@@ -101,26 +101,24 @@ Presets tune scoring weights for different genres:
 
 ### VLM model selection
 
-Models are discovered by scanning `/Applications/oMLX/models` (override with
-`PHOTO_MANAGER_VLM_ROOT`). Built-in aliases:
-
-| Alias | Model directory |
-|---|---|
-| `qwen3-vl-4b` (default) | `Qwen3-VL-4B-Instruct-MLX-8bit` |
-| `gemma-4-e2b` | `gemma-4-e2b-it-4bit` |
-| `gemma-4-e4b` | `gemma-4-e4b-it-8bit` |
-| `qwen3.5-9b` | `Qwen3.5-9B-MLX-8bit` |
+Stage 3 and Stage 4 run an in-process VLM via `mlx-vlm`. Any MLX-converted
+vision-language model works — point `PHOTO_MANAGER_VLM_ROOT` at a directory
+containing your model folders. Any subdirectory with a `config.json` containing
+a `vision_config` key is auto-discovered.
 
 ```bash
-cull --model gemma-4-e4b /path/to/photos
-cull --vlms   # list all discovered models
+cull --vlms                        # list discovered models
+cull --model <alias> /path/to/photos  # select a specific model
 ```
+
+Aliases are defined in `src/cull/config.py::VLM_ALIASES` — edit or extend them
+to match your local models.
 
 ## Environment variables
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `PHOTO_MANAGER_VLM_ROOT` | `/Applications/oMLX/models` | VLM model directory |
+| `PHOTO_MANAGER_VLM_ROOT` | — | Directory containing MLX VLM model folders |
 | `PHOTO_MANAGER_CACHE` | `~/.cache/photo-manager/models` | Model cache root |
 
 ## Output
