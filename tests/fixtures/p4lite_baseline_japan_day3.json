@@ -1,0 +1,152 @@
+{
+  "corpus_name": "japan_day3",
+  "corpus_path": "/Users/alrelador/Documents/Claude/photo-manager-fixtures/japan_day3",
+  "baseline_created_at": "2026-04-08T17:39:56.539577+00:00",
+  "pipeline_git_sha": null,
+  "scores": {
+    "DSCF7603.JPG": {
+      "aesthetic": 0.4330407778422038
+    },
+    "DSCF7639.JPG": {
+      "aesthetic": 0.4224776691860623
+    },
+    "DSCF7670.JPG": {
+      "aesthetic": 0.39995988210042316
+    },
+    "DSCF7688.JPG": {
+      "aesthetic": 0.45150889290703666
+    },
+    "DSCF7689.JPG": {
+      "aesthetic": 0.45708878835042316
+    },
+    "DSCF7690.JPG": {
+      "aesthetic": 0.4398936695522732
+    },
+    "DSCF7691.JPG": {
+      "aesthetic": 0.47134775585598415
+    },
+    "DSCF7692.JPG": {
+      "aesthetic": 0.41650978724161786
+    },
+    "DSCF7702.JPG": {
+      "aesthetic": 0.44249555799696183
+    },
+    "DSCF7726.JPG": {
+      "aesthetic": 0.39974662992689347
+    },
+    "DSCF7754.JPG": {
+      "aesthetic": 0.4170024659898546
+    },
+    "DSCF7779.JPG": {
+      "aesthetic": 0.4528252813551161
+    },
+    "DSCF7805.JPG": {
+      "aesthetic": 0.4779481887817383
+    },
+    "DSCF7828.JPG": {
+      "aesthetic": 0.4402943187289768
+    },
+    "DSCF7858.JPG": {
+      "aesthetic": 0.43768559561835396
+    },
+    "DSCF7886.JPG": {
+      "aesthetic": 0.4155867364671495
+    },
+    "DSCF7910.JPG": {
+      "aesthetic": 0.4367351002163357
+    },
+    "DSCF7935.JPG": {
+      "aesthetic": 0.4631503423055013
+    },
+    "DSCF7954.JPG": {
+      "aesthetic": 0.47222259309556747
+    },
+    "DSCF7979.JPG": {
+      "aesthetic": 0.5004062652587891
+    },
+    "DSCF8007.JPG": {
+      "aesthetic": 0.4220042758517795
+    },
+    "DSCF8039.JPG": {
+      "aesthetic": 0.38213056988186306
+    },
+    "DSCF8066.JPG": {
+      "aesthetic": 0.38938379287719727
+    },
+    "DSCF8096.JPG": {
+      "aesthetic": 0.3758437368604872
+    },
+    "DSCF8124.JPG": {
+      "aesthetic": 0.48758135901557076
+    },
+    "DSCF8156.JPG": {
+      "aesthetic": 0.43262963824801975
+    },
+    "DSCF8179.JPG": {
+      "aesthetic": 0.39784553315904403
+    },
+    "DSCF8206.JPG": {
+      "aesthetic": 0.4588112301296658
+    },
+    "DSCF8229.JPG": {
+      "aesthetic": 0.503908740149604
+    },
+    "DSCF8255.JPG": {
+      "aesthetic": 0.500986999935574
+    },
+    "synth_blur_01_DSCF8007.JPG": {
+      "aesthetic": 0.4020924038357205
+    },
+    "synth_blur_02_DSCF7688.JPG": {
+      "aesthetic": 0.4318867259555393
+    },
+    "synth_blur_03_DSCF7603.JPG": {
+      "aesthetic": 0.41598404778374565
+    },
+    "synth_dupe_01_DSCF7910.JPG": {
+      "aesthetic": 0.425586117638482
+    },
+    "synth_dupe_02_DSCF8039.JPG": {
+      "aesthetic": 0.405911922454834
+    },
+    "synth_dupe_03_DSCF8255.JPG": {
+      "aesthetic": 0.4892165395948622
+    },
+    "synth_motion_01_DSCF8096.JPG": {
+      "aesthetic": 0.37039640214708114
+    },
+    "synth_motion_02_DSCF7702.JPG": {
+      "aesthetic": 0.4380929734971788
+    },
+    "synth_motion_03_DSCF7692.JPG": {
+      "aesthetic": 0.40505197313096786
+    },
+    "synth_noisy_01_DSCF7828.JPG": {
+      "aesthetic": 0.4081369505988227
+    },
+    "synth_noisy_02_DSCF7639.JPG": {
+      "aesthetic": 0.4220486746893989
+    },
+    "synth_noisy_03_DSCF8206.JPG": {
+      "aesthetic": 0.47367615169949
+    },
+    "synth_overexp_01_DSCF8124.JPG": {
+      "aesthetic": 0.4781643549601237
+    },
+    "synth_overexp_02_DSCF7689.JPG": {
+      "aesthetic": 0.454403559366862
+    },
+    "synth_overexp_03_DSCF8229.JPG": {
+      "aesthetic": 0.4940546883477105
+    },
+    "synth_underexp_01_DSCF7935.JPG": {
+      "aesthetic": 0.43872955110337997
+    },
+    "synth_underexp_02_DSCF7670.JPG": {
+      "aesthetic": 0.3532231118943956
+    },
+    "synth_underexp_03_DSCF7954.JPG": {
+      "aesthetic": 0.4041013717651367
+    }
+  }
+}

@@ -1,0 +1,378 @@
+{
+  "corpus_name": "easter_vigil",
+  "corpus_fingerprint": "8b1d126df9a80ad50f029e7f102508d32bd1409a863cdacbbf77ebc7f302b2b3",
+  "corpus_path": "/Users/alrelador/Documents/Claude/photo-manager-fixtures/easter_vigil",
+  "baseline_created_at": null,
+  "pipeline_git_sha": null,
+  "scores": {
+    "DSCF0006.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0020.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0038.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0039.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0041.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0048.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0088.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0094.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0139.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0151.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0153.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0170.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0172.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0192.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0198.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0213.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0335.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0336.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0345.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0348.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0349.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0351.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0355.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0362.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0365.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0366.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0384.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0390.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0426.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0433.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0436.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0443.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0454.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0461.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0472.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0488.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0490.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0498.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0506.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0523.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0529.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0532.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0547.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0553.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0556.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0582.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0590.JPG": {
+      "aesthetic": null
+    },
+    "DSCF0593.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1123.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1133.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1142.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1157.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1161.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1172.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1175.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1179.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1195.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1232.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1234.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1243.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1273.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1280.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1288.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1289.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1290.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1298.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1302.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1307.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1317.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1321.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1330.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1340.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1342.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1343.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1349.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1350.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1357.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1364.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1391.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1397.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1400.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1405.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1426.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1441.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1451.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1468.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1472.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1489.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1512.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1513.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1515.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1521.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1525.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1527.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1529.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1532.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1553.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1562.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1572.JPG": {
+      "aesthetic": null
+    },
+    "DSCF1591.JPG": {
+      "aesthetic": null
+    },
+    "burst_DSCF0011.JPG": {
+      "aesthetic": null
+    },
+    "burst_DSCF0012.JPG": {
+      "aesthetic": null
+    },
+    "burst_DSCF0013.JPG": {
+      "aesthetic": null
+    },
+    "burst_DSCF0014.JPG": {
+      "aesthetic": null
+    },
+    "burst_DSCF0015.JPG": {
+      "aesthetic": null
+    },
+    "synth_blur_01_DSCF1405.JPG": {
+      "aesthetic": null
+    },
+    "synth_blur_02_DSCF0198.JPG": {
+      "aesthetic": null
+    },
+    "synth_blur_03_DSCF0039.JPG": {
+      "aesthetic": null
+    },
+    "synth_dupe_01_DSCF0390.JPG": {
+      "aesthetic": null
+    },
+    "synth_dupe_02_DSCF0433.JPG": {
+      "aesthetic": null
+    },
+    "synth_dupe_03_DSCF1290.JPG": {
+      "aesthetic": null
+    },
+    "synth_motion_01_DSCF1529.JPG": {
+      "aesthetic": null
+    },
+    "synth_motion_02_DSCF0488.JPG": {
+      "aesthetic": null
+    },
+    "synth_motion_03_DSCF0443.JPG": {
+      "aesthetic": null
+    },
+    "synth_noisy_01_DSCF1350.JPG": {
+      "aesthetic": null
+    },
+    "synth_noisy_02_DSCF1175.JPG": {
+      "aesthetic": null
+    },
+    "synth_noisy_03_DSCF0041.JPG": {
+      "aesthetic": null
+    },
+    "synth_overexp_01_DSCF0426.JPG": {
+      "aesthetic": null
+    },
+    "synth_overexp_02_DSCF0336.JPG": {
+      "aesthetic": null
+    },
+    "synth_overexp_03_DSCF0192.JPG": {
+      "aesthetic": null
+    },
+    "synth_underexp_01_DSCF1472.JPG": {
+      "aesthetic": null
+    },
+    "synth_underexp_02_DSCF1321.JPG": {
+      "aesthetic": null
+    },
+    "synth_underexp_03_DSCF0170.JPG": {
+      "aesthetic": null
+    }
+  }
+}

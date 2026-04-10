@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cull"
+version = "1.0.0"
+description = "Local AI photo culling — classical filters, neural IQA, and VLM tiebreaker. Runs entirely offline."
+requires-python = ">=3.11"
+license = "MIT"
+readme = "README.md"
+authors = [
+    { name = "itsaldrincr" },
+]
+keywords = ["photography", "culling", "image-quality", "vlm", "mlx"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Graphics",
+]
+
+[project.urls]
+Homepage = "https://github.com/itsaldrincr/photo-manager"
+Repository = "https://github.com/itsaldrincr/photo-manager"
+Issues = "https://github.com/itsaldrincr/photo-manager/issues"
+dependencies = [
+    "opencv-python",
+    "blur-detector",
+    "pyiqa",
+    "safetensors",
+    "huggingface-hub",
+    "Pillow",
+    "exifread",
+    "imagededup",
+    "imagehash",
+    "mediapipe>=0.10.9",
+    "deepface",
+    "mlx-vlm>=0.3.12,<0.4.0",
+    "torch",
+    "torchvision",
+    "textual",
+    "term-image",
+    "rich",
+    "click",
+    "pydantic>=2.0",
+    "scipy",
+    "lxml",
+    "smartcrop",
+    "river>=0.21,<0.24",
+    "scikit-learn",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+]
+
+[project.scripts]
+cull = "cull.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
