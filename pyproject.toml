@@ -17,18 +17,13 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Intended Audience :: End Users/Desktop",
-    "License :: OSI Approved :: MIT License",
+
     "Operating System :: MacOS",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Multimedia :: Graphics",
 ]
-
-[project.urls]
-Homepage = "https://github.com/itsaldrincr/photo-manager"
-Repository = "https://github.com/itsaldrincr/photo-manager"
-Issues = "https://github.com/itsaldrincr/photo-manager/issues"
 dependencies = [
     "opencv-python",
     "blur-detector",
@@ -61,6 +56,11 @@ dev = [
     "pytest",
     "pytest-cov",
 ]
+
+[project.urls]
+Homepage = "https://github.com/itsaldrincr/photo-manager"
+Repository = "https://github.com/itsaldrincr/photo-manager"
+Issues = "https://github.com/itsaldrincr/photo-manager/issues"
 
 [project.scripts]
 cull = "cull.cli:main"
