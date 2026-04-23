@@ -5,17 +5,15 @@ from __future__ import annotations
 from pathlib import Path
 
 # one-way dep: cli_results -> cli_review
-from cull.cli_review import _run_cull_app  # noqa: F401
+from cull.cli_review import ReviewLaunchInput, _launch_review_entry
 from cull.config import CullConfig
 from cull.dashboard import (
     DryRunSummary,
     ResultsSummary,
-    TuiHandoffCtx,
     show_dry_run_results,
     show_move_complete,
     show_report_writing,
     show_results_card,
-    show_tui_handoff,
 )
 from cull.pipeline import SessionResult
 from cull.report import write_report
@@ -78,10 +76,5 @@ def _write_report(result: SessionResult) -> None:
 
 
 def _launch_review_after(result: SessionResult, config: CullConfig) -> None:
-    """Show TUI handoff and launch review on the final pipeline session."""
-    ctx = TuiHandoffCtx(
-        uncertain_count=result.summary.uncertain,
-        total_count=result.total_photos,
-    )
-    show_tui_handoff(ctx)
-    _run_cull_app(result, config)
+    """Launch review on the final pipeline session via the unified entry path."""
+    _launch_review_entry(ReviewLaunchInput(config=config, session=result))

@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.0.1
+
+Patch release focused on review reliability and CLI startup behavior.
+
+### Review
+
+- `cull --review-after` and `cull --review` can hand off cleanly from cmux into a blocking Ghostty session without losing the live pipeline result.
+- Review save now shows `Saving review changes...` immediately, then `Save complete. Exiting...` before the TUI closes.
+- Save failures stay visible inside the review UI instead of exiting silently.
+
+### CLI
+
+- `cull.cli` now lazy-loads the heavy pipeline, review, and subcommand stacks so help and lightweight entry paths do not import the full ML pipeline up front.
+- Added an internal `--review-session` path used by the Ghostty handoff flow to reopen an in-memory review session safely.
+
+### Tests
+
+- Added regression coverage for lazy CLI imports, Ghostty review handoff, review save feedback, and preserving PyTorch's default Stage 2 CPU thread settings.
+
 ## v1.0.0
 
 Initial public release.
