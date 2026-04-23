@@ -3,7 +3,10 @@ from __future__ import annotations
 from pathlib import Path
 from unittest.mock import MagicMock
 
+import pytest
+
 from cull.cli_review import (
+    REVIEW_EXIT_HANDOFF_ERROR,
     ReviewLaunchInput,
     _launch_review_entry,
     _launch_review_session_file,
@@ -11,6 +14,7 @@ from cull.cli_review import (
 from cull.cli_results import _launch_review_after
 from cull.config import CullConfig
 from cull.pipeline import SessionResult, SessionSummary
+from cull.review_handoff import ReviewHandoffError
 
 
 def _make_session(source: Path) -> SessionResult:
@@ -89,6 +93,33 @@ def test_launch_review_session_file_runs_local_review(
 
     run_app.assert_called_once()
     assert run_app.call_args.args[0].source_path == str(tmp_path)
+
+
+def test_launch_review_entry_reports_handoff_error_cleanly(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    session = _make_session(tmp_path)
+    review_in = ReviewLaunchInput(config=CullConfig(), session=session)
+    observed: dict[str, Path] = {}
+    show_error = MagicMock()
+
+    monkeypatch.setattr("cull.cli_review.show_tui_handoff", lambda ctx: None)
+    monkeypatch.setattr("cull.cli_review.show_general_error", show_error)
+    monkeypatch.setattr("cull.cli_review.should_handoff_review", lambda: True)
+
+    def fake_launch(handoff_in) -> None:  # type: ignore[no-untyped-def]
+        observed["session_path"] = handoff_in.session_path
+        raise ReviewHandoffError("Ghostty launch failed.")
+
+    monkeypatch.setattr("cull.cli_review.launch_review_handoff", fake_launch)
+
+    with pytest.raises(SystemExit) as excinfo:
+        _launch_review_entry(review_in)
+
+    assert excinfo.value.code == REVIEW_EXIT_HANDOFF_ERROR
+    assert not observed["session_path"].exists()
+    show_error.assert_called_once_with("Review handoff failed", "Ghostty launch failed.")
 
 
 def test_launch_review_after_routes_session_to_unified_launcher(

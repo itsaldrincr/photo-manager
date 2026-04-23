@@ -43,15 +43,19 @@ def test_build_ghostty_open_command_uses_waiting_open_and_review_session(
 
     command = build_ghostty_open_command(handoff_in)
 
-    assert command[:6] == [
+    assert command[:9] == [
         "/usr/bin/open",
         "-n",
         "-W",
+        "-F",
         "-a",
         "Ghostty",
+        "--env",
+        f"{HANDOFF_ENV_VAR}={HANDOFF_ENV_VALUE}",
         "--args",
     ]
-    assert command[6:9] == ["-e", "/bin/zsh", "-lc"]
+    assert command[9:12] == ["-e", "/bin/zsh", "-c"]
     assert "--review-session" in command[-1]
     assert "review-session.json" in command[-1]
     assert "cd " in command[-1]
+    assert HANDOFF_ENV_VAR not in command[-1]

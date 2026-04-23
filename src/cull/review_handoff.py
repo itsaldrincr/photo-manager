@@ -61,7 +61,6 @@ def build_ghostty_open_command(handoff_in: ReviewHandoffInput) -> list[str]:
     """Build the blocking Ghostty launch command for a serialized review session."""
     cull_bin = resolve_cull_executable()
     shell_command = " && ".join([
-        f"export {HANDOFF_ENV_VAR}={shlex.quote(HANDOFF_ENV_VALUE)}",
         f"cd {shlex.quote(str(handoff_in.cwd))}",
         "exec "
         + " ".join([
@@ -74,12 +73,15 @@ def build_ghostty_open_command(handoff_in: ReviewHandoffInput) -> list[str]:
         OPEN_BIN,
         "-n",
         "-W",
+        "-F",
         "-a",
         GHOSTTY_APP,
+        "--env",
+        f"{HANDOFF_ENV_VAR}={HANDOFF_ENV_VALUE}",
         "--args",
         "-e",
         SHELL_BIN,
-        "-lc",
+        "-c",
         shell_command,
     ]
 

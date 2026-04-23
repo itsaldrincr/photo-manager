@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.0.2
+
+Patch release focused on hardening the cmux to Ghostty review handoff.
+
+### Review
+
+- Ghostty review handoff now launches in a fresh blocking window and returns cleanly to the waiting cmux command when the review session exits.
+- The handoff path no longer depends on a login shell to reopen the serialized review session.
+- Ghostty launch failures now surface as a normal CLI error instead of a traceback.
+
+### Tests
+
+- Tightened review handoff coverage around the final Ghostty launch flags and clean error handling.
+
 ## v1.0.1
 
 Patch release focused on review reliability and CLI startup behavior.

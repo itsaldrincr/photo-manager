@@ -14,11 +14,13 @@ from cull.pipeline import SessionResult
 from cull.report import REPORT_FILENAME
 from cull.review_handoff import (
     ReviewHandoffInput,
+    ReviewHandoffError,
     launch_review_handoff,
     should_handoff_review,
 )
 
 REVIEW_EXIT_MISSING_REPORT: int = 1
+REVIEW_EXIT_HANDOFF_ERROR: int = 1
 
 
 class ReviewLaunchInput(BaseModel):
@@ -111,6 +113,9 @@ def _launch_review_entry(review_in: ReviewLaunchInput) -> None:
                 cwd=_resolve_review_cwd(review_in, result),
                 session_path=session_path,
             ))
+        except ReviewHandoffError as exc:
+            show_general_error("Review handoff failed", str(exc))
+            sys.exit(REVIEW_EXIT_HANDOFF_ERROR)
         finally:
             session_path.unlink(missing_ok=True)
         return
