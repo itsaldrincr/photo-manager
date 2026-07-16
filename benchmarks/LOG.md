@@ -23,3 +23,21 @@ Notes for round 2: all models show heavy keep-bias on context-free prompts
 hint-enriched eval variant would better discriminate; consider adding
 stage-2 signals to the eval harness before the next model round.
 Rejected model weights kept under models/ for retest; delete to reclaim ~14.6 GB.
+
+## Pipeline optimization gate (2026-07-17, commits 171ed92 + 305d3d3)
+
+30-photo corpus (~/Desktop/cull-test-bench), full pipeline incl. VLM, dry-run:
+
+| metric | baseline (v1.0.2) | optimized | delta |
+|---|---|---|---|
+| total wall-clock | 7m30s | **5m03s** | **-33%** |
+| Stage 1 | 60s | 46s | -23% |
+| Stage 2 | 4m25s | 2m51s | -35% |
+| Stage 3 per photo | ~7.6s | ~5.9s | -23% |
+| peak RSS (whole run) | ~8 GB | 7.25 GB | -9% |
+
+VERDICT: PROMOTE — both optimization commits stay.
+Routing deltas (24->25 keepers, 16->14 stage-3 analyzed) are attributable to
+the intentional B2 exposure-corruption fix (7 photos repatched by the reducer
+had corrupted composites before), not to the decode-once refactor (whose
+stage-1 outputs were proven numerically identical by tests/stage1/test_worker.py).
