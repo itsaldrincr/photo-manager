@@ -19,7 +19,7 @@ from typing import Any, Iterator
 
 import pytest
 from PIL import Image
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from cull._pipeline.stage1_runner import _Stage1Output
 from cull._pipeline.stage2_runner import _Stage2Output
@@ -85,6 +85,35 @@ def _make_fake_vlm_session_cm(
 
     @contextlib.contextmanager
     def _cm(alias: str) -> Iterator[RecordingFakeVlmSession]:
+        state.entry_count += 1
+        session = RecordingFakeVlmSession()
+        state.session = session
+        try:
+            yield session
+        finally:
+            session.unload()
+
+    return _cm
+
+
+class _CallOrderRecorder(BaseModel):
+    """Records the order in which named lifecycle events occur."""
+
+    events: list[str] = Field(default_factory=list)
+
+    def record(self, name: str) -> None:
+        """Append name to the recorded event order."""
+        self.events.append(name)
+
+
+def _make_order_recording_vlm_session_cm(
+    state: _SessionCmState, order: _CallOrderRecorder
+) -> contextlib.AbstractContextManager:
+    """Return a CM like _make_fake_vlm_session_cm that also records "vlm_load" order."""
+
+    @contextlib.contextmanager
+    def _cm(alias: str) -> Iterator[RecordingFakeVlmSession]:
+        order.record("vlm_load")
         state.entry_count += 1
         session = RecordingFakeVlmSession()
         state.session = session
@@ -179,17 +208,39 @@ def _make_run_input(config: CullConfig, source_path: Path) -> _PipelineRunInput:
 # ---------------------------------------------------------------------------
 
 
-def _patch_pipeline_infra(
-    monkeypatch: pytest.MonkeyPatch,
-    cm_factory: Any,
+def _patch_session_and_dashboard(
+    monkeypatch: pytest.MonkeyPatch, cm_factory: Any
 ) -> None:
-    """Patch the vlm_session CM and dashboard for pipeline tests."""
+    """Patch the vlm_session CM, preflight, and dashboard for pipeline tests."""
     monkeypatch.setattr("cull.vlm_session.vlm_session", cm_factory)
     monkeypatch.setattr("cull._pipeline.orchestrator.vlm_session", cm_factory)
     monkeypatch.setattr(
-        "cull._pipeline.orchestrator._make_dashboard",
-        _make_stub_dashboard,
+        "cull._pipeline.orchestrator.run_vlm_preflight", lambda alias: None
     )
+    monkeypatch.setattr(
+        "cull._pipeline.orchestrator._make_dashboard", _make_stub_dashboard
+    )
+
+
+def _fake_run_s3_if_configured(run_in: Any) -> dict[str, Any]:
+    """Stub Stage 3: score every ambiguous photo via the (possibly patched) score_photo."""
+    if 3 not in run_in.ctx.config.stages:
+        return {}
+    from cull.stage3.vlm_scoring import score_photo  # noqa: PLC0415
+
+    return {
+        str(path): score_photo(
+            SimpleNamespace(
+                request=SimpleNamespace(image_path=path),
+                session=run_in.ctx.vlm_session,
+            )
+        )
+        for path in run_in.ctx.paths
+    }
+
+
+def _patch_stage_runners(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Patch Stage 1/2/3 runner entry points with deterministic stubs."""
     monkeypatch.setattr(
         "cull._pipeline.orchestrator._run_s1",
         lambda ctx: _Stage1Output(results={}, survivors=ctx.paths, encodings={}),
@@ -197,41 +248,44 @@ def _patch_pipeline_infra(
     monkeypatch.setattr(
         "cull._pipeline.orchestrator._run_s2",
         lambda run_in: _Stage2Output(
-            results={},
-            portraits={},
-            ambiguous=list(run_in.s1_out.survivors),
-            keepers=[],
-            rejects=[],
-            search_cache=None,
+            results={}, portraits={}, ambiguous=list(run_in.s1_out.survivors),
+            keepers=[], rejects=[], search_cache=None,
         ),
     )
+    monkeypatch.setattr("cull._pipeline.orchestrator._run_s2_reducer", lambda _run_in: None)
+    monkeypatch.setattr("cull._pipeline.orchestrator._unload_stage2_models", lambda: None)
     monkeypatch.setattr(
-        "cull._pipeline.orchestrator._run_s2_reducer",
-        lambda _run_in: None,
+        "cull._pipeline.orchestrator._run_s3_if_configured", _fake_run_s3_if_configured
     )
-    monkeypatch.setattr(
-        "cull._pipeline.orchestrator._unload_stage2_models",
-        lambda: None,
+
+
+def _fake_run_s4(s4_in: Any) -> CurationResult | None:
+    """Stub Stage 4 curator: run one tiebreak comparison and return a CurationResult."""
+    if s4_in.ctx.config.curate_target is None:
+        return None
+    from cull.stage4.vlm_tiebreak import compare_photos  # noqa: PLC0415
+
+    compare_photos(
+        CuratorTiebreakCallInput(
+            tiebreak_input=CuratorTiebreakInput(
+                photo_a=s4_in.ctx.paths[0], photo_b=s4_in.ctx.paths[1],
+                context=PromptContext(), context_b=PromptContext(), model="mock-model",
+            ),
+            session=s4_in.ctx.vlm_session,
+        )
     )
-    monkeypatch.setattr(
-        "cull._pipeline.orchestrator._run_s3_if_configured",
-        lambda run_in: {
-            str(path): __import__("cull.stage3.vlm_scoring", fromlist=["score_photo"]).score_photo(
-                SimpleNamespace(
-                    request=SimpleNamespace(image_path=path),
-                    session=run_in.ctx.vlm_session,
-                )
-            )
-            for path in run_in.ctx.paths
-        } if 3 in run_in.ctx.config.stages else {},
+    return CurationResult(
+        is_enabled=True, target_count=2, actual_count=0, cluster_count=0,
+        vlm_tiebreakers=1, threshold_used=0.0, elapsed_seconds=0.0, selected=[],
     )
+
+
+def _patch_decision_and_stage4(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Patch decision assembly, summary, and Stage 4 curator entry points."""
     monkeypatch.setattr(
         "cull._pipeline.orchestrator._build_all_decisions",
         lambda _ctx: [
-            PhotoDecision(
-                photo=PhotoMeta(path=path, filename=path.name),
-                decision="keeper",
-            )
+            PhotoDecision(photo=PhotoMeta(path=path, filename=path.name), decision="keeper")
             for path in _ctx.paths
         ],
     )
@@ -241,33 +295,14 @@ def _patch_pipeline_infra(
             keepers=len(_decisions), rejected=0, duplicates=0, uncertain=0, selected=0
         ),
     )
-    monkeypatch.setattr(
-        "cull._pipeline.orchestrator._run_s4",
-        lambda s4_in: (
-            __import__("cull.stage4.vlm_tiebreak", fromlist=["compare_photos"]).compare_photos(
-                CuratorTiebreakCallInput(
-                    tiebreak_input=CuratorTiebreakInput(
-                        photo_a=s4_in.ctx.paths[0],
-                        photo_b=s4_in.ctx.paths[1],
-                        context=PromptContext(),
-                        context_b=PromptContext(),
-                        model="mock-model",
-                    ),
-                    session=s4_in.ctx.vlm_session,
-                )
-            ),
-            CurationResult(
-                is_enabled=True,
-                target_count=2,
-                actual_count=0,
-                cluster_count=0,
-                vlm_tiebreakers=1,
-                threshold_used=0.0,
-                elapsed_seconds=0.0,
-                selected=[],
-            ),
-        )[1] if s4_in.ctx.config.curate_target is not None else None,
-    )
+    monkeypatch.setattr("cull._pipeline.orchestrator._run_s4", _fake_run_s4)
+
+
+def _patch_pipeline_infra(monkeypatch: pytest.MonkeyPatch, cm_factory: Any) -> None:
+    """Patch the vlm_session CM and every stage entry point for pipeline tests."""
+    _patch_session_and_dashboard(monkeypatch, cm_factory)
+    _patch_stage_runners(monkeypatch)
+    _patch_decision_and_stage4(monkeypatch)
 
 
 def _make_stub_dashboard(run_in: Any) -> Any:
@@ -314,9 +349,9 @@ class _StubDashboard:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.usefixtures("mock_scorers")
 def test_stages_3_and_4_share_session(
     tmp_path: Path,
-    mock_scorers: None,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Stage 3 and Stage 4 receive the same VlmSession instance."""
@@ -346,9 +381,9 @@ def test_stages_3_and_4_share_session(
     assert state.session.is_unloaded
 
 
+@pytest.mark.usefixtures("mock_scorers")
 def test_no_vlm_no_curate_skips_session(
     tmp_path: Path,
-    mock_scorers: None,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Session CM is never entered when stages=[1,2] and curate_target=None."""
@@ -363,9 +398,9 @@ def test_no_vlm_no_curate_skips_session(
     assert state.entry_count == 0
 
 
+@pytest.mark.usefixtures("mock_scorers")
 def test_stage3_only_releases_at_end_of_pipeline(
     tmp_path: Path,
-    mock_scorers: None,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Session is entered exactly once and released at pipeline end."""
@@ -386,3 +421,33 @@ def test_stage3_only_releases_at_end_of_pipeline(
     assert state.entry_count == 1
     assert state.session is not None
     assert state.session.is_unloaded
+
+
+@pytest.mark.usefixtures("mock_scorers")
+def test_stage2_unload_precedes_vlm_load(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Regression: Stage 2 models must unload before the VLM session loads.
+
+    This is the narrowed-scope memory fix — the VLM must never be resident
+    alongside Stage 2's torch/CLIP stack.
+    """
+    _build_corpus(tmp_path)
+    state = _SessionCmState()
+    order = _CallOrderRecorder()
+    cm_factory = _make_order_recording_vlm_session_cm(state, order)
+    _patch_pipeline_infra(monkeypatch, cm_factory)
+    monkeypatch.setattr(
+        "cull._pipeline.orchestrator._unload_stage2_models",
+        lambda: order.record("stage2_unload"),
+    )
+    monkeypatch.setattr(
+        "cull.stage3.vlm_scoring.score_photo",
+        _ScoreRecorder().record,
+    )
+
+    config = CullConfig(stages=[1, 2, 3], curate_target=None, is_portrait=False)
+    run_pipeline(_make_run_input(config, tmp_path))
+
+    assert order.events == ["stage2_unload", "vlm_load"]

@@ -19,6 +19,7 @@ from cull.config import (
     STAGE_IQA,
     STAGE_VLM,
 )
+from cull.vlm_registry import run_vlm_preflight
 from cull.vlm_session import vlm_session
 from cull.dashboard import (
     Dashboard,
@@ -151,6 +152,7 @@ class _StageRunCtx(BaseModel):
     timings: _StageTimings = Field(default_factory=_StageTimings)
     dashboard: Any = None  # Dashboard instance
     vlm_session: Any = None  # VlmSession — Any avoids import cycle
+    vlm_stack: Any = None  # ExitStack owning the lazy VLM load/unload for this run
 
 
 # `_S2RunInput` uses a forward reference to `_StageRunCtx`, and
@@ -293,23 +295,57 @@ def _finalize_run(state: _RunState, run_in: _PipelineRunInput) -> SessionResult:
     return _assemble_session(session_in, state.ctx)
 
 
+def _needs_vlm(config: CullConfig) -> bool:
+    """Return True if Stage 3 or the Stage 4 curator will need a VLM session."""
+    return STAGE_VLM in config.stages or config.curate_target is not None
+
+
 def _resolve_vlm_session_scope(
     config: CullConfig,
 ) -> AbstractContextManager:
-    """Return vlm_session CM if Stage 3/4 will run, else nullcontext."""
-    needs_vlm = STAGE_VLM in config.stages or config.curate_target is not None
-    if needs_vlm:
+    """Return vlm_session CM if Stage 3/4 will run, else nullcontext.
+
+    Kept as a standalone helper for the frozen cull_fast import contract
+    (cull_fast.cli_hook uses its own single-shot scope); `_run_with_session`
+    below no longer calls this — it opens the VLM lazily via `vlm_stack`
+    instead, so weights load only after Stage 2 unloads.
+    """
+    if _needs_vlm(config):
         return vlm_session(config.model)
     return contextlib.nullcontext()
+
+
+def _preflight_vlm(config: CullConfig) -> None:
+    """Fail fast on an unresolvable VLM alias before any stage runs.
+
+    Resolves the alias and checks the on-disk directory structure without
+    calling mlx_vlm.load(), so a bad --model value is caught before an
+    expensive Stage 1-2 run instead of after it.
+    """
+    if _needs_vlm(config):
+        run_vlm_preflight(config.model)
+
+
+def _load_vlm_if_needed(ctx: _StageRunCtx) -> None:
+    """Enter the VLM session CM into ctx.vlm_stack once Stage 2 memory is freed."""
+    if ctx.vlm_stack is None or not _needs_vlm(ctx.config):
+        return
+    ctx.vlm_session = ctx.vlm_stack.enter_context(vlm_session(ctx.config.model))
 
 
 def _run_with_session(
     run_in: _PipelineRunInput, dashboard: Any
 ) -> SessionResult:
-    """Open the VLM session scope and execute the run + finalize inside it."""
+    """Preflight the VLM alias, then run stages and finalize.
+
+    The VLM itself loads only after Stage 2 models unload (see
+    `_execute_stages_inline`) and stays resident through Stage 4 curation;
+    it unloads when the ExitStack closes at the end of this function.
+    """
     ctx = _build_run_ctx(run_in, dashboard)
-    with _resolve_vlm_session_scope(run_in.config) as session:
-        ctx.vlm_session = session
+    _preflight_vlm(run_in.config)
+    with contextlib.ExitStack() as stack:
+        ctx.vlm_stack = stack
         state = _execute_run(ctx)
         return _finalize_run(state, run_in)
 
@@ -323,7 +359,11 @@ def _run_pipeline_impl(run_in: _PipelineRunInput) -> SessionResult:
 
 
 def _execute_stages_inline(ctx: _StageRunCtx) -> _StagesResult:
-    """Run stages without opening a new dashboard context."""
+    """Run stages without opening a new dashboard context.
+
+    The VLM loads (via `_load_vlm_if_needed`) after Stage 2 models unload,
+    so Stage 1-2's torch/CLIP stack and the VLM are never resident together.
+    """
     s2_out: _Stage2Output | None = None
     s3_results: dict[str, Stage3Result] = {}
     s1_out = _run_s1(ctx)
@@ -331,6 +371,8 @@ def _execute_stages_inline(ctx: _StageRunCtx) -> _StagesResult:
         s2_out = _run_s2(_S2RunInput(s1_out=s1_out, ctx=ctx))
         _run_s2_reducer(_S2ReducerRunInput(s2_out=s2_out, s1_out=s1_out, ctx=ctx))
         _unload_stage2_models()
+    _load_vlm_if_needed(ctx)
+    if STAGE_IQA in ctx.config.stages:
         s3_results = _run_s3_if_configured(
             _S3MaybeRunInput(ctx=ctx, s2_out=s2_out, s1_out=s1_out),
         )
