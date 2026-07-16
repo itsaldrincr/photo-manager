@@ -73,13 +73,25 @@ def unload_metrics() -> None:
     logger.info("IQA metrics unloaded")
 
 
+def _scores_to_list(scores: torch.Tensor) -> list[float]:
+    """Detach/move a raw metric output to CPU and normalize it to a flat list.
+
+    pyiqa metrics may return a (batch, 1) or a bare (batch,) tensor depending
+    on the metric. For a 1-photo batch, squeeze(-1) on a (1,) tensor collapses
+    it to a 0-d scalar, and .tolist() then returns a bare float instead of a
+    list — which breaks zip() in stage2 scoring. torch.atleast_1d guarantees
+    at least one dimension survives regardless of the metric's native shape.
+    """
+    return torch.atleast_1d(scores.detach().cpu().squeeze(-1)).tolist()
+
+
 def _score_batch_with_fallback(request: _BatchScoreRequest) -> list[float]:
     """Score batch of tensors, falling back to CPU if MPS fails."""
     metric = _get_metric(request.name, request.device)
     try:
         with _silence_stdio(), torch.no_grad():
             scores = metric(request.batch_tensor.to(request.device))
-            return scores.detach().cpu().squeeze(-1).tolist()
+            return _scores_to_list(scores)
     except RuntimeError:
         if request.device == CPU_FALLBACK:
             raise
@@ -87,7 +99,7 @@ def _score_batch_with_fallback(request: _BatchScoreRequest) -> list[float]:
         cpu_metric = _get_metric(request.name, CPU_FALLBACK)
         with _silence_stdio(), torch.no_grad():
             scores = cpu_metric(request.batch_tensor.to(CPU_FALLBACK))
-            return scores.detach().cpu().squeeze(-1).tolist()
+            return _scores_to_list(scores)
 
 
 def score_topiq_batch(tensor_batch: torch.Tensor, device: str) -> list[float]:

@@ -5,28 +5,43 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
+from pydantic import BaseModel
 
-from cull.config import CullConfig, GENRE_WEIGHTS
-from cull.models import PortraitScores
-from cull.stage2.fusion import IqaScores, compute_composite
+from cull.config import CullConfig, GENRE_WEIGHTS, IQA_EXPOSURE_DEFAULT
+from cull.models import PortraitScores, ShootStatsScore
+from cull.stage2.fusion import (
+    IqaScores,
+    ReducerPatchInput,
+    compute_composite,
+    patch_reducer_scores,
+)
 
 
 PHOTO_PATH = Path("/tmp/test_photo.jpg")
 
 
-def _make_scores(topiq: float, laion: float, clipiqa: float, exposure: float) -> IqaScores:
+class _MetricValues(BaseModel):
+    """Bundle of the four core IQA metrics used to build synthetic test scores."""
+
+    topiq: float
+    laion: float
+    clipiqa: float
+    exposure: float
+
+
+def _make_scores(metrics: _MetricValues) -> IqaScores:
     return IqaScores(
         photo_path=PHOTO_PATH,
-        topiq=topiq,
-        laion_aesthetic=laion,
-        clipiqa=clipiqa,
-        exposure=exposure,
+        topiq=metrics.topiq,
+        laion_aesthetic=metrics.laion,
+        clipiqa=metrics.clipiqa,
+        exposure=metrics.exposure,
     )
 
 
 def _uniform_scores(value: float) -> IqaScores:
     """All metrics equal to `value` so composite == value regardless of weights."""
-    return _make_scores(value, value, value, value)
+    return _make_scores(_MetricValues(topiq=value, laion=value, clipiqa=value, exposure=value))
 
 
 def test_routes_keeper_at_high_composite() -> None:
@@ -86,7 +101,7 @@ def test_genre_weights_change_composite() -> None:
     # Give topiq a high value and laion_aesthetic a low value.
     # wildlife preset weights topiq=0.50, laion=0.20 → composite skews high.
     # wedding preset weights topiq=0.25, laion=0.40 → composite skews low.
-    scores = _make_scores(topiq=0.9, laion=0.1, clipiqa=0.5, exposure=0.5)
+    scores = _make_scores(_MetricValues(topiq=0.9, laion=0.1, clipiqa=0.5, exposure=0.5))
     wildlife_config = CullConfig(preset="wildlife")
     wedding_config = CullConfig(preset="wedding")
     wildlife_result = compute_composite(scores, wildlife_config)
@@ -147,7 +162,7 @@ def test_every_genre_has_tilt_penalty_key() -> None:
 
 def test_subject_blur_blends_with_topiq_instead_of_overriding() -> None:
     """Subject sharpness should raise the score, but not replace weak global IQA."""
-    scores = _make_scores(topiq=0.2, laion=0.5, clipiqa=0.5, exposure=0.5)
+    scores = _make_scores(_MetricValues(topiq=0.2, laion=0.5, clipiqa=0.5, exposure=0.5))
     scores.subject_blur = 1000.0
     result = compute_composite(scores, CullConfig(preset="holiday"))
     assert result.stage2.composite > 0.2
@@ -156,7 +171,7 @@ def test_subject_blur_blends_with_topiq_instead_of_overriding() -> None:
 
 def test_bokeh_bonus_is_preset_aware() -> None:
     """Holiday should tolerate intentional bokeh more than landscape."""
-    holiday_scores = _make_scores(topiq=0.4, laion=0.5, clipiqa=0.5, exposure=0.5)
+    holiday_scores = _make_scores(_MetricValues(topiq=0.4, laion=0.5, clipiqa=0.5, exposure=0.5))
     landscape_scores = holiday_scores.model_copy(deep=True)
     holiday_scores.subject_blur = 1000.0
     landscape_scores.subject_blur = 1000.0
@@ -169,7 +184,7 @@ def test_bokeh_bonus_is_preset_aware() -> None:
 
 def test_portrait_penalties_and_bonus_affect_routing() -> None:
     """Portrait quality should reward sharp eyes and penalize closed or occluded faces."""
-    base = _make_scores(topiq=0.68, laion=0.68, clipiqa=0.68, exposure=0.68)
+    base = _make_scores(_MetricValues(topiq=0.68, laion=0.68, clipiqa=0.68, exposure=0.68))
     improved = base.model_copy(deep=True)
     improved.portrait = PortraitScores(
         eye_sharpness_left=900.0,
@@ -188,3 +203,40 @@ def test_portrait_penalties_and_bonus_affect_routing() -> None:
     penalized_result = compute_composite(penalized, CullConfig(preset="wedding"))
     assert improved_result.stage2.composite > penalized_result.stage2.composite
     assert improved_result.routing != "REJECT"
+
+
+# ---------------------------------------------------------------------------
+# Reducer repatch regression — exposure must not be fed the prior composite
+# ---------------------------------------------------------------------------
+
+
+NEUTRAL_REDUCER_SCORE = ShootStatsScore(
+    palette_outlier_score=0.0,
+    exposure_drift_score=0.0,
+    exif_anomaly_score=0.0,
+    scene_start_bonus=0.0,
+    scene_id=0,
+)
+
+
+def test_repatch_with_neutral_reducer_matches_initial_composite() -> None:
+    """Repatching with a neutral reducer must reproduce the initial composite exactly.
+
+    Regression: the repatch path used to feed the previous composite back in as
+    the exposure input, corrupting every re-routed photo's composite.
+    """
+    scores = _make_scores(
+        _MetricValues(topiq=0.9, laion=0.1, clipiqa=0.5, exposure=IQA_EXPOSURE_DEFAULT)
+    )
+    config = CullConfig(preset="general")
+    initial = compute_composite(scores, config)
+    baseline_composite = initial.stage2.composite
+    fusion_results = {str(PHOTO_PATH): initial}
+    patch_reducer_scores(ReducerPatchInput(
+        fusion_results=fusion_results,
+        reducer_scores={str(PHOTO_PATH): NEUTRAL_REDUCER_SCORE},
+        config=config,
+    ))
+    assert fusion_results[str(PHOTO_PATH)].stage2.composite == pytest.approx(
+        baseline_composite, abs=1e-9
+    )

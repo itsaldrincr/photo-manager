@@ -70,3 +70,39 @@ def test_mps_fallback_keeps_default_torch_threads(monkeypatch) -> None:
 
     assert scores == [0.5]
     assert not any(name == "set_num_threads" for name, _ in calls)
+
+
+# ---------------------------------------------------------------------------
+# B7 regression: a metric that returns a bare (batch,) tensor instead of
+# (batch, 1) must still yield a list for a 1-photo batch, not a bare float
+# that would break zip() in stage2 scoring.
+# ---------------------------------------------------------------------------
+
+
+def test_single_photo_batch_yields_list_even_with_1d_metric_output(monkeypatch) -> None:
+    """A metric returning a 1-D (batch,) tensor still normalizes to a list for batch=1."""
+
+    def fake_get_metric(name: str, device: str):
+        def metric(batch_tensor: torch.Tensor) -> torch.Tensor:
+            # Some pyiqa metrics can return shape (batch,) rather than
+            # (batch, 1); squeeze(-1) on a length-1 1-D tensor collapses to
+            # a 0-d scalar, which .tolist() turns into a bare float.
+            return torch.full((batch_tensor.shape[0],), 0.5)
+
+        return metric
+
+    monkeypatch.setattr(iqa, "_get_metric", fake_get_metric)
+
+    scores = iqa.score_topiq_batch(torch.zeros((1, 3, 8, 8)), device="cpu")
+
+    assert isinstance(scores, list)
+    assert scores == [0.5]
+
+
+def test_multi_photo_batch_with_2d_metric_output_unaffected(monkeypatch) -> None:
+    """The normal (batch, 1) metric shape still produces one score per photo."""
+    monkeypatch.setattr(iqa, "_get_metric", lambda name, device: _fake_scores)
+
+    scores = iqa.score_clipiqa_batch(torch.zeros((3, 3, 8, 8)), device="cpu")
+
+    assert scores == [0.5, 0.5, 0.5]

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import logging
+import os
+import shutil
 from pathlib import Path
 
 from pydantic import BaseModel, Field
@@ -37,6 +39,8 @@ OVERRIDE_ORIGIN_AUTO: str = "auto_accept"
 logger = logging.getLogger(__name__)
 
 STATE_FILENAME: str = ".cull_tui_state.json"
+STATE_BACKUP_SUFFIX: str = ".bak"
+STATE_TEMP_SUFFIX: str = ".tmp"
 SAVE_IN_PROGRESS_MESSAGE: str = "Saving review changes..."
 SAVE_COMPLETE_MESSAGE: str = "Save complete. Exiting..."
 SAVE_FAILED_PREFIX: str = "Save failed: "
@@ -112,22 +116,48 @@ def _state_path(session: SessionResult) -> Path:
     return Path(session.source_path) / STATE_FILENAME
 
 
-def _save_state(state: TuiState, path: Path) -> None:
-    """Write TUI state to disk as JSON."""
-    path.write_text(state.model_dump_json(indent=2), encoding="utf-8")
-    logger.info("TUI state saved to %s", path)
+def _state_backup_path(path: Path) -> Path:
+    """Return the sibling .bak path for a state file."""
+    return path.with_name(path.name + STATE_BACKUP_SUFFIX)
 
 
-def _load_state(path: Path) -> TuiState | None:
-    """Load TUI state from disk if it exists."""
+def _parse_state_file(path: Path) -> TuiState | None:
+    """Parse a state file into TuiState, or None if missing/corrupt."""
     if not path.exists():
         return None
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
         return TuiState.model_validate(data)
     except (json.JSONDecodeError, ValueError):
-        logger.warning("Corrupt TUI state file, starting fresh")
         return None
+
+
+def _rotate_state_backup(path: Path) -> None:
+    """Copy a currently-valid state file to its .bak sibling before overwrite."""
+    if _parse_state_file(path) is not None:
+        shutil.copy2(path, _state_backup_path(path))
+
+
+def _save_state(state: TuiState, path: Path) -> None:
+    """Write TUI state to disk atomically, rotating any valid prior state to .bak."""
+    tmp_path = path.with_name(path.name + STATE_TEMP_SUFFIX)
+    tmp_path.write_text(state.model_dump_json(indent=2), encoding="utf-8")
+    _rotate_state_backup(path)
+    os.replace(tmp_path, path)
+    logger.info("TUI state saved to %s", path)
+
+
+def _load_state(path: Path) -> TuiState | None:
+    """Load TUI state from disk, recovering from .bak if the primary is corrupt."""
+    state = _parse_state_file(path)
+    if state is not None or not path.exists():
+        return state
+    backup_state = _parse_state_file(_state_backup_path(path))
+    if backup_state is not None:
+        logger.warning("Corrupt TUI state file %s; recovered from backup", path)
+        return backup_state
+    logger.warning("Corrupt TUI state file %s and no valid backup; starting fresh", path)
+    return None
 
 
 def _filter_queue(decisions: list[PhotoDecision], label: DecisionLabel) -> list[int]:
@@ -617,19 +647,52 @@ class CullApp(App):
 
     def _commit_save_and_exit(self) -> None:
         """Persist pending review changes after the save banner has painted."""
+        move_error = self._attempt_execute_moves()
+        if move_error is not None:
+            self._report_save_failure(f"{SAVE_FAILED_PREFIX}{move_error}")
+            return
+        report_error = self._attempt_write_report()
+        if report_error is not None:
+            self._report_save_failure(
+                f"Photos moved; report write failed: {report_error}"
+            )
+            return
+        self._clear_state_file()
+        self._complete_save()
+
+    def _attempt_execute_moves(self) -> str | None:
+        """Run execute_moves; return an error message on failure, else None."""
         try:
             execute_moves(self._session.decisions, self._config)
+        except OSError as exc:
+            self.log.warning("review save failed during move: %s", exc)
+            return str(exc)
+        return None
+
+    def _attempt_write_report(self) -> str | None:
+        """Build the summary and write the report; return an error message on failure."""
+        try:
             self._session.summary = _build_summary(self._session.decisions)
             write_report(self._session, overwrite=True)
-            state_path = _state_path(self._session)
-            if state_path.exists():
-                state_path.unlink()
-        except OSError as exc:
-            self._save_in_progress = False
-            self._status_message = f"{SAVE_FAILED_PREFIX}{exc}"
-            self._update_info_bar(self._current_decision())
-            self.log.warning("review save failed: %s", exc)
-            return
+        except Exception as exc:  # noqa: BLE001 - moves already happened, must not crash
+            self.log.warning("review report write failed: %s", exc)
+            return str(exc)
+        return None
+
+    def _clear_state_file(self) -> None:
+        """Remove the autosave state file after a successful commit."""
+        state_path = _state_path(self._session)
+        if state_path.exists():
+            state_path.unlink()
+
+    def _report_save_failure(self, message: str) -> None:
+        """Show a save-failure banner and clear the in-progress flag."""
+        self._save_in_progress = False
+        self._status_message = message
+        self._update_info_bar(self._current_decision())
+
+    def _complete_save(self) -> None:
+        """Show the save-complete banner and schedule app exit."""
         self._status_message = SAVE_COMPLETE_MESSAGE
         self._update_info_bar(self._current_decision())
         self.log.info("review save complete")

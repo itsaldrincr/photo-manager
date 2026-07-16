@@ -106,7 +106,7 @@ def stub_clip(monkeypatch: pytest.MonkeyPatch) -> _StubClipModel:
     )
     monkeypatch.setattr(
         "cull._pipeline.stage2_runner._apply_taste_to_scores",
-        lambda iqa_list, paths: None,
+        lambda apply_in: None,
     )
     monkeypatch.setattr(
         "cull._pipeline.stage2_runner._apply_subject_blur_to_scores",

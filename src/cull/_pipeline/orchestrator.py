@@ -29,6 +29,7 @@ from cull.models import (
     PhotoDecision,
     Stage3Result,
 )
+from cull.router import CURATED_DIR, REVIEW_DIR
 from cull.stage1 import duplicate as duplicate_module
 from cull import clip_loader
 from cull.stage2.aesthetic import unload_predictor
@@ -340,6 +341,17 @@ def _execute_stages_inline(ctx: _StageRunCtx) -> _StagesResult:
     )
 
 
+# Prior pipeline output dirs must never be re-ingested on a re-run — canonical
+# names live in cull.router (single source of truth).
+_EXCLUDED_SCAN_DIRS: frozenset[str] = frozenset({REVIEW_DIR, CURATED_DIR})
+
+
+def _is_pipeline_output_path(path: Path, source_path: Path) -> bool:
+    """Return True if path lives under a prior pipeline output dir (_review/_curated)."""
+    relative_parts = path.relative_to(source_path).parts
+    return any(part in _EXCLUDED_SCAN_DIRS for part in relative_parts)
+
+
 def _scan_with_dashboard(source_path: Path, dashboard: Dashboard) -> list[Path]:
     """Scan for JPEGs while updating the dashboard's scan state."""
     paths: list[Path] = []
@@ -347,6 +359,8 @@ def _scan_with_dashboard(source_path: Path, dashboard: Dashboard) -> list[Path]:
     dashboard.begin_scan()
     for p in source_path.rglob("*"):
         if not p.is_file() or p.suffix.lower() not in JPEG_EXTENSIONS:
+            continue
+        if _is_pipeline_output_path(p, source_path):
             continue
         paths.append(p)
         total_bytes += p.stat().st_size

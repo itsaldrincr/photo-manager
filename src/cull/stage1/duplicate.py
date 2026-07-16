@@ -10,11 +10,16 @@ from typing import Any
 from pydantic import BaseModel, ConfigDict, Field
 
 from cull.config import BLUR_CNN_SIMILARITY_EXACT
+from cull.router import CURATED_DIR, REVIEW_DIR
 
 logger = logging.getLogger(__name__)
 
 _CNN_INSTANCE: object | None = None
 _IMPORT_FAILED: bool = False
+
+# Prior pipeline output dirs must never re-enter duplicate detection — canonical
+# names live in cull.router (single source of truth).
+_EXCLUDED_DUPLICATE_DIRS: frozenset[str] = frozenset({REVIEW_DIR, CURATED_DIR})
 
 
 class DuplicateGroup(BaseModel):
@@ -77,6 +82,20 @@ def _unload_cnn() -> None:
     gc.collect()
 
 
+def _is_pipeline_output_name(relative_name: str) -> bool:
+    """Return True if a relative encoding key lives under a _review/_curated subtree."""
+    return any(part in _EXCLUDED_DUPLICATE_DIRS for part in Path(relative_name).parts)
+
+
+def _exclude_pipeline_output(raw_encodings: dict) -> dict:
+    """Drop CNN encodings for images already routed into prior pipeline output dirs."""
+    return {
+        name: vector
+        for name, vector in raw_encodings.items()
+        if not _is_pipeline_output_name(name)
+    }
+
+
 def _run_cnn_encoding(cnn: object, image_dir: Path) -> tuple[dict, dict]:
     """Run CNN encode and find_duplicates; return (raw_encodings, duplicates_map)."""
     from cull.io_silence import _silence_stdio  # noqa: PLC0415
@@ -84,6 +103,7 @@ def _run_cnn_encoding(cnn: object, image_dir: Path) -> tuple[dict, dict]:
     threshold = BLUR_CNN_SIMILARITY_EXACT
     with _silence_stdio():
         raw_encodings = cnn.encode_images(image_dir=str(image_dir), recursive=True)  # type: ignore[attr-defined]
+        raw_encodings = _exclude_pipeline_output(raw_encodings)
         duplicates_map = cnn.find_duplicates(  # type: ignore[attr-defined]
             encoding_map=raw_encodings,
             min_similarity_threshold=threshold,

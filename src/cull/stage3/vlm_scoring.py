@@ -88,16 +88,34 @@ def _run_attempt(call_in: VlmScoreCallInput) -> Stage3Result:
     return result
 
 
+def _run_attempt_safe(call_in: VlmScoreCallInput) -> Stage3Result:
+    """Run one attempt, converting a raw generate() failure into a parse-error result.
+
+    OOM, corrupt images, and backend failures raise from session.generate();
+    without this guard they propagate uncaught through future.result() and
+    abort the whole Stage 3 run instead of being retried like a parse error.
+    """
+    try:
+        return _run_attempt(call_in)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("VLM generate() failed for %s: %s", call_in.request.image_path, exc)
+        return Stage3Result(
+            photo_path=call_in.request.image_path,
+            model_used=call_in.request.model,
+            is_parse_error=True,
+        )
+
+
 def _retry_loop(call_in: VlmScoreCallInput) -> Stage3Result:
-    """Retry _run_attempt on parse errors with exponential backoff."""
+    """Retry _run_attempt_safe on parse errors or generate() failures with backoff."""
     delay = RETRY_BASE_DELAY
     for attempt in range(1, VLM_MAX_RETRIES + 1):
         logger.info("VLM attempt %d/%d", attempt, VLM_MAX_RETRIES)
-        result = _run_attempt(call_in)
+        result = _run_attempt_safe(call_in)
         if not result.is_parse_error:
             return result
         if attempt < VLM_MAX_RETRIES:
-            logger.warning("parse_error on attempt %d, retry in %.1fs", attempt, delay)
+            logger.warning("VLM attempt %d failed, retry in %.1fs", attempt, delay)
             time.sleep(delay)
             delay *= RETRY_BACKOFF_FACTOR
     logger.error("All %d VLM attempts failed for %s", VLM_MAX_RETRIES, call_in.request.image_path)

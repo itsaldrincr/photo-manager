@@ -10,8 +10,11 @@ import pytest
 
 from cull.stage1.burst import (
     BurstScoringInput,
+    _dhash_distance,
+    _mtime_as_datetime,
     cluster_by_time,
     confirm_burst_visually,
+    read_timestamps,
     select_burst_winner,
 )
 
@@ -153,3 +156,64 @@ def test_select_burst_winner_zero_scores_picks_first() -> None:
     winner, losers = select_burst_winner(scoring_input)
     assert winner in {PHOTO_A, PHOTO_B}
     assert len(losers) == 1
+
+
+# ---------------------------------------------------------------------------
+# B5 regression: a file deleted/unreadable between scan and burst pass must
+# not abort Stage 1 — it should be dropped from burst consideration and logged.
+# ---------------------------------------------------------------------------
+
+
+def test_mtime_as_datetime_missing_file_returns_none(tmp_path: Path) -> None:
+    """_mtime_as_datetime returns None instead of raising when the file is gone."""
+    missing = tmp_path / "deleted.jpg"
+    assert _mtime_as_datetime(missing) is None
+
+
+def test_read_timestamps_survives_deleted_file(tmp_path: Path) -> None:
+    """read_timestamps does not raise when a photo disappears before the EXIF/mtime read."""
+    present = tmp_path / "present.jpg"
+    present.write_bytes(b"fake-jpeg")
+    missing = tmp_path / "deleted.jpg"
+
+    result = read_timestamps([present, missing])
+
+    paths = [p for p, _dt in result]
+    assert present in paths
+    assert missing in paths
+    missing_dt = dict(result)[missing]
+    assert missing_dt is None
+
+
+def test_dhash_distance_missing_file_returns_none(tmp_path: Path) -> None:
+    """_dhash_distance returns None instead of raising when a file is unreadable."""
+    good = tmp_path / "good.jpg"
+    good.write_bytes(b"fake-jpeg")
+    missing = tmp_path / "deleted.jpg"
+
+    assert _dhash_distance(good, missing) is None
+    assert _dhash_distance(missing, good) is None
+
+
+def test_confirm_burst_visually_drops_unreadable_photo(tmp_path: Path) -> None:
+    """A photo whose hash cannot be computed is excluded, not fatal to the whole pass."""
+    good_a = tmp_path / "good_a.jpg"
+    good_b = tmp_path / "good_b.jpg"
+    bad = tmp_path / "deleted.jpg"
+    good_a.write_bytes(b"fake-jpeg")
+    good_b.write_bytes(b"fake-jpeg")
+
+    call_log: list[tuple[Path, Path]] = []
+
+    def mock_distance(path_a: Path, path_b: Path) -> int | None:
+        call_log.append((path_a, path_b))
+        if path_a == bad or path_b == bad:
+            return None
+        return 3
+
+    with patch("cull.stage1.burst._dhash_distance", side_effect=mock_distance):
+        result = confirm_burst_visually([good_a, bad, good_b])
+
+    assert len(result) == 1
+    assert bad not in result[0]
+    assert good_a in result[0] and good_b in result[0]

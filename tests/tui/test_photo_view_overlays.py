@@ -3,13 +3,18 @@
 from __future__ import annotations
 
 from io import BytesIO
-from unittest.mock import patch
 
 import pytest
 from PIL import Image
 
 from cull.models import CropProposal, GeometryScore
-from cull.tui.photo_view import RenderRequest, ViewportSize, _draw_crop_box, _draw_horizon, _render_with_overlays
+from cull.tui.photo_view import (
+    RenderRequest,
+    ViewportSize,
+    _draw_crop_box,
+    _draw_horizon,
+    _prepare_png_for_request,
+)
 
 IMAGE_WIDTH: int = 200
 IMAGE_HEIGHT: int = 150
@@ -53,7 +58,7 @@ def _make_crop() -> CropProposal:
 
 
 def _render_and_open(geometry: GeometryScore | None, crop: CropProposal | None) -> Image.Image:
-    """Build a RenderRequest, run _render_with_overlays, return decoded PIL image."""
+    """Build a RenderRequest, run the real overlay pipeline, return decoded PIL image."""
     png_bytes = _make_black_png()
     viewport = ViewportSize(cols=VIEWPORT_COLS, rows=VIEWPORT_ROWS)
     request = RenderRequest(
@@ -63,25 +68,8 @@ def _render_and_open(geometry: GeometryScore | None, crop: CropProposal | None) 
         geometry=geometry,
         crop=crop,
     )
-    with patch("cull.tui.photo_view._encode_chunks", return_value=""):
-        result_bytes = _render_raw(request)
+    result_bytes = _prepare_png_for_request(request)
     return Image.open(BytesIO(result_bytes))
-
-
-def _render_raw(request: RenderRequest) -> bytes:
-    """Resize, overlay, and return PNG bytes without Kitty encoding."""
-    from PIL import Image as _Image
-
-    img = _Image.open(BytesIO(request.image_bytes))
-    from cull.tui.photo_view import CELL_PX_HEIGHT, CELL_PX_WIDTH, _apply_overlays
-
-    target_w = request.viewport.cols * CELL_PX_WIDTH
-    target_h = request.viewport.rows * CELL_PX_HEIGHT
-    img.thumbnail((target_w, target_h))
-    _apply_overlays(img, request)
-    buf = BytesIO()
-    img.save(buf, format="PNG")
-    return buf.getvalue()
 
 
 def test_horizon_overlay_draws_non_black_pixels() -> None:

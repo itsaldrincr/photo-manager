@@ -40,13 +40,25 @@ class SidecarWriteInput(BaseModel):
     config: CullConfig
 
 
+def resolve_current_source(decision: PhotoDecision) -> Path:
+    """Return the photo's current on-disk location, preferring a prior destination.
+
+    Shared by sidecar writing and router move execution so a re-classified
+    photo's sidecar always lands next to wherever the photo actually is,
+    not its stale original path.
+    """
+    if decision.destination is not None and decision.destination.exists():
+        return decision.destination
+    return decision.photo.path
+
+
 def write_for_decision(input: SidecarWriteInput) -> Path | None:
     """Write an XMP sidecar next to the source file; return its path or None."""
     if not input.config.is_sidecars:
         return None
     payload = _payload_from_decision(input.decision)
     tree = _build_xmp_tree(payload)
-    source = input.decision.photo.path
+    source = resolve_current_source(input.decision)
     out_path = source.with_suffix(".xmp")
     out_path.write_bytes(etree.tostring(tree, xml_declaration=True, encoding="UTF-8", pretty_print=True))
     logger.info("wrote sidecar %s", out_path)

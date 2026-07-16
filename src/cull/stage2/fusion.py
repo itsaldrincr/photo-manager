@@ -10,6 +10,7 @@ from pydantic import BaseModel
 
 from cull.config import (
     GENRE_WEIGHTS,
+    IQA_EXPOSURE_DEFAULT,
     PRESET_QUALITY_POLICY,
     ROUTING_AMBIGUOUS_MIN,
     ROUTING_KEEPER_MIN,
@@ -169,16 +170,23 @@ def _weighted_sum(scores: IqaScores, weights: dict[str, float]) -> float:
     return round(raw, COMPOSITE_PRECISION)
 
 
-def _build_stage2_result(scores: IqaScores, composite: float, preset: str) -> Stage2Result:
+class _Stage2BuildInput(BaseModel):
+    """Bundle for _build_stage2_result — final composite plus the preset it used."""
+
+    composite: float
+    preset: str
+
+
+def _build_stage2_result(scores: IqaScores, build_in: _Stage2BuildInput) -> Stage2Result:
     """Build the Stage 2 result model from fused scores and preset."""
     return Stage2Result(
         photo_path=scores.photo_path,
         topiq=scores.topiq,
         laion_aesthetic=scores.laion_aesthetic,
         clipiqa=scores.clipiqa,
-        composite=composite,
+        composite=build_in.composite,
         portrait=scores.portrait,
-        preset_used=preset,
+        preset_used=build_in.preset,
         composition=scores.composition_score,
         crop=scores.crop,
         taste=scores.taste_score,
@@ -201,7 +209,9 @@ def compute_composite(scores: IqaScores, config: CullConfig) -> FusionResult:
     logger.debug(
         "Composite for %s: %.4f (preset=%s)", scores.photo_path, composite, config.preset
     )
-    stage2 = _build_stage2_result(scores, composite, config.preset)
+    stage2 = _build_stage2_result(
+        scores, _Stage2BuildInput(composite=composite, preset=config.preset)
+    )
     return FusionResult(stage2=stage2, routing=_route(composite))
 
 
@@ -222,7 +232,7 @@ def _stage2_to_iqa(stage2: Stage2Result, reducer: ShootStatsScore) -> IqaScores:
         topiq=stage2.topiq,
         laion_aesthetic=stage2.laion_aesthetic,
         clipiqa=stage2.clipiqa,
-        exposure=stage2.composite,
+        exposure=IQA_EXPOSURE_DEFAULT,
         composition=stage2.composition.composite if stage2.composition else None,
         composition_score=stage2.composition,
         crop=stage2.crop,

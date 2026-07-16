@@ -1,43 +1,22 @@
-"""Tests that cull.stage2.aesthetic passes cache kwargs to head + processor loads."""
+"""Tests that cull.stage2.aesthetic resolves model weights from the cache root."""
 
 from __future__ import annotations
 
 import pytest
 
+from cull import clip_loader
+from cull.config import ModelCacheConfig
 from cull.stage2 import aesthetic
 
 
 @pytest.fixture(autouse=True)
 def _reset_aesthetic_singletons():
-    """Clear the aesthetic module head/processor caches before and after each test."""
+    """Clear the aesthetic head and shared CLIP singletons before and after each test."""
     aesthetic.unload_predictor()
+    clip_loader.unload()
     yield
     aesthetic.unload_predictor()
-
-
-class _HeadRecorder:
-    """Captures kwargs from AestheticsPredictorV2Linear.from_pretrained."""
-
-    def __init__(self) -> None:
-        self.kwargs: dict = {}
-        self.layers = _FakeLayers()
-
-    def __call__(self, model_id: str, **kwargs) -> "_HeadRecorder":
-        """Record kwargs and return self so .layers access works downstream."""
-        self.kwargs = kwargs
-        return self
-
-
-class _FakeLayers:
-    """Stand-in for torch.nn.Module with a .to(device) method."""
-
-    def to(self, device: str) -> "_FakeLayers":
-        """No-op device move for the head-extraction path."""
-        return self
-
-    def eval(self) -> "_FakeLayers":
-        """No-op eval switch for the head-extraction path."""
-        return self
+    clip_loader.unload()
 
 
 class _ProcessorRecorder:
@@ -52,47 +31,45 @@ class _ProcessorRecorder:
         return self
 
 
-def _install_head_stub(monkeypatch, recorder: _HeadRecorder) -> None:
-    """Monkeypatch AestheticsPredictorV2Linear.from_pretrained to the recorder."""
-    import aesthetics_predictor  # noqa: PLC0415
-
-    monkeypatch.setattr(
-        aesthetics_predictor.AestheticsPredictorV2Linear,
-        "from_pretrained",
-        classmethod(lambda cls, mid, **kw: recorder(mid, **kw)),
+def _make_fake_cache(tmp_path) -> ModelCacheConfig:
+    """Build a ModelCacheConfig rooted at a pytest tmp_path."""
+    return ModelCacheConfig(
+        root=tmp_path,
+        hf_home=tmp_path / "hf",
+        torch_home=tmp_path / "torch",
+        deepface_home=tmp_path / "deepface",
+        mediapipe_dir=tmp_path / "mediapipe",
     )
 
 
-def _install_processor_stub(monkeypatch, recorder: _ProcessorRecorder) -> None:
-    """Monkeypatch CLIPProcessor.from_pretrained to the recorder."""
+def test_aesthetic_head_locates_weights_under_cache_root(tmp_path, monkeypatch) -> None:
+    """_locate_head_weights must resolve the safetensors file under the configured cache root."""
+    fake_cache = _make_fake_cache(tmp_path)
+    monkeypatch.setattr(aesthetic, "_CACHE", fake_cache)
+    flat = aesthetic.AESTHETIC_MODEL_ID.replace("/", "--")
+    snapshot_dir = fake_cache.hf_home / "hub" / f"models--{flat}" / "snapshots" / "abc123"
+    snapshot_dir.mkdir(parents=True)
+    (snapshot_dir / aesthetic.AESTHETIC_HEAD_FILENAME).write_bytes(b"")
+
+    weight_path = aesthetic._locate_head_weights()
+
+    expected_cache = str(fake_cache.hf_home / "hub")
+    assert weight_path.startswith(expected_cache)
+
+
+def test_aesthetic_processor_passes_cache_kwargs(monkeypatch) -> None:
+    """clip_loader.get_clip_processor (used for aesthetic embeddings) forwards cache kwargs."""
+    proc_rec = _ProcessorRecorder()
     import transformers  # noqa: PLC0415
 
     monkeypatch.setattr(
         transformers.CLIPProcessor,
         "from_pretrained",
-        classmethod(lambda cls, mid, **kw: recorder(mid, **kw)),
+        classmethod(lambda cls, mid, **kw: proc_rec(mid, **kw)),
     )
 
+    clip_loader.get_clip_processor()
 
-def test_aesthetic_head_passes_cache_kwargs(monkeypatch) -> None:
-    """_extract_head must forward cache_dir + local_files_only=True to the linear head."""
-    head_rec = _HeadRecorder()
-    proc_rec = _ProcessorRecorder()
-    _install_head_stub(monkeypatch, head_rec)
-    _install_processor_stub(monkeypatch, proc_rec)
-    aesthetic._get_head("cpu")
-    expected_cache = str(aesthetic._CACHE.hf_home / "hub")
-    assert head_rec.kwargs.get("cache_dir") == expected_cache
-    assert head_rec.kwargs.get("local_files_only") is True
-
-
-def test_aesthetic_processor_passes_cache_kwargs(monkeypatch) -> None:
-    """_get_head must forward cache_dir + local_files_only=True to CLIPProcessor."""
-    head_rec = _HeadRecorder()
-    proc_rec = _ProcessorRecorder()
-    _install_head_stub(monkeypatch, head_rec)
-    _install_processor_stub(monkeypatch, proc_rec)
-    aesthetic._get_head("cpu")
-    expected_cache = str(aesthetic._CACHE.hf_home / "hub")
+    expected_cache = str(clip_loader._CACHE.hf_home / "hub")
     assert proc_rec.kwargs.get("cache_dir") == expected_cache
     assert proc_rec.kwargs.get("local_files_only") is True

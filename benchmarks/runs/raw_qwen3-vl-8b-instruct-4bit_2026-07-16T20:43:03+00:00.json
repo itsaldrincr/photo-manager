@@ -1,0 +1,287 @@
+{
+  "model_alias": "qwen3-vl-8b-instruct-4bit",
+  "verdicts": [
+    {
+      "name": "DSCF7611.JPG",
+      "is_keeper": true,
+      "confidence": 0.9,
+      "latency_seconds": 8.87875954102492,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF7656.JPG",
+      "is_keeper": false,
+      "confidence": 0.85,
+      "latency_seconds": 7.953183082980104,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF7672.JPG",
+      "is_keeper": false,
+      "confidence": 0.85,
+      "latency_seconds": 7.860881542030256,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF7901.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.493504457990639,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF7962.JPG",
+      "is_keeper": false,
+      "confidence": 0.85,
+      "latency_seconds": 8.117132999992464,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF7971.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 8.012068499985617,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF7979.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 7.560994875035249,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF8597.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 7.524909291008953,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF8621.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.488741790992208,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF8637.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 7.2897843749960884,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF8651.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.375861042004544,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF8664.JPG",
+      "is_keeper": true,
+      "confidence": 0.9,
+      "latency_seconds": 7.419629791984335,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF8867.JPG",
+      "is_keeper": true,
+      "confidence": 0.92,
+      "latency_seconds": 7.512857583002187,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF8876.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 7.604183291026857,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF8895.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 7.405272917007096,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF8917.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.414695999992546,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF8941.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 7.384427958982997,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF8957.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 7.646873167017475,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF8995.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.42658870795276,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9016.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.665776833018754,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9039.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.293026417028159,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9049.JPG",
+      "is_keeper": true,
+      "confidence": 0.9,
+      "latency_seconds": 7.375879250001162,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9066.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 7.409918625024147,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9095.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 7.627823624992743,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9110.JPG",
+      "is_keeper": false,
+      "confidence": 0.85,
+      "latency_seconds": 7.915066291985568,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9113.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.701545707997866,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9149.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 7.680567750008777,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9159.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.570265875023324,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9162.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.442276416986715,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9181.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.3726659580133855,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9206.JPG",
+      "is_keeper": false,
+      "confidence": 0.85,
+      "latency_seconds": 7.608500084024854,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9210.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.398840708017815,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9215.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.426823084009811,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9290.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.27710429194849,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9642.JPG",
+      "is_keeper": true,
+      "confidence": 0.9,
+      "latency_seconds": 7.460341291036457,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9844.JPG",
+      "is_keeper": true,
+      "confidence": 0.9,
+      "latency_seconds": 7.454757832980249,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9848.JPG",
+      "is_keeper": true,
+      "confidence": 0.92,
+      "latency_seconds": 7.190831291023642,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9851.JPG",
+      "is_keeper": true,
+      "confidence": 0.85,
+      "latency_seconds": 7.400844166986644,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9868.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 7.431729374977294,
+      "is_parse_error": false
+    },
+    {
+      "name": "DSCF9876.JPG",
+      "is_keeper": true,
+      "confidence": 0.87,
+      "latency_seconds": 7.34363395802211,
+      "is_parse_error": false
+    }
+  ],
+  "load_seconds": 6.47,
+  "peak_metal_gb": 7.29
+}

@@ -47,3 +47,6 @@ MEMORY.md
 # Model cache (user-local, not shipped)
 *.npy
 models/
+
+# Benchmark eval photos (rebuild from NAS; labels + all run logs ARE committed)
+benchmarks/eval_set/

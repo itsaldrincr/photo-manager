@@ -20,7 +20,7 @@ from cull.models import (
     Stage1Result,
     Stage2Result,
 )
-from cull.sidecar import SidecarWriteInput, write_for_decision
+from cull.sidecar import SidecarWriteInput, resolve_current_source, write_for_decision
 
 
 def _make_decision(source: Path, decision: DecisionLabel = "keeper") -> PhotoDecision:
@@ -97,3 +97,49 @@ def test_write_for_decision_skip_when_disabled(tmp_path: Path) -> None:
 
     assert result is None
     assert not source.with_suffix(".xmp").exists()
+
+
+# ---------------------------------------------------------------------------
+# B6 regression: sidecar must follow a re-classified photo's current
+# location, not its stale original (pre-move) path.
+# ---------------------------------------------------------------------------
+
+
+def test_resolve_current_source_prefers_existing_destination(tmp_path: Path) -> None:
+    """resolve_current_source returns decision.destination when it exists on disk."""
+    original = tmp_path / "IMG_0003.jpg"
+    moved = tmp_path / "_review" / "_uncertain" / "IMG_0003.jpg"
+    moved.parent.mkdir(parents=True)
+    moved.write_bytes(b"fake-jpeg")
+    decision = _make_decision(original)
+    decision.destination = moved
+
+    assert resolve_current_source(decision) == moved
+
+
+def test_resolve_current_source_falls_back_when_destination_missing(tmp_path: Path) -> None:
+    """resolve_current_source falls back to photo.path when destination doesn't exist."""
+    original = tmp_path / "IMG_0004.jpg"
+    original.write_bytes(b"fake-jpeg")
+    decision = _make_decision(original)
+    decision.destination = tmp_path / "_review" / "_uncertain" / "IMG_0004.jpg"
+
+    assert resolve_current_source(decision) == original
+
+
+def test_write_for_decision_writes_next_to_current_destination(tmp_path: Path) -> None:
+    """A re-classified photo's sidecar lands next to its current location, not the stale path."""
+    original = tmp_path / "IMG_0005.jpg"
+    moved = tmp_path / "_review" / "_uncertain" / "IMG_0005.jpg"
+    moved.parent.mkdir(parents=True)
+    moved.write_bytes(b"fake-jpeg")
+    decision = _make_decision(original)
+    decision.destination = moved
+    config = CullConfig(is_sidecars=True)
+    sidecar_input = SidecarWriteInput(decision=decision, config=config)
+
+    result = write_for_decision(sidecar_input)
+
+    assert result == moved.with_suffix(".xmp")
+    assert result.exists()
+    assert not original.with_suffix(".xmp").exists()

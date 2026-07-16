@@ -8,7 +8,7 @@ from pathlib import Path
 
 import exifread
 import imagehash
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from pydantic import BaseModel, Field
 
 from cull.config import (
@@ -67,16 +67,24 @@ def _read_exif_datetime(path: Path) -> datetime | None:
         return None
 
 
-def _mtime_as_datetime(path: Path) -> datetime:
-    """Return the file modification time as a datetime."""
-    return datetime.fromtimestamp(path.stat().st_mtime)
+def _mtime_as_datetime(path: Path) -> datetime | None:
+    """Return the file modification time as a datetime, or None if unreadable."""
+    try:
+        return datetime.fromtimestamp(path.stat().st_mtime)
+    except OSError:
+        logger.warning("Cannot stat %s for burst timestamp; dropping from burst pass", path)
+        return None
 
 
-def _dhash_distance(path_a: Path, path_b: Path) -> int:
-    """Return the Hamming distance between dHash values of two images."""
-    hash_a = imagehash.dhash(Image.open(path_a))
-    hash_b = imagehash.dhash(Image.open(path_b))
-    return hash_a - hash_b
+def _dhash_distance(path_a: Path, path_b: Path) -> int | None:
+    """Return the Hamming distance between dHash values, or None if either is unreadable."""
+    try:
+        hash_a = imagehash.dhash(Image.open(path_a))
+        hash_b = imagehash.dhash(Image.open(path_b))
+        return hash_a - hash_b
+    except (OSError, UnidentifiedImageError) as exc:
+        logger.warning("Cannot hash %s or %s for burst pass: %s", path_a, path_b, exc)
+        return None
 
 
 # ---------------------------------------------------------------------------
@@ -115,7 +123,14 @@ def cluster_by_time(timestamped: list[TimestampedPhoto], gap_seconds: float) -> 
 
 
 def confirm_burst_visually(group: list[Path]) -> list[list[Path]]:
-    """Split a temporal group into visually similar sub-groups using dHash."""
+    """Split a temporal group into visually similar sub-groups using dHash.
+
+    A photo that cannot be hashed (deleted/unreadable between scan and this
+    pass) never matches any sub-group representative — _dhash_distance
+    returns None for it instead of raising — so it either lands in its own
+    singleton group (dropped by the final length filter) or is simply
+    skipped when compared against a broken representative.
+    """
     if not group:
         return []
     confirmed: list[list[Path]] = [[group[0]]]
@@ -123,7 +138,7 @@ def confirm_burst_visually(group: list[Path]) -> list[list[Path]]:
         placed = False
         for sub_group in confirmed:
             dist = _dhash_distance(sub_group[0], path)
-            if dist <= BLUR_DHASH_HAMMING_MAX:
+            if dist is not None and dist <= BLUR_DHASH_HAMMING_MAX:
                 sub_group.append(path)
                 placed = True
                 break

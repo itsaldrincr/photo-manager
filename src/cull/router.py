@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 
 from cull.config import CullConfig
 from cull.models import PhotoDecision
-from cull.sidecar import SidecarWriteInput, write_for_decision
+from cull.sidecar import SidecarWriteInput, resolve_current_source, write_for_decision
 
 logger = logging.getLogger(__name__)
 
@@ -134,50 +134,57 @@ def _write_sidecar_if_enabled(decision: PhotoDecision, config: CullConfig) -> No
     write_for_decision(SidecarWriteInput(decision=decision, config=config))
 
 
-def _move_sidecar_alongside(source: Path, destination: Path) -> None:
-    """Detect a .xmp next to the source and move it next to the destination."""
+def _move_sidecar_alongside(source: Path, destination: Path) -> MoveEntry | None:
+    """Detect a .xmp next to source and move it next to destination; return its entry."""
     sidecar_src = source.with_suffix(SIDECAR_SUFFIX)
     if not sidecar_src.exists():
-        return
+        return None
     sidecar_dest = destination.with_suffix(SIDECAR_SUFFIX)
-    _move_file(sidecar_src, sidecar_dest)
+    return _move_file(sidecar_src, sidecar_dest)
 
 
-def _current_source(decision: PhotoDecision) -> Path:
-    """Return the photo's current on-disk source, preferring a prior destination."""
-    if decision.destination is not None and decision.destination.exists():
-        return decision.destination
-    return decision.photo.path
+def _move_photo_and_sidecar(decision: PhotoDecision, config: CullConfig) -> list[MoveEntry]:
+    """Route, move (or dry-run) a photo and its sidecar; return all resulting entries."""
+    destination = route_photo(decision, config)
+    source = resolve_current_source(decision)
+    _write_sidecar_if_enabled(decision, config)
+    if destination == source:
+        return []
+    if config.is_dry_run:
+        return [_record_dry_run(source, destination)]
+    entry = _move_file(source, destination)
+    sidecar_entry = _move_sidecar_alongside(source, destination)
+    if entry.is_success:
+        decision.destination = entry.destination
+    entries = [entry]
+    if sidecar_entry is not None:
+        entries.append(sidecar_entry)
+    return entries
 
 
 def process_single_move(decision: PhotoDecision, config: CullConfig) -> MoveEntry | None:
-    """Route and move (or dry-run) a single photo; return None when no move needed."""
-    destination = route_photo(decision, config)
-    source = _current_source(decision)
-    if destination == source:
-        _write_sidecar_if_enabled(decision, config)
-        return None
-    _write_sidecar_if_enabled(decision, config)
-    if config.is_dry_run:
-        return _record_dry_run(source, destination)
-    entry = _move_file(source, destination)
-    _move_sidecar_alongside(source, destination)
-    if entry.is_success:
-        decision.destination = entry.destination
-    return entry
+    """Route and move (or dry-run) a single photo; return its primary entry or None."""
+    entries = _move_photo_and_sidecar(decision, config)
+    return entries[0] if entries else None
+
+
+def _fold_entries_into_report(entries: list[MoveEntry], report: MoveReport) -> None:
+    """Append move entries to the report, updating moved/error counters."""
+    for entry in entries:
+        report.entries.append(entry)
+        if entry.is_success:
+            report.moved += 1
+        else:
+            report.errors += 1
 
 
 def execute_moves(decisions: list[PhotoDecision], config: CullConfig) -> MoveReport:
     """Execute file moves for all decisions, respecting dry_run."""
     report = MoveReport(total=len(decisions), is_dry_run=config.is_dry_run)
     for decision in decisions:
-        entry = process_single_move(decision, config)
-        if entry is None:
+        entries = _move_photo_and_sidecar(decision, config)
+        if not entries:
             report.skipped += 1
             continue
-        report.entries.append(entry)
-        if entry.is_success:
-            report.moved += 1
-        else:
-            report.errors += 1
+        _fold_entries_into_report(entries, report)
     return report

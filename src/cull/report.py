@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -31,6 +32,13 @@ def _serialise(session_result: SessionResult) -> str:
     return session_result.model_dump_json(indent=2)
 
 
+def _atomic_write_text(target: Path, content: str) -> None:
+    """Write content to target via a sibling temp file + atomic os.replace."""
+    tmp_path = target.with_name(target.name + ".tmp")
+    tmp_path.write_text(content, encoding="utf-8")
+    os.replace(tmp_path, target)
+
+
 def write_report(session_result: SessionResult, overwrite: bool = False) -> Path:
     """Write session_report.json to the source path.
 
@@ -42,6 +50,6 @@ def write_report(session_result: SessionResult, overwrite: bool = False) -> Path
     base_path = source_dir / REPORT_FILENAME
     target = base_path if overwrite else _unique_path(base_path)
     content = _serialise(session_result)
-    target.write_text(content, encoding="utf-8")
+    _atomic_write_text(target, content)
     logger.info("Report written to %s", target)
     return target
