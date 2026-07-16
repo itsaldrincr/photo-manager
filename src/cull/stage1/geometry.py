@@ -178,14 +178,19 @@ def _scores_from_groups(groups: _LineGroups) -> GeometryScore:
 # ---------------------------------------------------------------------------
 
 
+def assess_geometry_from_array(gray: np.ndarray, path: Path) -> GeometryResult:
+    """Detect tilt and vertical keystone via LSD + RANSAC on an already-decoded grayscale image."""
+    lines = _detect_lines(gray)
+    if lines.size == 0:
+        return GeometryResult(path=path, scores=_empty_scores())
+    groups = _group_lines(lines)
+    return GeometryResult(path=path, scores=_scores_from_groups(groups))
+
+
 def assess_geometry(image_path: Path) -> GeometryResult:
-    """Assess geometry: detect tilt and vertical keystone via LSD + RANSAC."""
+    """Assess geometry: detect tilt and vertical keystone (thin path wrapper)."""
     logger.debug("assess_geometry: %s", image_path)
     gray = _load_gray(image_path)
     if gray is None:
         return GeometryResult(path=image_path, scores=_empty_scores())
-    lines = _detect_lines(gray)
-    if lines.size == 0:
-        return GeometryResult(path=image_path, scores=_empty_scores())
-    groups = _group_lines(lines)
-    return GeometryResult(path=image_path, scores=_scores_from_groups(groups))
+    return assess_geometry_from_array(gray, image_path)

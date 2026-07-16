@@ -168,10 +168,8 @@ def _derive_flags(metrics: _ExposureMetrics) -> tuple[bool, bool, bool, bool]:
     return has_highlight_clip, has_shadow_clip, has_color_cast, has_low_dr
 
 
-def assess_exposure(image_path: Path) -> ExposureResult:
-    """Assess exposure quality for a single image."""
-    log.debug("Assessing exposure: %s", image_path)
-    image = _load_and_resize(image_path)
+def assess_exposure_from_array(image: np.ndarray) -> ExposureResult:
+    """Assess exposure quality for an already-decoded, resized BGR image."""
     lab_image = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
     luminance = lab_image[:, :, 0]
     clipping = compute_clipping(image)
@@ -185,3 +183,10 @@ def assess_exposure(image_path: Path) -> ExposureResult:
         color_cast=color_cast, has_highlight_clip=hi_clip, has_shadow_clip=sh_clip,
         has_color_cast=cast, has_low_dr=low_dr,
     )
+
+
+def assess_exposure(image_path: Path) -> ExposureResult:
+    """Assess exposure quality for a single image (thin path wrapper)."""
+    log.debug("Assessing exposure: %s", image_path)
+    image = _load_and_resize(image_path)
+    return assess_exposure_from_array(image)

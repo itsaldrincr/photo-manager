@@ -18,6 +18,7 @@ from cull.stage2.composition_batch import (
     _get_smartcrop_executor,
     _resolve_future,
     _score_and_dispatch,
+    _ScoreDispatchInput,
 )
 from cull.stage2.composition_crop import (
     SMARTCROP_DOWNSAMPLE_LONG_EDGE,
@@ -41,6 +42,7 @@ from cull.stage2.composition_topiq import (
     _TOPIQ_IAA_METRIC,
     _get_topiq_iaa_metric,
     _score_topiq_iaa,
+    score_topiq_iaa_batch,
     unload_topiq_iaa,
     warmup_topiq_iaa,
 )
@@ -59,6 +61,7 @@ __all__ = [
     "_get_topiq_iaa_metric",
     "_TOPIQ_IAA_METRIC",
     "_score_topiq_iaa",
+    "score_topiq_iaa_batch",
     "warmup_topiq_iaa",
     "unload_topiq_iaa",
     "_GeometryMetrics",
@@ -76,6 +79,7 @@ __all__ = [
     "_get_smartcrop_executor",
     "_resolve_future",
     "_score_and_dispatch",
+    "_ScoreDispatchInput",
     "SMARTCROP_DOWNSAMPLE_LONG_EDGE",
 ]
 
@@ -99,13 +103,12 @@ def score_one(score_input: CompositionInput) -> tuple[CompositionScore, CropProp
     return score, crop
 
 
-def _score_image(
-    image: Image.Image, saliency: SaliencyResult
+def _score_image_with_topiq(
+    item: CompositionInput, topiq_iaa: float
 ) -> CompositionScore:
-    """Run geometry + topiq scoring on an open image; return CompositionScore."""
-    width, height = image.size
-    metrics = _compute_geometry_metrics(saliency, (width, height))
-    topiq_iaa = _score_topiq_iaa(image)
+    """Run geometry scoring on one item using a precomputed topiq_iaa value."""
+    width, height = item.pil_1280.size
+    metrics = _compute_geometry_metrics(item.saliency_result, (width, height))
     composite = _composite_score(metrics, topiq_iaa)
     return CompositionScore(
         thirds_alignment=metrics.thirds_alignment,
@@ -116,18 +119,31 @@ def _score_image(
     )
 
 
+def _score_image(
+    image: Image.Image, saliency: SaliencyResult
+) -> CompositionScore:
+    """Run geometry + topiq scoring on a single open image; return CompositionScore."""
+    topiq_iaa = _score_topiq_iaa(image)
+    item = CompositionInput(pil_1280=image, saliency_result=saliency)
+    return _score_image_with_topiq(item, topiq_iaa)
+
+
 def score_batch(
     inputs: list[CompositionInput],
 ) -> list[tuple[CompositionScore, CropProposal | None]]:
     """Compute composition scores and crop proposals for a batch of images.
 
-    Smartcrop calls are dispatched to a ThreadPoolExecutor so they overlap any
-    GPU-bound work that runs in parallel. Photos with skip_crop=True bypass
-    the crop step entirely. All futures are awaited before returning.
+    topiq_iaa is scored once for the whole batch (one pyiqa forward pass)
+    instead of once per image. Smartcrop calls are dispatched to a
+    ThreadPoolExecutor so they overlap any GPU-bound work that runs in
+    parallel. Photos with skip_crop=True bypass the crop step entirely.
+    All futures are awaited before returning.
     """
+    topiq_scores = score_topiq_iaa_batch([item.pil_1280 for item in inputs])
     executor = _get_smartcrop_executor()
     pending: list[tuple[CompositionScore, Future[CropProposal | None] | None]] = []
-    for item in inputs:
-        score, crop_future = _score_and_dispatch(item, executor)
+    for item, topiq_iaa in zip(inputs, topiq_scores):
+        dispatch_in = _ScoreDispatchInput(item=item, topiq_iaa=topiq_iaa)
+        score, crop_future = _score_and_dispatch(dispatch_in, executor)
         pending.append((score, crop_future))
     return [(score, _resolve_future(fut)) for score, fut in pending]

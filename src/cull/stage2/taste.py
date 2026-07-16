@@ -28,12 +28,20 @@ class TasteFeatureVector:
 
 
 class TasteScoreInput(BaseModel):
-    """Public input bundle for taste scoring."""
+    """Public input bundle for taste scoring.
+
+    clip_embedding is optional: when the caller already has an L2-normalised
+    CLIP image embedding for this photo (e.g. from the shared Stage 2 CLIP
+    forward pass), passing it here skips a redundant single-image CLIP
+    forward. Standalone callers (CLI, search) that omit it fall back to
+    re-embedding via _embed_clip.
+    """
 
     model_config = {"arbitrary_types_allowed": True}
 
     image_path: Path
     scalar_features: np.ndarray
+    clip_embedding: np.ndarray | None = None
 
 
 class _TasteProfile(BaseModel):
@@ -100,9 +108,16 @@ def _embed_clip(image_path: Path) -> np.ndarray:
     return features.detach().cpu().numpy().reshape(-1)
 
 
+def _resolve_embedding(score_in: TasteScoreInput) -> np.ndarray:
+    """Return the precomputed CLIP embedding if provided, else re-embed from disk."""
+    if score_in.clip_embedding is not None:
+        return score_in.clip_embedding
+    return _embed_clip(score_in.image_path)
+
+
 def _build_feature_row(score_in: TasteScoreInput) -> np.ndarray:
     """Concatenate CLIP embedding + scalar features into a single 1-D row."""
-    embedding = _embed_clip(score_in.image_path)
+    embedding = _resolve_embedding(score_in)
     scalar = np.asarray(score_in.scalar_features, dtype=np.float32).reshape(-1)
     return np.concatenate([embedding.astype(np.float32), scalar], axis=0)
 

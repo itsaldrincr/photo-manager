@@ -15,6 +15,8 @@ from pathlib import Path
 import pytest
 
 import cull.config as _config
+from cull.config import CullConfig
+from cull.stage1.worker import Stage1WorkerResult
 from tests._mock_scorers import (
     mock_assess_blur,
     mock_assess_exposure,
@@ -83,16 +85,24 @@ def corpus_manifest(corpus_path: Path) -> dict:
         return json.load(fh)
 
 
+def _mock_assess_one(image_path: Path, config: CullConfig) -> Stage1WorkerResult:
+    """Build a Stage1WorkerResult from the four deterministic mocks (no real decode)."""
+    return Stage1WorkerResult(
+        image_path=image_path,
+        blur=mock_assess_blur(image_path, config),
+        exposure=mock_assess_exposure(image_path),
+        noise=mock_assess_noise(image_path),
+        geometry=mock_assess_geometry(image_path),
+    )
+
+
 def _patch_stage1_workers(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Patch Stage 1 assess functions in source and worker modules."""
+    """Patch Stage 1 assess functions in source modules and the worker's entry point."""
     monkeypatch.setattr("cull.stage1.blur.assess_blur", mock_assess_blur)
     monkeypatch.setattr("cull.stage1.exposure.assess_exposure", mock_assess_exposure)
     monkeypatch.setattr("cull.stage1.noise.assess_noise", mock_assess_noise)
     monkeypatch.setattr("cull.stage1.geometry.assess_geometry", mock_assess_geometry)
-    monkeypatch.setattr("cull.stage1.worker.assess_blur", mock_assess_blur)
-    monkeypatch.setattr("cull.stage1.worker.assess_exposure", mock_assess_exposure)
-    monkeypatch.setattr("cull.stage1.worker.assess_noise", mock_assess_noise)
-    monkeypatch.setattr("cull.stage1.worker.assess_geometry", mock_assess_geometry)
+    monkeypatch.setattr("cull.stage1.worker.assess_one", _mock_assess_one)
 
 
 @pytest.fixture

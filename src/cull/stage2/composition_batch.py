@@ -3,14 +3,27 @@
 from __future__ import annotations
 
 from concurrent.futures import Future, ThreadPoolExecutor
-from typing import TYPE_CHECKING
+from typing import Any
+
+from pydantic import BaseModel, ConfigDict
 
 from cull.models import CompositionScore, CropProposal
 
-if TYPE_CHECKING:
-    from cull.stage2.composition import CompositionInput
-
 SMARTCROP_THREAD_WORKERS: int = 4
+
+
+class _ScoreDispatchInput(BaseModel):
+    """Bundle of one composition item plus its precomputed topiq_iaa score.
+
+    item is typed Any (rather than CompositionInput) to avoid a circular
+    import — composition.py imports from this module.
+    """
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    item: Any
+    topiq_iaa: float
+
 
 _SMARTCROP_EXECUTOR: ThreadPoolExecutor | None = None
 
@@ -33,12 +46,13 @@ def _resolve_future(
 
 
 def _score_and_dispatch(
-    item: CompositionInput, executor: ThreadPoolExecutor
+    dispatch_in: _ScoreDispatchInput, executor: ThreadPoolExecutor
 ) -> tuple[CompositionScore, Future[CropProposal | None] | None]:
-    """Score one image synchronously; dispatch its crop call to the executor."""
+    """Score one image using its precomputed topiq_iaa; dispatch its crop call."""
     from cull.stage2 import composition  # noqa: PLC0415 — lazy monkeypatch seam
 
-    score = composition._score_image(item.pil_1280, item.saliency_result)
+    item = dispatch_in.item
+    score = composition._score_image_with_topiq(item, dispatch_in.topiq_iaa)
     if item.skip_crop:
         return score, None
     crop_future = executor.submit(

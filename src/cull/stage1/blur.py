@@ -252,14 +252,29 @@ def _build_scores(metrics: _MetricPair, image: np.ndarray) -> tuple[BlurScores, 
     return scores, decision.is_blurry
 
 
-def assess_blur(image_path: Path, config: object) -> BlurResult:
-    """Load image, resize, run three-tier blur assessment, return BlurResult."""
-    logger.debug("assess_blur: %s", image_path)
-    image = _load_and_resize(image_path)
+class _ArrayAssessInput(BaseModel):
+    """Bundle of a pre-decoded, resized image plus its originating path."""
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    image: np.ndarray
+    path: Path
+
+
+def assess_blur_from_array(assess_in: _ArrayAssessInput, config: object) -> BlurResult:
+    """Run three-tier blur assessment on an already-decoded, resized image."""
+    image = assess_in.image
     gray = _to_gray(image)
     metrics = _MetricPair(
         tenengrad=compute_tenengrad(gray),
         fft_ratio=compute_fft_ratio(gray),
     )
     scores, is_blurry = _build_scores(metrics, image)
-    return BlurResult(path=image_path, scores=scores, is_blurry=is_blurry)
+    return BlurResult(path=assess_in.path, scores=scores, is_blurry=is_blurry)
+
+
+def assess_blur(image_path: Path, config: object) -> BlurResult:
+    """Load image, resize, run three-tier blur assessment (thin path wrapper)."""
+    logger.debug("assess_blur: %s", image_path)
+    image = _load_and_resize(image_path)
+    return assess_blur_from_array(_ArrayAssessInput(image=image, path=image_path), config)

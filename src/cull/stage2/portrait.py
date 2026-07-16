@@ -87,11 +87,10 @@ class _FaceContext:
 
 @dataclass(frozen=True)
 class _AssemblyInput:
-    """Groups FaceContext, total face count, and source path for assembly."""
+    """Groups FaceContext and total face count for result assembly."""
 
     ctx: _FaceContext
     face_count: int
-    image_path: Path
 
 
 # ---------------------------------------------------------------------------
@@ -198,7 +197,7 @@ def _assemble_result(assembly: _AssemblyInput) -> PortraitResult:
     occlusion = detect_occlusion(ctx.landmarks)
     sharp_l = _crop_sharpness(ctx, _LEFT_EYE_INDICES)
     sharp_r = _crop_sharpness(ctx, _RIGHT_EYE_INDICES)
-    emotion = detect_expression(assembly.image_path)
+    emotion = detect_expression_from_array(ctx.image)
     return PortraitResult(
         face_count=assembly.face_count,
         face_bbox=_face_bbox_from_landmarks(ctx),
@@ -266,6 +265,24 @@ def detect_occlusion(landmarks: list[Any]) -> float:
     return visible / TOTAL_LANDMARK_COUNT
 
 
+def _dominant_emotion(result: object) -> str:
+    """Extract the dominant_emotion field from a DeepFace.analyze() result."""
+    emotions = result[0] if isinstance(result, list) else result
+    return str(emotions.get("dominant_emotion", ""))
+
+
+def detect_expression_from_array(image: np.ndarray) -> str:
+    """Return dominant emotion for an already-decoded image; log errors, return empty."""
+    try:
+        from deepface import DeepFace  # type: ignore[import]  # noqa: PLC0415
+
+        result = DeepFace.analyze(image, actions=["emotion"], enforce_detection=False)
+        return _dominant_emotion(result)
+    except Exception as exc:
+        log.warning("DeepFace emotion detection failed: %s", exc)
+        return ""
+
+
 def detect_expression(image_path: Path) -> str:
     """Return dominant emotion string via DeepFace; log errors, return empty."""
     try:
@@ -274,24 +291,38 @@ def detect_expression(image_path: Path) -> str:
         result = DeepFace.analyze(
             str(image_path), actions=["emotion"], enforce_detection=False
         )
-        emotions = result[0] if isinstance(result, list) else result
-        return str(emotions.get("dominant_emotion", ""))
+        return _dominant_emotion(result)
     except Exception as exc:
         log.warning("DeepFace emotion detection failed: %s", exc)
         return ""
 
 
+def assess_portrait_from_array(image: np.ndarray, config: CullConfig) -> PortraitResult:
+    """Detect faces and return full PortraitResult for an already-decoded image.
+
+    Resolution note: the caller must pass a FULL-RESOLUTION decode (not the
+    downscaled pil_1280 used elsewhere in Stage 2). Eye-crop Tenengrad
+    sharpness is resolution-sensitive, and the historical cv2.imread-based
+    path always ran on the original file resolution — downscaling here
+    would silently shift the eye-sharpness scale and any calibrated
+    thresholds built against it.
+    """
+    if not config.is_portrait:
+        return PortraitResult(face_count=0)
+    faces = detect_faces(image)
+    if not faces:
+        return PortraitResult(face_count=0)
+    ctx = _FaceContext(image=image, landmarks=faces[0])
+    assembly = _AssemblyInput(ctx=ctx, face_count=len(faces))
+    return _assemble_result(assembly)
+
+
 def assess_portrait(image_path: Path, config: CullConfig) -> PortraitResult:
-    """Load image, detect faces, and return full PortraitResult."""
+    """Load image at full resolution and return full PortraitResult (thin path wrapper)."""
     if not config.is_portrait:
         return PortraitResult(face_count=0)
     image = cv2.imread(str(image_path))
     if image is None:
         log.error("Could not read image: %s", image_path)
         return PortraitResult(face_count=0)
-    faces = detect_faces(image)
-    if not faces:
-        return PortraitResult(face_count=0)
-    ctx = _FaceContext(image=image, landmarks=faces[0])
-    assembly = _AssemblyInput(ctx=ctx, face_count=len(faces), image_path=image_path)
-    return _assemble_result(assembly)
+    return assess_portrait_from_array(image, config)

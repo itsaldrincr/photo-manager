@@ -71,16 +71,26 @@ def estimate_noise(gray: np.ndarray) -> float:
     return min(raw / _NOISE_SCALE, 1.0)
 
 
-def assess_noise(image_path: Path) -> NoiseResult:
-    """Assess noise level for a single image."""
-    log.debug("Assessing noise: %s", image_path)
-    img = cv2.imread(str(image_path))
-    if img is None:
-        raise ValueError(f"Cannot read image: {image_path}")
-    img = _resize_to_long_edge(img)
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+def assess_noise_from_array(image: np.ndarray) -> NoiseResult:
+    """Assess noise level for an already-decoded, resized BGR image."""
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     noise_score = estimate_noise(gray)
     return NoiseResult(
         noise_score=noise_score,
         is_noisy=noise_score >= NOISE_SCORE_REJECT_MIN,
     )
+
+
+def _load_and_resize(image_path: Path) -> np.ndarray:
+    """Load image from disk and resize to long-edge limit."""
+    img = cv2.imread(str(image_path))
+    if img is None:
+        raise ValueError(f"Cannot read image: {image_path}")
+    return _resize_to_long_edge(img)
+
+
+def assess_noise(image_path: Path) -> NoiseResult:
+    """Assess noise level for a single image (thin path wrapper)."""
+    log.debug("Assessing noise: %s", image_path)
+    image = _load_and_resize(image_path)
+    return assess_noise_from_array(image)

@@ -7,6 +7,7 @@ import logging
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+import cv2
 import numpy as np
 import torch
 from PIL import Image
@@ -43,7 +44,7 @@ from cull.stage2.iqa import (
     score_topiq_batch,
     select_device,
 )
-from cull.stage2.portrait import PortraitResult, assess_portrait
+from cull.stage2.portrait import PortraitResult, assess_portrait_from_array
 from cull.stage2.subject_blur import SubjectBlurInput, score_one as score_subject_blur
 from cull.stage2.taste import TasteScoreInput
 from cull.models import PortraitScores
@@ -338,12 +339,31 @@ def _apply_composition_to_scores(apply_in: _CompositionApplyInput) -> None:
         target.crop = crop
 
 
+def _decode_full_res_bgr(path: Path) -> np.ndarray | None:
+    """Decode a photo at full resolution as BGR for portrait analysis."""
+    image = cv2.imread(str(path))
+    if image is None:
+        logger.warning("Could not read image for portrait analysis: %s", path)
+    return image
+
+
 def _portrait_or_none(path: Path, config: CullConfig) -> PortraitResult | None:
-    """Run assess_portrait and swallow failures, returning None when disabled."""
+    """Decode full-res once and run portrait assessment; swallow failures.
+
+    assess_portrait_from_array shares this single decode with DeepFace
+    (via portrait._assemble_result), eliminating the redundant cv2.imread
+    inside assess_portrait plus DeepFace's own path-based decode — 2 of
+    the 3 historical decodes for a portrait-mode photo. Full resolution is
+    preserved (not the downscaled pil_1280) because eye-sharpness scoring
+    is resolution-sensitive; see assess_portrait_from_array's docstring.
+    """
     if not config.is_portrait:
         return None
+    image = _decode_full_res_bgr(path)
+    if image is None:
+        return None
     try:
-        return assess_portrait(path, config)
+        return assess_portrait_from_array(image, config)
     except Exception as exc:  # noqa: BLE001
         logger.warning("Portrait assessment failed for %s: %s", path, exc)
         return None
@@ -428,13 +448,38 @@ def _build_taste_scalar_row(iqa: IqaScores) -> np.ndarray:
     )
 
 
-def _apply_taste_to_scores(iqa_list: list[IqaScores], paths: list[Path]) -> None:
-    """Score taste for each photo in the chunk and patch iqa_list in-place."""
+class _TasteApplyInput(BaseModel):
+    """Bundle for applying taste scores to an IQA batch."""
+
+    model_config = {"arbitrary_types_allowed": True}
+
+    iqa_list: list[IqaScores]
+    paths: list[Path]
+    batch_ctx: Any
+
+
+def _embedding_lookup(batch_ctx: "_BatchCtx") -> dict[str, np.ndarray]:
+    """Build a path-keyed lookup of already-computed CLIP embeddings from batch_ctx."""
+    return {str(path): row for path, row in batch_ctx.embedding_rows}
+
+
+def _apply_taste_to_scores(apply_in: _TasteApplyInput) -> None:
+    """Score taste for each photo in the chunk and patch iqa_list in-place.
+
+    Reuses the L2-normalised CLIP image_embeds already computed by the
+    shared Stage 2 CLIP forward pass (batch_ctx.embedding_rows) instead of
+    re-embedding each photo — mirrors _apply_precomputed_aesthetic.
+    """
+    embeddings = _embedding_lookup(apply_in.batch_ctx)
     taste_inputs = [
-        TasteScoreInput(image_path=path, scalar_features=_build_taste_scalar_row(iqa))
-        for path, iqa in zip(paths, iqa_list)
+        TasteScoreInput(
+            image_path=path,
+            scalar_features=_build_taste_scalar_row(iqa),
+            clip_embedding=embeddings.get(str(path)),
+        )
+        for path, iqa in zip(apply_in.paths, apply_in.iqa_list)
     ]
     taste_results = taste_module.score_batch(taste_inputs)
-    for iqa, taste_result in zip(iqa_list, taste_results):
+    for iqa, taste_result in zip(apply_in.iqa_list, taste_results):
         iqa.taste = taste_result.probability
         iqa.taste_score = taste_result

@@ -65,6 +65,7 @@ if TYPE_CHECKING:
 from cull._pipeline.stage2_scoring import (
     _CompositionApplyInput,
     _SubjectBlurApplyInput,
+    _TasteApplyInput,
     _apply_composition_to_scores,
     _apply_exposure_to_scores,
     _apply_geometry_to_scores,
@@ -358,7 +359,9 @@ def _process_batch(
     _apply_composition_to_scores(
         _CompositionApplyInput(iqa_list=iqa_list, paths=chunk_in.paths, ctx=batch_ctx)
     )
-    _apply_taste_to_scores(iqa_list, chunk_in.paths)
+    _apply_taste_to_scores(
+        _TasteApplyInput(iqa_list=iqa_list, paths=chunk_in.paths, batch_ctx=batch_ctx)
+    )
     sb_ctx = _SubjectBlurCtx(paths=chunk_in.paths, config=batch_ctx.loop_in.config)
     portraits = _apply_subject_blur_to_scores(
         _SubjectBlurApplyInput(iqa_list=iqa_list, ctx=sb_ctx, batch_ctx=batch_ctx)
