@@ -1,378 +1,377 @@
 {
   "corpus_name": "easter_vigil",
-  "corpus_fingerprint": "8b1d126df9a80ad50f029e7f102508d32bd1409a863cdacbbf77ebc7f302b2b3",
   "corpus_path": "/Users/alrelador/Documents/Claude/photo-manager-fixtures/easter_vigil",
-  "baseline_created_at": null,
+  "baseline_created_at": "2026-04-26T12:38:40.922484+00:00",
   "pipeline_git_sha": null,
   "scores": {
     "DSCF0006.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4519001642862956
     },
     "DSCF0020.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4701940218607585
     },
     "DSCF0038.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.47179815504286027
     },
     "DSCF0039.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4689605500962999
     },
     "DSCF0041.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.46336121029324
     },
     "DSCF0048.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4746989674038357
     },
     "DSCF0088.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.44497431649102104
     },
     "DSCF0094.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.40627596113416886
     },
     "DSCF0139.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.44900597466362846
     },
     "DSCF0151.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4852232403225369
     },
     "DSCF0153.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5145369635687934
     },
     "DSCF0170.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4840487374199761
     },
     "DSCF0172.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.48167525397406685
     },
     "DSCF0192.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5153387917412652
     },
     "DSCF0198.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5246968269348145
     },
     "DSCF0213.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5122915903727213
     },
     "DSCF0335.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.39963409635755753
     },
     "DSCF0336.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.450042724609375
     },
     "DSCF0345.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.501036008199056
     },
     "DSCF0348.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.47886069615681964
     },
     "DSCF0349.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.47813664542304146
     },
     "DSCF0351.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4879402584499783
     },
     "DSCF0355.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4807612631056044
     },
     "DSCF0362.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5080336464775933
     },
     "DSCF0365.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.45493682225545246
     },
     "DSCF0366.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4627910719977485
     },
     "DSCF0384.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4674443138970269
     },
     "DSCF0390.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5065442191229926
     },
     "DSCF0426.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.48312854766845703
     },
     "DSCF0433.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5075953801472982
     },
     "DSCF0436.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.49453745947943795
     },
     "DSCF0443.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4386150042215983
     },
     "DSCF0454.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5085588031344943
     },
     "DSCF0461.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4905591540866428
     },
     "DSCF0472.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4875282711452908
     },
     "DSCF0488.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5006412929958768
     },
     "DSCF0490.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5062704086303711
     },
     "DSCF0498.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.525893423292372
     },
     "DSCF0506.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5426929261949327
     },
     "DSCF0523.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4798106617397732
     },
     "DSCF0529.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.48692814509073895
     },
     "DSCF0532.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5048667589823405
     },
     "DSCF0547.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.3767493036058214
     },
     "DSCF0553.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.42788124084472656
     },
     "DSCF0556.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.45324934853447807
     },
     "DSCF0582.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4642281002468533
     },
     "DSCF0590.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.46574968761867946
     },
     "DSCF0593.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.46847205691867405
     },
     "DSCF1123.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.44067589441935223
     },
     "DSCF1133.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4340728653801812
     },
     "DSCF1142.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4727243317498101
     },
     "DSCF1157.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.479184627532959
     },
     "DSCF1161.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4405947791205512
     },
     "DSCF1172.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4700731701321072
     },
     "DSCF1175.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4397354655795627
     },
     "DSCF1179.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.42656999164157444
     },
     "DSCF1195.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4187263382805718
     },
     "DSCF1232.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4609336853027344
     },
     "DSCF1234.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4476557837592231
     },
     "DSCF1243.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.43288930257161456
     },
     "DSCF1273.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4599901835123698
     },
     "DSCF1280.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4977484809027778
     },
     "DSCF1288.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4965118302239312
     },
     "DSCF1289.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.49504004584418404
     },
     "DSCF1290.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5001456472608778
     },
     "DSCF1298.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5155254999796549
     },
     "DSCF1302.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5048478974236382
     },
     "DSCF1307.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5241993268330892
     },
     "DSCF1317.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.49936866760253906
     },
     "DSCF1321.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.525092601776123
     },
     "DSCF1330.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4409809642367893
     },
     "DSCF1340.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4773854679531521
     },
     "DSCF1342.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.49026309119330513
     },
     "DSCF1343.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5058809386359321
     },
     "DSCF1349.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4677170117696126
     },
     "DSCF1350.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4730818006727431
     },
     "DSCF1357.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4669026798672146
     },
     "DSCF1364.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.45412778854370117
     },
     "DSCF1391.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4751647843254937
     },
     "DSCF1397.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4472329881456163
     },
     "DSCF1400.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.44642183515760636
     },
     "DSCF1405.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4536102082994249
     },
     "DSCF1426.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.48677020602756077
     },
     "DSCF1441.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4578655030992296
     },
     "DSCF1451.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.431684758928087
     },
     "DSCF1468.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.483340581258138
     },
     "DSCF1472.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4926900863647461
     },
     "DSCF1489.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4848602082994249
     },
     "DSCF1512.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5076593822903104
     },
     "DSCF1513.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.48710595236884224
     },
     "DSCF1515.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5077294243706597
     },
     "DSCF1521.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5101499557495117
     },
     "DSCF1525.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.46902603573269314
     },
     "DSCF1527.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5266190105014377
     },
     "DSCF1529.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4987141291300456
     },
     "DSCF1532.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.47438812255859375
     },
     "DSCF1553.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4860645400153266
     },
     "DSCF1562.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4776477813720703
     },
     "DSCF1572.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.48410940170288086
     },
     "DSCF1591.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5245712068345811
     },
     "burst_DSCF0011.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4231550958421495
     },
     "burst_DSCF0012.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4177083969116211
     },
     "burst_DSCF0013.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4483049710591634
     },
     "burst_DSCF0014.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.45964394675360787
     },
     "burst_DSCF0015.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.45576678382025826
     },
     "synth_blur_01_DSCF1405.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.42172543207804364
     },
     "synth_blur_02_DSCF0198.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4989745881822374
     },
     "synth_blur_03_DSCF0039.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.46305810080634224
     },
     "synth_dupe_01_DSCF0390.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5190178553263346
     },
     "synth_dupe_02_DSCF0433.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.504293335808648
     },
     "synth_dupe_03_DSCF1290.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5061499277750651
     },
     "synth_motion_01_DSCF1529.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.5009860992431641
     },
     "synth_motion_02_DSCF0488.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.49158811569213867
     },
     "synth_motion_03_DSCF0443.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.43799559275309247
     },
     "synth_noisy_01_DSCF1350.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.47643809848361546
     },
     "synth_noisy_02_DSCF1175.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.47426912519666886
     },
     "synth_noisy_03_DSCF0041.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.45036082797580296
     },
     "synth_overexp_01_DSCF0426.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.43195629119873047
     },
     "synth_overexp_02_DSCF0336.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.3896150588989258
     },
     "synth_overexp_03_DSCF0192.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4102160665724013
     },
     "synth_underexp_01_DSCF1472.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.4581645329793294
     },
     "synth_underexp_02_DSCF1321.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.47995037502712673
     },
     "synth_underexp_03_DSCF0170.JPG": {
-      "aesthetic": null
+      "aesthetic": 0.44085894690619576
     }
   }
 }

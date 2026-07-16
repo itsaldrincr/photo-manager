@@ -37,6 +37,10 @@ OVERRIDE_ORIGIN_AUTO: str = "auto_accept"
 logger = logging.getLogger(__name__)
 
 STATE_FILENAME: str = ".cull_tui_state.json"
+SAVE_IN_PROGRESS_MESSAGE: str = "Saving review changes..."
+SAVE_COMPLETE_MESSAGE: str = "Save complete. Exiting..."
+SAVE_FAILED_PREFIX: str = "Save failed: "
+SAVE_COMPLETE_DELAY_SECONDS: float = 0.25
 QUEUE_UNCERTAIN: int = 0
 QUEUE_REJECTED: int = 1
 QUEUE_DUPLICATES: int = 2
@@ -235,6 +239,8 @@ class CullApp(App):
         self._queue_index: int = QUEUE_UNCERTAIN
         self._photo_index: int = 0
         self._queue_indices: list[int] = []
+        self._save_in_progress: bool = False
+        self._status_message: str | None = None
         self._normalize_decision_destinations()
         self._restore_state()
 
@@ -358,8 +364,29 @@ class CullApp(App):
 
     def _show_empty_queue(self) -> None:
         """Display empty queue message."""
+        self._update_info_bar(None)
+
+    def _update_info_bar(self, decision: PhotoDecision | None) -> None:
+        """Render the info bar, preferring any active status message."""
         info_bar = self.query_one("#info-bar", Static)
-        info_bar.update("Queue is empty")
+        if self._status_message is not None:
+            info_bar.update(self._status_message)
+            return
+        if decision is None:
+            info_bar.update("Queue is empty")
+            return
+        counts = {
+            QUEUE_LABELS[qi]: len(_filter_queue(self._session.decisions, QUEUE_LABELS[qi]))
+            for qi in QUEUE_CYCLE_ORDER
+        }
+        ctx = InfoBarContext(
+            decision=decision,
+            position=self._photo_index,
+            total=len(self._queue_indices),
+            queue_label=QUEUE_LABELS[self._queue_index],
+            queue_counts=counts,
+        )
+        info_bar.update(_build_info_text(ctx))
 
     def _resolve_decision_path(self, decision: PhotoDecision) -> Path:
         """Return the current on-disk path for a decision, routing through moves."""
@@ -416,19 +443,7 @@ class CullApp(App):
 
     def _show_info(self, decision: PhotoDecision) -> None:
         """Update the info bar with current photo details + queue navigation hints."""
-        info_bar = self.query_one("#info-bar", Static)
-        counts = {
-            QUEUE_LABELS[qi]: len(_filter_queue(self._session.decisions, QUEUE_LABELS[qi]))
-            for qi in QUEUE_CYCLE_ORDER
-        }
-        ctx = InfoBarContext(
-            decision=decision,
-            position=self._photo_index,
-            total=len(self._queue_indices),
-            queue_label=QUEUE_LABELS[self._queue_index],
-            queue_counts=counts,
-        )
-        info_bar.update(_build_info_text(ctx))
+        self._update_info_bar(decision)
         score_panel = self.query_one(ScorePanel)
         score_panel.show_scores(decision)
 
@@ -592,14 +607,33 @@ class CullApp(App):
                     break
 
     def action_save_quit(self) -> None:
-        """Save all pending moves, write report, and exit."""
-        execute_moves(self._session.decisions, self._config)
-        self._session.summary = _build_summary(self._session.decisions)
-        write_report(self._session, overwrite=True)
-        state_path = _state_path(self._session)
-        if state_path.exists():
-            state_path.unlink()
-        self.exit()
+        """Show a save banner, then persist moves/report after the next refresh."""
+        if self._save_in_progress:
+            return
+        self._save_in_progress = True
+        self._status_message = SAVE_IN_PROGRESS_MESSAGE
+        self._update_info_bar(self._current_decision())
+        self.call_after_refresh(self._commit_save_and_exit)
+
+    def _commit_save_and_exit(self) -> None:
+        """Persist pending review changes after the save banner has painted."""
+        try:
+            execute_moves(self._session.decisions, self._config)
+            self._session.summary = _build_summary(self._session.decisions)
+            write_report(self._session, overwrite=True)
+            state_path = _state_path(self._session)
+            if state_path.exists():
+                state_path.unlink()
+        except OSError as exc:
+            self._save_in_progress = False
+            self._status_message = f"{SAVE_FAILED_PREFIX}{exc}"
+            self._update_info_bar(self._current_decision())
+            self.log.warning("review save failed: %s", exc)
+            return
+        self._status_message = SAVE_COMPLETE_MESSAGE
+        self._update_info_bar(self._current_decision())
+        self.log.info("review save complete")
+        self.set_timer(SAVE_COMPLETE_DELAY_SECONDS, self.exit)
 
     def action_quit_no_save(self) -> None:
         """Quit without saving (should prompt for confirmation)."""

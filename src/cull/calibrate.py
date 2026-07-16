@@ -17,6 +17,8 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
+from cull.calibrate_progress import CalibrationProgress, PhaseStart
+
 logger = logging.getLogger(__name__)
 
 MANIFEST_FILENAME: str = "manifest.json"
@@ -24,6 +26,8 @@ BASELINE_DIR_PARTS: tuple[str, str] = ("tests", "fixtures")
 P1_BASELINE_KIND: str = "p1"
 P4LITE_BASELINE_KIND: str = "p4lite"
 JSON_INDENT: int = 2
+P1_PHASE_LABEL: str = "Stage 2 batch scoring (TOPIQ + CLIP-IQA + LAION)"
+P4LITE_PHASE_LABEL: str = "Aesthetic per-photo (LAION shared-CLIP)"
 
 
 class CalibrationRequest(BaseModel):
@@ -111,9 +115,35 @@ def _score_one_aesthetic(path: Path) -> float:
     return score_aesthetic_batch([pil_image])[0]
 
 
-def _score_p4lite(photo_paths: list[Path]) -> dict[str, dict[str, float]]:
-    """Score photos via score_aesthetic_batch and return {filename: {aesthetic}} map."""
-    return {p.name: {"aesthetic": _score_one_aesthetic(p)} for p in photo_paths}
+def _score_p4lite(
+    photo_paths: list[Path], progress: CalibrationProgress,
+) -> dict[str, dict[str, float]]:
+    """Score photos one at a time, advancing the progress reporter per photo."""
+    scores: dict[str, dict[str, float]] = {}
+    for path in photo_paths:
+        scores[path.name] = {"aesthetic": _score_one_aesthetic(path)}
+        progress.advance()
+    return scores
+
+
+class _ScoredCorpus(BaseModel):
+    """Bundle of p1 and p4lite scoring outputs."""
+
+    p1: dict[str, dict[str, float]]
+    p4lite: dict[str, dict[str, float]]
+
+
+def _score_with_progress(
+    photo_paths: list[Path], progress: CalibrationProgress,
+) -> _ScoredCorpus:
+    """Run p1 (opaque) then p4lite (per-photo) scoring with progress events."""
+    progress.start_phase(PhaseStart(label=P1_PHASE_LABEL, total=None))
+    p1_scores = _score_p1(photo_paths)
+    progress.end_phase()
+    progress.start_phase(PhaseStart(label=P4LITE_PHASE_LABEL, total=len(photo_paths)))
+    p4lite_scores = _score_p4lite(photo_paths, progress)
+    progress.end_phase()
+    return _ScoredCorpus(p1=p1_scores, p4lite=p4lite_scores)
 
 
 class _BaselineWriteInput(BaseModel):
@@ -150,19 +180,20 @@ def _write_baseline(write_in: _BaselineWriteInput) -> Path:
     return out_path
 
 
-def run_calibration(request: CalibrationRequest) -> CalibrationResult:
-    """Bake p1 + p4lite baselines for the given corpus and return paths + counts."""
+def run_calibration(
+    request: CalibrationRequest, progress: CalibrationProgress,
+) -> CalibrationResult:
+    """Bake p1 + p4lite baselines for the corpus, emitting progress events."""
     start = time.monotonic()
     manifest_path = _validate_corpus(request.corpus_dir)
     photo_paths = _load_photo_paths(manifest_path)
     logger.info("Calibrating %d photos in %s", len(photo_paths), request.corpus_dir)
-    p1_scores = _score_p1(photo_paths)
-    p4lite_scores = _score_p4lite(photo_paths)
+    scored = _score_with_progress(photo_paths, progress)
     p1_path = _write_baseline(_BaselineWriteInput(
-        kind=P1_BASELINE_KIND, corpus_dir=request.corpus_dir, scores=p1_scores,
+        kind=P1_BASELINE_KIND, corpus_dir=request.corpus_dir, scores=scored.p1,
     ))
     p4lite_path = _write_baseline(_BaselineWriteInput(
-        kind=P4LITE_BASELINE_KIND, corpus_dir=request.corpus_dir, scores=p4lite_scores,
+        kind=P4LITE_BASELINE_KIND, corpus_dir=request.corpus_dir, scores=scored.p4lite,
     ))
     return CalibrationResult(
         corpus_name=request.corpus_dir.name, photo_count=len(photo_paths),

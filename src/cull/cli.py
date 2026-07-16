@@ -1,7 +1,8 @@
-"""Slim hub for the ``cull`` CLI — re-exports every helper from sibling
-``cli_*`` modules, keeps the frozen Click decorator stack and ``main()``
-entry point, and owns ``_enforce_bootstrap_gate`` locally so tests that
-monkeypatch ``cli.require_bootstrap_valid`` intercept correctly.
+"""Slim hub for the ``cull`` CLI.
+
+Keeps the Click decorator stack and ``main()`` entry point lightweight by
+lazy-loading the heavy pipeline/review modules only when a command path
+actually needs them.
 """
 
 from __future__ import annotations
@@ -11,6 +12,7 @@ import os
 import sys
 import warnings
 from pathlib import Path
+from typing import Any
 
 os.environ["PYTHONWARNINGS"] = "ignore"
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
@@ -37,31 +39,37 @@ from cull.config import (  # noqa: E402
     CURATE_DEFAULT_TARGET, CURATE_VLM_TIEBREAK_THRESHOLD, CullConfig, VLM_DEFAULT_ALIAS,
 )
 from cull.model_cache import require_bootstrap_valid  # noqa: E402, F401
-from cull.pipeline import run_pipeline  # noqa: E402, F401
 from cull.cli_config import (  # noqa: E402, F401
     DEFAULT_BURST_GAP, DEFAULT_STAGES, DEFAULT_THRESHOLD, PRESET_CHOICES,
     _build_config, _build_stages,
 )
 from cull.cli_help import CullHelp, FAST_MODE_AVAILABLE  # noqa: E402, F401
-from cull.cli_review import _launch_review, _load_session_from_report  # noqa: E402, F401
 from cull.cli_bootstrap import (  # noqa: E402, F401
     SETUP_SUBCOMMAND_TOKEN, _is_setup_invocation, setup,
 )
-from cull.cli_results import (  # noqa: E402, F401
-    _execute_single_move, _launch_review_after, _move_files, _run_cull_app,
-    _show_dry_run, _show_results, _write_report,
-)
-from cull.cli_subcommands import (  # noqa: E402, F401
-    _dispatch_subcommand, _run_explain, _run_overrides_dump, _run_report_card,
-    _run_search_similar, _run_search_text,
-)
-from cull.cli_pipeline import (  # noqa: E402, F401
-    BYTES_PER_GB, PostPipelineInput, _compute_file_size_gb, _post_pipeline,
-    _require_source, _run_fast_dispatch, _run_with_dashboard,
-    _validate_curate_stages, _validate_fast_conflicts, _validate_subcommand_flags,
-)
 
 BOOTSTRAP_EXIT_CODE: int = 1
+
+
+def _get_cli_pipeline_module() -> Any:
+    """Return the cli_pipeline module on demand."""
+    from cull import cli_pipeline  # noqa: PLC0415
+
+    return cli_pipeline
+
+
+def _get_cli_review_module() -> Any:
+    """Return the cli_review module on demand."""
+    from cull import cli_review  # noqa: PLC0415
+
+    return cli_review
+
+
+def _get_cli_subcommands_module() -> Any:
+    """Return the cli_subcommands module on demand."""
+    from cull import cli_subcommands  # noqa: PLC0415
+
+    return cli_subcommands
 
 
 def _enforce_bootstrap_gate() -> None:
@@ -76,12 +84,87 @@ def _enforce_bootstrap_gate() -> None:
     sys.exit(BOOTSTRAP_EXIT_CODE)
 
 
+def _dispatch_subcommand(kwargs: dict) -> bool:
+    """Dispatch any subcommand flags via the lazy-loaded subcommand module."""
+    return _get_cli_subcommands_module()._dispatch_subcommand(kwargs)
+
+
+def _launch_review(source: Path, config: CullConfig) -> None:
+    """Launch review via the lazy-loaded review module."""
+    _get_cli_review_module()._launch_review(source, config)
+
+
+def _launch_review_session(session_path: Path, config: CullConfig) -> None:
+    """Launch an internal serialized review session via the lazy-loaded module."""
+    _get_cli_review_module()._launch_review_session(session_path, config)
+
+
+def _post_pipeline(post_in: object) -> None:
+    """Handle post-pipeline results via the lazy-loaded pipeline module."""
+    _get_cli_pipeline_module()._post_pipeline(post_in)
+
+
+def _require_source(kwargs: dict) -> None:
+    """Require a SOURCE path via the lazy-loaded pipeline module."""
+    _get_cli_pipeline_module()._require_source(kwargs)
+
+
+def _run_with_dashboard(config: CullConfig, source: Path) -> object:
+    """Run the full pipeline with dashboard/error handling."""
+    return _get_cli_pipeline_module()._run_with_dashboard(config, source)
+
+
+def _validate_curate_stages(config: CullConfig) -> None:
+    """Validate Stage 4 prerequisites via the lazy-loaded pipeline module."""
+    _get_cli_pipeline_module()._validate_curate_stages(config)
+
+
+def _validate_fast_conflicts(kwargs: dict) -> None:
+    """Validate fast-mode flag conflicts via the lazy-loaded pipeline module."""
+    _get_cli_pipeline_module()._validate_fast_conflicts(kwargs)
+
+
+def _validate_subcommand_flags(kwargs: dict) -> None:
+    """Validate subcommand flags via the lazy-loaded pipeline module."""
+    _get_cli_pipeline_module()._validate_subcommand_flags(kwargs)
+
+
+def _run_fast_dispatch(kwargs: dict) -> None:
+    """Run the fast pipeline without importing its stack during CLI import."""
+    if not FAST_MODE_AVAILABLE:
+        from cull.dashboard import show_general_error  # noqa: PLC0415
+
+        show_general_error(
+            "Fast mode unavailable",
+            "The cull_fast package is not installed. Install it to enable --fast.",
+        )
+        sys.exit(1)
+    from cull.pipeline import _PipelineRunInput  # noqa: PLC0415
+    from cull_fast.cli_hook import run_fast_pipeline  # noqa: PLC0415
+
+    pipe = _get_cli_pipeline_module()
+    _require_source(kwargs)
+    config = _build_config(kwargs)
+    source = Path(kwargs["source"])
+    run_in = _PipelineRunInput(
+        config=config, source_path=source, file_size_gb=pipe._compute_file_size_gb(source),
+    )
+    result = run_fast_pipeline(run_in)
+    _post_pipeline(pipe.PostPipelineInput(
+        result=result,
+        config=config,
+        report_flag=bool(kwargs["report"]),
+        review_after=bool(kwargs.get("review_after", False)),
+    ))
+
+
 def _run_standard_pipeline(kwargs: dict, config: CullConfig) -> None:
     """Run default pipeline path: source check, dashboard, post-processing."""
+    pipe = _get_cli_pipeline_module()
     _require_source(kwargs)
     _validate_curate_stages(config)
     result = _run_with_dashboard(config, Path(kwargs["source"]))
-    post_in = PostPipelineInput(
+    post_in = pipe.PostPipelineInput(
         result=result,
         config=config,
         report_flag=bool(kwargs["report"]),
@@ -116,6 +199,12 @@ def _run_standard_pipeline(kwargs: dict, config: CullConfig) -> None:
     is_flag=True,
     default=False,
     help="Run the pipeline, then launch the review TUI on the final session.",
+)
+@click.option(
+    "--review-session",
+    type=click.Path(exists=True, dir_okay=False, path_type=Path),
+    default=None,
+    hidden=True,
 )
 @click.option(
     "--report/--no-report",
@@ -222,6 +311,9 @@ def _run_standard_pipeline(kwargs: dict, config: CullConfig) -> None:
 def _cull_pipeline_command(**kwargs: object) -> None:
     """Run the photo cull pipeline on SOURCE directory."""
     logging.getLogger("cull").setLevel(logging.INFO)
+    if kwargs.get("review_session"):
+        _launch_review_session(kwargs["review_session"], _build_config(kwargs))
+        return
     if kwargs.get("vlms") or kwargs.get("bake_manifest"):
         _dispatch_subcommand(kwargs)
         return

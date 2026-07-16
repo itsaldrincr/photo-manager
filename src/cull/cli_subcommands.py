@@ -161,12 +161,16 @@ def _run_calibrate(kwargs: dict) -> None:
     from cull.calibrate import (  # noqa: PLC0415
         CalibrationError, CalibrationRequest, CalibrationResult, run_calibration,
     )
+    from cull.calibrate_progress import calibration_progress  # noqa: PLC0415
 
     console = Console()
     corpus_dir = Path(kwargs["calibrate"])
     _maybe_rebake_manifest(corpus_dir, bool(kwargs.get("no_rebake")))
     try:
-        result: CalibrationResult = run_calibration(CalibrationRequest(corpus_dir=corpus_dir))
+        with calibration_progress(use_rich=sys.stdout.isatty()) as progress:
+            result: CalibrationResult = run_calibration(
+                CalibrationRequest(corpus_dir=corpus_dir), progress,
+            )
     except CalibrationError as exc:
         show_general_error("Calibration failed", str(exc))
         sys.exit(1)

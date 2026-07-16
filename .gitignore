@@ -46,3 +46,4 @@ MEMORY.md
 
 # Model cache (user-local, not shipped)
 *.npy
+models/

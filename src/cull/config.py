@@ -20,7 +20,8 @@ STAGE_VLM: int = 3
 # ---------------------------------------------------------------------------
 
 VLM_DEFAULT_ALIAS: str = "qwen3-vl-4b"
-VLM_MODELS_ROOT: Path = Path(os.environ.get("PHOTO_MANAGER_VLM_ROOT", "/Applications/oMLX/models"))
+_REPO_MODELS_DIR: Path = Path(__file__).resolve().parents[2] / "models"
+VLM_MODELS_ROOT: Path = Path(os.environ.get("PHOTO_MANAGER_VLM_ROOT", str(_REPO_MODELS_DIR)))
 VLM_ALIASES: dict[str, str] = {
     "qwen3-vl-4b": "Qwen3-VL-4B-Instruct-MLX-8bit",
     "gemma-4-e2b": "gemma-4-e2b-it-4bit",

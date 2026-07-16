@@ -1,248 +1,248 @@
 {
   "corpus_name": "japan_day3",
   "corpus_path": "/Users/alrelador/Documents/Claude/photo-manager-fixtures/japan_day3",
-  "baseline_created_at": "2026-04-08T17:39:56.172977+00:00",
-  "pipeline_git_sha": null,
+  "baseline_created_at": "2026-04-26T12:04:09.446272+00:00",
+  "pipeline_git_sha": "f77831bf1c9d85e28aada68d4446bf856a70b247",
   "scores": {
     "DSCF7603.JPG": {
       "topiq": 0.5468654632568359,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.636881947517395
+      "laion_aesthetic": 0.43216604656643337,
+      "clipiqa": 0.6368814706802368
     },
     "DSCF7639.JPG": {
-      "topiq": 0.5698326230049133,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.6349853277206421
+      "topiq": 0.5698325634002686,
+      "laion_aesthetic": 0.42222346199883354,
+      "clipiqa": 0.6349872946739197
     },
     "DSCF7670.JPG": {
-      "topiq": 0.5267770290374756,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.5108751654624939
+      "topiq": 0.5267768502235413,
+      "laion_aesthetic": 0.40056159761216903,
+      "clipiqa": 0.5108715891838074
     },
     "DSCF7688.JPG": {
-      "topiq": 0.5109283328056335,
-      "laion_aesthetic": 0.10607608159383138,
-      "clipiqa": 0.5988426208496094
+      "topiq": 0.510928213596344,
+      "laion_aesthetic": 0.4519311587015788,
+      "clipiqa": 0.5988435745239258
     },
     "DSCF7689.JPG": {
-      "topiq": 0.5815255641937256,
-      "laion_aesthetic": 0.22207005818684897,
-      "clipiqa": 0.7283942699432373
+      "topiq": 0.5815255045890808,
+      "laion_aesthetic": 0.4573688507080078,
+      "clipiqa": 0.7283950448036194
     },
     "DSCF7690.JPG": {
-      "topiq": 0.5864525437355042,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.6189735531806946
+      "topiq": 0.5864524841308594,
+      "laion_aesthetic": 0.4397608968946669,
+      "clipiqa": 0.6189745664596558
     },
     "DSCF7691.JPG": {
       "topiq": 0.5532252192497253,
-      "laion_aesthetic": 0.4770376417371962,
-      "clipiqa": 0.5425028204917908
+      "laion_aesthetic": 0.47107791900634766,
+      "clipiqa": 0.5425030589103699
     },
     "DSCF7692.JPG": {
-      "topiq": 0.6652247309684753,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.7100614309310913
+      "topiq": 0.6652244925498962,
+      "laion_aesthetic": 0.41636154386732316,
+      "clipiqa": 0.7100628018379211
     },
     "DSCF7702.JPG": {
       "topiq": 0.4852736294269562,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.5931829214096069
+      "laion_aesthetic": 0.4411651823255751,
+      "clipiqa": 0.5931799411773682
     },
     "DSCF7726.JPG": {
-      "topiq": 0.6079142689704895,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.7012705206871033
+      "topiq": 0.6079142093658447,
+      "laion_aesthetic": 0.39984893798828125,
+      "clipiqa": 0.7012709379196167
     },
     "DSCF7754.JPG": {
       "topiq": 0.6961942315101624,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.7244942784309387
+      "laion_aesthetic": 0.4169076283772786,
+      "clipiqa": 0.7244963645935059
     },
     "DSCF7779.JPG": {
       "topiq": 0.50700443983078,
-      "laion_aesthetic": 0.12931129667494032,
-      "clipiqa": 0.5750376582145691
+      "laion_aesthetic": 0.45298322041829425,
+      "clipiqa": 0.57503342628479
     },
     "DSCF7805.JPG": {
       "topiq": 0.6719756126403809,
-      "laion_aesthetic": 0.5986190372043185,
-      "clipiqa": 0.7016586065292358
+      "laion_aesthetic": 0.4779046376546224,
+      "clipiqa": 0.7016583681106567
     },
     "DSCF7828.JPG": {
-      "topiq": 0.6250680088996887,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.6265870928764343
+      "topiq": 0.6250681281089783,
+      "laion_aesthetic": 0.4402498139275445,
+      "clipiqa": 0.6265848278999329
     },
     "DSCF7858.JPG": {
       "topiq": 0.6703054308891296,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.7087656855583191
+      "laion_aesthetic": 0.43751229180230033,
+      "clipiqa": 0.708763062953949
     },
     "DSCF7886.JPG": {
-      "topiq": 0.630541205406189,
-      "laion_aesthetic": 0.0,
+      "topiq": 0.6305411458015442,
+      "laion_aesthetic": 0.41564469867282444,
       "clipiqa": 0.6798829436302185
     },
     "DSCF7910.JPG": {
-      "topiq": 0.46505463123321533,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.5948408842086792
+      "topiq": 0.46505454182624817,
+      "laion_aesthetic": 0.4367293251885308,
+      "clipiqa": 0.5948420763015747
     },
     "DSCF7935.JPG": {
-      "topiq": 0.6954537034034729,
-      "laion_aesthetic": 0.3373422622680664,
-      "clipiqa": 0.7348671555519104
+      "topiq": 0.6954537630081177,
+      "laion_aesthetic": 0.4630129072401259,
+      "clipiqa": 0.7348703145980835
     },
     "DSCF7954.JPG": {
-      "topiq": 0.44741031527519226,
-      "laion_aesthetic": 0.4996157752143012,
-      "clipiqa": 0.4098644554615021
+      "topiq": 0.4474102556705475,
+      "laion_aesthetic": 0.4722267786661784,
+      "clipiqa": 0.40986284613609314
     },
     "DSCF7979.JPG": {
-      "topiq": 0.7130125164985657,
-      "laion_aesthetic": 0.9888977474636502,
-      "clipiqa": 0.689448356628418
+      "topiq": 0.7130124568939209,
+      "laion_aesthetic": 0.5002925131056044,
+      "clipiqa": 0.6894499659538269
     },
     "DSCF8007.JPG": {
-      "topiq": 0.7038352489471436,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.7168911099433899
+      "topiq": 0.7038351893424988,
+      "laion_aesthetic": 0.4224279721577962,
+      "clipiqa": 0.7168927192687988
     },
     "DSCF8039.JPG": {
-      "topiq": 0.43848496675491333,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.5480246543884277
+      "topiq": 0.4384849965572357,
+      "laion_aesthetic": 0.38208871417575413,
+      "clipiqa": 0.5480256080627441
     },
     "DSCF8066.JPG": {
       "topiq": 0.4038976728916168,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.5128083825111389
+      "laion_aesthetic": 0.38938119676378036,
+      "clipiqa": 0.5128098130226135
     },
     "DSCF8096.JPG": {
-      "topiq": 0.3452598452568054,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.47964170575141907
+      "topiq": 0.3452598750591278,
+      "laion_aesthetic": 0.3751037385728624,
+      "clipiqa": 0.47964173555374146
     },
     "DSCF8124.JPG": {
       "topiq": 0.5183098912239075,
-      "laion_aesthetic": 0.781561533610026,
-      "clipiqa": 0.6379861235618591
+      "laion_aesthetic": 0.48759905497233075,
+      "clipiqa": 0.6379819512367249
     },
     "DSCF8156.JPG": {
-      "topiq": 0.43847358226776123,
-      "laion_aesthetic": 0.0,
+      "topiq": 0.4384736120700836,
+      "laion_aesthetic": 0.43283796310424805,
       "clipiqa": 0.5176563858985901
     },
     "DSCF8179.JPG": {
-      "topiq": 0.5075346231460571,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.5072779059410095
+      "topiq": 0.5075346827507019,
+      "laion_aesthetic": 0.3978651894463433,
+      "clipiqa": 0.5072788596153259
     },
     "DSCF8206.JPG": {
       "topiq": 0.36369454860687256,
-      "laion_aesthetic": 0.2550666067335341,
-      "clipiqa": 0.45221391320228577
+      "laion_aesthetic": 0.4588245815700955,
+      "clipiqa": 0.45221322774887085
     },
     "DSCF8229.JPG": {
-      "topiq": 0.6592000722885132,
-      "laion_aesthetic": 1.0,
-      "clipiqa": 0.6638553738594055
+      "topiq": 0.659200131893158,
+      "laion_aesthetic": 0.5037058194478353,
+      "clipiqa": 0.663856029510498
     },
     "DSCF8255.JPG": {
-      "topiq": 0.4914218485355377,
-      "laion_aesthetic": 0.9950984319051107,
-      "clipiqa": 0.5940794348716736
+      "topiq": 0.49142178893089294,
+      "laion_aesthetic": 0.5009760856628418,
+      "clipiqa": 0.5940783023834229
     },
     "synth_blur_01_DSCF8007.JPG": {
-      "topiq": 0.20147904753684998,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.4524981379508972
+      "topiq": 0.20147907733917236,
+      "laion_aesthetic": 0.4019774860805935,
+      "clipiqa": 0.4524950683116913
     },
     "synth_blur_02_DSCF7688.JPG": {
-      "topiq": 0.21764016151428223,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.3984103202819824
+      "topiq": 0.21764013171195984,
+      "laion_aesthetic": 0.43156199985080296,
+      "clipiqa": 0.3984092175960541
     },
     "synth_blur_03_DSCF7603.JPG": {
       "topiq": 0.2549746334552765,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.4672315716743469
+      "laion_aesthetic": 0.41652552286783856,
+      "clipiqa": 0.4672291576862335
     },
     "synth_dupe_01_DSCF7910.JPG": {
       "topiq": 0.445363312959671,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.6053259372711182
+      "laion_aesthetic": 0.4261294470893012,
+      "clipiqa": 0.6053256988525391
     },
     "synth_dupe_02_DSCF8039.JPG": {
-      "topiq": 0.42805859446525574,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.5628498196601868
+      "topiq": 0.4280586838722229,
+      "laion_aesthetic": 0.40572675069173175,
+      "clipiqa": 0.5628500580787659
     },
     "synth_dupe_03_DSCF8255.JPG": {
-      "topiq": 0.4900777041912079,
-      "laion_aesthetic": 0.7924761242336698,
-      "clipiqa": 0.6129779815673828
+      "topiq": 0.4900774657726288,
+      "laion_aesthetic": 0.489530086517334,
+      "clipiqa": 0.6129768490791321
     },
     "synth_motion_01_DSCF8096.JPG": {
-      "topiq": 0.2601431608200073,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.3775455951690674
+      "topiq": 0.2601432204246521,
+      "laion_aesthetic": 0.3701331350538466,
+      "clipiqa": 0.3775438070297241
     },
     "synth_motion_02_DSCF7702.JPG": {
-      "topiq": 0.3326130211353302,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.5084694623947144
+      "topiq": 0.332613080739975,
+      "laion_aesthetic": 0.43808507919311523,
+      "clipiqa": 0.5084657073020935
     },
     "synth_motion_03_DSCF7692.JPG": {
-      "topiq": 0.4277380406856537,
-      "laion_aesthetic": 0.0,
+      "topiq": 0.4277380704879761,
+      "laion_aesthetic": 0.40567535824245876,
       "clipiqa": 0.542632520198822
     },
     "synth_noisy_01_DSCF7828.JPG": {
-      "topiq": 0.5923115611076355,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.5415965914726257
+      "topiq": 0.5923115015029907,
+      "laion_aesthetic": 0.40802203284369576,
+      "clipiqa": 0.5415935516357422
     },
     "synth_noisy_02_DSCF7639.JPG": {
-      "topiq": 0.3963208496570587,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.5003650188446045
+      "topiq": 0.3963209092617035,
+      "laion_aesthetic": 0.42200273937649196,
+      "clipiqa": 0.5003654956817627
     },
     "synth_noisy_03_DSCF8206.JPG": {
       "topiq": 0.24704700708389282,
-      "laion_aesthetic": 0.522334098815918,
-      "clipiqa": 0.38456785678863525
+      "laion_aesthetic": 0.4736618465847439,
+      "clipiqa": 0.3845672309398651
     },
     "synth_overexp_01_DSCF8124.JPG": {
-      "topiq": 0.45847490429878235,
-      "laion_aesthetic": 0.6067591773139106,
-      "clipiqa": 0.6101338863372803
+      "topiq": 0.4584750235080719,
+      "laion_aesthetic": 0.4780079523722331,
+      "clipiqa": 0.6101263761520386
     },
     "synth_overexp_02_DSCF7689.JPG": {
-      "topiq": 0.6191402077674866,
-      "laion_aesthetic": 0.1658537122938368,
-      "clipiqa": 0.7877183556556702
+      "topiq": 0.619140088558197,
+      "laion_aesthetic": 0.454300668504503,
+      "clipiqa": 0.7877199649810791
     },
     "synth_overexp_03_DSCF8229.JPG": {
-      "topiq": 0.5735005736351013,
-      "laion_aesthetic": 0.8980925877888998,
-      "clipiqa": 0.6441588997840881
+      "topiq": 0.5735006928443909,
+      "laion_aesthetic": 0.4938644833034939,
+      "clipiqa": 0.6441594958305359
     },
     "synth_underexp_01_DSCF7935.JPG": {
       "topiq": 0.3961504399776459,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.5275490283966064
+      "laion_aesthetic": 0.4387563069661458,
+      "clipiqa": 0.527549684047699
     },
     "synth_underexp_02_DSCF7670.JPG": {
-      "topiq": 0.28095415234565735,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.36292245984077454
+      "topiq": 0.2809542417526245,
+      "laion_aesthetic": 0.35322798622979057,
+      "clipiqa": 0.3629193902015686
     },
     "synth_underexp_03_DSCF7954.JPG": {
-      "topiq": 0.3130340874195099,
-      "laion_aesthetic": 0.0,
-      "clipiqa": 0.3592299818992615
+      "topiq": 0.3130341172218323,
+      "laion_aesthetic": 0.4041164186265733,
+      "clipiqa": 0.3592291474342346
     }
   }
 }
