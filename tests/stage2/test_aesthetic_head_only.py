@@ -51,7 +51,7 @@ def _install_fake_predictor(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_stored_predictor_is_head_only(monkeypatch: pytest.MonkeyPatch) -> None:
     """_get_head returns an AestheticHead with .layers and NO CLIP vision backbone."""
     _install_fake_predictor(monkeypatch)
-    head, _ = aesthetic._get_head("cpu")
+    head = aesthetic._get_head("cpu")
     assert hasattr(head, "layers")
     assert isinstance(head.layers, nn.Module)
     assert not hasattr(head, "vision_model")

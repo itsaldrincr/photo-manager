@@ -38,8 +38,9 @@ class VLMResolutionError(Exception):
     """Raised when an alias does not resolve to a discoverable VLM."""
 
 
-def discover_vlms(root: Path = VLM_MODELS_ROOT) -> VLMRegistry:
+def discover_vlms(root: Path | None = None) -> VLMRegistry:
     """Scan `root` and return a VLMRegistry of valid VLM dirs."""
+    root = root if root is not None else VLM_MODELS_ROOT
     if not root.is_dir():
         return VLMRegistry(entries=[], by_alias={})
     candidates = [d for d in root.iterdir() if d.is_dir() and _has_vision_config(d)]

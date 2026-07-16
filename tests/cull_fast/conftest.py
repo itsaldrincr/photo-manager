@@ -46,6 +46,14 @@ def _noop_musiq_metric(_name: str) -> object:
 
 @pytest.fixture
 def mock_musiq_scorers(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Patch cull_fast.musiq scorers with deterministic stubs."""
+    """Patch cull_fast.musiq scorers with deterministic stubs.
+
+    cull_fast.pipeline_fast imports score_musiq_batch via `from cull_fast.musiq
+    import score_musiq_batch`, binding its own module-local name — patching
+    only cull_fast.musiq.score_musiq_batch leaves that bound copy pointing at
+    the real (pyiqa-backed) implementation, so the pipeline_fast call site
+    must be patched too.
+    """
     monkeypatch.setattr("cull_fast.musiq.score_musiq_batch", _mock_score_musiq_batch)
     monkeypatch.setattr("cull_fast.musiq._get_musiq_metric", _noop_musiq_metric)
+    monkeypatch.setattr("cull_fast.pipeline_fast.score_musiq_batch", _mock_score_musiq_batch)

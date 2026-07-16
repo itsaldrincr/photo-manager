@@ -57,7 +57,9 @@ def test_power_of_two_bracket_round_count(
 
     result = run(inp, ctx)
 
-    assert len(result) == 1
+    # run() returns the full elimination order (winner first, then losers by
+    # round), not just the champion — see tournament.run()'s docstring.
+    assert len(result) == CANDIDATE_COUNT_POW2
     expected_rounds = int(math.log2(CANDIDATE_COUNT_POW2))
     assert expected_rounds == 3
 
@@ -100,4 +102,6 @@ def test_odd_candidate_count(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) ->
 
     result = run(inp, ctx)
 
-    assert len(result) == 1
+    # run() returns the full elimination order, so an odd bracket still
+    # yields every candidate — just resolved to a single champion at [0].
+    assert len(result) == CANDIDATE_COUNT_ODD

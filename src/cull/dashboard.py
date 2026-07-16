@@ -8,7 +8,7 @@ import warnings
 from pathlib import Path
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from rich.console import Console, Group
 from rich.live import Live
 from rich.text import Text
@@ -593,6 +593,51 @@ from cull.dashboard_render import (  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
+# Logging suppression snapshot/restore
+#
+# Dashboard.__enter__ silences every logger in the process so the Rich Live
+# display isn't corrupted by stray log lines. That mutation must be undone on
+# exit — otherwise every logger touched here (including ones created by other
+# code, or in-process test suites) stays permanently silenced for the rest of
+# the process, since logging.disable() and per-logger propagate/level/handler
+# state have no automatic expiry.
+# ---------------------------------------------------------------------------
+
+
+class _LoggerSnapshot(BaseModel):
+    """Captured handlers/propagate/level for one logger, for suppression restore."""
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+    handlers: list[Any]
+    propagate: bool
+    level: int
+
+
+def _capture_logger(log: logging.Logger) -> _LoggerSnapshot:
+    """Snapshot one logger's current handlers/propagate/level."""
+    return _LoggerSnapshot(
+        handlers=list(log.handlers), propagate=log.propagate, level=log.level
+    )
+
+
+def _snapshot_logger_state() -> dict[str, _LoggerSnapshot]:
+    """Capture root + every existing logger's handlers/propagate/level."""
+    state = {"": _capture_logger(logging.root)}
+    for name in list(logging.root.manager.loggerDict.keys()):
+        state[name] = _capture_logger(logging.getLogger(name))
+    return state
+
+
+def _restore_logger_state(state: dict[str, _LoggerSnapshot]) -> None:
+    """Restore handlers/propagate/level captured by `_snapshot_logger_state`."""
+    for name, snapshot in state.items():
+        log = logging.root if name == "" else logging.getLogger(name)
+        log.handlers = list(snapshot.handlers)
+        log.propagate = snapshot.propagate
+        log.setLevel(snapshot.level)
+
+
+# ---------------------------------------------------------------------------
 # Live Dashboard class
 # ---------------------------------------------------------------------------
 
@@ -702,6 +747,8 @@ class Dashboard:
         self._film: list[str] = []
         self._init_stage_states()
         self._active = _ActiveLine()
+        self._log_disable_level: int = logging.NOTSET
+        self._log_state: dict[str, _LoggerSnapshot] = {}
 
     def __enter__(self) -> Dashboard:
         """Suppress loggers, start live display with a pinned stdout file."""
@@ -724,7 +771,9 @@ class Dashboard:
 
 
     def _suppress_library_logs(self) -> None:
-        """Nuke every existing logger and disable all handlers globally."""
+        """Snapshot, then nuke every existing logger and disable all handlers globally."""
+        self._log_disable_level = logging.root.manager.disable
+        self._log_state = _snapshot_logger_state()
         logging.disable(logging.CRITICAL)
         # Remove ALL handlers from the root and every existing logger.
         for name in list(logging.root.manager.loggerDict.keys()):
@@ -736,11 +785,17 @@ class Dashboard:
         logging.root.addHandler(logging.NullHandler())
         warnings.filterwarnings("ignore")
 
+    def _restore_library_logs(self) -> None:
+        """Undo `_suppress_library_logs` so callers keep working after this dashboard exits."""
+        logging.disable(self._log_disable_level)
+        _restore_logger_state(self._log_state)
+
     def __exit__(self, *args: object) -> None:
-        """Stop the live display."""
+        """Stop the live display and restore logging state."""
         if self._live and not self._is_stopped:
             self._is_stopped = True
             self._live.__exit__(*args)
+        self._restore_library_logs()
 
     # --- Stage 1 (delegates to _Stage1Tracker) ---------------------------
 

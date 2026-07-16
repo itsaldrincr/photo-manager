@@ -2,7 +2,6 @@
 import json
 import tempfile
 from pathlib import Path
-from types import SimpleNamespace
 from typing import Callable
 
 # third-party
@@ -32,11 +31,31 @@ def _make_fake_entry() -> VLMEntry:
     return VLMEntry(alias=_DUMMY_MODEL, directory=_DUMMY_DIR, display_name="Test")
 
 
+class FakeVlmSession(VlmSession):
+    """VlmSession subclass whose generate() delegates to an injected callable.
+
+    Subclassing (rather than monkeypatching an instance attribute) is the
+    correct seam for a strict pydantic model: overriding a method on a
+    subclass works through normal attribute lookup, it does not require
+    instance __setattr__ to accept an undeclared field.
+    """
+
+    _generate_fn: Callable[[VlmGenerateInput], str] = staticmethod(lambda call_in: "")
+
+    def configure(self, generate_fn: Callable[[VlmGenerateInput], str]) -> None:
+        """Set the callable used to produce generate() responses."""
+        object.__setattr__(self, "_generate_fn", generate_fn)
+
+    def generate(self, call_in: VlmGenerateInput) -> str:
+        """Delegate to the configured generate function."""
+        return self._generate_fn(call_in)
+
+
 def _make_session(generate_fn: Callable[[VlmGenerateInput], str]) -> VlmSession:
     """Build a VlmSession stub with a patched generate method."""
     entry = _make_fake_entry()
-    session = VlmSession(entry=entry)
-    session.generate = generate_fn  # type: ignore[method-assign]
+    session = FakeVlmSession(entry=entry)
+    session.configure(generate_fn)
     return session
 
 

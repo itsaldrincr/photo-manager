@@ -63,11 +63,19 @@ def test_rescale_drops_clipiqa(preset: str) -> None:
 
 @pytest.mark.parametrize("preset", ALL_PRESETS)
 def test_rescale_zeroes_other_terms(preset: str) -> None:
-    """composition, taste, and tilt_penalty must all be zeroed."""
+    """composition and taste must be zeroed — fast mode has no CLIP/taste scorers."""
     weights = _rescaled(preset)
     assert weights["composition"] == 0.0
     assert weights["taste"] == 0.0
-    assert weights["tilt_penalty"] == 0.0
+
+
+@pytest.mark.parametrize("preset", ALL_PRESETS)
+def test_rescale_preserves_tilt_penalty(preset: str) -> None:
+    """tilt_penalty must survive rescaling — fast mode reuses Stage 1 geometry
+    (_apply_geometry_to_scores) unlike composition/taste, which it cannot compute."""
+    original = GENRE_WEIGHTS[preset]
+    weights = _rescaled(preset)
+    assert weights["tilt_penalty"] == original.get("tilt_penalty", 0.0)
 
 
 @pytest.mark.parametrize("preset", ALL_PRESETS)

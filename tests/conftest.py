@@ -54,26 +54,31 @@ def _resolve_corpus_path(request: pytest.FixtureRequest) -> Path:
     return _config.PERF_CORPUS_PATH
 
 
-def _assert_corpus_valid(corpus_path: Path) -> None:
-    """Fail loudly if corpus directory or manifest.json is missing."""
-    if not corpus_path.exists():
-        pytest.fail(
-            f"Corpus directory not found: {corpus_path}\n"
-            f"Pass --corpus <path> or set PERF_CORPUS_PATH env var."
-        )
-    manifest = corpus_path / MANIFEST_FILENAME
-    if not manifest.exists():
-        pytest.fail(
-            f"manifest.json not found in corpus: {corpus_path}\n"
-            f"The corpus directory must contain a manifest.json file."
-        )
+def _assert_corpus_valid(corpus_path: Path, is_explicit: bool) -> None:
+    """Skip when the corpus/manifest.json is missing; fail loudly if --corpus was explicit.
+
+    An unset --corpus falls back to cull.config.PERF_CORPUS_PATH, which is a
+    real photo corpus not shipped in this repo — that's an environment
+    limitation, not a test failure, so it's skipped with a clear reason. A
+    user-supplied --corpus that turns out invalid is still a real error.
+    """
+    if corpus_path.exists() and (corpus_path / MANIFEST_FILENAME).exists():
+        return
+    reason = (
+        f"Corpus not found or missing manifest.json: {corpus_path}. "
+        f"Pass --corpus <path> pointing at a valid fixture corpus to run this test."
+    )
+    if is_explicit:
+        pytest.fail(reason)
+    pytest.skip(reason)
 
 
 @pytest.fixture(scope="session")
 def corpus_path(request: pytest.FixtureRequest) -> Path:
     """Session-scoped corpus directory path, validated on access."""
     path = _resolve_corpus_path(request)
-    _assert_corpus_valid(path)
+    is_explicit = request.config.getoption("--corpus") is not None
+    _assert_corpus_valid(path, is_explicit)
     return path
 
 

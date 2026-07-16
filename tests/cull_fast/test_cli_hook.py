@@ -18,7 +18,7 @@ import pytest
 from click.testing import CliRunner
 from PIL import Image
 
-from cull.cli import main
+from cull.cli import _cull_pipeline_command
 from cull.pipeline import SessionResult
 
 GRADIENT_SIZE: int = 64
@@ -33,10 +33,18 @@ def _write_synthetic_jpeg(path: Path) -> None:
     img.save(path, "JPEG")
 
 
-def test_lazy_import() -> None:
-    """Importing cull.cli must NOT pull cull_fast into sys.modules."""
-    sys.modules.pop("cull_fast", None)
-    sys.modules.pop("cull_fast.cli_hook", None)
+def test_lazy_import(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Importing cull.cli must NOT pull cull_fast into sys.modules.
+
+    Uses monkeypatch.delitem (not a raw sys.modules.pop) so these entries
+    are restored after the test — a bare pop leaves cull_fast's
+    already-imported submodules (musiq, ...) orphaned from any later fresh
+    reimport of the parent package, which silently breaks unrelated tests'
+    `monkeypatch.setattr("cull_fast.musiq...")` calls for the rest of the
+    session.
+    """
+    monkeypatch.delitem(sys.modules, "cull_fast", raising=False)
+    monkeypatch.delitem(sys.modules, "cull_fast.cli_hook", raising=False)
     import cull.cli  # noqa: F401, PLC0415
 
     assert "cull_fast" not in sys.modules
@@ -47,16 +55,20 @@ def test_fast_search_conflict(tmp_path: Path) -> None:
     """`--fast --search` must exit non-zero with a conflict message."""
     runner = CliRunner()
     result = runner.invoke(
-        main, ["--fast", "--search", "test query", str(tmp_path)],
+        _cull_pipeline_command, ["--fast", "--search", "test query", str(tmp_path)],
     )
     assert result.exit_code != 0
     assert "cannot be combined" in result.output
 
 
+@pytest.fixture
+def fast_dispatch_mocks(mock_scorers: None, mock_musiq_scorers: None) -> None:
+    """Bundle the Stage1/2 and MusiQ scorer mocks for --fast dispatch tests."""
+
+
 def test_fast_dispatches_to_cli_hook(
     tmp_path: Path,
-    mock_scorers: None,
-    mock_musiq_scorers: None,
+    fast_dispatch_mocks: None,
 ) -> None:
     """`--fast SOURCE` must call run_fast_pipeline exactly once."""
     _write_synthetic_jpeg(tmp_path / "img_001.jpg")
@@ -64,6 +76,6 @@ def test_fast_dispatches_to_cli_hook(
     with patch("cull_fast.cli_hook.run_fast_pipeline", return_value=fake_result) as mock_run:
         with patch("cull.cli._post_pipeline") as mock_post:
             runner = CliRunner()
-            runner.invoke(main, ["--fast", str(tmp_path)])
+            runner.invoke(_cull_pipeline_command, ["--fast", str(tmp_path)])
     assert mock_run.call_count == 1
     assert mock_post.call_count == 1
