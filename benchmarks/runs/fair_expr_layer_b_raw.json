@@ -1,0 +1,40 @@
+[
+  {
+    "model": "deepface",
+    "n_faces": 50,
+    "flip_rate_by_perturbation": {
+      "downscale_64": 0.4,
+      "downscale_96": 0.26,
+      "brightness_0.6": 0.34,
+      "brightness_1.4": 0.18,
+      "blur_r2": 0.18
+    },
+    "valence_drift_by_perturbation": null,
+    "arousal_drift_by_perturbation": null
+  },
+  {
+    "model": "emotiefflib",
+    "n_faces": 50,
+    "flip_rate_by_perturbation": {
+      "downscale_64": 0.24,
+      "downscale_96": 0.24,
+      "brightness_0.6": 0.08,
+      "brightness_1.4": 0.1,
+      "blur_r2": 0.22
+    },
+    "valence_drift_by_perturbation": {
+      "downscale_64": 0.0837,
+      "downscale_96": 0.0631,
+      "brightness_0.6": 0.0451,
+      "brightness_1.4": 0.0411,
+      "blur_r2": 0.0544
+    },
+    "arousal_drift_by_perturbation": {
+      "downscale_64": 0.0726,
+      "downscale_96": 0.0402,
+      "brightness_0.6": 0.0356,
+      "brightness_1.4": 0.0308,
+      "blur_r2": 0.0555
+    }
+  }
+]

@@ -1,0 +1,334 @@
+{
+  "stage": "deepface",
+  "readings": [
+    {
+      "name": "121024_tim_sam_wedding - 10.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.36379008303629234,
+      "raw_label": "sad",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 17.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.10216020798543468,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 26.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.1577166669885628,
+      "raw_label": "angry",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 29.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.43499254097696394,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 30.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.7068725419812836,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 34.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.09472616697894409,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 36.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.17712362500606105,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 37.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.17650579201290384,
+      "raw_label": "angry",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 38.jpeg",
+      "has_face": true,
+      "latency_seconds": 1.8903820000123233,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 39.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.10843025002395734,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 42.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.10051537497201934,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 43.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.08644350001122802,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 47.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.5315183339989744,
+      "raw_label": "surprise",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 48.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.2835161249968223,
+      "raw_label": "fear",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 49.jpeg",
+      "has_face": true,
+      "latency_seconds": 1.3113960420014337,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 50.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.6856423329445533,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 51.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.17335383302997798,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 59.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.1664127089898102,
+      "raw_label": "angry",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 61.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.12499295797897503,
+      "raw_label": "fear",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 62.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.09294291702099144,
+      "raw_label": "fear",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 64.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.10147724999114871,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 65.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.07675404200563207,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 66.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.08733875001780689,
+      "raw_label": "sad",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 67.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.0917004169896245,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 69.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.6132128749741241,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 70.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.547306958003901,
+      "raw_label": "sad",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 72.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.11116100003710017,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 74.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.0953014999977313,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 75.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.16258920799009502,
+      "raw_label": "sad",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 76.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.22167091601295397,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 79.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.1823851250228472,
+      "raw_label": "fear",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 80.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.07502258400199935,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 81.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.07685708295321092,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 82.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.0944439169834368,
+      "raw_label": "sad",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 84.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.16076487500686198,
+      "raw_label": "surprise",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 85.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.1651027089683339,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "121024_tim_sam_wedding - 86.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.13627545797498897,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "141224_james_mary_wedding - 11.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.10415295901475474,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "141224_james_mary_wedding - 17.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.1492304999846965,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "141224_james_mary_wedding - 18.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.09102849999908358,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "141224_james_mary_wedding - 2.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.14149000000907108,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    }
+  ],
+  "bboxes": []
+}

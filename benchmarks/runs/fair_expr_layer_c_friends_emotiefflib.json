@@ -1,0 +1,182 @@
+{
+  "stage": "emotiefflib",
+  "readings": [
+    {
+      "name": "180124_joel_birthday_dinner - 14.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.01237933401716873,
+      "raw_label": "Happiness",
+      "valence": 0.8518003821372986,
+      "arousal": 0.2785205841064453
+    },
+    {
+      "name": "180124_joel_birthday_dinner - 19.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.011823000037111342,
+      "raw_label": "Happiness",
+      "valence": 0.6311079263687134,
+      "arousal": 0.22186872363090515
+    },
+    {
+      "name": "180124_joel_birthday_dinner - 3.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.011876250035129488,
+      "raw_label": "Happiness",
+      "valence": 0.5588781237602234,
+      "arousal": 0.19900274276733398
+    },
+    {
+      "name": "231024_alex_joel_dinner - 13.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010851417027879506,
+      "raw_label": "Happiness",
+      "valence": 0.37237057089805603,
+      "arousal": 0.07682926952838898
+    },
+    {
+      "name": "231024_alex_joel_dinner - 17.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010505582962650806,
+      "raw_label": "Happiness",
+      "valence": 0.8206088542938232,
+      "arousal": 0.08431342244148254
+    },
+    {
+      "name": "231024_alex_joel_dinner - 22.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010179541015531868,
+      "raw_label": "Neutral",
+      "valence": -0.01004716008901596,
+      "arousal": 0.0721883624792099
+    },
+    {
+      "name": "231024_alex_joel_dinner - 23.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010210790962446481,
+      "raw_label": "Disgust",
+      "valence": -0.00990264117717743,
+      "arousal": 0.046935904771089554
+    },
+    {
+      "name": "231024_alex_joel_dinner - 24.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010554666980169713,
+      "raw_label": "Neutral",
+      "valence": -0.28584980964660645,
+      "arousal": 0.0436844676733017
+    },
+    {
+      "name": "231024_alex_joel_dinner - 27.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010395249992143363,
+      "raw_label": "Happiness",
+      "valence": 0.6275537610054016,
+      "arousal": 0.1463712900876999
+    },
+    {
+      "name": "231024_alex_joel_dinner - 33.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.009922583005391061,
+      "raw_label": "Neutral",
+      "valence": -0.2509458661079407,
+      "arousal": 0.037253864109516144
+    },
+    {
+      "name": "231024_alex_joel_dinner - 34.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.01121691701700911,
+      "raw_label": "Neutral",
+      "valence": -0.002999216318130493,
+      "arousal": -0.028967205435037613
+    },
+    {
+      "name": "231024_alex_joel_dinner - 36.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010396208963356912,
+      "raw_label": "Neutral",
+      "valence": -0.08675018697977066,
+      "arousal": 0.02104313112795353
+    },
+    {
+      "name": "231024_alex_joel_dinner - 39.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010096499987412244,
+      "raw_label": "Happiness",
+      "valence": 0.3001202642917633,
+      "arousal": 0.2906762361526489
+    },
+    {
+      "name": "231024_alex_joel_dinner - 9.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010499041003640741,
+      "raw_label": "Neutral",
+      "valence": 0.06696588546037674,
+      "arousal": 0.041050467640161514
+    },
+    {
+      "name": "260225_zenas - 3.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.011601709004025906,
+      "raw_label": "Surprise",
+      "valence": -0.008189566433429718,
+      "arousal": 0.06199347600340843
+    },
+    {
+      "name": "260225_zenas - 4.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010248333041090518,
+      "raw_label": "Surprise",
+      "valence": -0.11764141172170639,
+      "arousal": -0.02104170247912407
+    },
+    {
+      "name": "260225_zenas - 5.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010143874969799072,
+      "raw_label": "Fear",
+      "valence": 0.13804012537002563,
+      "arousal": 0.2167808711528778
+    },
+    {
+      "name": "260225_zenas - 9.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.01020250003784895,
+      "raw_label": "Neutral",
+      "valence": -0.08830461651086807,
+      "arousal": -0.09901653230190277
+    },
+    {
+      "name": "281024_cal_lunch - 117.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.011215542035643011,
+      "raw_label": "Happiness",
+      "valence": 0.8193721771240234,
+      "arousal": 0.1912047415971756
+    },
+    {
+      "name": "281024_cal_lunch - 126.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010504125035367906,
+      "raw_label": "Happiness",
+      "valence": 0.8193578124046326,
+      "arousal": 0.20246505737304688
+    },
+    {
+      "name": "281024_cal_lunch - 127.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010538707952946424,
+      "raw_label": "Happiness",
+      "valence": 0.5647954940795898,
+      "arousal": -0.13980095088481903
+    },
+    {
+      "name": "281024_cal_lunch - 130.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.011616750038228929,
+      "raw_label": "Sadness",
+      "valence": -0.3623950183391571,
+      "arousal": -0.19947749376296997
+    }
+  ],
+  "bboxes": []
+}

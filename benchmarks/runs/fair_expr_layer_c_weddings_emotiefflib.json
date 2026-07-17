@@ -1,0 +1,334 @@
+{
+  "stage": "emotiefflib",
+  "readings": [
+    {
+      "name": "121024_tim_sam_wedding - 10.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.013309500005561858,
+      "raw_label": "Surprise",
+      "valence": -0.41518262028694153,
+      "arousal": 0.6269673109054565
+    },
+    {
+      "name": "121024_tim_sam_wedding - 17.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010960209008771926,
+      "raw_label": "Happiness",
+      "valence": 0.8512756824493408,
+      "arousal": 0.3572380542755127
+    },
+    {
+      "name": "121024_tim_sam_wedding - 26.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010797582974191755,
+      "raw_label": "Happiness",
+      "valence": 0.8192957043647766,
+      "arousal": 0.2055852860212326
+    },
+    {
+      "name": "121024_tim_sam_wedding - 29.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010719000012613833,
+      "raw_label": "Happiness",
+      "valence": 0.9094866514205933,
+      "arousal": 0.34943753480911255
+    },
+    {
+      "name": "121024_tim_sam_wedding - 30.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010922499990556389,
+      "raw_label": "Happiness",
+      "valence": 0.8024264574050903,
+      "arousal": 0.2899203896522522
+    },
+    {
+      "name": "121024_tim_sam_wedding - 34.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.01201820798451081,
+      "raw_label": "Happiness",
+      "valence": 0.8905236721038818,
+      "arousal": 0.23172026872634888
+    },
+    {
+      "name": "121024_tim_sam_wedding - 36.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.011629290995188057,
+      "raw_label": "Happiness",
+      "valence": 0.8290351629257202,
+      "arousal": 0.06996352970600128
+    },
+    {
+      "name": "121024_tim_sam_wedding - 37.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010814125009346753,
+      "raw_label": "Happiness",
+      "valence": 0.8943212032318115,
+      "arousal": 0.15742987394332886
+    },
+    {
+      "name": "121024_tim_sam_wedding - 38.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010587625030893832,
+      "raw_label": "Happiness",
+      "valence": 0.8038309216499329,
+      "arousal": 0.27245068550109863
+    },
+    {
+      "name": "121024_tim_sam_wedding - 39.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010520833020564169,
+      "raw_label": "Happiness",
+      "valence": 0.7291306853294373,
+      "arousal": -0.03151834383606911
+    },
+    {
+      "name": "121024_tim_sam_wedding - 42.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.01025087496964261,
+      "raw_label": "Contempt",
+      "valence": 0.22570666670799255,
+      "arousal": 0.12611772119998932
+    },
+    {
+      "name": "121024_tim_sam_wedding - 43.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.009908999956678599,
+      "raw_label": "Contempt",
+      "valence": 0.2720617353916168,
+      "arousal": 0.11551697552204132
+    },
+    {
+      "name": "121024_tim_sam_wedding - 47.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.01091499999165535,
+      "raw_label": "Surprise",
+      "valence": -0.05657992511987686,
+      "arousal": 0.6415823101997375
+    },
+    {
+      "name": "121024_tim_sam_wedding - 48.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010431208997033536,
+      "raw_label": "Fear",
+      "valence": -0.20637643337249756,
+      "arousal": 0.5938619375228882
+    },
+    {
+      "name": "121024_tim_sam_wedding - 49.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.01008112501585856,
+      "raw_label": "Happiness",
+      "valence": 0.8311583399772644,
+      "arousal": 0.1888420134782791
+    },
+    {
+      "name": "121024_tim_sam_wedding - 50.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010448542016092688,
+      "raw_label": "Happiness",
+      "valence": 0.8132485151290894,
+      "arousal": 0.2134341448545456
+    },
+    {
+      "name": "121024_tim_sam_wedding - 51.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.011748250050004572,
+      "raw_label": "Happiness",
+      "valence": 0.8070562481880188,
+      "arousal": -0.03703658655285835
+    },
+    {
+      "name": "121024_tim_sam_wedding - 59.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.011669833969790488,
+      "raw_label": "Neutral",
+      "valence": -0.22050780057907104,
+      "arousal": 0.0004933997988700867
+    },
+    {
+      "name": "121024_tim_sam_wedding - 61.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010156708012800664,
+      "raw_label": "Sadness",
+      "valence": -0.3686908185482025,
+      "arousal": 0.04373226314783096
+    },
+    {
+      "name": "121024_tim_sam_wedding - 62.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010063334018923342,
+      "raw_label": "Sadness",
+      "valence": -0.5833121538162231,
+      "arousal": 0.11390860378742218
+    },
+    {
+      "name": "121024_tim_sam_wedding - 64.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.01009854202857241,
+      "raw_label": "Happiness",
+      "valence": 0.33084630966186523,
+      "arousal": 0.27625587582588196
+    },
+    {
+      "name": "121024_tim_sam_wedding - 65.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010081333050038666,
+      "raw_label": "Happiness",
+      "valence": 0.04902878403663635,
+      "arousal": -0.17554251849651337
+    },
+    {
+      "name": "121024_tim_sam_wedding - 66.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010941625048872083,
+      "raw_label": "Surprise",
+      "valence": -0.2625817656517029,
+      "arousal": 0.16829216480255127
+    },
+    {
+      "name": "121024_tim_sam_wedding - 67.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010364332993049175,
+      "raw_label": "Neutral",
+      "valence": -0.14529162645339966,
+      "arousal": 0.17417378723621368
+    },
+    {
+      "name": "121024_tim_sam_wedding - 69.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010645915986970067,
+      "raw_label": "Surprise",
+      "valence": -0.15734457969665527,
+      "arousal": 1.0207034349441528
+    },
+    {
+      "name": "121024_tim_sam_wedding - 70.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010177250020205975,
+      "raw_label": "Surprise",
+      "valence": -0.2290797233581543,
+      "arousal": 0.857222318649292
+    },
+    {
+      "name": "121024_tim_sam_wedding - 72.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.009944624966010451,
+      "raw_label": "Happiness",
+      "valence": 0.8035078048706055,
+      "arousal": 0.11042051017284393
+    },
+    {
+      "name": "121024_tim_sam_wedding - 74.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.01019820902729407,
+      "raw_label": "Neutral",
+      "valence": -0.21946486830711365,
+      "arousal": -0.027253422886133194
+    },
+    {
+      "name": "121024_tim_sam_wedding - 75.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.01120179204735905,
+      "raw_label": "Happiness",
+      "valence": 0.17689117789268494,
+      "arousal": 0.18927395343780518
+    },
+    {
+      "name": "121024_tim_sam_wedding - 76.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010155374999158084,
+      "raw_label": "Contempt",
+      "valence": 0.05457967519760132,
+      "arousal": 0.09077338874340057
+    },
+    {
+      "name": "121024_tim_sam_wedding - 79.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010566499957349151,
+      "raw_label": "Happiness",
+      "valence": 0.819135844707489,
+      "arousal": 0.2908558249473572
+    },
+    {
+      "name": "121024_tim_sam_wedding - 80.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.011223624984268099,
+      "raw_label": "Happiness",
+      "valence": 0.7147750854492188,
+      "arousal": -0.004305735230445862
+    },
+    {
+      "name": "121024_tim_sam_wedding - 81.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.013264708046335727,
+      "raw_label": "Happiness",
+      "valence": 0.7005423903465271,
+      "arousal": 0.013442885130643845
+    },
+    {
+      "name": "121024_tim_sam_wedding - 82.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.010904292052146047,
+      "raw_label": "Happiness",
+      "valence": 0.6806735396385193,
+      "arousal": 0.15235668420791626
+    },
+    {
+      "name": "121024_tim_sam_wedding - 84.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.01417208299972117,
+      "raw_label": "Surprise",
+      "valence": 0.276264488697052,
+      "arousal": 0.8244540691375732
+    },
+    {
+      "name": "121024_tim_sam_wedding - 85.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.012775624985806644,
+      "raw_label": "Happiness",
+      "valence": 0.8980598449707031,
+      "arousal": 0.23296771943569183
+    },
+    {
+      "name": "121024_tim_sam_wedding - 86.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.012516834016423672,
+      "raw_label": "Happiness",
+      "valence": 0.888788640499115,
+      "arousal": 0.2163345068693161
+    },
+    {
+      "name": "141224_james_mary_wedding - 11.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.012345624971203506,
+      "raw_label": "Sadness",
+      "valence": -0.24929946660995483,
+      "arousal": -0.3168630301952362
+    },
+    {
+      "name": "141224_james_mary_wedding - 17.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.016703583009075373,
+      "raw_label": "Contempt",
+      "valence": 0.3455440402030945,
+      "arousal": -0.0663694441318512
+    },
+    {
+      "name": "141224_james_mary_wedding - 18.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.014385958027560264,
+      "raw_label": "Happiness",
+      "valence": 0.47536501288414,
+      "arousal": 0.21082229912281036
+    },
+    {
+      "name": "141224_james_mary_wedding - 2.jpeg",
+      "has_face": true,
+      "latency_seconds": 0.013397749979048967,
+      "raw_label": "Happiness",
+      "valence": 0.9998056292533875,
+      "arousal": 0.3651316463947296
+    }
+  ],
+  "bboxes": []
+}

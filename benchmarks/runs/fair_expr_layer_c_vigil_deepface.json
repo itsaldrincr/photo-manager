@@ -1,0 +1,246 @@
+{
+  "stage": "deepface",
+  "readings": [
+    {
+      "name": "DSCF0166 52 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.3113233339972794,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0179.JPG",
+      "has_face": true,
+      "latency_seconds": 0.1202792499680072,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0180 57 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.07111904199700803,
+      "raw_label": "angry",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0180.JPG",
+      "has_face": true,
+      "latency_seconds": 0.06542204198194668,
+      "raw_label": "angry",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0210.JPG",
+      "has_face": true,
+      "latency_seconds": 0.08892054203897715,
+      "raw_label": "fear",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0213.JPG",
+      "has_face": true,
+      "latency_seconds": 0.08932212501531467,
+      "raw_label": "sad",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0218 68 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.11925008299294859,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0218.JPG",
+      "has_face": true,
+      "latency_seconds": 0.13602837501093745,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0226.JPG",
+      "has_face": true,
+      "latency_seconds": 0.14930704096332192,
+      "raw_label": "sad",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0244.JPG",
+      "has_face": true,
+      "latency_seconds": 0.1108677500160411,
+      "raw_label": "sad",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0252.JPG",
+      "has_face": true,
+      "latency_seconds": 0.11365916702197865,
+      "raw_label": "fear",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0261.JPG",
+      "has_face": true,
+      "latency_seconds": 0.1256159589975141,
+      "raw_label": "angry",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0264.JPG",
+      "has_face": true,
+      "latency_seconds": 0.09425887500401586,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0354.JPG",
+      "has_face": true,
+      "latency_seconds": 0.19985104200895876,
+      "raw_label": "angry",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0363.JPG",
+      "has_face": true,
+      "latency_seconds": 0.18758291599806398,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0366.JPG",
+      "has_face": true,
+      "latency_seconds": 0.1479646249790676,
+      "raw_label": "angry",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0369.JPG",
+      "has_face": true,
+      "latency_seconds": 0.14995166601147503,
+      "raw_label": "fear",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0370 145 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.1556874579982832,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0373.JPG",
+      "has_face": true,
+      "latency_seconds": 0.157165625016205,
+      "raw_label": "surprise",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0377.JPG",
+      "has_face": true,
+      "latency_seconds": 0.1668643329758197,
+      "raw_label": "angry",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0384.JPG",
+      "has_face": true,
+      "latency_seconds": 0.17560358298942447,
+      "raw_label": "sad",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0387.JPG",
+      "has_face": true,
+      "latency_seconds": 0.13801233295816928,
+      "raw_label": "neutral",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0457.JPG",
+      "has_face": true,
+      "latency_seconds": 0.24333287501940504,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0484.JPG",
+      "has_face": true,
+      "latency_seconds": 0.1564019169891253,
+      "raw_label": "sad",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0494.JPG",
+      "has_face": true,
+      "latency_seconds": 0.2864697079639882,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF0588 181 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.12161124998237938,
+      "raw_label": "sad",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF1422.JPG",
+      "has_face": true,
+      "latency_seconds": 0.09967054199660197,
+      "raw_label": "angry",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF1490.JPG",
+      "has_face": true,
+      "latency_seconds": 0.14134099998045713,
+      "raw_label": "fear",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF1491.JPG",
+      "has_face": true,
+      "latency_seconds": 0.11394975002622232,
+      "raw_label": "happy",
+      "valence": null,
+      "arousal": null
+    },
+    {
+      "name": "DSCF1543.JPG",
+      "has_face": true,
+      "latency_seconds": 0.10840183397522196,
+      "raw_label": "angry",
+      "valence": null,
+      "arousal": null
+    }
+  ],
+  "bboxes": []
+}

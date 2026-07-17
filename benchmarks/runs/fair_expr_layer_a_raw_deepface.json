@@ -1,0 +1,3362 @@
+[
+  {
+    "name": "anger_000.jpg",
+    "has_face": true,
+    "latency_seconds": 0.2551694579888135,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_001.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007994499988853931,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_002.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007099582988303155,
+    "raw_label": "disgust",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_003.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008743207959923893,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_004.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006565249990671873,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_005.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0048712079878896475,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_006.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008960917009972036,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_007.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007861958991270512,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_008.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0049504999769851565,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_009.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0062911249697208405,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_010.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007783374981954694,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_011.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005100124981254339,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_012.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009358166018500924,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_013.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005459834006614983,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_014.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006875708000734448,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_015.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00726929196389392,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_016.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0050171249895356596,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_017.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008466792001854628,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_018.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0049614160088822246,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_019.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007945167017169297,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_020.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009627124993130565,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_021.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007282332982867956,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_022.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009215249971020967,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_023.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009084040997549891,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_024.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006160749995615333,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_025.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009852249990217388,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_026.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005969249992631376,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_027.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007481874956283718,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_028.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008953250013291836,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_029.jpg",
+    "has_face": true,
+    "latency_seconds": 0.010402166983112693,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_030.jpg",
+    "has_face": true,
+    "latency_seconds": 0.010334708029404283,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_031.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009039958007633686,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_032.jpg",
+    "has_face": true,
+    "latency_seconds": 0.011199708038475364,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_033.jpg",
+    "has_face": true,
+    "latency_seconds": 0.013139792019501328,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_034.jpg",
+    "has_face": true,
+    "latency_seconds": 0.011242292006500065,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_035.jpg",
+    "has_face": true,
+    "latency_seconds": 0.011096583970356733,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_036.jpg",
+    "has_face": true,
+    "latency_seconds": 0.015135166991967708,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_037.jpg",
+    "has_face": true,
+    "latency_seconds": 0.016263291996438056,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_038.jpg",
+    "has_face": true,
+    "latency_seconds": 0.014998209022451192,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_039.jpg",
+    "has_face": true,
+    "latency_seconds": 0.010339208005461842,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_040.jpg",
+    "has_face": true,
+    "latency_seconds": 0.012897791981231421,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_041.jpg",
+    "has_face": true,
+    "latency_seconds": 0.011754624953027815,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_042.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006853625003714114,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_043.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005472708027809858,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_044.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005460583022795618,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_045.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008696542005054653,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_046.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008589416975155473,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_047.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005680750007741153,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_048.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007410750025883317,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_049.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008031458011828363,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_050.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00854991702362895,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_051.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008233166998252273,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_052.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00901024998165667,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_053.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007792707998305559,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_054.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00882820796687156,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_055.jpg",
+    "has_face": true,
+    "latency_seconds": 0.010036708961706609,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_056.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009540166007354856,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_057.jpg",
+    "has_face": true,
+    "latency_seconds": 0.011549250048119575,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_058.jpg",
+    "has_face": true,
+    "latency_seconds": 0.011766624986194074,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "anger_059.jpg",
+    "has_face": true,
+    "latency_seconds": 0.010092000011354685,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_000.jpg",
+    "has_face": true,
+    "latency_seconds": 0.010422124993056059,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_001.jpg",
+    "has_face": true,
+    "latency_seconds": 0.012513333989772946,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_002.jpg",
+    "has_face": true,
+    "latency_seconds": 0.011002750019542873,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_003.jpg",
+    "has_face": true,
+    "latency_seconds": 0.010476958006620407,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_004.jpg",
+    "has_face": true,
+    "latency_seconds": 0.011354417016264051,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_005.jpg",
+    "has_face": true,
+    "latency_seconds": 0.012456541997380555,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_006.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006932415999472141,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_007.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008746374980546534,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_008.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008107791014481336,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_009.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0056214999640360475,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_010.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008470750006381422,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_011.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0073470420320518315,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_012.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007196499966084957,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_013.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008685708045959473,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_014.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007828707981389016,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_015.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009046207997016609,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_016.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006981124985031784,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_017.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00790033396333456,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_018.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008608999953139573,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_019.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006267166987527162,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_020.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006597708037588745,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_021.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007645457983016968,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_022.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005329750012606382,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_023.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007008083048276603,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_024.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005001332960091531,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_025.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006363749969750643,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_026.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00868108298163861,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_027.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007121624948922545,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_028.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0075304589699953794,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_029.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006310999975539744,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_030.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007513042015489191,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_031.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008088708971627057,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_032.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007702000031713396,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_033.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006683874991722405,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_034.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007544916006736457,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_035.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006446667015552521,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_036.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009094542008824646,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_037.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007148750009946525,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_038.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006739499978721142,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_039.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004488582955673337,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_040.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007239666010718793,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_041.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006209624989423901,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_042.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006225583027116954,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_043.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005842124985065311,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_044.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006644290988333523,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_045.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005861999990884215,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_046.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0074711249908432364,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_047.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004602458968292922,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_048.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008291292004287243,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_049.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006976665987167507,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_050.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006709915993269533,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_051.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007365625002421439,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_052.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008237625006586313,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_053.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007995792024303228,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_054.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00814074999652803,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_055.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006163333018776029,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_056.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00710762501694262,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_057.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008147582993842661,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_058.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006986957974731922,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "disgust_059.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008562250004615635,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_000.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004830624966416508,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_001.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007032208028249443,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_002.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0048886670265346766,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_003.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00791304197628051,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_004.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005024540994782001,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_005.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005081291019450873,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_006.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00824937503784895,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_007.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00865854200674221,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_008.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004854166996665299,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_009.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006858124979771674,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_010.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006932833988685161,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_011.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006747042003553361,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_012.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007262166996952146,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_013.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007214249984826893,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_014.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00988787499954924,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_015.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007488875009585172,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_016.jpg",
+    "has_face": true,
+    "latency_seconds": 0.011521417007315904,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_017.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009835542005021125,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_018.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007998457993380725,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_019.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008295165956951678,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_020.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008271290978882462,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_021.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009232458018232137,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_022.jpg",
+    "has_face": true,
+    "latency_seconds": 0.010557708970736712,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_023.jpg",
+    "has_face": true,
+    "latency_seconds": 0.010275083011947572,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_024.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00685787497786805,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_025.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008655624988023192,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_026.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0077944580116309226,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_027.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008695958007592708,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_028.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005504541972186416,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_029.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007763875008095056,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_030.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007892374997027218,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_031.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006979290978051722,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_032.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005612332955934107,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_033.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005308749969117343,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_034.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006710875022690743,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_035.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008826042001601309,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_036.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005665583012159914,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_037.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0075530000030994415,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_038.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007105791999492794,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_039.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007738790998701006,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_040.jpg",
+    "has_face": true,
+    "latency_seconds": 0.010168332955799997,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_041.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009577166987583041,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_042.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00611374998698011,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_043.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009207374998368323,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_044.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00828499998897314,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_045.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008239083050284535,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_046.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005884958023671061,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_047.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008295792038552463,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_048.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005113708961289376,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_049.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00645616598194465,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_050.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00538479199167341,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_051.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005341667041648179,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_052.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006874874990899116,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_053.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007799040991812944,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_054.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005238124984316528,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_055.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0090005419915542,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_056.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005531959002837539,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_057.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005979167006444186,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_058.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005851875001098961,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "fear_059.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008432500006165355,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_000.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007418166962452233,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_001.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0073625840013846755,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_002.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007706707983743399,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_003.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004571375029627234,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_004.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004971416026819497,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_005.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0049889160436578095,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_006.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007672499981708825,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_007.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004910374991595745,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_008.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006764416990336031,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_009.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0066013329778797925,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_010.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009436416963580996,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_011.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00807141698896885,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_012.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007137041015084833,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_013.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008031459001358598,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_014.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00841700000455603,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_015.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007462917012162507,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_016.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006017709034495056,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_017.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006357708014547825,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_018.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007232665957417339,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_019.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00645154103403911,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_020.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006671707960776985,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_021.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007641584030352533,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_022.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008522124961018562,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_023.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008458332973532379,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_024.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0048137500416487455,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_025.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004379458958283067,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_026.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008524791977833956,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_027.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009273250005207956,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_028.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007683917006943375,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_029.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006990124995354563,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_030.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008474875008687377,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_031.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006937124999240041,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_032.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004902583023067564,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_033.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00842600001487881,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_034.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005782333959359676,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_035.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007316291972529143,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_036.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006987875036429614,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_037.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00460345798637718,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_038.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008383208012674004,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_039.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007057415961753577,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_040.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008394333010073751,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_041.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007851166999898851,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_042.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00457862502662465,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_043.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007241417013574392,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_044.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006488958955742419,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_045.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0061467920313589275,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_046.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007629542029462755,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_047.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007157874992117286,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_048.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008208499988541007,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_049.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0047138340305536985,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_050.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004586542025208473,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_051.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006868625001516193,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_052.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0048532080254517496,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_053.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0069404999958351254,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_054.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007356250018347055,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_055.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0071414579870179296,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_056.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006735958042554557,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_057.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005933209031354636,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_058.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007084707962349057,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "happiness_059.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0077166249975562096,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_000.jpg",
+    "has_face": true,
+    "latency_seconds": 0.035716834012418985,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_001.jpg",
+    "has_face": true,
+    "latency_seconds": 0.037364916992373765,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_002.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0414989169803448,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_003.jpg",
+    "has_face": true,
+    "latency_seconds": 0.028898624994326383,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_004.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03669187502237037,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_005.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03093545901356265,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_006.jpg",
+    "has_face": true,
+    "latency_seconds": 0.038019249972421676,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_007.jpg",
+    "has_face": true,
+    "latency_seconds": 0.04037133400561288,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_008.jpg",
+    "has_face": true,
+    "latency_seconds": 0.04150808299891651,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_009.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03723645897116512,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_010.jpg",
+    "has_face": true,
+    "latency_seconds": 0.039394250023178756,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_011.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03687441599322483,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_012.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03504375001648441,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_013.jpg",
+    "has_face": true,
+    "latency_seconds": 0.04113129200413823,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_014.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03557374997762963,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_015.jpg",
+    "has_face": true,
+    "latency_seconds": 0.039127124997321516,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_016.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03558954200707376,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_017.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03884933399967849,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_018.jpg",
+    "has_face": true,
+    "latency_seconds": 0.026807499991264194,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_019.jpg",
+    "has_face": true,
+    "latency_seconds": 0.027383250009734184,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_020.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03227808402152732,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_021.jpg",
+    "has_face": true,
+    "latency_seconds": 0.030176041997037828,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_022.jpg",
+    "has_face": true,
+    "latency_seconds": 0.026822666986845434,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_023.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03047191700898111,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_024.jpg",
+    "has_face": true,
+    "latency_seconds": 0.029694249969907105,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_025.jpg",
+    "has_face": true,
+    "latency_seconds": 0.04186925000976771,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_026.jpg",
+    "has_face": true,
+    "latency_seconds": 0.037382291979156435,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_027.jpg",
+    "has_face": true,
+    "latency_seconds": 0.036116667033638805,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_028.jpg",
+    "has_face": true,
+    "latency_seconds": 0.027295459003653377,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_029.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03667000000132248,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_030.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03876041597686708,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_031.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03616445901570842,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_032.jpg",
+    "has_face": true,
+    "latency_seconds": 0.036318416998256,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_033.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03674349997891113,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_034.jpg",
+    "has_face": true,
+    "latency_seconds": 0.026230791001580656,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_035.jpg",
+    "has_face": true,
+    "latency_seconds": 0.04018266702769324,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_036.jpg",
+    "has_face": true,
+    "latency_seconds": 0.037405290990136564,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_037.jpg",
+    "has_face": true,
+    "latency_seconds": 0.031751458009239286,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_038.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03503037500195205,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_039.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03360537497792393,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_040.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0395967080257833,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_041.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03367199999047443,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_042.jpg",
+    "has_face": true,
+    "latency_seconds": 0.035454707976896316,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_043.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03552745800698176,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_044.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0322115839808248,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_045.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03412762505467981,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_046.jpg",
+    "has_face": true,
+    "latency_seconds": 0.02247616701060906,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_047.jpg",
+    "has_face": true,
+    "latency_seconds": 0.032023459032643586,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_048.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03564087499398738,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_049.jpg",
+    "has_face": true,
+    "latency_seconds": 0.028557874960824847,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_050.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03989054198609665,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_051.jpg",
+    "has_face": true,
+    "latency_seconds": 0.07705158297903836,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_052.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03744770900812,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_053.jpg",
+    "has_face": true,
+    "latency_seconds": 0.04298679099883884,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_054.jpg",
+    "has_face": true,
+    "latency_seconds": 0.035871584026608616,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_055.jpg",
+    "has_face": true,
+    "latency_seconds": 0.04223720805021003,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_056.jpg",
+    "has_face": true,
+    "latency_seconds": 0.038590708980336785,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_057.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03018641599919647,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_058.jpg",
+    "has_face": true,
+    "latency_seconds": 0.03227354201953858,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "neutral_059.jpg",
+    "has_face": true,
+    "latency_seconds": 0.02948804199695587,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_000.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007598500000312924,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_001.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004704874998424202,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_002.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0057746669626794755,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_003.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0053587500005960464,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_004.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007309208973310888,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_005.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00514849997125566,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_006.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00870916701387614,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_007.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007978459005244076,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_008.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007854500028770417,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_009.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0077755830134265125,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_010.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0078640419524163,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_011.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0065793340327218175,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_012.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006561624992173165,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_013.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007217958976980299,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_014.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007464041991624981,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_015.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00788729201303795,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_016.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005376000015530735,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_017.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007667833007872105,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_018.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004949582973495126,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_019.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009131708007771522,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_020.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005044082994572818,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_021.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005564666993450373,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_022.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007780417043250054,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_023.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007296041992958635,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_024.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0069974170182831585,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_025.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0056375000276602805,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_026.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005117458000313491,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_027.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005122250004205853,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_028.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009149666992016137,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_029.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004977083008270711,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_030.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0065162499668076634,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_031.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00560366699937731,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_032.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007753749960102141,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_033.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007437708030920476,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_034.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006340790947433561,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_035.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005279458011500537,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_036.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006871624966152012,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_037.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006766083010006696,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_038.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004425416002050042,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_039.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00446758302859962,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_040.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006851624988485128,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_041.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008908999967388809,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_042.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004625083995051682,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_043.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006786374957300723,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_044.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005737542000133544,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_045.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004411917005199939,
+    "raw_label": "disgust",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_046.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007021416968200356,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_047.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006998582975938916,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_048.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004591667035128921,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_049.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004604666028171778,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_050.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004487792029976845,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_051.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007214625016786158,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_052.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005186708003748208,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_053.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00864633300807327,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_054.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0056813330156728625,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_055.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007776667014695704,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_056.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004990582994651049,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_057.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005869042011909187,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_058.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004568792006466538,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "sadness_059.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004821916983928531,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_000.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004924333014059812,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_001.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006368417001795024,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_002.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006286458985414356,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_003.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007091625011526048,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_004.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005136874970048666,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_005.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005147999967448413,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_006.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007624042045790702,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_007.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008477459021378309,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_008.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005303999991156161,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_009.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007153541024308652,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_010.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00847979198442772,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_011.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005452334007713944,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_012.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00976191699737683,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_013.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00501562503632158,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_014.jpg",
+    "has_face": true,
+    "latency_seconds": 0.004868875024840236,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_015.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006387875007931143,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_016.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008201458025723696,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_017.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007418708992190659,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_018.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007176832994446158,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_019.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009126249991822988,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_020.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006411542010027915,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_021.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008884040988050401,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_022.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00696708302712068,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_023.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007683959032874554,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_024.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008857709006406367,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_025.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00889404199551791,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_026.jpg",
+    "has_face": true,
+    "latency_seconds": 0.006360667000990361,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_027.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007889749947935343,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_028.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007737624982837588,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_029.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008133542025461793,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_030.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00840729201445356,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_031.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0050087919807992876,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_032.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009247083042282611,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_033.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007003207982052118,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_034.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008397333032917231,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_035.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005573333008214831,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_036.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008590292010921985,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_037.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00752108299639076,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_038.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00675729097565636,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_039.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00546158297220245,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_040.jpg",
+    "has_face": true,
+    "latency_seconds": 0.0071012910339049995,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_041.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009050499997101724,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_042.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007915207999758422,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_043.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007697082997765392,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_044.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008451874949969351,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_045.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007968541991431266,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_046.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00797529105329886,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_047.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005539415986277163,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_048.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005537125049158931,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_049.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005668458004947752,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_050.jpg",
+    "has_face": true,
+    "latency_seconds": 0.005913499975576997,
+    "raw_label": "surprise",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_051.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00523745798273012,
+    "raw_label": "happy",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_052.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008215166977606714,
+    "raw_label": "sad",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_053.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008514499990269542,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_054.jpg",
+    "has_face": true,
+    "latency_seconds": 0.00826691696420312,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_055.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009702457988169044,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_056.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007560333993751556,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_057.jpg",
+    "has_face": true,
+    "latency_seconds": 0.009514750039670616,
+    "raw_label": "neutral",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_058.jpg",
+    "has_face": true,
+    "latency_seconds": 0.007358792005106807,
+    "raw_label": "angry",
+    "valence": null,
+    "arousal": null
+  },
+  {
+    "name": "surprise_059.jpg",
+    "has_face": true,
+    "latency_seconds": 0.008630291966255754,
+    "raw_label": "fear",
+    "valence": null,
+    "arousal": null
+  }
+]
