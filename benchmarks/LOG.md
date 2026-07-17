@@ -98,3 +98,26 @@ Measured e2e on the labeled variant corpus (real production find_duplicates):
 Cost: +29.5 ms/photo (202 ms total, under the 250 ms budget). Suite 475 passed
 (465 baseline + 10 new), zero regressions. `cull setup` status=ok (5 manifest
 entries). GATE: PROMOTE.
+
+## Current pipeline benchmark (2026-07-17, post-Gemma + post-DINOv2)
+
+30 Japan photos (scratchpad/bench30), full pipeline dry-run, machine quiet:
+
+| stage | time | rate |
+|---|---|---|
+| Stage 1 (incl. DINOv2 tier) | 54s | 1.8 s/photo |
+| Stage 2 | 1m52s | 4.0 s/photo (28 survivors) |
+| Stage 3 (Gemma-4-12B) | 2m28s | 7.4 s/photo (20 ambiguous) |
+| **total** | **5m19s** | peak RSS 7.23 GB |
+
+CAVEAT: different 30-photo corpus than the 7m30s/5m03s runs (the original
+bench set became inaccessible via macOS TCC), so totals are NOT directly
+comparable — per-photo rates are. Stage 2 is ~4.0 s/photo vs ~8.8 s/photo at
+the v1.0.2 baseline. Stage 3 is 7.4 s/photo on Gemma-4-12B vs 5.9 s/photo on
+Qwen-4B — the accuracy swap cost ~1.5 s/photo, as expected.
+
+METHOD NOTE: an earlier run of this benchmark was discarded — it executed
+concurrently with the expression eval (DeepFace 6.5 GB + Py-Feat) on an 18 GB
+host, driving free memory to ~64 MB and inflating Stage 2 to 7m56s and Stage 3
+past 36m. Those numbers measured swap contention, not the pipeline. Always
+benchmark serially with no other model process resident.

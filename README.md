@@ -9,6 +9,7 @@ download.
 
 ```
 Stage 1 ── Classical filters (blur, exposure, geometry, burst, duplicates)
+         └─ Two-tier dedup: MobileNetV3 CNN + DINOv2-small (catches crops/rotations)
 Stage 2 ── Neural IQA scoring (TOPIQ, LAION aesthetics, CLIP taste, composition)
          ├─ Shoot-level reducer (palette coherence, exposure drift, EXIF anomalies)
 Stage 3 ── VLM tiebreaker for ambiguous photos (optional, runs in-process via mlx-vlm)

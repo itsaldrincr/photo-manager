@@ -51,9 +51,15 @@ Correctness, performance, and a model swap validated by a new A/B harness.
 
 ### Added
 
+- Two-tier near-duplicate detection: DINOv2-small embeddings now run alongside
+  the existing MobileNetV3 pass and merge into its groups. Cropped near-dupes
+  go from 10/20 to 20/20 recall and rotated ones from 19/20 to 20/20, for
+  +29 ms/photo. The CNN pass is retained because Stage 4's clustering
+  thresholds are calibrated to its embedding distribution.
 - `benchmarks/`: an A/B harness that scores VLM candidates against
   human-curated keep/reject labels in an isolated subprocess, applies memory
-  and accuracy gates, and appends every run to a durable log.
+  and accuracy gates, and appends every run to a durable log. Includes
+  evaluations of dedup backbones and facial-expression models.
 
 ## v1.0.2
 
