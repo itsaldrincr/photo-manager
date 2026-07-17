@@ -12,6 +12,7 @@ from pydantic import BaseModel, ConfigDict
 from cull.config import BURST_GAP_DEFAULT_SECONDS
 from cull.models import (
     BlurScores,
+    ExifSummary,
     ExposureScores,
     Stage1Result,
     Stage2Result,
@@ -223,3 +224,119 @@ def test_scene_boundary_detected_at_burst_gap(tmp_path: Path) -> None:
     scores = compute(input_in)
     boundary_path = str(input_in.stage2_results[SCENE_GAP_INDEX].photo_path)
     assert scores[boundary_path].scene_start_bonus > 0.0
+
+
+# ---------------------------------------------------------------------------
+# Real-model wiring tests — proves the signals fire on the actual production
+# Stage1Result / Stage2Result models, not just on duck-typed mocks that were
+# already shaped like the fields the reducer expected (which is exactly how
+# these three signals stayed dead: mocks passed, real models had no such
+# fields, and getattr() fell back silently).
+# ---------------------------------------------------------------------------
+
+
+def _real_inlier_pair(index: int, tmp_path: Path) -> tuple[Stage1Result, Stage2Result]:
+    """Build a real Stage1Result/Stage2Result inlier pair (production model types)."""
+    path = tmp_path / f"real_{index:03d}.jpg"
+    s1 = Stage1Result(
+        photo_path=path,
+        blur=_make_inlier_blur(),
+        exposure=_make_inlier_exposure(INLIER_DR_SCORE),
+        noise_score=BASE_NOISE_SCORE,
+        exif=ExifSummary(
+            iso=INLIER_EXIF_ISO,
+            shutter=INLIER_EXIF_SHUTTER,
+            aperture=INLIER_EXIF_APERTURE,
+            focal_length_mm=INLIER_EXIF_FOCAL,
+        ),
+        capture_time=_capture_for_index(index),
+    )
+    s2 = Stage2Result(
+        photo_path=path,
+        topiq=0.5,
+        laion_aesthetic=0.5,
+        clipiqa=0.5,
+        composite=0.5,
+        palette_lab=(INLIER_LAB_VALUE, INLIER_LAB_VALUE, INLIER_LAB_VALUE),
+    )
+    return s1, s2
+
+
+def _real_outlier_pair(index: int, tmp_path: Path) -> tuple[Stage1Result, Stage2Result]:
+    """Build a real Stage1Result/Stage2Result outlier pair (production model types)."""
+    path = tmp_path / f"real_{index:03d}.jpg"
+    s1 = Stage1Result(
+        photo_path=path,
+        blur=_make_inlier_blur(),
+        exposure=_make_inlier_exposure(OUTLIER_DR_SCORE),
+        noise_score=BASE_NOISE_SCORE,
+        exif=ExifSummary(
+            iso=OUTLIER_EXIF_ISO,
+            shutter=OUTLIER_EXIF_SHUTTER,
+            aperture=OUTLIER_EXIF_APERTURE,
+            focal_length_mm=OUTLIER_EXIF_FOCAL,
+        ),
+        capture_time=_capture_for_index(index),
+    )
+    s2 = Stage2Result(
+        photo_path=path,
+        topiq=0.5,
+        laion_aesthetic=0.5,
+        clipiqa=0.5,
+        composite=0.5,
+        palette_lab=(OUTLIER_LAB_VALUE, OUTLIER_LAB_VALUE, OUTLIER_LAB_VALUE),
+    )
+    return s1, s2
+
+
+def _build_real_model_corpus(tmp_path: Path) -> ShootStatsInput:
+    """Synthesise a corpus using real Stage1Result/Stage2Result (not duck-typed mocks)."""
+    stage1_results: list[Stage1Result] = []
+    stage2_results: list[Stage2Result] = []
+    for i in range(TOTAL_PHOTOS):
+        s1, s2 = _real_outlier_pair(i, tmp_path) if i == OUTLIER_INDEX else _real_inlier_pair(i, tmp_path)
+        stage1_results.append(s1)
+        stage2_results.append(s2)
+    return ShootStatsInput(stage1_results=stage1_results, stage2_results=stage2_results)
+
+
+def test_real_models_palette_outlier_fires(tmp_path: Path) -> None:
+    """A real Stage2Result carrying palette_lab must produce a firing palette_outlier_score."""
+    input_in = _build_real_model_corpus(tmp_path)
+    scores = compute(input_in)
+    outlier_path = str(input_in.stage2_results[OUTLIER_INDEX].photo_path)
+    assert scores[outlier_path].palette_outlier_score > OUTLIER_THRESHOLD
+
+
+def test_real_models_exif_anomaly_fires(tmp_path: Path) -> None:
+    """A real Stage1Result carrying exif must produce a firing exif_anomaly_score."""
+    input_in = _build_real_model_corpus(tmp_path)
+    scores = compute(input_in)
+    outlier_path = str(input_in.stage2_results[OUTLIER_INDEX].photo_path)
+    assert scores[outlier_path].exif_anomaly_score > OUTLIER_THRESHOLD
+
+
+def test_real_models_scene_start_bonus_fires(tmp_path: Path) -> None:
+    """A real Stage1Result carrying capture_time must produce a scene boundary."""
+    input_in = _build_real_model_corpus(tmp_path)
+    scores = compute(input_in)
+    boundary_path = str(input_in.stage2_results[SCENE_GAP_INDEX].photo_path)
+    assert scores[boundary_path].scene_start_bonus > 0.0
+
+
+def test_real_models_without_exif_degrade_gracefully(tmp_path: Path) -> None:
+    """A photo missing EXIF (exif=None, capture_time=None) must not raise or crash."""
+    path = tmp_path / "no_exif.jpg"
+    s1 = Stage1Result(
+        photo_path=path,
+        blur=_make_inlier_blur(),
+        exposure=_make_inlier_exposure(INLIER_DR_SCORE),
+        noise_score=BASE_NOISE_SCORE,
+    )
+    s2 = Stage2Result(
+        photo_path=path, topiq=0.5, laion_aesthetic=0.5, clipiqa=0.5, composite=0.5,
+    )
+    scores = compute(ShootStatsInput(stage1_results=[s1], stage2_results=[s2]))
+    score = scores[str(path)]
+    assert score.exif_anomaly_score == 0.0
+    assert score.scene_id == 0

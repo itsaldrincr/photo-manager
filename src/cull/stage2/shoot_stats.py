@@ -49,11 +49,10 @@ class ShootStatsInput(BaseModel):
 
 
 def _palette_lab_for_result(result: Any) -> np.ndarray:
-    """Extract a 3-vector LAB centroid from a Stage 2 result; zero on miss."""
-    palette = getattr(result, "palette_lab", None)
-    if palette is None:
+    """Extract a 3-vector LAB centroid from a Stage 2 result; zero when EXIF/decode is absent."""
+    if result.palette_lab is None:
         return np.zeros(3, dtype=np.float32)
-    return np.asarray(palette, dtype=np.float32)
+    return np.asarray(result.palette_lab, dtype=np.float32)
 
 
 def _exposure_value_for_s1(s1: Any) -> float:
@@ -62,11 +61,10 @@ def _exposure_value_for_s1(s1: Any) -> float:
 
 
 def _exif_dict_for_s1(s1: Any) -> dict[str, Any]:
-    """Return a dict of EXIF-derived fields, falling back to empty when absent."""
-    raw = getattr(s1, "exif", None)
-    if raw is None:
+    """Return a dict of EXIF-derived fields; empty when the photo has no readable EXIF."""
+    if s1.exif is None:
         return {}
-    return {key: getattr(raw, key, None) for key in EXIF_ANOMALY_KEYS}
+    return {key: getattr(s1.exif, key, None) for key in EXIF_ANOMALY_KEYS}
 
 
 def _max_palette_distance(palette_rows: np.ndarray, median_lab: np.ndarray) -> float:
@@ -175,8 +173,8 @@ def _compute_exif_anomaly(s1: Any, bundle: ShootStatsBundle) -> float:
 
 
 def _capture_seconds(s1: Any) -> float | None:
-    """Return the capture timestamp as POSIX seconds, or None when missing."""
-    raw = getattr(s1, "capture_time", None)
+    """Return the capture timestamp as POSIX seconds, or None when EXIF has no timestamp."""
+    raw = s1.capture_time
     if raw is None:
         return None
     if hasattr(raw, "timestamp"):

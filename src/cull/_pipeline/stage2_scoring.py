@@ -23,6 +23,7 @@ from cull.config import (
     IMAGE_LONG_EDGE_PX,
     IQA_EXPOSURE_DEFAULT,
     KEYSTONE_PENALTY_DEGREES,
+    PALETTE_CENTROID_DOWNSAMPLE_PX,
     SHARED_DECODE_CLIP_PX,
     SHARED_DECODE_PIXEL_PX,
     TILT_PENALTY_DEGREES,
@@ -201,6 +202,30 @@ def _load_dual_pil_batch(load_in: _DualLoadInput) -> _DualPilBatch:
         tensor_1280=_stack_tensor_1280(pil_1280_list),
         paths=list(load_in.paths),
     )
+
+
+def _palette_lab_centroid(pil_image: Image.Image) -> tuple[float, float, float]:
+    """Compute a cheap LAB centroid from a small downsample of a decoded photo."""
+    small = pil_image.resize(
+        (PALETTE_CENTROID_DOWNSAMPLE_PX, PALETTE_CENTROID_DOWNSAMPLE_PX), Image.BILINEAR
+    )
+    rgb_array = np.asarray(small, dtype=np.uint8)
+    lab_array = cv2.cvtColor(rgb_array, cv2.COLOR_RGB2LAB)
+    mean = lab_array.reshape(-1, 3).mean(axis=0)
+    return float(mean[0]), float(mean[1]), float(mean[2])
+
+
+def score_palette_lab_batch(pil_images: list[Image.Image]) -> list[tuple[float, float, float]]:
+    """Compute a LAB palette centroid per image for shoot-level outlier detection."""
+    return [_palette_lab_centroid(img) for img in pil_images]
+
+
+def apply_palette_lab_to_scores(
+    iqa_list: list[IqaScores], pil_1280: list[Image.Image]
+) -> None:
+    """Compute and patch a LAB palette centroid onto each IqaScores in-place."""
+    for iqa, centroid in zip(iqa_list, score_palette_lab_batch(pil_1280)):
+        iqa.palette_lab = centroid
 
 
 def _score_aesthetic_for_batch(batch_in: "_Stage2BatchInput") -> list[float]:

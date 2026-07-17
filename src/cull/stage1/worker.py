@@ -4,13 +4,18 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
+from datetime import datetime
+from fractions import Fraction
 from pathlib import Path
+from typing import Any
 
 import cv2
+import exifread
 import numpy as np
 from pydantic import BaseModel, ConfigDict
 
 from cull.config import CullConfig
+from cull.models import ExifSummary
 from cull.stage1.blur import (
     BlurResult,
     _ArrayAssessInput,
@@ -23,6 +28,13 @@ from cull.stage1.noise import NoiseResult, assess_noise_from_array
 
 logger = logging.getLogger(__name__)
 
+EXIF_TAG_DATETIME_ORIGINAL: str = "EXIF DateTimeOriginal"
+EXIF_TAG_ISO: str = "EXIF ISOSpeedRatings"
+EXIF_TAG_SHUTTER: str = "EXIF ExposureTime"
+EXIF_TAG_APERTURE: str = "EXIF FNumber"
+EXIF_TAG_FOCAL_LENGTH: str = "EXIF FocalLength"
+EXIF_DATETIME_FORMAT: str = "%Y:%m:%d %H:%M:%S"
+
 
 @dataclass(frozen=True)
 class Stage1WorkerResult:
@@ -33,6 +45,8 @@ class Stage1WorkerResult:
     exposure: ExposureResult
     noise: NoiseResult
     geometry: GeometryResult
+    capture_time: datetime | None = None
+    exif: ExifSummary | None = None
 
 
 class _DecodedImage(BaseModel):
@@ -55,6 +69,63 @@ class _DecodedImage(BaseModel):
     full_gray: np.ndarray
 
 
+def _parse_capture_time(tags: dict[str, Any]) -> datetime | None:
+    """Parse EXIF DateTimeOriginal into a datetime, or None when absent/malformed."""
+    raw = tags.get(EXIF_TAG_DATETIME_ORIGINAL)
+    if raw is None:
+        return None
+    try:
+        return datetime.strptime(str(raw), EXIF_DATETIME_FORMAT)
+    except ValueError:
+        return None
+
+
+def _parse_int_tag(tags: dict[str, Any], key: str) -> int | None:
+    """Parse an EXIF tag as an int, or None when absent/malformed."""
+    raw = tags.get(key)
+    if raw is None:
+        return None
+    try:
+        return int(str(raw))
+    except ValueError:
+        return None
+
+
+def _parse_focal_length(tags: dict[str, Any]) -> float | None:
+    """Parse EXIF FocalLength as millimetres, or None when absent/malformed."""
+    raw = tags.get(EXIF_TAG_FOCAL_LENGTH)
+    if raw is None:
+        return None
+    try:
+        return float(Fraction(str(raw)))
+    except (ValueError, ZeroDivisionError):
+        return None
+
+
+def _build_exif_summary(tags: dict[str, Any]) -> ExifSummary | None:
+    """Build an ExifSummary from parsed tags; None when every field is missing."""
+    summary = ExifSummary(
+        iso=_parse_int_tag(tags, EXIF_TAG_ISO),
+        shutter=str(tags[EXIF_TAG_SHUTTER]) if EXIF_TAG_SHUTTER in tags else None,
+        aperture=str(tags[EXIF_TAG_APERTURE]) if EXIF_TAG_APERTURE in tags else None,
+        focal_length_mm=_parse_focal_length(tags),
+    )
+    if summary.model_dump(exclude_none=True):
+        return summary
+    return None
+
+
+def _read_exif_summary(image_path: Path) -> tuple[datetime | None, ExifSummary | None]:
+    """Read capture time and camera settings from EXIF in a single file pass."""
+    try:
+        with open(image_path, "rb") as fh:
+            tags = exifread.process_file(fh, details=False, extract_thumbnail=False)
+    except OSError:
+        logger.debug("EXIF read failed for %s", image_path)
+        return None, None
+    return _parse_capture_time(tags), _build_exif_summary(tags)
+
+
 def _decode_once(image_path: Path) -> _DecodedImage:
     """Read the image from disk once per required variant (color + grayscale)."""
     raw_bgr = cv2.imread(str(image_path))
@@ -75,10 +146,13 @@ def assess_one(image_path: Path, config: CullConfig) -> Stage1WorkerResult:
     exposure_result = assess_exposure_from_array(decoded.resized_bgr)
     noise_result = assess_noise_from_array(decoded.resized_bgr)
     geometry_result = assess_geometry_from_array(decoded.full_gray, image_path)
+    capture_time, exif = _read_exif_summary(image_path)
     return Stage1WorkerResult(
         image_path=image_path,
         blur=blur_result,
         exposure=exposure_result,
         noise=noise_result,
         geometry=geometry_result,
+        capture_time=capture_time,
+        exif=exif,
     )

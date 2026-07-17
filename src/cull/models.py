@@ -63,6 +63,15 @@ class TasteScore(BaseModel):
     model_version: str
 
 
+class ExifSummary(BaseModel):
+    """Camera settings extracted from EXIF, used for shoot-level anomaly detection."""
+
+    iso: int | None = None
+    shutter: str | None = None
+    aperture: str | None = None
+    focal_length_mm: float | None = None
+
+
 class ShootStatsScore(BaseModel):
     """Shoot-level statistical outlier scores."""
 
@@ -151,6 +160,8 @@ class Stage1Result(BaseModel):
     is_pass: bool = True
     reject_reason: str | None = None
     geometry: GeometryScore | None = None
+    capture_time: datetime | None = None
+    exif: ExifSummary | None = None
 
 
 # ---------------------------------------------------------------------------
@@ -189,6 +200,7 @@ class Stage2Result(BaseModel):
     taste: TasteScore | None = None
     shoot_stats: ShootStatsScore | None = None
     crop: CropProposal | None = None
+    palette_lab: tuple[float, float, float] | None = None
 
 
 # ---------------------------------------------------------------------------

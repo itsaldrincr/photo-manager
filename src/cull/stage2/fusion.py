@@ -55,6 +55,7 @@ class IqaScores(BaseModel):
     exposure_drift: float | None = None
     exif_anomaly: float | None = None
     scene_start_bonus: float | None = None
+    palette_lab: tuple[float, float, float] | None = None
 
 
 class FusionResult(BaseModel):
@@ -191,6 +192,7 @@ def _build_stage2_result(scores: IqaScores, build_in: _Stage2BuildInput) -> Stag
         crop=scores.crop,
         taste=scores.taste_score,
         subject_blur=scores.subject_blur_score,
+        palette_lab=scores.palette_lab,
     )
 
 
@@ -241,6 +243,7 @@ def _stage2_to_iqa(stage2: Stage2Result, reducer: ShootStatsScore) -> IqaScores:
         portrait=stage2.portrait,
         subject_blur=stage2.subject_blur.tenengrad if stage2.subject_blur else None,
         subject_blur_score=stage2.subject_blur,
+        palette_lab=stage2.palette_lab,
         palette_outlier=reducer.palette_outlier_score,
         exposure_drift=reducer.exposure_drift_score,
         exif_anomaly=reducer.exif_anomaly_score,

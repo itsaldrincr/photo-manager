@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import time
+from datetime import datetime
 from functools import partial
 from multiprocessing import get_context
 from pathlib import Path
@@ -13,7 +14,7 @@ from pydantic import BaseModel, Field
 
 from cull.config import CullConfig, STAGE1_WORKER_COUNT
 from cull.dashboard import Dashboard
-from cull.models import ExposureScores, Stage1Result
+from cull.models import ExifSummary, ExposureScores, Stage1Result
 from cull.stage1 import duplicate as duplicate_module
 from cull.stage1.blur import BlurResult
 from cull.stage1.burst import _BurstInput, detect_bursts
@@ -33,6 +34,8 @@ class _Stage1Ctx(BaseModel):
     geometry: GeometryResult
     noise_score: float
     is_noisy: bool
+    capture_time: datetime | None
+    exif: ExifSummary | None
 
 
 class _Stage1Output(BaseModel):
@@ -96,6 +99,8 @@ def _worker_result_to_ctx(w: Stage1WorkerResult) -> _Stage1Ctx:
         geometry=w.geometry,
         noise_score=w.noise.noise_score,
         is_noisy=w.noise.is_noisy,
+        capture_time=w.capture_time,
+        exif=w.exif,
     )
 
 
@@ -139,6 +144,8 @@ def _build_stage1_result(path: Path, ctx: _Stage1Ctx) -> Stage1Result:
         is_pass=not is_reject,
         reject_reason=reason,
         geometry=ctx.geometry.scores,
+        capture_time=ctx.capture_time,
+        exif=ctx.exif,
     )
 
 

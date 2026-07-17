@@ -72,6 +72,7 @@ from cull._pipeline.stage2_scoring import (
     _apply_stage1_blur_context_to_scores,
     _apply_subject_blur_to_scores,
     _apply_taste_to_scores,
+    apply_palette_lab_to_scores,
     _DualLoadInput,
     _DualPilBatch,
     _load_dual_pil_batch,
@@ -343,9 +344,11 @@ def _score_one_chunk(
         _EmbedCollectInput(paths=chunk_in.paths, image_embeds=shared.image_embeds),
         batch_ctx,
     )
-    return _build_iqa_with_shared_embeds(_SharedBuildInput(
+    iqa_list = _build_iqa_with_shared_embeds(_SharedBuildInput(
         chunk_in=chunk_in, batch_ctx=batch_ctx, shared=shared,
     ))
+    apply_palette_lab_to_scores(iqa_list, batch_ctx.dual_pil.pil_1280)
+    return iqa_list
 
 
 def _process_batch(
