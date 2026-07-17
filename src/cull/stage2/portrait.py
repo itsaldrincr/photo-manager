@@ -16,6 +16,7 @@ from cull.config import (
     PORTRAIT_NUM_FACES_MAX,
     PORTRAIT_FACE_DETECTION_CONFIDENCE_MIN,
     PORTRAIT_EAR_CLOSED_MAX,
+    PORTRAIT_EAR_SQUINT_MAX,
     PORTRAIT_EMOTION_CROP_MARGIN_FRACTION,
     PORTRAIT_FACE_OCCLUSION_MIN,
     PORTRAIT_OCCLUSION_PATCH_IOD_FRACTION,
@@ -70,6 +71,7 @@ class PortraitResult(BaseModel):
     ear_left: float | None = None
     ear_right: float | None = None
     eyes_closed: bool = False
+    is_squinting: bool = False
     face_occluded: bool = False
     occlusion_ratio: float | None = None
     dominant_emotion: str | None = None
@@ -275,6 +277,7 @@ def _assemble_result(assembly: _AssemblyInput) -> PortraitResult:
     ctx = assembly.ctx
     metrics = _compute_face_metrics(ctx)
     mean_ear = (metrics.ear_left + metrics.ear_right) / 2.0
+    eyes_closed = is_eyes_closed(mean_ear)
     return PortraitResult(
         face_count=assembly.face_count,
         face_bbox=_face_bbox_from_landmarks(ctx),
@@ -282,7 +285,8 @@ def _assemble_result(assembly: _AssemblyInput) -> PortraitResult:
         eye_sharpness_right=metrics.sharp_right,
         ear_left=metrics.ear_left,
         ear_right=metrics.ear_right,
-        eyes_closed=is_eyes_closed(mean_ear),
+        eyes_closed=eyes_closed,
+        is_squinting=is_squinting(mean_ear, eyes_closed),
         face_occluded=metrics.occlusion < PORTRAIT_FACE_OCCLUSION_MIN,
         occlusion_ratio=metrics.occlusion,
         dominant_emotion=metrics.emotion.label or None,
@@ -336,6 +340,11 @@ def compute_ear(landmarks: list[Any]) -> float:
 def is_eyes_closed(ear_value: float) -> bool:
     """Return True if EAR is below the closed-eye threshold."""
     return ear_value < PORTRAIT_EAR_CLOSED_MAX
+
+
+def is_squinting(ear_value: float, eyes_closed: bool) -> bool:
+    """Return True if eyes are open but EAR is below squint threshold."""
+    return (not eyes_closed) and (ear_value < PORTRAIT_EAR_SQUINT_MAX)
 
 
 @dataclass(frozen=True)

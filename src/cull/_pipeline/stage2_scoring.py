@@ -11,7 +11,7 @@ import cv2
 import numpy as np
 import torch
 from PIL import Image
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from torchvision.transforms import ToTensor
 from torchvision.transforms.functional import to_tensor as tv_to_tensor
 
@@ -49,6 +49,7 @@ from cull.stage2.portrait import PortraitResult, assess_portrait_from_array
 from cull.stage2.subject_blur import SubjectBlurInput, score_one as score_subject_blur
 from cull.stage2.taste import TasteScoreInput
 from cull.models import PortraitScores
+from cull.taste_features import TasteFeatureInputs, build_taste_feature_row, flatten_stage1_scores
 
 if TYPE_CHECKING:
     from cull._pipeline.stage2_runner import _BatchCtx, _Stage2BatchInput
@@ -430,6 +431,7 @@ def _to_portrait_scores(portrait: PortraitResult) -> PortraitScores:
         ear_left=portrait.ear_left,
         ear_right=portrait.ear_right,
         is_eyes_closed=portrait.eyes_closed,
+        is_squinting=portrait.is_squinting,
         dominant_emotion=portrait.dominant_emotion,
         valence=portrait.valence,
         arousal=portrait.arousal,
@@ -467,14 +469,6 @@ def _apply_subject_blur_to_scores(apply_in: _SubjectBlurApplyInput) -> dict[str,
     return portraits
 
 
-def _build_taste_scalar_row(iqa: IqaScores) -> np.ndarray:
-    """Bundle iqa scalar metrics into a feature row for the taste model."""
-    return np.asarray(
-        [iqa.topiq, iqa.laion_aesthetic, iqa.clipiqa, iqa.exposure],
-        dtype=np.float32,
-    )
-
-
 class _TasteApplyInput(BaseModel):
     """Bundle for applying taste scores to an IQA batch."""
 
@@ -485,25 +479,56 @@ class _TasteApplyInput(BaseModel):
     batch_ctx: Any
 
 
-def _embedding_lookup(batch_ctx: "_BatchCtx") -> dict[str, np.ndarray]:
-    """Build a path-keyed lookup of already-computed CLIP embeddings from batch_ctx."""
-    return {str(path): row for path, row in batch_ctx.embedding_rows}
+class _TasteRowCtx(BaseModel):
+    """Bundle for building one photo's canonical taste feature row mid-Stage-2."""
+
+    model_config = {"arbitrary_types_allowed": True}
+
+    path: Path
+    iqa: IqaScores
+    batch_ctx: Any
+
+
+def _pre_taste_composite(iqa: IqaScores, config: CullConfig) -> float:
+    """Composite as it stands before taste is scored (taste term is zero here).
+
+    This is the analog of the OverrideEntry.stage2_composite historically
+    logged for the 602 real overrides, all of which predate a real taste
+    profile — their logged composite never carried a taste contribution.
+    """
+    return compute_composite(iqa, config).stage2.composite
+
+
+def _stage1_scores_for(path: Path, s1_results: dict[str, Any]) -> dict[str, float]:
+    """Look up Stage 1 scalar scores for a path, flattened via the canonical helper."""
+    return flatten_stage1_scores(s1_results.get(str(path)))
+
+
+def _taste_inputs_for(ctx: _TasteRowCtx) -> TasteFeatureInputs:
+    """Assemble canonical taste feature inputs for one photo mid-Stage-2."""
+    config = ctx.batch_ctx.loop_in.config
+    composition = ctx.iqa.composition_score
+    subject_blur = ctx.iqa.subject_blur_score
+    return TasteFeatureInputs(
+        stage1_scores=_stage1_scores_for(ctx.path, ctx.batch_ctx.loop_in.s1_results),
+        stage2_composite=_pre_taste_composite(ctx.iqa, config),
+        composition_composite=composition.composite if composition else None,
+        thirds_alignment=composition.thirds_alignment if composition else None,
+        negative_space_balance=composition.negative_space_balance if composition else None,
+        subject_blur_tenengrad=subject_blur.tenengrad if subject_blur else None,
+    )
 
 
 def _apply_taste_to_scores(apply_in: _TasteApplyInput) -> None:
     """Score taste for each photo in the chunk and patch iqa_list in-place.
 
-    Reuses the L2-normalised CLIP image_embeds already computed by the
-    shared Stage 2 CLIP forward pass (batch_ctx.embedding_rows) instead of
-    re-embedding each photo — mirrors _apply_precomputed_aesthetic.
+    Requires subject_blur to already be applied to iqa_list (see
+    stage2_runner._process_batch ordering) so its tenengrad feeds the row.
     """
-    embeddings = _embedding_lookup(apply_in.batch_ctx)
     taste_inputs = [
-        TasteScoreInput(
-            image_path=path,
-            scalar_features=_build_taste_scalar_row(iqa),
-            clip_embedding=embeddings.get(str(path)),
-        )
+        TasteScoreInput(feature_row=build_taste_feature_row(
+            _taste_inputs_for(_TasteRowCtx(path=path, iqa=iqa, batch_ctx=apply_in.batch_ctx))
+        ))
         for path, iqa in zip(apply_in.paths, apply_in.iqa_list)
     ]
     taste_results = taste_module.score_batch(taste_inputs)

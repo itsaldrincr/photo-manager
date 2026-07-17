@@ -293,7 +293,6 @@ PORTRAIT_NUM_FACES_MAX: int = 10
 PORTRAIT_FACE_DETECTION_CONFIDENCE_MIN: float = 0.5
 PORTRAIT_EAR_CLOSED_MAX: float = 0.20
 PORTRAIT_EAR_SQUINT_MAX: float = 0.25
-PORTRAIT_PRESENCE_SCORE_MIN: float = 0.70
 
 # Occlusion detection: MediaPipe's FaceLandmarker never populates per-landmark
 # `visibility`, so occlusion is measured from pixel texture instead. Small
@@ -320,6 +319,12 @@ PORTRAIT_FACE_OCCLUSION_MIN: float = 0.32
 # against — changing it would silently drift production accuracy away from
 # the benchmarked result.
 PORTRAIT_EMOTION_CROP_MARGIN_FRACTION: float = 0.25
+
+# ---------------------------------------------------------------------------
+# Scene boundary detection
+# ---------------------------------------------------------------------------
+
+SCENE_MIN_GAP_SECONDS: float = 120.0
 
 # ---------------------------------------------------------------------------
 # Burst grouping defaults

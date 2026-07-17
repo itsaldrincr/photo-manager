@@ -41,7 +41,7 @@ OUTLIER_EXIF_FOCAL: float = 200.0
 OUTLIER_THRESHOLD: float = 0.5
 INLIER_MAX_SCORE: float = 0.2
 SCENE_GAP_INDEX: int = 6
-SCENE_GAP_MULTIPLIER: float = 5.0
+SCENE_GAP_MULTIPLIER: float = 300.0  # Creates ~900 second gap, well above SCENE_MIN_GAP_SECONDS=120
 BASE_TIMESTAMP: datetime = datetime(2026, 4, 8, 12, 0, 0, tzinfo=timezone.utc)
 BASE_BLUR_TENENGRAD: float = 100.0
 BASE_FFT_RATIO: float = 0.5
@@ -340,3 +340,80 @@ def test_real_models_without_exif_degrade_gracefully(tmp_path: Path) -> None:
     score = scores[str(path)]
     assert score.exif_anomaly_score == 0.0
     assert score.scene_id == 0
+
+
+# ---------------------------------------------------------------------------
+# Scene boundary tests with SCENE_MIN_GAP_SECONDS
+# ---------------------------------------------------------------------------
+
+
+def test_scene_boundary_no_gap_under_120_seconds(tmp_path: Path) -> None:
+    """Photos with gaps under 120 seconds must remain in the same scene."""
+    stage1_results: list[Stage1Result] = []
+    stage2_results: list[Stage2Result] = []
+    for i in range(3):
+        path = tmp_path / f"rapid_{i:03d}.jpg"
+        time_offset = i * 30.0  # 30 seconds between photos
+        s1 = Stage1Result(
+            photo_path=path,
+            blur=_make_inlier_blur(),
+            exposure=_make_inlier_exposure(INLIER_DR_SCORE),
+            noise_score=BASE_NOISE_SCORE,
+            exif=ExifSummary(
+                iso=INLIER_EXIF_ISO,
+                shutter=INLIER_EXIF_SHUTTER,
+                aperture=INLIER_EXIF_APERTURE,
+                focal_length_mm=INLIER_EXIF_FOCAL,
+            ),
+            capture_time=BASE_TIMESTAMP + timedelta(seconds=time_offset),
+        )
+        s2 = Stage2Result(
+            photo_path=path,
+            topiq=0.5,
+            laion_aesthetic=0.5,
+            clipiqa=0.5,
+            composite=0.5,
+            palette_lab=(INLIER_LAB_VALUE, INLIER_LAB_VALUE, INLIER_LAB_VALUE),
+        )
+        stage1_results.append(s1)
+        stage2_results.append(s2)
+    input_in = ShootStatsInput(stage1_results=stage1_results, stage2_results=stage2_results)
+    scores = compute(input_in)
+    scene_ids = [scores[str(stage2_results[i].photo_path)].scene_id for i in range(3)]
+    assert scene_ids == [0, 0, 0], f"All photos should be in scene 0, got {scene_ids}"
+
+
+def test_scene_boundary_triggered_at_120_seconds(tmp_path: Path) -> None:
+    """A gap of greater than 120 seconds must trigger a new scene boundary."""
+    stage1_results: list[Stage1Result] = []
+    stage2_results: list[Stage2Result] = []
+    times = [0.0, 30.0, 150.1]  # Last gap is 120.1 seconds, just over threshold
+    for i, time_offset in enumerate(times):
+        path = tmp_path / f"boundary_{i:03d}.jpg"
+        s1 = Stage1Result(
+            photo_path=path,
+            blur=_make_inlier_blur(),
+            exposure=_make_inlier_exposure(INLIER_DR_SCORE),
+            noise_score=BASE_NOISE_SCORE,
+            exif=ExifSummary(
+                iso=INLIER_EXIF_ISO,
+                shutter=INLIER_EXIF_SHUTTER,
+                aperture=INLIER_EXIF_APERTURE,
+                focal_length_mm=INLIER_EXIF_FOCAL,
+            ),
+            capture_time=BASE_TIMESTAMP + timedelta(seconds=time_offset),
+        )
+        s2 = Stage2Result(
+            photo_path=path,
+            topiq=0.5,
+            laion_aesthetic=0.5,
+            clipiqa=0.5,
+            composite=0.5,
+            palette_lab=(INLIER_LAB_VALUE, INLIER_LAB_VALUE, INLIER_LAB_VALUE),
+        )
+        stage1_results.append(s1)
+        stage2_results.append(s2)
+    input_in = ShootStatsInput(stage1_results=stage1_results, stage2_results=stage2_results)
+    scores = compute(input_in)
+    boundary_path = str(stage2_results[2].photo_path)
+    assert scores[boundary_path].scene_start_bonus > 0.0

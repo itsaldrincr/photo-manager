@@ -16,6 +16,7 @@ from cull.stage2.portrait import (
     compute_ear,
     detect_occlusion,
     is_eyes_closed,
+    is_squinting,
 )
 
 # ---------------------------------------------------------------------------
@@ -274,5 +275,35 @@ def test_portrait_result_default_construction() -> None:
     result = PortraitResult()
     assert result.face_count == 0
     assert result.eyes_closed is False
+    assert result.is_squinting is False
     assert result.face_occluded is False
     assert result.dominant_emotion is None
+
+
+# ---------------------------------------------------------------------------
+# is_squinting tests
+# ---------------------------------------------------------------------------
+
+
+def test_is_squinting_true_between_thresholds() -> None:
+    """is_squinting must return True when EAR is between closed and squint thresholds."""
+    ear_squint = 0.22  # between CLOSED_MAX (0.20) and SQUINT_MAX (0.25)
+    assert is_squinting(ear_squint, eyes_closed=False) is True
+
+
+def test_is_squinting_false_above_squint_threshold() -> None:
+    """is_squinting must return False when EAR is above squint threshold."""
+    ear_open = 0.30
+    assert is_squinting(ear_open, eyes_closed=False) is False
+
+
+def test_is_squinting_false_when_eyes_closed() -> None:
+    """is_squinting must return False when eyes are closed, regardless of EAR."""
+    ear_closed = 0.10  # below CLOSED_MAX
+    assert is_squinting(ear_closed, eyes_closed=True) is False
+
+
+def test_is_squinting_false_at_squint_threshold() -> None:
+    """is_squinting must return False when EAR equals squint threshold exactly."""
+    ear_threshold = 0.25  # exactly PORTRAIT_EAR_SQUINT_MAX
+    assert is_squinting(ear_threshold, eyes_closed=False) is False

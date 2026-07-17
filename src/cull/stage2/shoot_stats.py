@@ -13,6 +13,7 @@ from cull.config import (
     EXIF_ANOMALY_SIGMA,
     EXPOSURE_DRIFT_SIGMA,
     PALETTE_OUTLIER_SIGMA,
+    SCENE_MIN_GAP_SECONDS,
 )
 from cull.models import ShootStatsScore
 
@@ -185,7 +186,8 @@ def _capture_seconds(s1: Any) -> float | None:
 def _detect_scene_boundaries(stage1_results: list[Any]) -> list[int]:
     """Mark photo indices that follow a temporal gap larger than the burst gap."""
     boundaries: list[int] = [0] if stage1_results else []
-    threshold = BURST_GAP_DEFAULT_SECONDS * SCENE_BOUNDARY_GAP_MULTIPLIER
+    multiplier_threshold = BURST_GAP_DEFAULT_SECONDS * SCENE_BOUNDARY_GAP_MULTIPLIER
+    threshold = max(SCENE_MIN_GAP_SECONDS, multiplier_threshold)
     previous: float | None = None
     for index, s1 in enumerate(stage1_results):
         current = _capture_seconds(s1)
