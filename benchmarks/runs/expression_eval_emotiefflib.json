@@ -1,0 +1,279 @@
+{
+  "timing": {
+    "load_seconds": 13.765,
+    "rss_before_load_mb": 73.3,
+    "rss_after_load_mb": 849.1
+  },
+  "readings": [
+    {
+      "name": "DSCF0166 52 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.38743425003485754,
+      "dominant_emotion": "Surprise",
+      "valence": 0.20369848608970642,
+      "arousal": 0.14354434609413147,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0179.JPG",
+      "has_face": true,
+      "latency_seconds": 0.008636582992039621,
+      "dominant_emotion": "Sadness",
+      "valence": 0.1125754714012146,
+      "arousal": 0.10814169049263,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0180 57 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.006369333015754819,
+      "dominant_emotion": "Neutral",
+      "valence": 0.03891148418188095,
+      "arousal": -0.04836075380444527,
+      "va_quadrant": "pos_valence_neg_arousal"
+    },
+    {
+      "name": "DSCF0180.JPG",
+      "has_face": true,
+      "latency_seconds": 0.009931667009368539,
+      "dominant_emotion": "Neutral",
+      "valence": 0.1956082582473755,
+      "arousal": 0.17331086099147797,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0210.JPG",
+      "has_face": true,
+      "latency_seconds": 0.015854666999075562,
+      "dominant_emotion": "Happiness",
+      "valence": 0.8176509141921997,
+      "arousal": 0.15262600779533386,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0213.JPG",
+      "has_face": true,
+      "latency_seconds": 0.0068630409659817815,
+      "dominant_emotion": "Neutral",
+      "valence": -0.29154306650161743,
+      "arousal": 0.10102897882461548,
+      "va_quadrant": "neg_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0218 68 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.006523541989736259,
+      "dominant_emotion": "Neutral",
+      "valence": 0.1572760045528412,
+      "arousal": 0.08517991006374359,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0218.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010573790990747511,
+      "dominant_emotion": "Neutral",
+      "valence": 0.14097657799720764,
+      "arousal": 0.015780005604028702,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0226.JPG",
+      "has_face": true,
+      "latency_seconds": 0.006398333003744483,
+      "dominant_emotion": "Neutral",
+      "valence": 0.09028539061546326,
+      "arousal": 0.1472238451242447,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0244.JPG",
+      "has_face": true,
+      "latency_seconds": 0.007131082995329052,
+      "dominant_emotion": "Sadness",
+      "valence": -0.6405203938484192,
+      "arousal": -0.5957825779914856,
+      "va_quadrant": "neg_valence_neg_arousal"
+    },
+    {
+      "name": "DSCF0252.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010291666025295854,
+      "dominant_emotion": "Neutral",
+      "valence": -0.17184144258499146,
+      "arousal": 0.024343162775039673,
+      "va_quadrant": "neg_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0261.JPG",
+      "has_face": true,
+      "latency_seconds": 0.007913042034488171,
+      "dominant_emotion": "Surprise",
+      "valence": 0.2711014151573181,
+      "arousal": 0.1788163036108017,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0264.JPG",
+      "has_face": true,
+      "latency_seconds": 0.006538290996104479,
+      "dominant_emotion": "Neutral",
+      "valence": -0.3213002383708954,
+      "arousal": 0.19567781686782837,
+      "va_quadrant": "neg_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0354.JPG",
+      "has_face": true,
+      "latency_seconds": 0.012421166989952326,
+      "dominant_emotion": "Neutral",
+      "valence": -0.1735081672668457,
+      "arousal": -0.027983207255601883,
+      "va_quadrant": "neg_valence_neg_arousal"
+    },
+    {
+      "name": "DSCF0363.JPG",
+      "has_face": true,
+      "latency_seconds": 0.0063364580273628235,
+      "dominant_emotion": "Happiness",
+      "valence": 0.6340799331665039,
+      "arousal": 0.14165383577346802,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0366.JPG",
+      "has_face": true,
+      "latency_seconds": 0.00731979199917987,
+      "dominant_emotion": "Disgust",
+      "valence": 0.13575230538845062,
+      "arousal": 0.08034219592809677,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0369.JPG",
+      "has_face": true,
+      "latency_seconds": 0.006325708003714681,
+      "dominant_emotion": "Surprise",
+      "valence": 0.0876404419541359,
+      "arousal": 0.12665726244449615,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0370 145 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.006776791997253895,
+      "dominant_emotion": "Surprise",
+      "valence": -0.16469749808311462,
+      "arousal": 0.0701378583908081,
+      "va_quadrant": "neg_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0373.JPG",
+      "has_face": true,
+      "latency_seconds": 0.006837500026449561,
+      "dominant_emotion": "Neutral",
+      "valence": 0.007115669548511505,
+      "arousal": -0.1219959408044815,
+      "va_quadrant": "pos_valence_neg_arousal"
+    },
+    {
+      "name": "DSCF0377.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010777291026897728,
+      "dominant_emotion": "Contempt",
+      "valence": 0.0559287890791893,
+      "arousal": -0.1326919049024582,
+      "va_quadrant": "pos_valence_neg_arousal"
+    },
+    {
+      "name": "DSCF0384.JPG",
+      "has_face": true,
+      "latency_seconds": 0.006930541945621371,
+      "dominant_emotion": "Surprise",
+      "valence": -0.10170940309762955,
+      "arousal": 0.19013454020023346,
+      "va_quadrant": "neg_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0387.JPG",
+      "has_face": true,
+      "latency_seconds": 0.006554833031259477,
+      "dominant_emotion": "Neutral",
+      "valence": -0.27094244956970215,
+      "arousal": -0.10022591054439545,
+      "va_quadrant": "neg_valence_neg_arousal"
+    },
+    {
+      "name": "DSCF0457.JPG",
+      "has_face": true,
+      "latency_seconds": 0.012067999981809407,
+      "dominant_emotion": "Sadness",
+      "valence": 0.23177886009216309,
+      "arousal": -0.13640792667865753,
+      "va_quadrant": "pos_valence_neg_arousal"
+    },
+    {
+      "name": "DSCF0484.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011228625022340566,
+      "dominant_emotion": "Neutral",
+      "valence": 0.1450107991695404,
+      "arousal": 0.04674477502703667,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0494.JPG",
+      "has_face": true,
+      "latency_seconds": 0.008259165973868221,
+      "dominant_emotion": "Neutral",
+      "valence": 0.18564388155937195,
+      "arousal": 0.1830344796180725,
+      "va_quadrant": "pos_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF0588 181 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.00702612497843802,
+      "dominant_emotion": "Surprise",
+      "valence": -0.266126811504364,
+      "arousal": 0.19763365387916565,
+      "va_quadrant": "neg_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF1422.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010148584027774632,
+      "dominant_emotion": "Anger",
+      "valence": -0.03473200649023056,
+      "arousal": 0.11616581678390503,
+      "va_quadrant": "neg_valence_pos_arousal"
+    },
+    {
+      "name": "DSCF1490.JPG",
+      "has_face": true,
+      "latency_seconds": 0.007490625022910535,
+      "dominant_emotion": "Happiness",
+      "valence": 0.7253948450088501,
+      "arousal": -0.027935225516557693,
+      "va_quadrant": "pos_valence_neg_arousal"
+    },
+    {
+      "name": "DSCF1491.JPG",
+      "has_face": true,
+      "latency_seconds": 0.007127458055038005,
+      "dominant_emotion": "Neutral",
+      "valence": 0.08412070572376251,
+      "arousal": -0.14337900280952454,
+      "va_quadrant": "pos_valence_neg_arousal"
+    },
+    {
+      "name": "DSCF1543.JPG",
+      "has_face": true,
+      "latency_seconds": 0.006743374979123473,
+      "dominant_emotion": "Neutral",
+      "valence": 0.1461600959300995,
+      "arousal": 0.15853285789489746,
+      "va_quadrant": "pos_valence_pos_arousal"
+    }
+  ]
+}
