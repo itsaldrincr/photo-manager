@@ -1,15 +1,15 @@
 {
   "timing": {
-    "load_seconds": 5.523,
-    "rss_before_load_mb": 71.5,
-    "rss_after_load_mb": 581.1
+    "load_seconds": 7.944,
+    "rss_before_load_mb": 71.6,
+    "rss_after_load_mb": 304.4
   },
   "readings": [
     {
       "name": "DSCF7611.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7611.JPG",
       "has_face": false,
-      "latency_seconds": 0.005923332995735109,
+      "latency_seconds": 0.00922295800410211,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -18,7 +18,7 @@
       "name": "DSCF7656.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7656.JPG",
       "has_face": false,
-      "latency_seconds": 0.0017397500341758132,
+      "latency_seconds": 0.003087957971729338,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -27,7 +27,7 @@
       "name": "DSCF7672.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7672.JPG",
       "has_face": false,
-      "latency_seconds": 0.0016706659807823598,
+      "latency_seconds": 0.0021872909856028855,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -36,7 +36,7 @@
       "name": "DSCF7901.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7901.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015684160171076655,
+      "latency_seconds": 0.0020455839694477618,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -45,7 +45,7 @@
       "name": "DSCF7962.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7962.JPG",
       "has_face": false,
-      "latency_seconds": 0.007762624998576939,
+      "latency_seconds": 0.011548625014256686,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -54,7 +54,7 @@
       "name": "DSCF7971.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7971.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015224580420181155,
+      "latency_seconds": 0.0023258329601958394,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -63,7 +63,7 @@
       "name": "DSCF7979.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7979.JPG",
       "has_face": false,
-      "latency_seconds": 0.0018264580285176635,
+      "latency_seconds": 0.0022531659924425185,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -72,7 +72,7 @@
       "name": "DSCF8597.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8597.JPG",
       "has_face": false,
-      "latency_seconds": 0.007527582987677306,
+      "latency_seconds": 0.00905233301455155,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -81,7 +81,7 @@
       "name": "DSCF8621.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8621.JPG",
       "has_face": false,
-      "latency_seconds": 0.00686445803148672,
+      "latency_seconds": 0.008005083014722914,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -90,7 +90,7 @@
       "name": "DSCF8637.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8637.JPG",
       "has_face": false,
-      "latency_seconds": 0.001593333960045129,
+      "latency_seconds": 0.002277666993904859,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -99,7 +99,7 @@
       "name": "DSCF8651.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8651.JPG",
       "has_face": false,
-      "latency_seconds": 0.001572042005136609,
+      "latency_seconds": 0.002697375020943582,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -108,7 +108,7 @@
       "name": "DSCF8664.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8664.JPG",
       "has_face": false,
-      "latency_seconds": 0.00161725003272295,
+      "latency_seconds": 0.00329408299876377,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -117,7 +117,7 @@
       "name": "DSCF8867.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8867.JPG",
       "has_face": true,
-      "latency_seconds": 0.008133667055517435,
+      "latency_seconds": 0.013229666976258159,
       "ear_eyes_closed": false,
       "blendshape_eyes_closed": false,
       "expression_bucket": "neutral"
@@ -126,7 +126,7 @@
       "name": "DSCF8876.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8876.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015742090181447566,
+      "latency_seconds": 0.0021427919855341315,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -135,7 +135,7 @@
       "name": "DSCF8895.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8895.JPG",
       "has_face": false,
-      "latency_seconds": 0.001683125039562583,
+      "latency_seconds": 0.0022048329701647162,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -144,7 +144,7 @@
       "name": "DSCF8917.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8917.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015816250233910978,
+      "latency_seconds": 0.0020818329649046063,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -153,7 +153,7 @@
       "name": "DSCF8941.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8941.JPG",
       "has_face": false,
-      "latency_seconds": 0.001524624996818602,
+      "latency_seconds": 0.0017560829874128103,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -162,7 +162,7 @@
       "name": "DSCF8957.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8957.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015445839962922037,
+      "latency_seconds": 0.002293541969265789,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -171,7 +171,7 @@
       "name": "DSCF8995.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8995.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015310000162571669,
+      "latency_seconds": 0.007013124995864928,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -180,7 +180,7 @@
       "name": "DSCF9016.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9016.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015301670064218342,
+      "latency_seconds": 0.001737416023388505,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -189,7 +189,7 @@
       "name": "DSCF9039.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9039.JPG",
       "has_face": false,
-      "latency_seconds": 0.006457625015173107,
+      "latency_seconds": 0.009430875012185425,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -198,7 +198,7 @@
       "name": "DSCF9049.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9049.JPG",
       "has_face": false,
-      "latency_seconds": 0.0016032089479267597,
+      "latency_seconds": 0.002096833020914346,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -207,7 +207,7 @@
       "name": "DSCF9066.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9066.JPG",
       "has_face": false,
-      "latency_seconds": 0.001587499980814755,
+      "latency_seconds": 0.0022738329716958106,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -216,7 +216,7 @@
       "name": "DSCF9095.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9095.JPG",
       "has_face": false,
-      "latency_seconds": 0.001598333998117596,
+      "latency_seconds": 0.0019471249543130398,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -225,7 +225,7 @@
       "name": "DSCF9110.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9110.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015949169755913317,
+      "latency_seconds": 0.002143416029866785,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -234,7 +234,7 @@
       "name": "DSCF9113.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9113.JPG",
       "has_face": false,
-      "latency_seconds": 0.0016014589928090572,
+      "latency_seconds": 0.0021317090140655637,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -243,7 +243,7 @@
       "name": "DSCF9149.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9149.JPG",
       "has_face": false,
-      "latency_seconds": 0.0016389999655075371,
+      "latency_seconds": 0.0026522499974817038,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -252,7 +252,7 @@
       "name": "DSCF9159.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9159.JPG",
       "has_face": false,
-      "latency_seconds": 0.0016767919878475368,
+      "latency_seconds": 0.0021030829520896077,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -261,7 +261,7 @@
       "name": "DSCF9162.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9162.JPG",
       "has_face": false,
-      "latency_seconds": 0.0016691250493749976,
+      "latency_seconds": 0.001926290977280587,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -270,7 +270,7 @@
       "name": "DSCF9181.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9181.JPG",
       "has_face": false,
-      "latency_seconds": 0.001675125036854297,
+      "latency_seconds": 0.0017729579703882337,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -279,7 +279,7 @@
       "name": "DSCF9206.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9206.JPG",
       "has_face": false,
-      "latency_seconds": 0.001690375036559999,
+      "latency_seconds": 0.0021888749906793237,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -288,7 +288,7 @@
       "name": "DSCF9210.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9210.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015791250043548644,
+      "latency_seconds": 0.0022231669863685966,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -297,7 +297,7 @@
       "name": "DSCF9215.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9215.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015249999705702066,
+      "latency_seconds": 0.0020797920296899974,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -306,7 +306,7 @@
       "name": "DSCF9290.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9290.JPG",
       "has_face": false,
-      "latency_seconds": 0.0017059999518096447,
+      "latency_seconds": 0.0019211249891668558,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -315,7 +315,7 @@
       "name": "DSCF9642.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9642.JPG",
       "has_face": false,
-      "latency_seconds": 0.0016177500365301967,
+      "latency_seconds": 0.0017715409630909562,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -324,7 +324,7 @@
       "name": "DSCF9844.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9844.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015658749616704881,
+      "latency_seconds": 0.0022263749851845205,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -333,7 +333,7 @@
       "name": "DSCF9848.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9848.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015947920037433505,
+      "latency_seconds": 0.0026318749878555536,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -342,7 +342,7 @@
       "name": "DSCF9851.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9851.JPG",
       "has_face": false,
-      "latency_seconds": 0.0016062089707702398,
+      "latency_seconds": 0.0016288749757222831,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -351,7 +351,7 @@
       "name": "DSCF9868.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9868.JPG",
       "has_face": false,
-      "latency_seconds": 0.001580708019901067,
+      "latency_seconds": 0.0017141250427812338,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -360,7 +360,7 @@
       "name": "DSCF9876.JPG",
       "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9876.JPG",
       "has_face": false,
-      "latency_seconds": 0.001647958008106798,
+      "latency_seconds": 0.0230855830013752,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -369,7 +369,7 @@
       "name": "DSCF7340.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF7340.JPG",
       "has_face": false,
-      "latency_seconds": 0.006827417004387826,
+      "latency_seconds": 0.017906916968058795,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -378,7 +378,7 @@
       "name": "DSCF7966.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF7966.JPG",
       "has_face": false,
-      "latency_seconds": 0.007003791979514062,
+      "latency_seconds": 0.008915042039006948,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -387,7 +387,7 @@
       "name": "DSCF8580.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF8580.JPG",
       "has_face": false,
-      "latency_seconds": 0.006381041021086276,
+      "latency_seconds": 0.007233374984934926,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -396,7 +396,7 @@
       "name": "DSCF8595.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF8595.JPG",
       "has_face": false,
-      "latency_seconds": 0.006659917009528726,
+      "latency_seconds": 0.0074708330212160945,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -405,7 +405,7 @@
       "name": "DSCF8672.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF8672.JPG",
       "has_face": false,
-      "latency_seconds": 0.006527416000608355,
+      "latency_seconds": 0.008455167000647634,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -414,7 +414,7 @@
       "name": "DSCF8674.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF8674.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015889169881120324,
+      "latency_seconds": 0.001841291959863156,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -423,7 +423,7 @@
       "name": "DSCF8821.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF8821.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015942500322125852,
+      "latency_seconds": 0.0017964160069823265,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -432,7 +432,7 @@
       "name": "DSCF8898.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF8898.JPG",
       "has_face": false,
-      "latency_seconds": 0.0014907079748809338,
+      "latency_seconds": 0.00214470800710842,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -441,7 +441,7 @@
       "name": "DSCF8930.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF8930.JPG",
       "has_face": false,
-      "latency_seconds": 0.0014947079471312463,
+      "latency_seconds": 0.0017776659806258976,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -450,7 +450,7 @@
       "name": "DSCF8997.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF8997.JPG",
       "has_face": false,
-      "latency_seconds": 0.006730500026606023,
+      "latency_seconds": 0.007949749997351319,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -459,7 +459,7 @@
       "name": "DSCF9053.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF9053.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015488750068470836,
+      "latency_seconds": 0.002306999987922609,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -468,7 +468,7 @@
       "name": "DSCF9198.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF9198.JPG",
       "has_face": false,
-      "latency_seconds": 0.0014847919810563326,
+      "latency_seconds": 0.0021645830129273236,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -477,7 +477,7 @@
       "name": "DSCF9207.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF9207.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015303330146707594,
+      "latency_seconds": 0.0022511249990202487,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -486,7 +486,7 @@
       "name": "DSCF9317.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF9317.JPG",
       "has_face": false,
-      "latency_seconds": 0.0014725420041941106,
+      "latency_seconds": 0.0018230410059913993,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -495,7 +495,7 @@
       "name": "DSCF9632.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF9632.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015266250120475888,
+      "latency_seconds": 0.001787375018466264,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -504,7 +504,7 @@
       "name": "DSCF9647.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF9647.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015456249820999801,
+      "latency_seconds": 0.001994333986658603,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -513,7 +513,7 @@
       "name": "DSCF9661.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF9661.JPG",
       "has_face": false,
-      "latency_seconds": 0.001577374991029501,
+      "latency_seconds": 0.0021262079826556146,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -522,7 +522,7 @@
       "name": "DSCF9839.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF9839.JPG",
       "has_face": false,
-      "latency_seconds": 0.006777707953006029,
+      "latency_seconds": 0.008694834017660469,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -531,7 +531,7 @@
       "name": "DSCF9901.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF9901.JPG",
       "has_face": false,
-      "latency_seconds": 0.0015199589543044567,
+      "latency_seconds": 0.002044582972303033,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"
@@ -540,7 +540,7 @@
       "name": "DSCF9906.JPG",
       "path": "/Users/alrelador/Desktop/cull-test/DSCF9906.JPG",
       "has_face": false,
-      "latency_seconds": 0.001497040968388319,
+      "latency_seconds": 0.002083541010506451,
       "ear_eyes_closed": null,
       "blendshape_eyes_closed": null,
       "expression_bucket": "unknown"

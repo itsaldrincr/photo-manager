@@ -1,0 +1,15 @@
+{
+  "timing": {
+    "load_seconds": 8.658,
+    "rss_before_load_mb": 72.0,
+    "rss_after_load_mb": 366.9
+  },
+  "readings": [
+    {
+      "name": "DSCF8867.JPG",
+      "latency_seconds": 4.4602073749993,
+      "dominant_emotion": "happy",
+      "expression_bucket": "happy"
+    }
+  ]
+}

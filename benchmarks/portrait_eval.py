@@ -23,6 +23,8 @@ from portrait_eval_models import (
     DeepfaceStageOutput,
     ExpressionBucket,
     MediapipeStageOutput,
+    MIN_AGREEMENT_SAMPLE_SIZE,
+    StageTiming,
     SWAP_AGREEMENT_MIN,
     SWAP_RSS_SAVINGS_MIN_MB,
     SWAP_SPEEDUP_MIN,
@@ -133,13 +135,26 @@ def _mean(values: list[float]) -> float:
     return round(sum(values) / len(values), 4) if values else 0.0
 
 
+def _timing_dict(timing: StageTiming) -> dict:
+    """Serialize a StageTiming including its computed rss_delta_mb property."""
+    return {**timing.model_dump(), "rss_delta_mb": timing.rss_delta_mb}
+
+
 def _recommend(report_inputs: "_RecommendationInputs") -> tuple[str, list[str]]:
     """Apply the swap/no-swap rubric and return (recommendation, reasoning)."""
     reasons = [
-        f"agreement {report_inputs.agreement_rate:.1%} (threshold {SWAP_AGREEMENT_MIN:.0%})",
+        f"agreement {report_inputs.agreement_rate:.1%} on n={report_inputs.sample_size} "
+        f"face photos (threshold {SWAP_AGREEMENT_MIN:.0%})",
         f"speedup {report_inputs.speedup_ratio:.2f}x (threshold {SWAP_SPEEDUP_MIN:.2f}x)",
         f"RSS savings {report_inputs.rss_savings_mb:.1f} MB (threshold {SWAP_RSS_SAVINGS_MIN_MB:.0f} MB)",
     ]
+    if report_inputs.sample_size < MIN_AGREEMENT_SAMPLE_SIZE:
+        reasons.append(
+            f"sample size n={report_inputs.sample_size} is below the "
+            f"minimum of {MIN_AGREEMENT_SAMPLE_SIZE} face photos needed to trust the "
+            "agreement rate; latency/RSS findings below are still valid and directionally strong"
+        )
+        return "INCONCLUSIVE", reasons
     agreement_ok = report_inputs.agreement_rate >= SWAP_AGREEMENT_MIN
     lighter_faster = (
         report_inputs.speedup_ratio >= SWAP_SPEEDUP_MIN
@@ -158,6 +173,7 @@ class _RecommendationInputs(BaseModel):
     agreement_rate: float
     speedup_ratio: float
     rss_savings_mb: float
+    sample_size: int
 
 
 def _build_report(stage_outputs: "_StageOutputs") -> EvalReport:
@@ -174,15 +190,16 @@ def _build_report(stage_outputs: "_StageOutputs") -> EvalReport:
     speedup = round(df_mean / mp_mean, 2) if mp_mean else 0.0
     rss_savings = df_out.timing.rss_delta_mb - mp_out.timing.rss_delta_mb
     recommendation, reasoning = _recommend(_RecommendationInputs(
-        agreement_rate=agreement_rate, speedup_ratio=speedup, rss_savings_mb=rss_savings,
+        agreement_rate=agreement_rate, speedup_ratio=speedup,
+        rss_savings_mb=rss_savings, sample_size=len(merged),
     ))
     return EvalReport(
         photo_count_total=stage_outputs.photo_count_total,
         face_photo_count=len(merged),
         agreement_rate=agreement_rate,
         eyes_closed_cross_check_rate=cross_check,
-        mediapipe_timing=mp_out.timing.model_dump(),
-        deepface_timing=df_out.timing.model_dump(),
+        mediapipe_timing=_timing_dict(mp_out.timing),
+        deepface_timing=_timing_dict(df_out.timing),
         mediapipe_mean_latency_seconds=mp_mean,
         deepface_mean_latency_seconds=df_mean,
         speedup_ratio=speedup,
@@ -225,6 +242,7 @@ def _report_header_lines(report: EvalReport) -> list[str]:
         f"- MediaPipe load: {mp_t['load_seconds']}s, RSS delta {mp_t['rss_delta_mb']} MB",
         f"- DeepFace load: {df_t['load_seconds']}s, RSS delta {df_t['rss_delta_mb']} MB",
         "",
+        *_sample_size_note(report),
         f"## Recommendation: {report.recommendation}",
         "",
         *[f"- {r}" for r in report.reasoning],
@@ -233,6 +251,21 @@ def _report_header_lines(report: EvalReport) -> list[str]:
         "",
         "| photo | mediapipe bucket | deepface bucket | deepface label |",
         "|---|---|---|---|",
+    ]
+
+
+def _sample_size_note(report: EvalReport) -> list[str]:
+    """Return a caveat block when the face-bearing sample is too small to trust."""
+    if report.face_photo_count >= MIN_AGREEMENT_SAMPLE_SIZE:
+        return []
+    return [
+        "> **Caveat:** eval_set (benchmarks/eval_set) and the extra photos pulled from "
+        "/Users/alrelador/Desktop/cull-test are predominantly non-portrait (wildlife/travel) "
+        f"shots at MediaPipe's production confidence threshold — only "
+        f"{report.face_photo_count} of {report.photo_count_total} candidate photos had a "
+        "detectable face. The agreement rate below is not statistically meaningful; the "
+        "latency and RSS findings do not depend on sample size and remain valid.",
+        "",
     ]
 
 

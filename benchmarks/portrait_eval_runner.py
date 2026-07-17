@@ -33,7 +33,6 @@ from portrait_eval_models import (
     bucket_from_deepface_label,
 )
 
-MIN_FACE_DETECTION_CONFIDENCE: float = 0.5
 SINGLE_FACE_MAX: int = 1
 
 _BLENDSHAPE_FIELD_NAMES: dict[str, str] = {
@@ -98,7 +97,11 @@ def _bootstrap_offline_env() -> None:
 def _build_face_landmarker() -> Any:
     """Construct a blendshapes-enabled FaceLandmarker from the shared model cache."""
     import mediapipe as mp  # noqa: PLC0415
-    from cull.config import FACE_LANDMARKER_FILENAME, ModelCacheConfig  # noqa: PLC0415
+    from cull.config import (  # noqa: PLC0415
+        FACE_LANDMARKER_FILENAME,
+        PORTRAIT_FACE_DETECTION_CONFIDENCE_MIN,
+        ModelCacheConfig,
+    )
 
     cache = ModelCacheConfig.from_env()
     model_path = cache.mediapipe_dir / FACE_LANDMARKER_FILENAME
@@ -107,7 +110,7 @@ def _build_face_landmarker() -> Any:
         base_options=base_opts,
         running_mode=mp.tasks.vision.RunningMode.IMAGE,
         num_faces=SINGLE_FACE_MAX,
-        min_face_detection_confidence=MIN_FACE_DETECTION_CONFIDENCE,
+        min_face_detection_confidence=PORTRAIT_FACE_DETECTION_CONFIDENCE_MIN,
         output_face_blendshapes=True,
     )
     return mp.tasks.vision.FaceLandmarker.create_from_options(opts)
@@ -116,7 +119,6 @@ def _build_face_landmarker() -> Any:
 def _detect_one_mediapipe(photo_path: Path, landmarker: Any) -> MediapipeReading:
     """Run one photo through the blendshapes-enabled landmarker; time detect() only."""
     import mediapipe as mp  # noqa: PLC0415
-    from cull.stage2.portrait import compute_ear, is_eyes_closed  # noqa: PLC0415
 
     image = cv2.imread(str(photo_path))
     if image is None:

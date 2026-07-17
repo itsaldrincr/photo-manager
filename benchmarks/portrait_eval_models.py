@@ -32,6 +32,7 @@ BLENDSHAPE_BROW_INNER_UP_SURPRISE_MIN: float = 0.3
 SWAP_AGREEMENT_MIN: float = 0.90
 SWAP_SPEEDUP_MIN: float = 1.5
 SWAP_RSS_SAVINGS_MIN_MB: float = 200.0
+MIN_AGREEMENT_SAMPLE_SIZE: int = 10
 
 _DEEPFACE_BUCKETS: dict[str, ExpressionBucket] = {
     "happy": "happy",
