@@ -73,6 +73,18 @@ class _AdviceInput(BaseModel):
     keep_rate: float
 
 
+class _PortraitWithEmotion(BaseModel):
+    """Portrait stats extended with mean valence/arousal."""
+
+    stats: PortraitStats
+    mean_valence: float | None = None
+    mean_arousal: float | None = None
+
+
+# Module-level cache for portrait emotion data (set in build_report_card, used in render_report_card)
+_portrait_emotion_cache: _PortraitWithEmotion | None = None
+
+
 # ---------------------------------------------------------------------------
 # Session loading
 # ---------------------------------------------------------------------------
@@ -298,6 +310,23 @@ def _collect_portrait_scores(stage2: Stage2Result | None) -> tuple[float | None,
     return avg_sharpness, p.is_eyes_closed
 
 
+def _compute_emotion_means(session: SessionResult) -> tuple[float | None, float | None]:
+    """Compute mean valence and arousal across keeper face photos."""
+    keeper_decisions = [d for d in session.decisions if d.decision in _KEEPER_LABELS]
+    valences = []
+    arousals = []
+    for decision in keeper_decisions:
+        if decision.stage2 and decision.stage2.portrait:
+            p = decision.stage2.portrait
+            if p.valence is not None:
+                valences.append(p.valence)
+            if p.arousal is not None:
+                arousals.append(p.arousal)
+    mean_valence = statistics.mean(valences) if valences else None
+    mean_arousal = statistics.mean(arousals) if arousals else None
+    return mean_valence, mean_arousal
+
+
 def _compute_portrait_stats(session: SessionResult) -> PortraitStats | None:
     """Compute portrait aggregate stats; return None if no portrait data exists."""
     keeper_decisions = [d for d in session.decisions if d.decision in _KEEPER_LABELS]
@@ -402,6 +431,7 @@ class _CardMetrics(BaseModel):
     breakdown: RejectBreakdown
     exif_patterns: ExifPatterns
     portrait_stats: PortraitStats | None
+    portrait_emotion: _PortraitWithEmotion | None = None
     timing: SessionTiming2
     advice: list[str]
 
@@ -411,13 +441,23 @@ def _compute_metrics(session: SessionResult) -> _CardMetrics:
     keep_rate, keep_count, reject_count = _compute_keep_rate(session)
     breakdown = _compute_reject_breakdown(session)
     exif_patterns = _compute_exif_patterns(session)
+    portrait_stats = _compute_portrait_stats(session)
+    portrait_emotion = None
+    if portrait_stats:
+        mean_val, mean_arous = _compute_emotion_means(session)
+        portrait_emotion = _PortraitWithEmotion(
+            stats=portrait_stats,
+            mean_valence=mean_val,
+            mean_arousal=mean_arous,
+        )
     return _CardMetrics(
         keep_rate=keep_rate,
         keep_count=keep_count,
         reject_count=reject_count,
         breakdown=breakdown,
         exif_patterns=exif_patterns,
-        portrait_stats=_compute_portrait_stats(session),
+        portrait_stats=portrait_stats,
+        portrait_emotion=portrait_emotion,
         timing=_compute_timing(session),
         advice=_generate_advice(_AdviceInput(breakdown=breakdown, exif=exif_patterns, keep_rate=keep_rate)),
     )
@@ -425,8 +465,10 @@ def _compute_metrics(session: SessionResult) -> _CardMetrics:
 
 def build_report_card(source: Path) -> ReportCard:
     """Load session, compute all metrics, and return a populated ReportCard."""
+    global _portrait_emotion_cache
     session = _load_session(source)
     metrics = _compute_metrics(session)
+    _portrait_emotion_cache = metrics.portrait_emotion
     return ReportCard(
         source_path=str(source),
         keep_rate=metrics.keep_rate,
@@ -475,12 +517,17 @@ def _render_exif_panel(card: ReportCard) -> Panel:
     return Panel(content, title="EXIF Patterns", border_style=PANEL_BORDER_STYLE)
 
 
-def _render_portrait_panel(stats: PortraitStats) -> Panel:
-    """Build the portrait stats Rich Panel."""
+def _render_portrait_panel(portrait_data: _PortraitWithEmotion) -> Panel:
+    """Build the portrait stats Rich Panel with emotion metrics."""
+    stats = portrait_data.stats
     content = Text()
     content.append(f"Unique subjects: {stats.unique_subjects}\n")
     content.append(f"Eye sharpness median: {stats.eye_sharpness_median:.3f}\n")
     content.append(f"Eyes-closed rate: {stats.eyes_closed_rate:.1%}")
+    if portrait_data.mean_valence is not None:
+        content.append(f"\nMean valence: {portrait_data.mean_valence:+.2f}")
+    if portrait_data.mean_arousal is not None:
+        content.append(f"\nMean arousal: {portrait_data.mean_arousal:+.2f}")
     return Panel(content, title="Portrait Stats", border_style=PANEL_BORDER_STYLE)
 
 
@@ -511,7 +558,7 @@ def render_report_card(card: ReportCard) -> None:
     console.print(_render_header_panel(card))
     console.print(_render_breakdown_panel(card))
     console.print(_render_exif_panel(card))
-    if card.portrait_stats is not None:
-        console.print(_render_portrait_panel(card.portrait_stats))
+    if card.portrait_stats is not None and _portrait_emotion_cache is not None:
+        console.print(_render_portrait_panel(_portrait_emotion_cache))
     console.print(_render_timing_panel(card))
     console.print(_render_advice_panel(card))

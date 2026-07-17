@@ -327,3 +327,51 @@ def test_sample_exif_caps_at_count(tmp_path: Path) -> None:
     results = _sample_exif(sample_input)
 
     assert len(results) <= 5
+
+
+def test_portrait_emotion_means_computed(tmp_path: Path) -> None:
+    """Portrait stats should include computed mean valence/arousal when available."""
+    from cull.report_card import _compute_emotion_means
+    decisions = [
+        _make_decision(tmp_path / f"k{i}.jpg", "keeper")
+        for i in range(3)
+    ]
+    # Add valence/arousal to portrait data
+    for i, decision in enumerate(decisions):
+        if decision.stage2 and decision.stage2.portrait:
+            decision.stage2.portrait.valence = 0.5 + i * 0.1
+            decision.stage2.portrait.arousal = 0.4 + i * 0.1
+    session = _make_session(decisions)
+
+    mean_val, mean_arous = _compute_emotion_means(session)
+
+    assert mean_val is not None
+    assert mean_arous is not None
+    assert 0.5 <= mean_val <= 0.7
+    assert 0.4 <= mean_arous <= 0.6
+
+
+def test_portrait_emotion_none_when_no_face_data(tmp_path: Path) -> None:
+    """Emotion means should be None when no portrait data exists."""
+    from cull.report_card import _compute_emotion_means
+    path = tmp_path / "no_face.jpg"
+    stage2 = Stage2Result(
+        photo_path=path,
+        topiq=0.70,
+        laion_aesthetic=0.65,
+        clipiqa=0.60,
+        composite=_COMPOSITE_DEFAULT,
+        portrait=None,
+    )
+    decision = PhotoDecision(
+        photo=_make_photo_meta(path),
+        decision="keeper",
+        stage1=_make_stage1(path),
+        stage2=stage2,
+    )
+    session = _make_session([decision])
+
+    mean_val, mean_arous = _compute_emotion_means(session)
+
+    assert mean_val is None
+    assert mean_arous is None

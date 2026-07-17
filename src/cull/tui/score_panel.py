@@ -9,10 +9,12 @@ from textual.widgets import Static
 
 from cull.models import (
     PhotoDecision,
+    PortraitScores,
     ShootStatsScore,
     Stage1Result,
     Stage2Result,
     Stage3Result,
+    TasteScore,
 )
 
 logger = logging.getLogger(__name__)
@@ -48,11 +50,23 @@ def _format_tilt(tilt_degrees: float | None) -> str:
     return f"{tilt_degrees:.1f}\u00b0"
 
 
-def _format_taste(probability: float | None) -> str:
-    """Format taste probability for display, returning em dash when absent."""
-    if probability is None:
+def _format_taste(taste: TasteScore | None) -> str:
+    """Format taste display, detecting untrained warmstart state."""
+    if taste is None:
         return EM_DASH
-    return f"{probability:.3f}"
+    if taste.weight_applied == 0.0 or taste.label_count_at_score == 0:
+        return "untrained"
+    return f"{taste.probability:.3f}"
+
+
+def _format_portrait_emotion(portrait: PortraitScores | None) -> str:
+    """Format portrait emotion with valence/arousal when available."""
+    if portrait is None or portrait.dominant_emotion is None:
+        return EM_DASH
+    emotion = portrait.dominant_emotion
+    if portrait.valence is not None and portrait.arousal is not None:
+        return f"{emotion} (v {portrait.valence:+.2f} a {portrait.arousal:+.2f})"
+    return emotion
 
 
 def _format_anomaly_flags(stats: ShootStatsScore | None) -> str:
@@ -116,9 +130,10 @@ def _render_stage2(s2: Stage2Result) -> list[str]:
     """Render Stage 2 section lines."""
     composition_val = f"{s2.composition.composite:.3f}" if s2.composition else EM_DASH
     subj_sharp = f"{s2.subject_blur.tenengrad:.2f}" if s2.subject_blur else EM_DASH
-    taste_p = _format_taste(s2.taste.probability if s2.taste else None)
+    taste_p = _format_taste(s2.taste)
     anomaly = _format_anomaly_flags(s2.shoot_stats)
-    return [
+    emotion = _format_portrait_emotion(s2.portrait)
+    lines = [
         "Stage 2 (IQA)",
         f"  TOPIQ:              {s2.topiq:.2f}",
         f"  LAION Aesth:        {s2.laion_aesthetic:.2f}",
@@ -128,8 +143,11 @@ def _render_stage2(s2: Stage2Result) -> list[str]:
         f"  Composition:        {composition_val}",
         f"  Subject sharpness:  {subj_sharp}",
         f"  Taste p:            {taste_p}",
-        f"  Shoot anomaly:      {anomaly}",
     ]
+    if emotion != EM_DASH:
+        lines.append(f"  Expression:         {emotion}")
+    lines.append(f"  Shoot anomaly:      {anomaly}")
+    return lines
 
 
 def _render_stage3(s3: Stage3Result) -> list[str]:

@@ -12,6 +12,7 @@ from cull.models import (
     GeometryScore,
     PhotoDecision,
     PhotoMeta,
+    PortraitScores,
     ShootStatsScore,
     Stage1Result,
     Stage2Result,
@@ -154,3 +155,98 @@ def test_none_fields_render_em_dash() -> None:
     assert "Shoot anomaly" in text
     em_count = text.count(EM_DASH)
     assert em_count >= 5
+
+
+def test_taste_untrained_warmstart() -> None:
+    """Taste renders 'untrained' when weight_applied is 0.0."""
+    stage2 = Stage2Result(
+        photo_path=_PHOTO_PATH,
+        topiq=0.72,
+        laion_aesthetic=0.68,
+        clipiqa=0.81,
+        composite=0.74,
+        taste=TasteScore(
+            probability=0.5,
+            label_count_at_score=0,
+            weight_applied=0.0,
+            model_version="warmstart",
+        ),
+    )
+    decision = _make_decision(_make_stage1_no_geometry(), stage2)
+    text = render_score_text(decision)
+    assert "untrained" in text
+    assert "0.500" not in text
+
+
+def test_taste_trained_shows_probability() -> None:
+    """Taste shows probability when model is trained (weight > 0)."""
+    stage2 = Stage2Result(
+        photo_path=_PHOTO_PATH,
+        topiq=0.72,
+        laion_aesthetic=0.68,
+        clipiqa=0.81,
+        composite=0.74,
+        taste=TasteScore(
+            probability=0.823,
+            label_count_at_score=5,
+            weight_applied=1.0,
+            model_version="v1",
+        ),
+    )
+    decision = _make_decision(_make_stage1_no_geometry(), stage2)
+    text = render_score_text(decision)
+    assert "0.823" in text
+    assert "untrained" not in text
+
+
+def test_portrait_emotion_with_valence_arousal() -> None:
+    """Expression line shows emotion with valence/arousal when present."""
+    stage2 = Stage2Result(
+        photo_path=_PHOTO_PATH,
+        topiq=0.72,
+        laion_aesthetic=0.68,
+        clipiqa=0.81,
+        composite=0.74,
+        portrait=PortraitScores(
+            eye_sharpness_left=0.8,
+            eye_sharpness_right=0.75,
+            dominant_emotion="happy",
+            valence=0.75,
+            arousal=0.60,
+        ),
+    )
+    decision = _make_decision(_make_stage1_no_geometry(), stage2)
+    text = render_score_text(decision)
+    assert "Expression:" in text
+    assert "happy" in text
+    assert "(v +0.75 a +0.60)" in text
+
+
+def test_portrait_emotion_without_valence_arousal() -> None:
+    """Expression line shows just emotion when valence/arousal absent."""
+    stage2 = Stage2Result(
+        photo_path=_PHOTO_PATH,
+        topiq=0.72,
+        laion_aesthetic=0.68,
+        clipiqa=0.81,
+        composite=0.74,
+        portrait=PortraitScores(
+            eye_sharpness_left=0.8,
+            dominant_emotion="neutral",
+        ),
+    )
+    decision = _make_decision(_make_stage1_no_geometry(), stage2)
+    text = render_score_text(decision)
+    assert "Expression:" in text
+    assert "neutral" in text
+    assert "(v" not in text
+
+
+def test_no_portrait_emotion_omits_expression_line() -> None:
+    """Expression line is omitted when portrait data absent."""
+    stage2 = _make_stage2_nulls()
+    decision = _make_decision(_make_stage1_no_geometry(), stage2)
+    text = render_score_text(decision)
+    lines = text.split("\n")
+    expression_lines = [l for l in lines if "Expression:" in l]
+    assert len(expression_lines) == 0
