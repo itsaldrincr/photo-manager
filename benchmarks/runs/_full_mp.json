@@ -1,0 +1,549 @@
+{
+  "timing": {
+    "load_seconds": 5.523,
+    "rss_before_load_mb": 71.5,
+    "rss_after_load_mb": 581.1
+  },
+  "readings": [
+    {
+      "name": "DSCF7611.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7611.JPG",
+      "has_face": false,
+      "latency_seconds": 0.005923332995735109,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF7656.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7656.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0017397500341758132,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF7672.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7672.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0016706659807823598,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF7901.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7901.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015684160171076655,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF7962.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7962.JPG",
+      "has_face": false,
+      "latency_seconds": 0.007762624998576939,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF7971.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7971.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015224580420181155,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF7979.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7979.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0018264580285176635,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8597.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8597.JPG",
+      "has_face": false,
+      "latency_seconds": 0.007527582987677306,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8621.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8621.JPG",
+      "has_face": false,
+      "latency_seconds": 0.00686445803148672,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8637.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8637.JPG",
+      "has_face": false,
+      "latency_seconds": 0.001593333960045129,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8651.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8651.JPG",
+      "has_face": false,
+      "latency_seconds": 0.001572042005136609,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8664.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8664.JPG",
+      "has_face": false,
+      "latency_seconds": 0.00161725003272295,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8867.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8867.JPG",
+      "has_face": true,
+      "latency_seconds": 0.008133667055517435,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
+    },
+    {
+      "name": "DSCF8876.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8876.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015742090181447566,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8895.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8895.JPG",
+      "has_face": false,
+      "latency_seconds": 0.001683125039562583,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8917.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8917.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015816250233910978,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8941.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8941.JPG",
+      "has_face": false,
+      "latency_seconds": 0.001524624996818602,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8957.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8957.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015445839962922037,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8995.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8995.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015310000162571669,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9016.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9016.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015301670064218342,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9039.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9039.JPG",
+      "has_face": false,
+      "latency_seconds": 0.006457625015173107,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9049.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9049.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0016032089479267597,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9066.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9066.JPG",
+      "has_face": false,
+      "latency_seconds": 0.001587499980814755,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9095.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9095.JPG",
+      "has_face": false,
+      "latency_seconds": 0.001598333998117596,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9110.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9110.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015949169755913317,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9113.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9113.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0016014589928090572,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9149.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9149.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0016389999655075371,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9159.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9159.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0016767919878475368,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9162.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9162.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0016691250493749976,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9181.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9181.JPG",
+      "has_face": false,
+      "latency_seconds": 0.001675125036854297,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9206.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9206.JPG",
+      "has_face": false,
+      "latency_seconds": 0.001690375036559999,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9210.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9210.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015791250043548644,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9215.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9215.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015249999705702066,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9290.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9290.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0017059999518096447,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9642.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9642.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0016177500365301967,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9844.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9844.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015658749616704881,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9848.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9848.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015947920037433505,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9851.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9851.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0016062089707702398,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9868.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9868.JPG",
+      "has_face": false,
+      "latency_seconds": 0.001580708019901067,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9876.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9876.JPG",
+      "has_face": false,
+      "latency_seconds": 0.001647958008106798,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF7340.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF7340.JPG",
+      "has_face": false,
+      "latency_seconds": 0.006827417004387826,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF7966.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF7966.JPG",
+      "has_face": false,
+      "latency_seconds": 0.007003791979514062,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8580.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF8580.JPG",
+      "has_face": false,
+      "latency_seconds": 0.006381041021086276,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8595.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF8595.JPG",
+      "has_face": false,
+      "latency_seconds": 0.006659917009528726,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8672.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF8672.JPG",
+      "has_face": false,
+      "latency_seconds": 0.006527416000608355,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8674.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF8674.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015889169881120324,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8821.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF8821.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015942500322125852,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8898.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF8898.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0014907079748809338,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8930.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF8930.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0014947079471312463,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF8997.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF8997.JPG",
+      "has_face": false,
+      "latency_seconds": 0.006730500026606023,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9053.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF9053.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015488750068470836,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9198.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF9198.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0014847919810563326,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9207.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF9207.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015303330146707594,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9317.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF9317.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0014725420041941106,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9632.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF9632.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015266250120475888,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9647.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF9647.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015456249820999801,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9661.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF9661.JPG",
+      "has_face": false,
+      "latency_seconds": 0.001577374991029501,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9839.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF9839.JPG",
+      "has_face": false,
+      "latency_seconds": 0.006777707953006029,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9901.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF9901.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0015199589543044567,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF9906.JPG",
+      "path": "/Users/alrelador/Desktop/cull-test/DSCF9906.JPG",
+      "has_face": false,
+      "latency_seconds": 0.001497040968388319,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    }
+  ]
+}

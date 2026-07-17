@@ -52,3 +52,14 @@ stage-1 outputs were proven numerically identical by tests/stage1/test_worker.py
 - VERDICT: Gemma-4 E4B is not competitive for photo judgment at any quant that
   fits this machine (plain 4-bit scored 55% vs champion 62.5%). Closed until
   hardware or a compatible higher-quality quant changes. Dead downloads removed.
+| 2026-07-17T03:38:52+00:00 | gemma-4-e4b-it-6bit | 60.0% | 85.0% | 35.0% | 4.83s | 8.14 GB | 0.0% |
+
+## Gemma-4 E4B Q6 (home-built, 2026-07-17)
+
+No prebuilt 6-bit exists; converted from bf16 via mlx_vlm convert (6.6 GB,
+7.09 effective bits/weight). Result: 60.0% accuracy (keep 85% / reject 35%),
+4.83s/photo, 8.14 GB peak. Q6 recovers +5pp over Q4 (55%) — quantization
+sensitivity confirmed in BOTH families — but still 2.5pp under champion with
+worse keep recall. GATE: within accuracy tolerance band but no improvement →
+REJECTED. Champion qwen3-vl-4b (8-bit) stands. Gemma line now fully closed:
+Q4 rejected, Q6 rejected, Q8 exceeds memory gate, OptiQ/unsloth unloadable.

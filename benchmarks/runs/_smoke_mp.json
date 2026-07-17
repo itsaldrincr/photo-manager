@@ -1,0 +1,45 @@
+{
+  "timing": {
+    "load_seconds": 8.27,
+    "rss_before_load_mb": 71.5,
+    "rss_after_load_mb": 130.5
+  },
+  "readings": [
+    {
+      "name": "DSCF7611.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7611.JPG",
+      "has_face": false,
+      "latency_seconds": 0.007370209030341357,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF7656.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7656.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0020299580064602196,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF7672.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7672.JPG",
+      "has_face": false,
+      "latency_seconds": 0.0018697500345297158,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    },
+    {
+      "name": "DSCF7901.JPG",
+      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7901.JPG",
+      "has_face": false,
+      "latency_seconds": 0.00223837501835078,
+      "ear_eyes_closed": null,
+      "blendshape_eyes_closed": null,
+      "expression_bucket": "unknown"
+    }
+  ]
+}
