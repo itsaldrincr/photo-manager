@@ -10,12 +10,16 @@ from pydantic import BaseModel
 
 from cull.config import TASTE_RETRAIN_BATCH
 from cull.models import OverrideEntry
+from cull.override_log import load_overrides
 
 logger = logging.getLogger(__name__)
 
-KEEPER_LABEL: str = "keeper"
+# "select" is the curated-keeper queue (see report_card._KEEPER_LABELS /
+# router.SIDECAR_DECISIONS) — it must count as a positive taste label too.
+KEEPER_LABELS: frozenset[str] = frozenset({"keeper", "select"})
 COUNTER_SUFFIX: str = ".counter"
 PROFILE_VERSION_PREFIX: str = "logreg-v"
+MIN_CLASSES_TO_FIT: int = 2
 
 
 class TasteTrainerInput(BaseModel):
@@ -29,7 +33,7 @@ class TasteTrainerInput(BaseModel):
 
 def _label_for(entry: OverrideEntry) -> int:
     """Map a final user_decision to a 1/0 keeper label."""
-    return 1 if entry.user_decision == KEEPER_LABEL else 0
+    return 1 if entry.user_decision in KEEPER_LABELS else 0
 
 
 def _features_for(entry: OverrideEntry) -> np.ndarray:
@@ -59,11 +63,26 @@ def _persist(estimator: object, ctx: TasteTrainerInput) -> Path:
     return ctx.profile_path
 
 
-def retrain(ctx: TasteTrainerInput) -> Path:
-    """Batch-retrain the taste model from all overrides and persist it."""
+def _has_enough_classes(labels: np.ndarray) -> bool:
+    """Check whether labels contain both keeper and non-keeper examples."""
+    return len(np.unique(labels)) >= MIN_CLASSES_TO_FIT
+
+
+def retrain(ctx: TasteTrainerInput) -> Path | None:
+    """Batch-retrain the taste model from all overrides and persist it.
+
+    Returns None (without raising) when the override history is single-class
+    (all-keeper or all-reject) — LogisticRegression cannot fit one class.
+    """
     from sklearn.linear_model import LogisticRegression  # noqa: PLC0415
 
     matrix, labels = _build_matrix(ctx.overrides)
+    if not _has_enough_classes(labels):
+        logger.warning(
+            "Skipping taste retrain: %d overrides are all one class, need both keeper and reject examples",
+            len(labels),
+        )
+        return None
     estimator = LogisticRegression(class_weight="balanced", max_iter=1000)
     estimator.fit(matrix, labels)
     return _persist(estimator, ctx)
@@ -90,15 +109,25 @@ def _write_counter(counter_path: Path, value: int) -> None:
     counter_path.write_text(str(value), encoding="utf-8")
 
 
+def _full_history_ctx(profile_path: Path) -> TasteTrainerInput:
+    """Build a trainer input from the complete on-disk override history.
+
+    The incremental counter only tracks WHEN to retrain; the actual training
+    set is always the full override log, not the handful of new entries that
+    tripped the threshold.
+    """
+    return TasteTrainerInput(overrides=load_overrides(), profile_path=profile_path)
+
+
 def maybe_retrain(ctx: TasteTrainerInput) -> Path | None:
-    """Retrain only when the counter has accumulated TASTE_RETRAIN_BATCH labels."""
+    """Retrain on the full override history once the counter reaches TASTE_RETRAIN_BATCH."""
     counter_path = _counter_path_for(ctx.profile_path)
     new_count = _read_counter(counter_path) + len(ctx.overrides)
     if new_count < TASTE_RETRAIN_BATCH:
         _write_counter(counter_path, new_count)
         return None
     _write_counter(counter_path, 0)
-    return retrain(ctx)
+    return retrain(_full_history_ctx(ctx.profile_path))
 
 
 def _stream_partial_fit(estimator: object, ctx: TasteTrainerInput) -> object:

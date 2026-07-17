@@ -514,12 +514,12 @@ class CullApp(App):
             return None
 
     def _trigger_retrain(self, entry: OverrideEntry) -> None:
-        """Invoke maybe_retrain after an override is written to disk."""
+        """Bump the retrain counter; maybe_retrain reads the full override log to fit."""
         trainer_ctx = TasteTrainerInput(overrides=[entry], profile_path=TASTE_PROFILE_PATH)
         try:
             maybe_retrain(trainer_ctx)
         except Exception as exc:  # noqa: BLE001
-            logger.warning("taste retrain skipped: %s", exc)
+            logger.warning("taste retrain failed unexpectedly (%s): %s", type(exc).__name__, exc)
 
     def _stage_move(self, label: DecisionLabel) -> None:
         """Stage a decision override for the current photo."""

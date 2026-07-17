@@ -103,10 +103,66 @@ def test_maybe_retrain_skips_until_batch_threshold(tmp_path: Path) -> None:
     assert not profile_path.exists()
 
 
-def test_maybe_retrain_persists_when_batch_ready(tmp_path: Path) -> None:
+def test_maybe_retrain_persists_when_batch_ready(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     """maybe_retrain triggers retrain once the counter exceeds TASTE_RETRAIN_BATCH."""
     profile_path = tmp_path / "taste.joblib"
     full = _make_balanced_corpus()  # 60 entries > TASTE_RETRAIN_BATCH (50)
+    monkeypatch.setattr("cull.taste_trainer.load_overrides", lambda: full)
+
     result = maybe_retrain(TasteTrainerInput(overrides=full, profile_path=profile_path))
+
     assert result is not None
     assert profile_path.exists()
+
+
+def test_maybe_retrain_trains_on_full_history_not_just_the_trip_batch(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A single new override that trips the counter must train on the full log.
+
+    Regression test for the bug where app.py's _trigger_retrain passed only
+    the newest override into a training call, fitting LogisticRegression on
+    one sample and silently never producing a usable profile.
+    """
+    profile_path = tmp_path / "taste.joblib"
+    full_history = _make_balanced_corpus()  # 60 real entries sit on disk
+    monkeypatch.setattr("cull.taste_trainer.load_overrides", lambda: full_history)
+    newest_entry = full_history[-1]
+
+    # Simulate TASTE_RETRAIN_BATCH already having accumulated via the counter
+    # file, and the current call only carrying the single newest override —
+    # exactly what tui/app.py._trigger_retrain does per decision.
+    counter_path = profile_path.with_suffix(profile_path.suffix + ".counter")
+    counter_path.write_text("49", encoding="utf-8")
+
+    result = maybe_retrain(TasteTrainerInput(overrides=[newest_entry], profile_path=profile_path))
+
+    assert result is not None
+    # Safe: loading a joblib file this same test just wrote to tmp_path, not
+    # an untrusted/external artifact.
+    payload = joblib.load(result)
+    assert payload["label_count"] == len(full_history)
+
+
+def test_retrain_skips_single_class_history_without_raising(tmp_path: Path) -> None:
+    """A single-class override history (all-keeper or all-reject) skips cleanly."""
+    profile_path = tmp_path / "taste.joblib"
+    all_keepers = [_make_entry(KEEPER_LABEL, KEEPER_FEATURE_MEAN) for _ in range(5)]
+
+    result = retrain(TasteTrainerInput(overrides=all_keepers, profile_path=profile_path))
+
+    assert result is None
+    assert not profile_path.exists()
+
+
+def test_label_for_treats_select_as_keeper() -> None:
+    """The curated 'select' queue counts as a positive taste label, like 'keeper'."""
+    from cull.taste_trainer import _label_for  # noqa: PLC0415
+
+    select_entry = _make_entry("select", KEEPER_FEATURE_MEAN)
+    reject_entry = _make_entry(REJECT_LABEL, REJECT_FEATURE_MEAN)
+
+    assert _label_for(select_entry) == 1
+    assert _label_for(reject_entry) == 0
