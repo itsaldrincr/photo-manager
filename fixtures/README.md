@@ -1,21 +1,32 @@
 # photo-manager fixture corpora
 
-This directory holds **fixture corpora** for the [photo-manager](../../Library/CloudStorage/GoogleDrive-al.relador@gmail.com/My%20Drive/1%20Projects/OpenCode%20Projects/photo-manager) project's performance-track golden-baseline tests.
+This directory holds **fixture corpora** for photo-manager's performance-track
+golden-baseline tests. It lives inside the repo at `fixtures/`; the photos are
+**gitignored** (see `.gitignore`) while `manifest.json` files and this README
+ARE tracked.
 
-A **corpus** is a frozen set of photographs with a known-good baseline score map. Running Stage 1 / Stage 2 / aesthetic scoring on the corpus must produce byte-identical results to the baseline (within 1e-9) — any drift fails the test loudly with a per-category breakdown. Corpora exist to guarantee non-regressive refactors: if a refactor changes the score on any photo, the gate catches it before the PR lands.
+A **corpus** is a frozen set of photographs with a known-good baseline score map.
+Running Stage 1 / Stage 2 / aesthetic scoring on the corpus must produce
+byte-identical results to the baseline (within 1e-9) — any drift fails the test
+loudly with a per-category breakdown. Corpora exist to guarantee non-regressive
+refactors: if a refactor changes the score on any photo, the gate catches it
+before the change lands.
 
-## Why this directory is outside the project tree
+## Storage model (updated 2026-07-17)
 
-1. Corpora are large (the default `easter_vigil/` is 1.5 GB across 123 JPEGs). Google Drive sync of a project-local fixture is impractical.
-2. Git has no business tracking binary photo blobs. Baselines (~30 KB JSON each) live inside the project at `tests/fixtures/p*_baseline_<corpus_name>.json` and ARE committed to git. The corpora themselves live here and stay out of git.
-3. Decoupling storage lets you swap, delete, or regenerate corpora without touching the git history of photo-manager.
+- Corpus photos: `fixtures/<corpus>/` — in the working tree, **not** in git
+  (large binaries). If lost, restore from a machine backup or rebuild from the
+  raw source shoots on the NAS (`atlas-server:~/media/Photos/from-mac/`
+  `2026-05-easter-vigil` and `.../2024 Japan Trip - November/Day 3`).
+- Manifests: `fixtures/<corpus>/manifest.json` — tracked in git.
+- Baselines: `tests/fixtures/p*_baseline_<corpus>.json` — tracked in git.
 
 ---
 
 ## Layout convention
 
 ```
-photo-manager-fixtures/              ← you are here
+fixtures/                            ← you are here (repo root/fixtures)
   README.md                          ← this file
   easter_vigil/                      ← default corpus; one subdirectory = one corpus
     DSCF*.JPG                        ← real photos
@@ -65,11 +76,11 @@ The synthetic variants exist to guarantee that each classical-filter scoring bra
 `src/cull/config.py` holds:
 
 ```python
+_DEFAULT_PERF_CORPUS: str = str(
+    Path(__file__).resolve().parents[2] / "fixtures" / "easter_vigil"
+)
 PERF_CORPUS_PATH: Path = Path(
-    os.environ.get(
-        "PERF_CORPUS_PATH",
-        "/Users/alrelador/Documents/Claude/photo-manager-fixtures/easter_vigil"
-    )
+    os.environ.get("PERF_CORPUS_PATH", _DEFAULT_PERF_CORPUS)
 )
 ```
 
@@ -89,8 +100,8 @@ Goal: you run a shoot or curate a photo set, drop it here, generate a manifest +
 ### 1. Create the directory and drop photos
 
 ```bash
-mkdir -p ~/Documents/Claude/photo-manager-fixtures/wedding_shoot
-cp ~/Desktop/wedding-shoot-raw/*.JPG ~/Documents/Claude/photo-manager-fixtures/wedding_shoot/
+mkdir -p fixtures/wedding_shoot
+cp ~/Desktop/wedding-shoot-raw/*.JPG fixtures/wedding_shoot/
 ```
 
 Any JPEG count ≥50 works. For diagnostic power, aim for a mix that will exercise every scoring branch. If your shoot is narrow (e.g. all tack-sharp, well-exposed portraits), add synthetic variants — see next section.
@@ -109,7 +120,7 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-CORPUS = Path("/Users/alrelador/Documents/Claude/photo-manager-fixtures/wedding_shoot")
+CORPUS = Path("fixtures/wedding_shoot")
 
 def categorise(name: str) -> str:
     if name.startswith("synth_"):
@@ -151,9 +162,9 @@ print(f"Wrote manifest with {len(entries)} entries")
 From the project root:
 
 ```bash
-python tests/_capture_p1_baseline.py --corpus /Users/alrelador/Documents/Claude/photo-manager-fixtures/wedding_shoot
-python tests/_capture_p3_baseline.py --corpus /Users/alrelador/Documents/Claude/photo-manager-fixtures/wedding_shoot
-python tests/_capture_p4lite_baseline.py --corpus /Users/alrelador/Documents/Claude/photo-manager-fixtures/wedding_shoot
+python tests/_capture_p1_baseline.py --corpus fixtures/wedding_shoot
+python tests/_capture_p3_baseline.py --corpus fixtures/wedding_shoot
+python tests/_capture_p4lite_baseline.py --corpus fixtures/wedding_shoot
 ```
 
 This produces:
@@ -168,9 +179,9 @@ Commit the baseline JSONs to git. The corpus itself stays out of git.
 ### 5. Run the golden tests against the new corpus
 
 ```bash
-pytest tests/test_perf_p1_batch_golden.py --corpus /Users/alrelador/Documents/Claude/photo-manager-fixtures/wedding_shoot -v
-pytest tests/test_perf_p3_pool_golden.py --corpus /Users/alrelador/Documents/Claude/photo-manager-fixtures/wedding_shoot -v
-pytest tests/test_perf_p4lite_clip_golden.py --corpus /Users/alrelador/Documents/Claude/photo-manager-fixtures/wedding_shoot -v
+pytest tests/test_perf_p1_batch_golden.py --corpus fixtures/wedding_shoot -v
+pytest tests/test_perf_p3_pool_golden.py --corpus fixtures/wedding_shoot -v
+pytest tests/test_perf_p4lite_clip_golden.py --corpus fixtures/wedding_shoot -v
 ```
 
 First run should be all-green (it's identical to the baseline you just captured). Any refactor that breaks scoring will then fail with a per-category divergence breakdown.
@@ -197,7 +208,7 @@ from PIL import Image, ImageFilter, ImageEnhance
 import numpy as np
 from scipy.ndimage import convolve
 
-CORPUS = Path("/Users/alrelador/Documents/Claude/photo-manager-fixtures/wedding_shoot")  # <— change
+CORPUS = Path("fixtures/wedding_shoot")  # <— change
 
 random.seed(42)  # reproducible selection
 np.random.seed(42)  # reproducible noise
@@ -352,9 +363,9 @@ What this does NOT catch:
 If you changed the corpus (added/removed files, edited a photo, rebuilt the manifest) and you know the new state is correct, regenerate the baseline for that corpus:
 
 ```bash
-python tests/_capture_p1_baseline.py --corpus /Users/alrelador/Documents/Claude/photo-manager-fixtures/easter_vigil
-python tests/_capture_p3_baseline.py --corpus /Users/alrelador/Documents/Claude/photo-manager-fixtures/easter_vigil
-python tests/_capture_p4lite_baseline.py --corpus /Users/alrelador/Documents/Claude/photo-manager-fixtures/easter_vigil
+python tests/_capture_p1_baseline.py --corpus fixtures/easter_vigil
+python tests/_capture_p3_baseline.py --corpus fixtures/easter_vigil
+python tests/_capture_p4lite_baseline.py --corpus fixtures/easter_vigil
 ```
 
 Then commit the new baseline JSONs. The test will pass on the next run because both the fingerprint and the scores are re-captured against the current code.
