@@ -57,3 +57,16 @@ def mock_musiq_scorers(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr("cull_fast.musiq.score_musiq_batch", _mock_score_musiq_batch)
     monkeypatch.setattr("cull_fast.musiq._get_musiq_metric", _noop_musiq_metric)
     monkeypatch.setattr("cull_fast.pipeline_fast.score_musiq_batch", _mock_score_musiq_batch)
+
+
+@pytest.fixture(autouse=True)
+def _no_dinov2_duplicate_pass(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Disable the DINOv2 second-tier duplicate pass for fast-mode tests.
+
+    Fast-mode tests write tiny synthetic gradient JPEGs; DINOv2's semantic
+    embedding space clusters these degenerate images far more tightly than
+    real photographs, producing spurious near-duplicate matches that are not
+    representative of production behavior (see benchmarks/runs/
+    dedupe_eval_report.md, measured with FP=0 on real photographs).
+    """
+    monkeypatch.setattr("cull.stage1.duplicate._run_dinov2_pass", lambda image_dir, candidate_names: [])

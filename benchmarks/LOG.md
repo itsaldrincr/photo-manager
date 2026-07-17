@@ -77,3 +77,24 @@ Q4 rejected, Q6 rejected, Q8 exceeds memory gate, OptiQ/unsloth unloadable.
   known upstream regressions); zero golden-baseline drift after upgrade;
   full test suite green
 - VLM_DEFAULT_ALIAS -> gemma-4-12b; qwen3-vl-4b retained as fallback alias
+
+## DINOv2 dedupe tier — PROMOTED (2026-07-17)
+
+Implemented as a SECOND TIER (CNN retained), not a replacement: Stage 4 curation
+clustering consumes `DuplicateResult.encodings` (MobileNetV3) and its per-preset
+CLUSTER_THRESHOLD values are calibrated to that embedding distribution — swapping
+the backbone outright would have silently invalidated an unmeasured calibration.
+DINOv2 pairs merge into CNN groups via connected components; its embeddings are
+never exposed downstream.
+
+Measured e2e on the labeled variant corpus (real production find_duplicates):
+
+| variant | CNN only | CNN + DINOv2 |
+|---|---|---|
+| crop | 10/20 | **20/20** |
+| rotation | 19/20 | **20/20** |
+| reencode / resize / brightness | 20/20 | 20/20 |
+
+Cost: +29.5 ms/photo (202 ms total, under the 250 ms budget). Suite 475 passed
+(465 baseline + 10 new), zero regressions. `cull setup` status=ok (5 manifest
+entries). GATE: PROMOTE.

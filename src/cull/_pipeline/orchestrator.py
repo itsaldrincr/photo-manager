@@ -192,8 +192,8 @@ def _unload_stage2_models() -> None:
 
 
 def _unload_imagededup_cnn() -> None:
-    """Free Stage 1 imagededup MobileNetV3 cache before Stage 2 loads its models."""
-    duplicate_module._unload_cnn()
+    """Free Stage 1 duplicate-detection models (CNN + DINOv2) before Stage 2 loads its models."""
+    duplicate_module.unload_models()
 
 
 def _assemble_session(session_in: _SessionInput, ctx: _StageRunCtx) -> SessionResult:

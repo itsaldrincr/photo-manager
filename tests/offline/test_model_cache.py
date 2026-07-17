@@ -42,7 +42,7 @@ def test_run_preflight_empty_cache_returns_missing(tmp_path: Path) -> None:
     cache = _build_cache(tmp_path)
     status = run_preflight(cache)
     assert status.state == "missing"
-    assert len(status.missing) == 4
+    assert len(status.missing) == len(cull_config.MODEL_MANIFEST)
     assert status.corrupt == []
 
 
@@ -93,6 +93,7 @@ def test_hash_mismatch_is_corrupt(tmp_path: Path, monkeypatch) -> None:
     _seed_face_landmarker(cache)
     _seed_hf_repo(cache, cull_config.CLIP_REPO_ID)
     _seed_hf_repo(cache, cull_config.AESTHETIC_REPO_ID)
+    _seed_hf_repo(cache, cull_config.DINOV2_REPO_ID)
     _seed_deepface(cache)
     face_entry = cull_config.MODEL_MANIFEST["face_landmarker"].model_copy(
         update={"sha256": BOGUS_HASH}

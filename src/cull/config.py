@@ -222,6 +222,14 @@ BLUR_CNN_SIMILARITY_EXACT: float = 0.98
 BLUR_MOTION_ANISOTROPY_RATIO: float = 3.0
 BLUR_SPATIAL_CENTER_FRACTION: float = 0.40
 
+# DINOv2-small second-tier near-duplicate detector — added to catch cropped
+# near-duplicates the CNN pass misses (measured recall 0.50 -> 1.00; see
+# benchmarks/runs/dedupe_eval_report.md). Threshold is the best-F1 value from
+# the report's threshold sweep on the controlled eval corpus.
+DINOV2_MODEL_ID: str = "facebook/dinov2-small"
+DINOV2_DUPLICATE_SIMILARITY: float = 0.80
+DINOV2_EMBED_BATCH_SIZE: int = 8
+
 # ---------------------------------------------------------------------------
 # Stage 1 exposure thresholds
 # ---------------------------------------------------------------------------
@@ -361,6 +369,7 @@ DEFAULT_CACHE_ROOT: Path = Path.home() / ".cache" / "photo-manager" / "models"
 
 CLIP_REPO_ID: str = CLIP_MODEL_ID
 AESTHETIC_REPO_ID: str = "shunk031/aesthetics-predictor-v2-sac-logos-ava1-l14-linearMSE"
+DINOV2_REPO_ID: str = DINOV2_MODEL_ID
 
 FACE_LANDMARKER_FILENAME: str = "face_landmarker.task"
 FACE_LANDMARKER_URL: str = (
@@ -383,6 +392,7 @@ CLIP_MODEL_SHA256: str = ""
 AESTHETIC_HEAD_SHA256: str = ""
 FACE_LANDMARKER_SHA256: str = ""
 DEEPFACE_EMOTION_SHA256: str = ""
+DINOV2_MODEL_SHA256: str = ""
 
 # Cache subdir tokens — kept here so config.py can build MODEL_MANIFEST
 # without importing from cull.model_cache (which would create a cycle).
@@ -568,6 +578,13 @@ MODEL_MANIFEST: dict[str, ModelManifestEntry] = {
         filename=DEEPFACE_EMOTION_FILENAME,
         sha256=DEEPFACE_EMOTION_SHA256 or None,
         subdir=SUBDIR_DEEPFACE,
+    ),
+    "dinov2": ModelManifestEntry(
+        name="dinov2",
+        kind="hf_repo",
+        repo_id=DINOV2_REPO_ID,
+        sha256=DINOV2_MODEL_SHA256 or None,
+        subdir=SUBDIR_HF,
     ),
 }
 

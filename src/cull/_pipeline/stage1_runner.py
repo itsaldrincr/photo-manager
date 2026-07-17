@@ -252,5 +252,5 @@ class _Stage1WorkCtx(BaseModel):
 
 
 def _unload_imagededup_cnn() -> None:
-    """Free Stage 1 imagededup MobileNetV3 cache before Stage 2 loads its models."""
-    duplicate_module._unload_cnn()
+    """Free Stage 1 duplicate-detection models (CNN + DINOv2) before Stage 2 loads its models."""
+    duplicate_module.unload_models()
