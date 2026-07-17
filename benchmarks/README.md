@@ -21,8 +21,8 @@ human-labeled ground truth before it may be promoted.
 python3 benchmarks/harness.py eval <model_alias>     # run + log one candidate
 python3 benchmarks/harness.py gate <model_alias>     # exit 0 = promote, 1 = reject
 python3 benchmarks/harness.py report                 # print LOG.md
-# models needing a newer mlx-vlm run via their own venv:
-python3 benchmarks/harness.py eval gemma-4-e4b-it-4bit --python .venv-mlx063/bin/python3
+# (historical: a .venv-mlx063 venv was used while the main env was pinned to
+# mlx-vlm 0.3.12; the main env is now 0.6.3, so no separate venv is needed)
 ```
 
 ## Gate rules
