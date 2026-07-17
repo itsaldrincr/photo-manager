@@ -1,8 +1,9 @@
 {
   "corpus_name": "japan_day3",
-  "corpus_path": "/Users/alrelador/Documents/Claude/photo-manager-fixtures/japan_day3",
-  "baseline_created_at": "2026-04-26T12:04:09.788277+00:00",
-  "pipeline_git_sha": "f77831bf1c9d85e28aada68d4446bf856a70b247",
+  "corpus_fingerprint": "d1d94a3c54f26cb9d446343ccc8e241411412fdaa9ea49212652b7f8b8989290",
+  "corpus_path": "fixtures/japan_day3",
+  "baseline_created_at": "2026-07-17T04:42:37.089378+00:00",
+  "pipeline_git_sha": "29435a8200336bc89f063a74307ab69caaf926c4",
   "scores": {
     "DSCF7603.JPG": {
       "aesthetic": 0.4330407248602973
