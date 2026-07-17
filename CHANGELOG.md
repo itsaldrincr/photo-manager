@@ -1,5 +1,60 @@
 # Changelog
 
+## v1.1.0
+
+Correctness, performance, and a model swap validated by a new A/B harness.
+
+### Fixed
+
+- Re-running `cull` on an already-culled folder no longer re-ingests `_review/`
+  and `_curated/` contents or nests output directories inside each other.
+- Stage 2's reducer repatch fed the fused composite back in as the exposure
+  input, corrupting the score of every re-routed photo. It now uses the
+  documented neutral default.
+- TUI state and `session_report.json` are written atomically with backup
+  rotation and recovery; a crash mid-write no longer discards review decisions.
+- Stage 3 retries genuine VLM inference failures instead of aborting the run;
+  burst detection survives photos that vanish mid-run.
+- XMP sidecars follow a photo's current location instead of its original path,
+  and sidecar move failures are reported rather than dropped.
+- `discover_vlms` read `VLM_MODELS_ROOT` at import time, ignoring environment
+  overrides for default-argument callers.
+- The dashboard permanently silenced all process logging after first use.
+- `detect_expression` silently returned an empty string because DeepFace's
+  backend needs `tf-keras` on TensorFlow >= 2.16; it is now a declared
+  dependency.
+
+### Performance
+
+- Full-pipeline wall clock on a 30-photo corpus: 7m30s to 5m03s (-33%), with
+  Stage 2 down 35% and peak RSS down to ~7.25 GB.
+- Photos are decoded once per stage instead of up to four (Stage 1) and three
+  (portrait analysis) times; taste scoring reuses batch CLIP embeddings; the
+  TOPIQ composition metric is batched like its siblings.
+- The Stage 3 VLM now loads only after Stage 2 unloads its models, so the two
+  never sit in memory together, and images are passed to `mlx-vlm` in memory
+  instead of via temporary files.
+
+### Changed
+
+- Default Stage 3 VLM is now `gemma-4-12b`, promoted over `qwen3-vl-4b` after
+  scoring 5 points higher on two disjoint human-labeled holdout sets.
+  `qwen3-vl-4b` remains available via `--model`.
+- `mlx-vlm` pinned to 0.6.3 (Gemma 4 vision support; 0.6.4 has known upstream
+  regressions).
+- VLM models are read from `<repo>/models` by default.
+- The golden fixture corpus moved into the repo at `fixtures/` (photos are
+  gitignored, manifests are tracked). `PERF_CORPUS_PATH` defaults there, so
+  golden-baseline tests no longer skip silently.
+- Golden baselines re-captured with a `corpus_fingerprint` integrity guard;
+  all 684 score entries are unchanged from the pre-refactor baselines.
+
+### Added
+
+- `benchmarks/`: an A/B harness that scores VLM candidates against
+  human-curated keep/reject labels in an isolated subprocess, applies memory
+  and accuracy gates, and appends every run to a durable log.
+
 ## v1.0.2
 
 Patch release focused on hardening the cmux to Ghostty review handoff.

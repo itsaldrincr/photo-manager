@@ -24,7 +24,9 @@ thresholds go to the VLM for a second opinion. The rest are rejected.
 
 - macOS (Apple Silicon recommended for VLM inference)
 - Python 3.11+
-- ~3 GB disk for model cache (one-time download)
+- ~4 GB disk for the scoring model cache (one-time download), plus ~6 GB for
+  the Stage 3 VLM if you use it
+- ~16 GB RAM recommended (peak ~8 GB with the default VLM)
 
 ## Install
 
@@ -101,10 +103,20 @@ Presets tune scoring weights for different genres:
 
 ### VLM model selection
 
-Stage 3 and Stage 4 run an in-process VLM via `mlx-vlm`. Any MLX-converted
-vision-language model works — point `PHOTO_MANAGER_VLM_ROOT` at a directory
-containing your model folders. Any subdirectory with a `config.json` containing
-a `vision_config` key is auto-discovered.
+Stage 3 and Stage 4 run an in-process VLM via `mlx-vlm`. Models are read from
+`models/` in the repo root by default; override with `PHOTO_MANAGER_VLM_ROOT`.
+Any subdirectory with a `config.json` containing a `vision_config` key is
+auto-discovered, so any MLX-converted vision-language model works.
+
+The default is `gemma-4-12b` (`mlx-community/gemma-4-12B-it-4bit`, ~6.3 GB),
+chosen by A/B evaluation against human-curated keep/reject labels — see
+`benchmarks/`. `qwen3-vl-4b` (`mlx-community/Qwen3-VL-4B-Instruct-MLX-8bit`)
+is a faster, slightly less accurate alternative. Download either with:
+
+```bash
+huggingface-cli download mlx-community/gemma-4-12B-it-4bit \
+  --local-dir models/gemma-4-12B-it-4bit
+```
 
 ```bash
 cull --vlms                        # list discovered models
@@ -118,8 +130,9 @@ to match your local models.
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `PHOTO_MANAGER_VLM_ROOT` | — | Directory containing MLX VLM model folders |
+| `PHOTO_MANAGER_VLM_ROOT` | `<repo>/models` | Directory containing MLX VLM model folders |
 | `PHOTO_MANAGER_CACHE` | `~/.cache/photo-manager/models` | Model cache root |
+| `PERF_CORPUS_PATH` | `<repo>/fixtures/easter_vigil` | Golden-baseline test corpus |
 
 ## Output
 
