@@ -336,7 +336,7 @@ OVERRIDE_LOG_PATH: Path = OVERRIDE_LOG_DIR / "overrides.jsonl"
 # Default corpus for golden-baseline tests. Override via --corpus CLI flag
 # (pytest / capture scripts) or PERF_CORPUS_PATH env var.
 _DEFAULT_PERF_CORPUS: str = str(
-    Path.home() / "Documents" / "Claude" / "photo-manager-fixtures" / "easter_vigil"
+    Path(__file__).resolve().parents[2] / "fixtures" / "easter_vigil"
 )
 PERF_CORPUS_PATH: Path = Path(
     os.environ.get("PERF_CORPUS_PATH", _DEFAULT_PERF_CORPUS)

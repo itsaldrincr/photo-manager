@@ -50,3 +50,9 @@ models/
 
 # Benchmark eval photos (rebuild from NAS; labels + all run logs ARE committed)
 benchmarks/eval_set/
+benchmarks/eval_set_v2/
+
+# Golden corpus photos (manifests + README ARE committed; images are not)
+fixtures/**/*.JPG
+fixtures/**/*.jpg
+fixtures/**/*.jpeg
