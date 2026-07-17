@@ -1,5 +1,28 @@
 # Changelog
 
+## v1.2.0
+
+### Changed
+
+- Facial expression analysis now runs on EmotiEffLib (EfficientNet-B0, ONNX)
+  instead of DeepFace: ~50x faster per face (21 ms vs 1050 ms), ~5.8 GB less
+  resident memory, and TensorFlow leaves the dependency tree entirely. The
+  swap was gated by a three-layer fair test (labeled RAF-DB accuracy: macro-F1
+  0.578 vs 0.256; perturbation stability; wedding-vs-liturgy context
+  separation on the owner's own corpora) — see
+  benchmarks/runs/expression_fair_test_report.md.
+- Portrait results now carry optional valence/arousal fields alongside the
+  existing 7-class emotion label. Scoring math is unchanged; the dimensional
+  signal is available for future preset-aware use.
+
+### Fixed
+
+- Stage 2 crashed on any real photo with a detected face when portrait mode
+  was enabled: MediaPipe's FaceLandmarker never populates landmark.visibility,
+  and detect_occlusion compared None against a float. All prior tests mocked
+  visibility as a float, masking the crash. The occlusion heuristic is now
+  explicitly a no-op on real photos until a geometric signal replaces it.
+
 ## v1.1.0
 
 Correctness, performance, and a model swap validated by a new A/B harness.

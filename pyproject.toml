@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cull"
-version = "1.1.0"
+version = "1.2.0"
 description = "Local AI photo culling — classical filters, neural IQA, and VLM tiebreaker. Runs entirely offline."
 requires-python = ">=3.11"
 license = "MIT"
