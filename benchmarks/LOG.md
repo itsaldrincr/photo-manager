@@ -41,3 +41,14 @@ Routing deltas (24->25 keepers, 16->14 stage-3 analyzed) are attributable to
 the intentional B2 exposure-corruption fix (7 photos repatched by the reducer
 had corrupted composites before), not to the decode-once refactor (whose
 stage-1 outputs were proven numerically identical by tests/stage1/test_worker.py).
+
+## Gemma-4 E4B quant sweep conclusion (2026-07-17)
+
+- `e4b-it-qat-OptiQ-4bit` (7.0 GB): FAILS TO LOAD in mlx-vlm 0.6.3 — OptiQ embeds
+  calibration tensors (input_max/output_min) needing the mlx-optiq runtime.
+- `unsloth e4b-it-UD-MLX-4bit` (6.2 GB): FAILS TO LOAD — incompatible weight layout.
+- No 6-bit E4B exists on mlx-community; `e4b-it-8bit` (12.7 GB) breaches the
+  12 GB Metal gate on this 18 GB host.
+- VERDICT: Gemma-4 E4B is not competitive for photo judgment at any quant that
+  fits this machine (plain 4-bit scored 55% vs champion 62.5%). Closed until
+  hardware or a compatible higher-quality quant changes. Dead downloads removed.
