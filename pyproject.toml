@@ -36,6 +36,9 @@ dependencies = [
     "imagehash",
     "mediapipe>=0.10.9",
     "deepface",
+    # deepface's TF backend needs tf-keras with TF>=2.16; without it,
+    # detect_expression silently degrades to "" (found 2026-07-17)
+    "tf-keras",
     "mlx-vlm>=0.3.12,<0.4.0",
     "torch",
     "torchvision",

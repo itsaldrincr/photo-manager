@@ -12,6 +12,7 @@ Usage:
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -79,7 +80,10 @@ def _utc_now() -> str:
 
 
 def _gather_candidate_photos() -> list[Path]:
-    """Return the eval_set plus up to EXTRA_PORTRAIT_MAX non-duplicate extra photos."""
+    """Return photos from $PORTRAIT_EVAL_DIR if set, else eval_set + extras."""
+    override = os.environ.get("PORTRAIT_EVAL_DIR")
+    if override:
+        return list_image_paths(Path(override))
     eval_photos = list_image_paths(EVAL_SET_DIR)
     known_names = {p.name for p in eval_photos}
     extra_all = [p for p in list_image_paths(EXTRA_PORTRAIT_DIR) if p.name not in known_names]
