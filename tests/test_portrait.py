@@ -13,6 +13,7 @@ from cull.stage2.portrait import (
     PortraitResult,
     _ear_from_pts,
     compute_ear,
+    detect_occlusion,
     is_eyes_closed,
 )
 
@@ -145,6 +146,32 @@ def test_is_eyes_closed_false_above_squint() -> None:
 def test_is_eyes_closed_false_at_exact_threshold() -> None:
     """is_eyes_closed must return False when EAR equals threshold exactly."""
     assert is_eyes_closed(EAR_CLOSED_THRESHOLD) is False
+
+
+# ---------------------------------------------------------------------------
+# detect_occlusion tests — visibility=None mirrors real MediaPipe
+# FaceLandmarker output (visibility/presence are never populated for faces,
+# unlike PoseLandmarker), which previously crashed with a TypeError.
+# ---------------------------------------------------------------------------
+
+
+def _make_landmark_no_visibility(x: float, y: float) -> SimpleNamespace:
+    """Return a landmark-like object with visibility=None (real MediaPipe output)."""
+    return SimpleNamespace(x=x, y=y, z=0.0, visibility=None, presence=None)
+
+
+def test_detect_occlusion_none_visibility_does_not_raise() -> None:
+    """detect_occlusion must not raise when visibility is None on every landmark."""
+    landmarks = [_make_landmark_no_visibility(0.5, 0.5) for _ in range(LANDMARK_COUNT)]
+    ratio = detect_occlusion(landmarks)
+    assert ratio == pytest.approx(1.0)
+
+
+def test_detect_occlusion_none_visibility_treated_as_fully_visible() -> None:
+    """detect_occlusion must treat None visibility as visible (neutral fallback)."""
+    all_none = [_make_landmark_no_visibility(0.5, 0.5) for _ in range(LANDMARK_COUNT)]
+    all_visible = [_make_landmark(0.5, 0.5) for _ in range(LANDMARK_COUNT)]
+    assert detect_occlusion(all_none) == pytest.approx(detect_occlusion(all_visible))
 
 
 # ---------------------------------------------------------------------------

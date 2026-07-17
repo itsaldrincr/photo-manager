@@ -323,9 +323,23 @@ def is_eyes_closed(ear_value: float) -> bool:
     return ear_value < PORTRAIT_EAR_CLOSED_MAX
 
 
+def _is_landmark_visible(landmark: Any) -> bool:
+    """Return True if a landmark's visibility clears the threshold.
+
+    MediaPipe's FaceLandmarker task (unlike PoseLandmarker) never populates
+    `visibility`/`presence` — both are always None on real inference output.
+    Treat None as visible (neutral fallback) so the occlusion ratio does not
+    crash on real photos; this heuristic is effectively a no-op until a
+    geometric or model-based occlusion signal replaces it.
+    """
+    if landmark.visibility is None:
+        return True
+    return landmark.visibility > PORTRAIT_LANDMARK_VISIBILITY_THRESHOLD
+
+
 def detect_occlusion(landmarks: list[Any]) -> float:
     """Return ratio of landmarks with visibility > threshold (MediaPipe visibility attribute)."""
-    visible = sum(1 for lm in landmarks[:TOTAL_LANDMARK_COUNT] if lm.visibility > PORTRAIT_LANDMARK_VISIBILITY_THRESHOLD)
+    visible = sum(1 for lm in landmarks[:TOTAL_LANDMARK_COUNT] if _is_landmark_visible(lm))
     return visible / TOTAL_LANDMARK_COUNT
 
 
