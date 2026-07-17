@@ -15,10 +15,11 @@ from cull.config import (
     FACE_LANDMARKER_FILENAME,
     PORTRAIT_NUM_FACES_MAX,
     PORTRAIT_FACE_DETECTION_CONFIDENCE_MIN,
-    PORTRAIT_LANDMARK_VISIBILITY_THRESHOLD,
     PORTRAIT_EAR_CLOSED_MAX,
     PORTRAIT_EMOTION_CROP_MARGIN_FRACTION,
     PORTRAIT_FACE_OCCLUSION_MIN,
+    PORTRAIT_OCCLUSION_PATCH_IOD_FRACTION,
+    PORTRAIT_OCCLUSION_PATCH_MIN_HALF_PX,
     CullConfig,
     ModelCacheConfig,
 )
@@ -32,6 +33,20 @@ log = logging.getLogger(__name__)
 
 _LEFT_EYE_INDICES: list[int] = [362, 385, 387, 263, 373, 380]
 _RIGHT_EYE_INDICES: list[int] = [33, 160, 158, 133, 153, 144]
+
+# Outer eye corners, reused to measure inter-ocular distance (occlusion patch sizing).
+_IOD_RIGHT_OUTER_IDX: int = _RIGHT_EYE_INDICES[0]
+_IOD_LEFT_OUTER_IDX: int = _LEFT_EYE_INDICES[3]
+
+# Key face regions sampled for occlusion texture analysis (see detect_occlusion).
+_OCCLUSION_LANDMARK_GROUPS: dict[str, tuple[int, ...]] = {
+    "left_eye": tuple(_LEFT_EYE_INDICES),
+    "right_eye": tuple(_RIGHT_EYE_INDICES),
+    "left_brow": (70, 63, 105, 66, 107),
+    "right_brow": (300, 293, 334, 296, 336),
+    "nose": (1, 2, 98, 327),
+    "mouth": (61, 291, 0, 17, 78, 308, 13, 14),
+}
 
 EYE_CROP_PADDING: float = 0.20
 TOTAL_LANDMARK_COUNT: int = 468
@@ -248,7 +263,7 @@ def _compute_face_metrics(ctx: _FaceContext) -> _FaceMetrics:
     return _FaceMetrics(
         ear_left=ear_l,
         ear_right=ear_r,
-        occlusion=detect_occlusion(ctx.landmarks),
+        occlusion=detect_occlusion(ctx.image, ctx.landmarks),
         sharp_left=_crop_sharpness(ctx, _LEFT_EYE_INDICES),
         sharp_right=_crop_sharpness(ctx, _RIGHT_EYE_INDICES),
         emotion=_detect_emotion_reading(_emotion_crop(ctx)),
@@ -323,24 +338,85 @@ def is_eyes_closed(ear_value: float) -> bool:
     return ear_value < PORTRAIT_EAR_CLOSED_MAX
 
 
-def _is_landmark_visible(landmark: Any) -> bool:
-    """Return True if a landmark's visibility clears the threshold.
+@dataclass(frozen=True)
+class _TexturePatch:
+    """Pixel-space patch centre + half-width for a local-texture sample."""
 
-    MediaPipe's FaceLandmarker task (unlike PoseLandmarker) never populates
-    `visibility`/`presence` — both are always None on real inference output.
-    Treat None as visible (neutral fallback) so the occlusion ratio does not
-    crash on real photos; this heuristic is effectively a no-op until a
-    geometric or model-based occlusion signal replaces it.
+    cx: int
+    cy: int
+    half: int
+
+
+def _texture_patch_variance(gray: np.ndarray, patch: _TexturePatch) -> float:
+    """Return Laplacian variance (local texture strength) of a small patch."""
+    h, w = gray.shape[:2]
+    x1, x2 = max(0, patch.cx - patch.half), min(w, patch.cx + patch.half)
+    y1, y2 = max(0, patch.cy - patch.half), min(h, patch.cy + patch.half)
+    crop = gray[y1:y2, x1:x2]
+    if crop.size < 4:
+        return 0.0
+    return float(cv2.Laplacian(crop, cv2.CV_64F).var())
+
+
+def _inter_ocular_distance_px(ctx: _FaceContext) -> float:
+    """Return pixel distance between the outer corners of both eyes."""
+    h, w = ctx.image.shape[:2]
+    left = ctx.landmarks[_IOD_LEFT_OUTER_IDX]
+    right = ctx.landmarks[_IOD_RIGHT_OUTER_IDX]
+    dx = (left.x - right.x) * w
+    dy = (left.y - right.y) * h
+    return float(np.hypot(dx, dy))
+
+
+def _occlusion_patch_half_px(ctx: _FaceContext) -> int:
+    """Return face-size-scaled patch half-width, floored for stability."""
+    scaled = int(_inter_ocular_distance_px(ctx) * PORTRAIT_OCCLUSION_PATCH_IOD_FRACTION)
+    return max(PORTRAIT_OCCLUSION_PATCH_MIN_HALF_PX, scaled)
+
+
+@dataclass(frozen=True)
+class _RegionSample:
+    """Bundles a grayscale face image with one region's landmark indices."""
+
+    gray: np.ndarray
+    indices: tuple[int, ...]
+
+
+def _region_texture_variance(ctx: _FaceContext, sample: _RegionSample) -> float:
+    """Return mean local-texture variance across one face region's landmarks."""
+    h, w = ctx.image.shape[:2]
+    half = _occlusion_patch_half_px(ctx)
+    patches = [
+        _TexturePatch(cx=_to_px(ctx.landmarks[i].x, w), cy=_to_px(ctx.landmarks[i].y, h), half=half)
+        for i in sample.indices
+    ]
+    return float(np.mean([_texture_patch_variance(sample.gray, p) for p in patches]))
+
+
+def _occlusion_region_variances(ctx: _FaceContext) -> dict[str, float]:
+    """Return per-face-region local-texture variance (eyes, brows, nose, mouth)."""
+    gray = cv2.cvtColor(ctx.image, cv2.COLOR_BGR2GRAY)
+    return {
+        region: _region_texture_variance(ctx, _RegionSample(gray=gray, indices=indices))
+        for region, indices in _OCCLUSION_LANDMARK_GROUPS.items()
+    }
+
+
+def detect_occlusion(image: np.ndarray, landmarks: list[Any]) -> float:
+    """Return occlusion visibility ratio: min region texture over median region texture.
+
+    A hand, object, or other occluder flattens local pixel texture in the
+    region it covers (MediaPipe still fits landmarks there, but the pixels
+    underneath are uniform). Comparing the flattest region against this same
+    face's own median keeps the ratio valid across arbitrary photo
+    resolutions and stays distinct from whole-face blur (which lowers every
+    region together, leaving the ratio near 1.0). Lower = more occluded.
     """
-    if landmark.visibility is None:
-        return True
-    return landmark.visibility > PORTRAIT_LANDMARK_VISIBILITY_THRESHOLD
-
-
-def detect_occlusion(landmarks: list[Any]) -> float:
-    """Return ratio of landmarks with visibility > threshold (MediaPipe visibility attribute)."""
-    visible = sum(1 for lm in landmarks[:TOTAL_LANDMARK_COUNT] if _is_landmark_visible(lm))
-    return visible / TOTAL_LANDMARK_COUNT
+    variances = list(_occlusion_region_variances(_FaceContext(image=image, landmarks=landmarks)).values())
+    median = float(np.median(variances))
+    if median < 1e-6:
+        return 1.0
+    return min(variances) / median
 
 
 def _map_emotiefflib_label(label: str) -> str:

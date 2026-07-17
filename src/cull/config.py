@@ -291,11 +291,26 @@ CURATE_VLM_TIEBREAK_THRESHOLD: float = 0.02
 
 PORTRAIT_NUM_FACES_MAX: int = 10
 PORTRAIT_FACE_DETECTION_CONFIDENCE_MIN: float = 0.5
-PORTRAIT_LANDMARK_VISIBILITY_THRESHOLD: float = 0.5
 PORTRAIT_EAR_CLOSED_MAX: float = 0.20
 PORTRAIT_EAR_SQUINT_MAX: float = 0.25
-PORTRAIT_FACE_OCCLUSION_MIN: float = 0.70
 PORTRAIT_PRESENCE_SCORE_MIN: float = 0.70
+
+# Occlusion detection: MediaPipe's FaceLandmarker never populates per-landmark
+# `visibility`, so occlusion is measured from pixel texture instead. Small
+# patches are sampled around key eye/brow/nose/mouth landmarks; an occluder
+# (hand, object, heavy blur) flattens local texture in the region it covers.
+# occlusion_ratio = min(region variance) / median(region variance) — a
+# same-image, same-resolution ratio, so it stays valid across arbitrary photo
+# resolutions/qualities without a hardcoded absolute variance cutoff. This
+# also keeps it distinct from whole-face softness/blur (handled elsewhere by
+# eye-sharpness scoring): a uniformly soft face keeps min/median near 1.0.
+# Patch half-width scales with inter-ocular distance so it tracks face size.
+# Calibrated on scratchpad/occlusion_eval (27 real negatives + 81 synthetic
+# occlusions: opaque rect, skin-tone ellipse, heavy gaussian blur) — P=0.83,
+# R=0.76, F1=0.80 on the subset MediaPipe still detects a face for.
+PORTRAIT_OCCLUSION_PATCH_IOD_FRACTION: float = 0.03
+PORTRAIT_OCCLUSION_PATCH_MIN_HALF_PX: int = 3
+PORTRAIT_FACE_OCCLUSION_MIN: float = 0.32
 
 # Margin applied to the landmark-derived face bbox before feeding it to the
 # EmotiEffLib emotion recognizer. EmotiEffLib has no internal face detector
@@ -440,6 +455,11 @@ KEYSTONE_PENALTY_DEGREES: float = 5.0
 
 PALETTE_OUTLIER_SIGMA: float = 2.5
 EXPOSURE_DRIFT_SIGMA: float = 2.0
+
+# Side length (px) of the downsample used to compute a photo's LAB palette
+# centroid — cheap enough to run per-photo in the Stage 2 batch loop without
+# a second full-resolution decode.
+PALETTE_CENTROID_DOWNSAMPLE_PX: int = 32
 
 # ---------------------------------------------------------------------------
 # EXIF anomaly detection

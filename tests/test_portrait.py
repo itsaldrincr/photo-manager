@@ -9,6 +9,7 @@ from unittest.mock import MagicMock, patch
 import numpy as np
 import pytest
 
+from cull.config import PORTRAIT_FACE_OCCLUSION_MIN
 from cull.stage2.portrait import (
     PortraitResult,
     _ear_from_pts,
@@ -149,10 +150,32 @@ def test_is_eyes_closed_false_at_exact_threshold() -> None:
 
 
 # ---------------------------------------------------------------------------
-# detect_occlusion tests — visibility=None mirrors real MediaPipe
-# FaceLandmarker output (visibility/presence are never populated for faces,
-# unlike PoseLandmarker), which previously crashed with a TypeError.
+# detect_occlusion tests — pixel-texture based (visibility/presence are never
+# populated by MediaPipe's FaceLandmarker, unlike PoseLandmarker, so the old
+# visibility-based heuristic could never fire; this measures local texture
+# flatness at key face-region landmarks instead).
 # ---------------------------------------------------------------------------
+
+IMG_SIZE: int = 240
+BLOCK_HALF: int = 14
+RNG_SEED: int = 7
+
+_OCCLUSION_GROUP_CENTERS: dict[str, tuple[int, int]] = {
+    "left_eye": (60, 60),
+    "right_eye": (180, 60),
+    "left_brow": (60, 30),
+    "right_brow": (180, 30),
+    "nose": (120, 120),
+    "mouth": (120, 190),
+}
+_OCCLUSION_GROUP_INDICES: dict[str, list[int]] = {
+    "left_eye": [362, 385, 387, 263, 373, 380],
+    "right_eye": [33, 160, 158, 133, 153, 144],
+    "left_brow": [70, 63, 105, 66, 107],
+    "right_brow": [300, 293, 334, 296, 336],
+    "nose": [1, 2, 98, 327],
+    "mouth": [61, 291, 0, 17, 78, 308, 13, 14],
+}
 
 
 def _make_landmark_no_visibility(x: float, y: float) -> SimpleNamespace:
@@ -160,18 +183,60 @@ def _make_landmark_no_visibility(x: float, y: float) -> SimpleNamespace:
     return SimpleNamespace(x=x, y=y, z=0.0, visibility=None, presence=None)
 
 
-def test_detect_occlusion_none_visibility_does_not_raise() -> None:
-    """detect_occlusion must not raise when visibility is None on every landmark."""
+def _build_occlusion_landmarks() -> list[SimpleNamespace]:
+    """Return a full landmark list with each occlusion-region index placed at its block centre."""
     landmarks = [_make_landmark_no_visibility(0.5, 0.5) for _ in range(LANDMARK_COUNT)]
-    ratio = detect_occlusion(landmarks)
-    assert ratio == pytest.approx(1.0)
+    for group, indices in _OCCLUSION_GROUP_INDICES.items():
+        cx, cy = _OCCLUSION_GROUP_CENTERS[group]
+        for idx in indices:
+            landmarks[idx] = _make_landmark_no_visibility(cx / IMG_SIZE, cy / IMG_SIZE)
+    return landmarks
 
 
-def test_detect_occlusion_none_visibility_treated_as_fully_visible() -> None:
-    """detect_occlusion must treat None visibility as visible (neutral fallback)."""
-    all_none = [_make_landmark_no_visibility(0.5, 0.5) for _ in range(LANDMARK_COUNT)]
-    all_visible = [_make_landmark(0.5, 0.5) for _ in range(LANDMARK_COUNT)]
-    assert detect_occlusion(all_none) == pytest.approx(detect_occlusion(all_visible))
+_FLAT_BLOCK_VALUE: tuple[int, int, int] = (120, 120, 120)
+
+
+def _build_textured_image(flat_group: str | None) -> np.ndarray:
+    """Return a synthetic BGR image with noisy blocks at every region, one optionally flat."""
+    rng = np.random.default_rng(RNG_SEED)
+    image = np.full((IMG_SIZE, IMG_SIZE, 3), 128, dtype=np.uint8)
+    for group, (cx, cy) in _OCCLUSION_GROUP_CENTERS.items():
+        slice_y = slice(cy - BLOCK_HALF, cy + BLOCK_HALF)
+        slice_x = slice(cx - BLOCK_HALF, cx + BLOCK_HALF)
+        if group == flat_group:
+            image[slice_y, slice_x] = _FLAT_BLOCK_VALUE
+            continue
+        image[slice_y, slice_x] = rng.integers(0, 255, size=(2 * BLOCK_HALF, 2 * BLOCK_HALF, 3), dtype=np.uint8)
+    return image
+
+
+def test_detect_occlusion_none_visibility_does_not_raise() -> None:
+    """detect_occlusion must not raise on landmark objects with visibility=None (real MediaPipe shape)."""
+    image = _build_textured_image(flat_group=None)
+    landmarks = _build_occlusion_landmarks()
+    ratio = detect_occlusion(image, landmarks)
+    assert 0.0 <= ratio <= 1.0
+
+
+def test_detect_occlusion_all_textured_is_near_visible() -> None:
+    """detect_occlusion must return a high ratio when every key region is textured."""
+    image = _build_textured_image(flat_group=None)
+    landmarks = _build_occlusion_landmarks()
+    ratio = detect_occlusion(image, landmarks)
+    assert ratio > 0.5, f"Expected ratio > 0.5 for fully textured face, got {ratio:.4f}"
+
+
+def test_detect_occlusion_flat_region_lowers_ratio() -> None:
+    """detect_occlusion must return a lower ratio when one region is flat (occluded)."""
+    clean_image = _build_textured_image(flat_group=None)
+    occluded_image = _build_textured_image(flat_group="mouth")
+    landmarks = _build_occlusion_landmarks()
+    clean_ratio = detect_occlusion(clean_image, landmarks)
+    occluded_ratio = detect_occlusion(occluded_image, landmarks)
+    assert occluded_ratio < clean_ratio
+    assert occluded_ratio < PORTRAIT_FACE_OCCLUSION_MIN, (
+        f"Expected occluded ratio < {PORTRAIT_FACE_OCCLUSION_MIN}, got {occluded_ratio:.4f}"
+    )
 
 
 # ---------------------------------------------------------------------------
