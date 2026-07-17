@@ -63,3 +63,17 @@ sensitivity confirmed in BOTH families — but still 2.5pp under champion with
 worse keep recall. GATE: within accuracy tolerance band but no improvement →
 REJECTED. Champion qwen3-vl-4b (8-bit) stands. Gemma line now fully closed:
 Q4 rejected, Q6 rejected, Q8 exceeds memory gate, OptiQ/unsloth unloadable.
+| 2026-07-17T03:48:01+00:00 | gemma-4-12b-it-4bit | 67.5% | 100.0% | 35.0% | 8.37s | 8.18 GB | 0.0% |
+| 2026-07-17T04:00:31+00:00 | gemma-4-12b-it-6bit | 62.5% | 100.0% | 25.0% | 10.33s | 11.09 GB | 0.0% |
+
+## CHAMPION SWAP (2026-07-17)
+
+`gemma-4-12b-it-4bit` PROMOTED over `qwen3-vl-4b` (4B, 8-bit):
+- v1 eval set: 67.5% vs 62.5% · holdout v2 (disjoint): 65.0% vs 60.0% —
+  +5pp on BOTH independent sets (n=80 total)
+- 12B Q6 (home-built) scored 62.5% — worse than Q4; not pursued
+- Cost accepted: +2s/photo stage 3 (~+30s per 30-photo run), peak 8.18 GB
+- Infra: main env upgraded mlx-vlm 0.3.12 -> 0.6.3 (pinned <0.6.4 due to
+  known upstream regressions); zero golden-baseline drift after upgrade;
+  full test suite green
+- VLM_DEFAULT_ALIAS -> gemma-4-12b; qwen3-vl-4b retained as fallback alias

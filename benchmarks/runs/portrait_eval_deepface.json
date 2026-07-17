@@ -1,15 +1,189 @@
 {
   "timing": {
-    "load_seconds": 8.658,
-    "rss_before_load_mb": 72.0,
-    "rss_after_load_mb": 366.9
+    "load_seconds": 5.111,
+    "rss_before_load_mb": 72.1,
+    "rss_after_load_mb": 6625.0
   },
   "readings": [
     {
-      "name": "DSCF8867.JPG",
-      "latency_seconds": 4.4602073749993,
+      "name": "DSCF0166 52 Edited.jpg",
+      "latency_seconds": 1.7052048339974135,
+      "dominant_emotion": "fear",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0179.JPG",
+      "latency_seconds": 1.5428276250022464,
+      "dominant_emotion": "neutral",
+      "expression_bucket": "neutral"
+    },
+    {
+      "name": "DSCF0180 57 Edited.jpg",
+      "latency_seconds": 0.9212255830061622,
+      "dominant_emotion": "neutral",
+      "expression_bucket": "neutral"
+    },
+    {
+      "name": "DSCF0180.JPG",
+      "latency_seconds": 0.9453139579854906,
+      "dominant_emotion": "fear",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0210.JPG",
+      "latency_seconds": 1.0588107500225306,
+      "dominant_emotion": "neutral",
+      "expression_bucket": "neutral"
+    },
+    {
+      "name": "DSCF0213.JPG",
+      "latency_seconds": 1.1151599580189213,
+      "dominant_emotion": "sad",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0218 68 Edited.jpg",
+      "latency_seconds": 0.9757947910111398,
+      "dominant_emotion": "neutral",
+      "expression_bucket": "neutral"
+    },
+    {
+      "name": "DSCF0218.JPG",
+      "latency_seconds": 0.9605023339972831,
+      "dominant_emotion": "neutral",
+      "expression_bucket": "neutral"
+    },
+    {
+      "name": "DSCF0226.JPG",
+      "latency_seconds": 1.0005543750012293,
+      "dominant_emotion": "sad",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0244.JPG",
+      "latency_seconds": 0.9944707499817014,
+      "dominant_emotion": "fear",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0252.JPG",
+      "latency_seconds": 1.15210541698616,
+      "dominant_emotion": "neutral",
+      "expression_bucket": "neutral"
+    },
+    {
+      "name": "DSCF0261.JPG",
+      "latency_seconds": 1.3336791250039823,
+      "dominant_emotion": "fear",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0264.JPG",
+      "latency_seconds": 1.2610609169933014,
+      "dominant_emotion": "angry",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0354.JPG",
+      "latency_seconds": 0.9516402909648605,
+      "dominant_emotion": "neutral",
+      "expression_bucket": "neutral"
+    },
+    {
+      "name": "DSCF0363.JPG",
+      "latency_seconds": 1.0461715839919634,
       "dominant_emotion": "happy",
       "expression_bucket": "happy"
+    },
+    {
+      "name": "DSCF0366.JPG",
+      "latency_seconds": 0.9760238750022836,
+      "dominant_emotion": "angry",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0369.JPG",
+      "latency_seconds": 1.027407832967583,
+      "dominant_emotion": "sad",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0370 145 Edited.jpg",
+      "latency_seconds": 0.9664639169932343,
+      "dominant_emotion": "sad",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0373.JPG",
+      "latency_seconds": 1.038408791006077,
+      "dominant_emotion": "surprise",
+      "expression_bucket": "surprised"
+    },
+    {
+      "name": "DSCF0377.JPG",
+      "latency_seconds": 1.1045093329739757,
+      "dominant_emotion": "happy",
+      "expression_bucket": "happy"
+    },
+    {
+      "name": "DSCF0384.JPG",
+      "latency_seconds": 1.1460808329866268,
+      "dominant_emotion": "sad",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0387.JPG",
+      "latency_seconds": 0.9878139580250718,
+      "dominant_emotion": "sad",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0457.JPG",
+      "latency_seconds": 0.9989715840201825,
+      "dominant_emotion": "happy",
+      "expression_bucket": "happy"
+    },
+    {
+      "name": "DSCF0484.JPG",
+      "latency_seconds": 0.8672324999934062,
+      "dominant_emotion": "sad",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0494.JPG",
+      "latency_seconds": 0.8342248749686405,
+      "dominant_emotion": "sad",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF0588 181 Edited.jpg",
+      "latency_seconds": 0.8656209589680657,
+      "dominant_emotion": "fear",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF1422.JPG",
+      "latency_seconds": 1.0501490829628892,
+      "dominant_emotion": "angry",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF1490.JPG",
+      "latency_seconds": 0.9013587920344435,
+      "dominant_emotion": "fear",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF1491.JPG",
+      "latency_seconds": 0.8825270000379533,
+      "dominant_emotion": "sad",
+      "expression_bucket": "negative"
+    },
+    {
+      "name": "DSCF1543.JPG",
+      "latency_seconds": 0.9043370410217904,
+      "dominant_emotion": "neutral",
+      "expression_bucket": "neutral"
     }
   ]
 }

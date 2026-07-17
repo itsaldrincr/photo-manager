@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
-from transformers import AutoConfig, CLIPVisionConfig
+import json
+
+from huggingface_hub import hf_hub_download
+from transformers import CLIPVisionConfig
 
 from cull.config import CLIP_MODEL_ID
 from cull.stage2.aesthetic import AESTHETIC_MODEL_ID
@@ -21,9 +24,15 @@ _GEOMETRY_KEYS: tuple[str, ...] = (
 )
 
 
-def _load_aesthetic_config() -> AutoConfig:
-    """Fetch aesthetics predictor config (JSON only, no model weights)."""
-    return AutoConfig.from_pretrained(AESTHETIC_MODEL_ID, trust_remote_code=True)
+def _load_aesthetic_config() -> dict:
+    """Fetch the aesthetics predictor's raw config.json.
+
+    Read as plain JSON (no AutoConfig): the repo's remote code passes
+    positional args to CLIPVisionConfig, which transformers>=5 rejects.
+    Production never executes that remote code either.
+    """
+    config_path = hf_hub_download(AESTHETIC_MODEL_ID, "config.json")
+    return json.loads(open(config_path, encoding="utf-8").read())
 
 
 def _load_clip_vision_config() -> CLIPVisionConfig:
@@ -33,10 +42,8 @@ def _load_clip_vision_config() -> CLIPVisionConfig:
 
 def test_clip_backbone_matches_clip_model_id() -> None:
     """Assert the aesthetics predictor backbone geometry matches CLIP_MODEL_ID."""
-    aesthetic_cfg = _load_aesthetic_config()
-    clip_cfg = _load_clip_vision_config()
-    aesthetic_dict = aesthetic_cfg.to_dict()
-    clip_dict = clip_cfg.to_dict()
+    aesthetic_dict = _load_aesthetic_config()
+    clip_dict = _load_clip_vision_config().to_dict()
     for key in _GEOMETRY_KEYS:
         aesthetic_val = aesthetic_dict.get(key)
         clip_val = clip_dict.get(key)
@@ -50,9 +57,9 @@ def test_clip_backbone_matches_clip_model_id() -> None:
 def test_vit_l14_geometry() -> None:
     """Assert ViT-L/14 geometry: hidden_size==1024 and image_size==224."""
     config = _load_aesthetic_config()
-    assert config.hidden_size == EXPECTED_HIDDEN_SIZE, (
-        f"Expected hidden_size {EXPECTED_HIDDEN_SIZE}, got {config.hidden_size}"
+    assert config.get("hidden_size") == EXPECTED_HIDDEN_SIZE, (
+        f"Expected hidden_size {EXPECTED_HIDDEN_SIZE}, got {config.get('hidden_size')}"
     )
-    assert config.image_size == EXPECTED_IMAGE_SIZE, (
-        f"Expected image_size {EXPECTED_IMAGE_SIZE}, got {config.image_size}"
+    assert config.get("image_size") == EXPECTED_IMAGE_SIZE, (
+        f"Expected image_size {EXPECTED_IMAGE_SIZE}, got {config.get('image_size')}"
     )

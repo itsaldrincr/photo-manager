@@ -1,549 +1,279 @@
 {
   "timing": {
-    "load_seconds": 7.944,
+    "load_seconds": 5.781,
     "rss_before_load_mb": 71.6,
-    "rss_after_load_mb": 304.4
+    "rss_after_load_mb": 617.7
   },
   "readings": [
     {
-      "name": "DSCF7611.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7611.JPG",
-      "has_face": false,
-      "latency_seconds": 0.00922295800410211,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF7656.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7656.JPG",
-      "has_face": false,
-      "latency_seconds": 0.003087957971729338,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF7672.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7672.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0021872909856028855,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF7901.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7901.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0020455839694477618,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF7962.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7962.JPG",
-      "has_face": false,
-      "latency_seconds": 0.011548625014256686,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF7971.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7971.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0023258329601958394,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF7979.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF7979.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0022531659924425185,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8597.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8597.JPG",
-      "has_face": false,
-      "latency_seconds": 0.00905233301455155,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8621.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8621.JPG",
-      "has_face": false,
-      "latency_seconds": 0.008005083014722914,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8637.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8637.JPG",
-      "has_face": false,
-      "latency_seconds": 0.002277666993904859,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8651.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8651.JPG",
-      "has_face": false,
-      "latency_seconds": 0.002697375020943582,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8664.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8664.JPG",
-      "has_face": false,
-      "latency_seconds": 0.00329408299876377,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8867.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8867.JPG",
+      "name": "DSCF0166 52 Edited.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0166 52 Edited.jpg",
       "has_face": true,
-      "latency_seconds": 0.013229666976258159,
+      "latency_seconds": 0.009362790966406465,
+      "ear_eyes_closed": true,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
+    },
+    {
+      "name": "DSCF0179.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0179.JPG",
+      "has_face": true,
+      "latency_seconds": 0.008012667007278651,
+      "ear_eyes_closed": true,
+      "blendshape_eyes_closed": true,
+      "expression_bucket": "neutral"
+    },
+    {
+      "name": "DSCF0180 57 Edited.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0180 57 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.007579416036605835,
       "ear_eyes_closed": false,
       "blendshape_eyes_closed": false,
       "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF8876.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8876.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0021427919855341315,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0180.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0180.JPG",
+      "has_face": true,
+      "latency_seconds": 0.00751529197441414,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF8895.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8895.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0022048329701647162,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0210.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0210.JPG",
+      "has_face": true,
+      "latency_seconds": 0.0076496670371852815,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "happy"
     },
     {
-      "name": "DSCF8917.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8917.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0020818329649046063,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0213.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0213.JPG",
+      "has_face": true,
+      "latency_seconds": 0.007636375026777387,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": true,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF8941.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8941.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0017560829874128103,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0218 68 Edited.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0218 68 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.0074516249587759376,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF8957.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8957.JPG",
-      "has_face": false,
-      "latency_seconds": 0.002293541969265789,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0218.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0218.JPG",
+      "has_face": true,
+      "latency_seconds": 0.007659208960831165,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": true,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF8995.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF8995.JPG",
-      "has_face": false,
-      "latency_seconds": 0.007013124995864928,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0226.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0226.JPG",
+      "has_face": true,
+      "latency_seconds": 0.007905042031779885,
+      "ear_eyes_closed": true,
+      "blendshape_eyes_closed": true,
+      "expression_bucket": "happy"
     },
     {
-      "name": "DSCF9016.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9016.JPG",
-      "has_face": false,
-      "latency_seconds": 0.001737416023388505,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0244.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0244.JPG",
+      "has_face": true,
+      "latency_seconds": 0.007933792017865926,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9039.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9039.JPG",
-      "has_face": false,
-      "latency_seconds": 0.009430875012185425,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0252.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0252.JPG",
+      "has_face": true,
+      "latency_seconds": 0.0077281249687075615,
+      "ear_eyes_closed": true,
+      "blendshape_eyes_closed": true,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9049.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9049.JPG",
-      "has_face": false,
-      "latency_seconds": 0.002096833020914346,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0261.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0261.JPG",
+      "has_face": true,
+      "latency_seconds": 0.007754000020213425,
+      "ear_eyes_closed": true,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9066.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9066.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0022738329716958106,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0264.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0264.JPG",
+      "has_face": true,
+      "latency_seconds": 0.007772582990583032,
+      "ear_eyes_closed": true,
+      "blendshape_eyes_closed": true,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9095.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9095.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0019471249543130398,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0354.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0354.JPG",
+      "has_face": true,
+      "latency_seconds": 0.0077302499557845294,
+      "ear_eyes_closed": true,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9110.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9110.JPG",
-      "has_face": false,
-      "latency_seconds": 0.002143416029866785,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0363.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0363.JPG",
+      "has_face": true,
+      "latency_seconds": 0.008028167008887976,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "happy"
     },
     {
-      "name": "DSCF9113.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9113.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0021317090140655637,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0366.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0366.JPG",
+      "has_face": true,
+      "latency_seconds": 0.008271750004496425,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "happy"
     },
     {
-      "name": "DSCF9149.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9149.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0026522499974817038,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0369.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0369.JPG",
+      "has_face": true,
+      "latency_seconds": 0.009043666010256857,
+      "ear_eyes_closed": true,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "happy"
     },
     {
-      "name": "DSCF9159.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9159.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0021030829520896077,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0370 145 Edited.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0370 145 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.008436417032498866,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "happy"
     },
     {
-      "name": "DSCF9162.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9162.JPG",
-      "has_face": false,
-      "latency_seconds": 0.001926290977280587,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0373.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0373.JPG",
+      "has_face": true,
+      "latency_seconds": 0.008258292044047266,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9181.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9181.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0017729579703882337,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0377.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0377.JPG",
+      "has_face": true,
+      "latency_seconds": 0.00849170796573162,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9206.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9206.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0021888749906793237,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0384.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0384.JPG",
+      "has_face": true,
+      "latency_seconds": 0.009236291982233524,
+      "ear_eyes_closed": true,
+      "blendshape_eyes_closed": true,
+      "expression_bucket": "happy"
     },
     {
-      "name": "DSCF9210.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9210.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0022231669863685966,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0387.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0387.JPG",
+      "has_face": true,
+      "latency_seconds": 0.009219124971423298,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9215.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9215.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0020797920296899974,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0457.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0457.JPG",
+      "has_face": true,
+      "latency_seconds": 0.007738916028756648,
+      "ear_eyes_closed": true,
+      "blendshape_eyes_closed": true,
+      "expression_bucket": "happy"
     },
     {
-      "name": "DSCF9290.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9290.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0019211249891668558,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0484.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0484.JPG",
+      "has_face": true,
+      "latency_seconds": 0.008893457998055965,
+      "ear_eyes_closed": true,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9642.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9642.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0017715409630909562,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0494.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0494.JPG",
+      "has_face": true,
+      "latency_seconds": 0.008399957965593785,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9844.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9844.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0022263749851845205,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF0588 181 Edited.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF0588 181 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.00836654199520126,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9848.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9848.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0026318749878555536,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF1422.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF1422.JPG",
+      "has_face": true,
+      "latency_seconds": 0.00829179200809449,
+      "ear_eyes_closed": true,
+      "blendshape_eyes_closed": true,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9851.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9851.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0016288749757222831,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF1490.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF1490.JPG",
+      "has_face": true,
+      "latency_seconds": 0.008378166996408254,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "happy"
     },
     {
-      "name": "DSCF9868.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9868.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0017141250427812338,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF1491.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF1491.JPG",
+      "has_face": true,
+      "latency_seconds": 0.008193375018890947,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     },
     {
-      "name": "DSCF9876.JPG",
-      "path": "/Users/alrelador/Applications/photo-manager/benchmarks/eval_set/DSCF9876.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0230855830013752,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF7340.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF7340.JPG",
-      "has_face": false,
-      "latency_seconds": 0.017906916968058795,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF7966.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF7966.JPG",
-      "has_face": false,
-      "latency_seconds": 0.008915042039006948,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8580.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF8580.JPG",
-      "has_face": false,
-      "latency_seconds": 0.007233374984934926,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8595.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF8595.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0074708330212160945,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8672.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF8672.JPG",
-      "has_face": false,
-      "latency_seconds": 0.008455167000647634,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8674.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF8674.JPG",
-      "has_face": false,
-      "latency_seconds": 0.001841291959863156,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8821.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF8821.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0017964160069823265,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8898.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF8898.JPG",
-      "has_face": false,
-      "latency_seconds": 0.00214470800710842,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8930.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF8930.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0017776659806258976,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF8997.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF8997.JPG",
-      "has_face": false,
-      "latency_seconds": 0.007949749997351319,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF9053.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF9053.JPG",
-      "has_face": false,
-      "latency_seconds": 0.002306999987922609,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF9198.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF9198.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0021645830129273236,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF9207.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF9207.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0022511249990202487,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF9317.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF9317.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0018230410059913993,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF9632.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF9632.JPG",
-      "has_face": false,
-      "latency_seconds": 0.001787375018466264,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF9647.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF9647.JPG",
-      "has_face": false,
-      "latency_seconds": 0.001994333986658603,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF9661.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF9661.JPG",
-      "has_face": false,
-      "latency_seconds": 0.0021262079826556146,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF9839.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF9839.JPG",
-      "has_face": false,
-      "latency_seconds": 0.008694834017660469,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF9901.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF9901.JPG",
-      "has_face": false,
-      "latency_seconds": 0.002044582972303033,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
-    },
-    {
-      "name": "DSCF9906.JPG",
-      "path": "/Users/alrelador/Desktop/cull-test/DSCF9906.JPG",
-      "has_face": false,
-      "latency_seconds": 0.002083541010506451,
-      "ear_eyes_closed": null,
-      "blendshape_eyes_closed": null,
-      "expression_bucket": "unknown"
+      "name": "DSCF1543.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/85225a69-a5ad-4e09-b879-f167553ba959/scratchpad/ev_faces/DSCF1543.JPG",
+      "has_face": true,
+      "latency_seconds": 0.008324499998707324,
+      "ear_eyes_closed": false,
+      "blendshape_eyes_closed": false,
+      "expression_bucket": "neutral"
     }
   ]
 }
