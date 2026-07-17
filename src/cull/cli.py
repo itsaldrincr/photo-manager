@@ -27,7 +27,7 @@ _root.handlers.clear()
 _root.addHandler(logging.NullHandler())
 
 # Bootstrap offline model cache env vars BEFORE any cull.* import that
-# transitively pulls torch / transformers / pyiqa / mediapipe / deepface.
+# transitively pulls torch / transformers / pyiqa / mediapipe / emotiefflib.
 from cull.env_bootstrap import bootstrap_default  # noqa: E402
 from cull.config import ModelCacheConfig  # noqa: E402
 

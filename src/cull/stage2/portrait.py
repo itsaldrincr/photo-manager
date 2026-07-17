@@ -17,6 +17,7 @@ from cull.config import (
     PORTRAIT_FACE_DETECTION_CONFIDENCE_MIN,
     PORTRAIT_LANDMARK_VISIBILITY_THRESHOLD,
     PORTRAIT_EAR_CLOSED_MAX,
+    PORTRAIT_EMOTION_CROP_MARGIN_FRACTION,
     PORTRAIT_FACE_OCCLUSION_MIN,
     CullConfig,
     ModelCacheConfig,
@@ -57,6 +58,8 @@ class PortraitResult(BaseModel):
     face_occluded: bool = False
     occlusion_ratio: float | None = None
     dominant_emotion: str | None = None
+    valence: float | None = None
+    arousal: float | None = None
 
     @property
     def has_face(self) -> bool:
@@ -91,6 +94,32 @@ class _AssemblyInput:
 
     ctx: _FaceContext
     face_count: int
+
+
+@dataclass(frozen=True)
+class _EmotionReading:
+    """Mapped 7-class emotion label plus EmotiEffLib valence/arousal scores."""
+
+    label: str
+    valence: float | None
+    arousal: float | None
+
+
+# EmotiEffLib's enet_b0_8_va_mtl model emits 8 classes; DeepFace-era consumers
+# (Stage 2/3/4 scoring, VLM prompt hints) expect the classic 7-class FER
+# vocabulary. "Contempt" has no direct match, so it folds into "disgust" —
+# the nearest facial-signature neighbour (curled lip / nose-wrinkle overlap)
+# and DeepFace's own historical closest bucket for contempt-like expressions.
+_EMOTIEFF_TO_CONSUMER_LABEL: dict[str, str] = {
+    "anger": "angry",
+    "contempt": "disgust",
+    "disgust": "disgust",
+    "fear": "fear",
+    "happiness": "happy",
+    "neutral": "neutral",
+    "sadness": "sad",
+    "surprise": "surprise",
+}
 
 
 # ---------------------------------------------------------------------------
@@ -189,26 +218,61 @@ def _face_bbox_from_landmarks(ctx: _FaceContext) -> tuple[int, int, int, int]:
     return (max(0, min(xs)), max(0, min(ys)), min(w, max(xs)), min(h, max(ys)))
 
 
+def _emotion_crop(ctx: _FaceContext) -> np.ndarray:
+    """Return the margin-padded face crop fed to EmotiEffLib (no internal detector)."""
+    x1, y1, x2, y2 = _face_bbox_from_landmarks(ctx)
+    h, w = ctx.image.shape[:2]
+    pad_x = int((x2 - x1) * PORTRAIT_EMOTION_CROP_MARGIN_FRACTION)
+    pad_y = int((y2 - y1) * PORTRAIT_EMOTION_CROP_MARGIN_FRACTION)
+    return ctx.image[
+        max(0, y1 - pad_y):min(h, y2 + pad_y),
+        max(0, x1 - pad_x):min(w, x2 + pad_x),
+    ]
+
+
+@dataclass(frozen=True)
+class _FaceMetrics:
+    """Aggregated per-face measurements feeding PortraitResult assembly."""
+
+    ear_left: float
+    ear_right: float
+    occlusion: float
+    sharp_left: float
+    sharp_right: float
+    emotion: _EmotionReading
+
+
+def _compute_face_metrics(ctx: _FaceContext) -> _FaceMetrics:
+    """Compute EAR, occlusion, eye sharpness, and emotion for a detected face."""
+    ear_l, ear_r = _ear_pair(ctx.landmarks)
+    return _FaceMetrics(
+        ear_left=ear_l,
+        ear_right=ear_r,
+        occlusion=detect_occlusion(ctx.landmarks),
+        sharp_left=_crop_sharpness(ctx, _LEFT_EYE_INDICES),
+        sharp_right=_crop_sharpness(ctx, _RIGHT_EYE_INDICES),
+        emotion=_detect_emotion_reading(_emotion_crop(ctx)),
+    )
+
+
 def _assemble_result(assembly: _AssemblyInput) -> PortraitResult:
     """Build PortraitResult from AssemblyInput."""
     ctx = assembly.ctx
-    ear_l, ear_r = _ear_pair(ctx.landmarks)
-    mean_ear = (ear_l + ear_r) / 2.0
-    occlusion = detect_occlusion(ctx.landmarks)
-    sharp_l = _crop_sharpness(ctx, _LEFT_EYE_INDICES)
-    sharp_r = _crop_sharpness(ctx, _RIGHT_EYE_INDICES)
-    emotion = detect_expression_from_array(ctx.image)
+    metrics = _compute_face_metrics(ctx)
+    mean_ear = (metrics.ear_left + metrics.ear_right) / 2.0
     return PortraitResult(
         face_count=assembly.face_count,
         face_bbox=_face_bbox_from_landmarks(ctx),
-        eye_sharpness_left=sharp_l,
-        eye_sharpness_right=sharp_r,
-        ear_left=ear_l,
-        ear_right=ear_r,
+        eye_sharpness_left=metrics.sharp_left,
+        eye_sharpness_right=metrics.sharp_right,
+        ear_left=metrics.ear_left,
+        ear_right=metrics.ear_right,
         eyes_closed=is_eyes_closed(mean_ear),
-        face_occluded=occlusion < PORTRAIT_FACE_OCCLUSION_MIN,
-        occlusion_ratio=occlusion,
-        dominant_emotion=emotion or None,
+        face_occluded=metrics.occlusion < PORTRAIT_FACE_OCCLUSION_MIN,
+        occlusion_ratio=metrics.occlusion,
+        dominant_emotion=metrics.emotion.label or None,
+        valence=metrics.emotion.valence,
+        arousal=metrics.emotion.arousal,
     )
 
 
@@ -265,36 +329,46 @@ def detect_occlusion(landmarks: list[Any]) -> float:
     return visible / TOTAL_LANDMARK_COUNT
 
 
-def _dominant_emotion(result: object) -> str:
-    """Extract the dominant_emotion field from a DeepFace.analyze() result."""
-    emotions = result[0] if isinstance(result, list) else result
-    return str(emotions.get("dominant_emotion", ""))
+def _map_emotiefflib_label(label: str) -> str:
+    """Map an EmotiEffLib 8-class label into the legacy 7-class FER vocabulary."""
+    return _EMOTIEFF_TO_CONSUMER_LABEL.get(label.strip().lower(), "")
+
+
+def _emotieff_reading(image_rgb: np.ndarray) -> _EmotionReading:
+    """Run the EmotiEffLib recognizer on an RGB array; return mapped label + VA."""
+    from cull.emotieff_loader import get_emotieff_recognizer  # noqa: PLC0415
+
+    recognizer = get_emotieff_recognizer()
+    labels, scores = recognizer.predict_emotions(image_rgb, logits=True)
+    return _EmotionReading(
+        label=_map_emotiefflib_label(labels[0]),
+        valence=float(scores[0, -2]),
+        arousal=float(scores[0, -1]),
+    )
+
+
+def _detect_emotion_reading(image: np.ndarray) -> _EmotionReading:
+    """Return mapped emotion + valence/arousal for a BGR array; log errors, return empty."""
+    try:
+        rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        return _emotieff_reading(rgb)
+    except Exception as exc:
+        log.warning("EmotiEffLib emotion detection failed: %s", exc)
+        return _EmotionReading(label="", valence=None, arousal=None)
 
 
 def detect_expression_from_array(image: np.ndarray) -> str:
-    """Return dominant emotion for an already-decoded image; log errors, return empty."""
-    try:
-        from deepface import DeepFace  # type: ignore[import]  # noqa: PLC0415
-
-        result = DeepFace.analyze(image, actions=["emotion"], enforce_detection=False)
-        return _dominant_emotion(result)
-    except Exception as exc:
-        log.warning("DeepFace emotion detection failed: %s", exc)
-        return ""
+    """Return dominant emotion for an already face-cropped BGR array; log errors, return empty."""
+    return _detect_emotion_reading(image).label
 
 
 def detect_expression(image_path: Path) -> str:
-    """Return dominant emotion string via DeepFace; log errors, return empty."""
-    try:
-        from deepface import DeepFace  # type: ignore[import]  # noqa: PLC0415
-
-        result = DeepFace.analyze(
-            str(image_path), actions=["emotion"], enforce_detection=False
-        )
-        return _dominant_emotion(result)
-    except Exception as exc:
-        log.warning("DeepFace emotion detection failed: %s", exc)
+    """Return dominant emotion string for a face-cropped image path; log errors, return empty."""
+    image = cv2.imread(str(image_path))
+    if image is None:
+        log.error("Could not read image: %s", image_path)
         return ""
+    return detect_expression_from_array(image)
 
 
 def assess_portrait_from_array(image: np.ndarray, config: CullConfig) -> PortraitResult:

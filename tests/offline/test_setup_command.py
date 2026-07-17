@@ -25,7 +25,7 @@ def _build_cache(tmp_path: Path) -> ModelCacheConfig:
         root=tmp_path,
         hf_home=tmp_path / "hf",
         torch_home=tmp_path / "torch",
-        deepface_home=tmp_path / "deepface",
+        emotieff_dir=tmp_path / "emotieff",
         mediapipe_dir=tmp_path / "mediapipe",
     )
 

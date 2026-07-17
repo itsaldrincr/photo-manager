@@ -25,7 +25,7 @@ def _build_cache(tmp_path: Path) -> ModelCacheConfig:
         root=tmp_path,
         hf_home=tmp_path / "hf",
         torch_home=tmp_path / "torch",
-        deepface_home=tmp_path / "deepface",
+        emotieff_dir=tmp_path / "emotieff",
         mediapipe_dir=tmp_path / "mediapipe",
     )
 
@@ -81,10 +81,9 @@ def _seed_hf_repo(cache: ModelCacheConfig, repo_id: str) -> None:
     link.symlink_to(blob)
 
 
-def _seed_deepface(cache: ModelCacheConfig) -> None:
-    deepface_dir = cache.deepface_home / ".deepface" / "weights"
-    deepface_dir.mkdir(parents=True, exist_ok=True)
-    (deepface_dir / "facial_expression_model_weights.h5").write_bytes(SAMPLE_BYTES)
+def _seed_emotieff(cache: ModelCacheConfig) -> None:
+    cache.emotieff_dir.mkdir(parents=True, exist_ok=True)
+    (cache.emotieff_dir / cull_config.EMOTIEFF_ONNX_FILENAME).write_bytes(SAMPLE_BYTES)
 
 
 def test_hash_mismatch_is_corrupt(tmp_path: Path, monkeypatch) -> None:
@@ -94,7 +93,7 @@ def test_hash_mismatch_is_corrupt(tmp_path: Path, monkeypatch) -> None:
     _seed_hf_repo(cache, cull_config.CLIP_REPO_ID)
     _seed_hf_repo(cache, cull_config.AESTHETIC_REPO_ID)
     _seed_hf_repo(cache, cull_config.DINOV2_REPO_ID)
-    _seed_deepface(cache)
+    _seed_emotieff(cache)
     face_entry = cull_config.MODEL_MANIFEST["face_landmarker"].model_copy(
         update={"sha256": BOGUS_HASH}
     )

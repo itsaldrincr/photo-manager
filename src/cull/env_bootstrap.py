@@ -2,7 +2,7 @@
 
 Must be imported before any ``cull.*`` module that transitively imports
 ``torch``, ``transformers``, ``huggingface_hub``, ``mediapipe``, or
-``deepface``. The module body has no side effects — env mutation only
+``emotiefflib``. The module body has no side effects — env mutation only
 happens when one of the ``apply_*`` functions is called explicitly.
 """
 
@@ -21,7 +21,6 @@ def _write_path_env(cache: ModelCacheConfig) -> None:
     os.environ["HF_HOME"] = str(cache.hf_home)
     os.environ["HF_HUB_CACHE"] = str(cache.hf_home / HF_HUB_SUBDIR)
     os.environ["TORCH_HOME"] = str(cache.torch_home)
-    os.environ["DEEPFACE_HOME"] = str(cache.deepface_home)
 
 
 def apply_offline_env(cache: ModelCacheConfig) -> None:

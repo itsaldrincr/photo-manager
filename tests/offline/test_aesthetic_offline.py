@@ -37,7 +37,7 @@ def _make_fake_cache(tmp_path) -> ModelCacheConfig:
         root=tmp_path,
         hf_home=tmp_path / "hf",
         torch_home=tmp_path / "torch",
-        deepface_home=tmp_path / "deepface",
+        emotieff_dir=tmp_path / "emotieff",
         mediapipe_dir=tmp_path / "mediapipe",
     )
 

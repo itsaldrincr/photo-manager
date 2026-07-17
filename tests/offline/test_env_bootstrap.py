@@ -20,7 +20,6 @@ PATH_VARS: tuple[str, ...] = (
     "HF_HOME",
     "HF_HUB_CACHE",
     "TORCH_HOME",
-    "DEEPFACE_HOME",
 )
 ENV_BOOTSTRAP_PATH: Path = (
     Path(__file__).resolve().parents[2] / "src" / "cull" / "env_bootstrap.py"

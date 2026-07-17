@@ -297,6 +297,15 @@ PORTRAIT_EAR_SQUINT_MAX: float = 0.25
 PORTRAIT_FACE_OCCLUSION_MIN: float = 0.70
 PORTRAIT_PRESENCE_SCORE_MIN: float = 0.70
 
+# Margin applied to the landmark-derived face bbox before feeding it to the
+# EmotiEffLib emotion recognizer. EmotiEffLib has no internal face detector
+# (unlike DeepFace), so it must receive a pre-cropped face region. This value
+# matches benchmarks/fair_expr_models.py's FACE_CROP_MARGIN_FRACTION, which
+# is what the REPLACE-verdict accuracy numbers (macro-F1 0.578) were measured
+# against — changing it would silently drift production accuracy away from
+# the benchmarked result.
+PORTRAIT_EMOTION_CROP_MARGIN_FRACTION: float = 0.25
+
 # ---------------------------------------------------------------------------
 # Burst grouping defaults
 # ---------------------------------------------------------------------------
@@ -377,10 +386,15 @@ FACE_LANDMARKER_URL: str = (
     "face_landmarker/face_landmarker/float16/1/face_landmarker.task"
 )
 
-DEEPFACE_EMOTION_FILENAME: str = "facial_expression_model_weights.h5"
-DEEPFACE_EMOTION_URL: str = (
-    "https://github.com/serengil/deepface_models/releases/download/"
-    "v1.0/facial_expression_model_weights.h5"
+# EmotiEffLib downloads its ONNX weights from GitHub on first use (no HF repo
+# exists for this model); the manifest treats it as a url_file entry, same
+# mechanism as face_landmarker. See cull.emotieff_loader for the local-cache
+# symlink bridge into EmotiEffLib's hardcoded ~/.emotiefflib download dir.
+EMOTIEFF_MODEL_NAME: str = "enet_b0_8_va_mtl"
+EMOTIEFF_ONNX_FILENAME: str = "enet_b0_8_va_mtl.onnx"
+EMOTIEFF_ONNX_URL: str = (
+    "https://github.com/sb-ai-lab/EmotiEffLib/blob/main/"
+    "models/affectnet_emotions/onnx/enet_b0_8_va_mtl.onnx?raw=true"
 )
 
 # SHA-256 pinning is deferred to v2 (see comments in cull.model_cache).
@@ -391,14 +405,14 @@ DEEPFACE_EMOTION_URL: str = (
 CLIP_MODEL_SHA256: str = ""
 AESTHETIC_HEAD_SHA256: str = ""
 FACE_LANDMARKER_SHA256: str = ""
-DEEPFACE_EMOTION_SHA256: str = ""
+EMOTIEFF_ONNX_SHA256: str = ""
 DINOV2_MODEL_SHA256: str = ""
 
 # Cache subdir tokens — kept here so config.py can build MODEL_MANIFEST
 # without importing from cull.model_cache (which would create a cycle).
 SUBDIR_HF: str = "hf"
 SUBDIR_MEDIAPIPE: str = "mediapipe"
-SUBDIR_DEEPFACE: str = "deepface"
+SUBDIR_EMOTIEFF: str = "emotieff"
 
 # ---------------------------------------------------------------------------
 # Rejection explanations
@@ -519,7 +533,7 @@ class ModelCacheConfig(BaseModel):
     root: Path
     hf_home: Path
     torch_home: Path
-    deepface_home: Path
+    emotieff_dir: Path
     mediapipe_dir: Path
 
     @classmethod
@@ -531,7 +545,7 @@ class ModelCacheConfig(BaseModel):
             root=root,
             hf_home=root / "hf",
             torch_home=root / "torch",
-            deepface_home=root / "deepface",
+            emotieff_dir=root / "emotieff",
             mediapipe_dir=root / "mediapipe",
         )
 
@@ -571,13 +585,13 @@ MODEL_MANIFEST: dict[str, ModelManifestEntry] = {
         sha256=FACE_LANDMARKER_SHA256 or None,
         subdir=SUBDIR_MEDIAPIPE,
     ),
-    "deepface_emotion": ModelManifestEntry(
-        name="deepface_emotion",
+    "emotieff_emotion": ModelManifestEntry(
+        name="emotieff_emotion",
         kind="url_file",
-        url=DEEPFACE_EMOTION_URL,
-        filename=DEEPFACE_EMOTION_FILENAME,
-        sha256=DEEPFACE_EMOTION_SHA256 or None,
-        subdir=SUBDIR_DEEPFACE,
+        url=EMOTIEFF_ONNX_URL,
+        filename=EMOTIEFF_ONNX_FILENAME,
+        sha256=EMOTIEFF_ONNX_SHA256 or None,
+        subdir=SUBDIR_EMOTIEFF,
     ),
     "dinov2": ModelManifestEntry(
         name="dinov2",

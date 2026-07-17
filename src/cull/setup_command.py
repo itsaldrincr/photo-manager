@@ -33,13 +33,12 @@ _PYIQA_METRIC_NAMES: tuple[str, ...] = ("topiq_nr", "clipiqa+", "topiq_iaa")
 _KIND_HF_REPO: str = "hf_repo"
 _KIND_URL_FILE: str = "url_file"
 _SUBDIR_MEDIAPIPE: str = "mediapipe"
-_SUBDIR_DEEPFACE: str = "deepface"
+_SUBDIR_EMOTIEFF: str = "emotieff"
 _HF_HUB_SUBDIR: str = "hub"
 _HF_IGNORE_PATTERNS: list[str] = ["*.bin", "*.msgpack", "*.h5", "flax_*"]
 _PARTIAL_SUFFIX: str = ".part"
 _HF_BLOBS_SUBDIR: str = "blobs"
 _INCOMPLETE_SUFFIX: str = ".incomplete"
-_DEEPFACE_WEIGHTS_SUBPATH: tuple[str, str] = (".deepface", "weights")
 
 
 class SetupRequest(BaseModel):
@@ -92,8 +91,8 @@ def _resolve_url_file_dest(
         raise ConfigError(f"url_file entry {entry.name} has no filename")
     if entry.subdir == _SUBDIR_MEDIAPIPE:
         return cache.mediapipe_dir / entry.filename
-    if entry.subdir == _SUBDIR_DEEPFACE:
-        return cache.deepface_home.joinpath(*_DEEPFACE_WEIGHTS_SUBPATH, entry.filename)
+    if entry.subdir == _SUBDIR_EMOTIEFF:
+        return cache.emotieff_dir / entry.filename
     raise ConfigError(f"unknown manifest subdir: {entry.subdir}")
 
 

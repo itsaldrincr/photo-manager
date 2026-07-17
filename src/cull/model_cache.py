@@ -13,7 +13,7 @@ from cull.config import (
     MODEL_MANIFEST,
     ModelCacheConfig,
     ModelManifestEntry,
-    SUBDIR_DEEPFACE,
+    SUBDIR_EMOTIEFF,
     SUBDIR_MEDIAPIPE,
 )
 
@@ -25,7 +25,6 @@ _KIND_HF_REPO: str = "hf_repo"
 _HF_HUB_SUBDIR: str = "hub"
 _HF_SNAPSHOTS_SUBDIR: str = "snapshots"
 _HF_BLOBS_SUBDIR: str = "blobs"
-_DEEPFACE_WEIGHTS_SUBPATH: tuple[str, str] = (".deepface", "weights")
 
 
 class BootstrapStatus(BaseModel):
@@ -78,8 +77,8 @@ def _manifest_file_path(
         return None
     if entry.subdir == SUBDIR_MEDIAPIPE:
         return cache.mediapipe_dir / entry.filename
-    if entry.subdir == SUBDIR_DEEPFACE:
-        return cache.deepface_home.joinpath(*_DEEPFACE_WEIGHTS_SUBPATH, entry.filename)
+    if entry.subdir == SUBDIR_EMOTIEFF:
+        return cache.emotieff_dir / entry.filename
     raise ConfigError(f"unknown manifest subdir: {entry.subdir}")
 
 

@@ -1,9 +1,11 @@
-"""Tests for cull.stage2.portrait: face_landmarker resolver + DeepFace fallback."""
+"""Tests for cull.stage2.portrait: face_landmarker resolver + EmotiEffLib fallback."""
 
 from __future__ import annotations
 
 from pathlib import Path
 
+import cv2
+import numpy as np
 import pytest
 
 from cull.config import FACE_LANDMARKER_FILENAME, ModelCacheConfig
@@ -18,7 +20,7 @@ def _build_cache(tmp_path: Path) -> ModelCacheConfig:
         root=tmp_path,
         hf_home=tmp_path / "hf",
         torch_home=tmp_path / "torch",
-        deepface_home=tmp_path / "deepface",
+        emotieff_dir=tmp_path / "emotieff",
         mediapipe_dir=tmp_path / "mediapipe",
     )
 
@@ -41,39 +43,89 @@ def test_resolve_face_landmarker_path_returns_existing(tmp_path: Path) -> None:
     assert result == expected
 
 
-class _FakeDeepFace:
-    """Stand-in for the deepface.DeepFace module whose analyze always raises."""
+class _FakeRecognizerFailing:
+    """Stand-in whose predict_emotions always raises."""
 
     @staticmethod
-    def analyze(path: str, **kwargs: object) -> list:
-        """Simulate a DeepFace analysis failure."""
-        raise RuntimeError("simulated deepface failure")
+    def predict_emotions(image: np.ndarray, logits: bool = True) -> tuple:
+        """Simulate an EmotiEffLib inference failure."""
+        raise RuntimeError("simulated emotiefflib failure")
 
 
-def test_detect_expression_handles_deepface_failure(monkeypatch) -> None:
-    """detect_expression must swallow DeepFace errors and return an empty string."""
-    import sys  # noqa: PLC0415
-    import types  # noqa: PLC0415
+class _FakeRecognizerHappy:
+    """Stand-in that always reports 'Happiness' with fixed valence/arousal."""
 
-    fake_module = types.ModuleType("deepface")
-    fake_module.DeepFace = _FakeDeepFace  # type: ignore[attr-defined]
-    monkeypatch.setitem(sys.modules, "deepface", fake_module)
-    result = detect_expression(Path("/tmp/does-not-exist.jpg"))
-    assert result == ""
+    @staticmethod
+    def predict_emotions(image: np.ndarray, logits: bool = True) -> tuple:
+        """Return a single 'Happiness' reading with valence=0.30, arousal=0.10."""
+        scores = np.array([[0.0, 0.0, 0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.30, 0.10]])
+        return ["Happiness"], scores
 
 
-def test_detect_expression_returns_dominant_emotion(monkeypatch) -> None:
-    """detect_expression must return the dominant_emotion value from DeepFace."""
-    import sys  # noqa: PLC0415
-    import types  # noqa: PLC0415
+class _FakeRecognizerContempt:
+    """Stand-in that always reports 'Contempt' (the 8-class label with no 7-class match)."""
 
-    class _HappyDeepFace:
-        @staticmethod
-        def analyze(path: str, **kwargs: object) -> list:
-            """Return a single-face analysis result with dominant_emotion=happy."""
-            return [{"dominant_emotion": "happy"}]
+    @staticmethod
+    def predict_emotions(image: np.ndarray, logits: bool = True) -> tuple:
+        """Return a single 'Contempt' reading."""
+        scores = np.array([[0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.10, 0.05]])
+        return ["Contempt"], scores
 
-    fake_module = types.ModuleType("deepface")
-    fake_module.DeepFace = _HappyDeepFace  # type: ignore[attr-defined]
-    monkeypatch.setitem(sys.modules, "deepface", fake_module)
-    assert detect_expression(Path("/tmp/any.jpg")) == "happy"
+
+def test_detect_expression_from_array_handles_emotiefflib_failure(monkeypatch) -> None:
+    """detect_expression_from_array must swallow EmotiEffLib errors and return empty string."""
+    monkeypatch.setattr(
+        "cull.emotieff_loader.get_emotieff_recognizer",
+        lambda: _FakeRecognizerFailing(),
+    )
+    image = np.zeros((10, 10, 3), dtype=np.uint8)
+    assert portrait.detect_expression_from_array(image) == ""
+
+
+def test_detect_expression_from_array_maps_happiness(monkeypatch) -> None:
+    """detect_expression_from_array must map EmotiEffLib 'Happiness' to 'happy'."""
+    monkeypatch.setattr(
+        "cull.emotieff_loader.get_emotieff_recognizer",
+        lambda: _FakeRecognizerHappy(),
+    )
+    image = np.zeros((10, 10, 3), dtype=np.uint8)
+    assert portrait.detect_expression_from_array(image) == "happy"
+
+
+def test_detect_emotion_reading_captures_valence_arousal(monkeypatch) -> None:
+    """_detect_emotion_reading must surface valence/arousal alongside the mapped label."""
+    monkeypatch.setattr(
+        "cull.emotieff_loader.get_emotieff_recognizer",
+        lambda: _FakeRecognizerHappy(),
+    )
+    image = np.zeros((10, 10, 3), dtype=np.uint8)
+    reading = portrait._detect_emotion_reading(image)
+    assert reading.label == "happy"
+    assert reading.valence == pytest.approx(0.30)
+    assert reading.arousal == pytest.approx(0.10)
+
+
+def test_detect_expression_from_array_folds_contempt_into_disgust(monkeypatch) -> None:
+    """detect_expression_from_array must fold the 8-class 'Contempt' label into 'disgust'."""
+    monkeypatch.setattr(
+        "cull.emotieff_loader.get_emotieff_recognizer",
+        lambda: _FakeRecognizerContempt(),
+    )
+    image = np.zeros((10, 10, 3), dtype=np.uint8)
+    assert portrait.detect_expression_from_array(image) == "disgust"
+
+
+def test_detect_expression_reads_image_and_delegates(tmp_path: Path, monkeypatch) -> None:
+    """detect_expression must read image bytes then delegate to detect_expression_from_array."""
+    monkeypatch.setattr(
+        "cull.emotieff_loader.get_emotieff_recognizer",
+        lambda: _FakeRecognizerHappy(),
+    )
+    image_path = tmp_path / "face.jpg"
+    cv2.imwrite(str(image_path), np.zeros((20, 20, 3), dtype=np.uint8))
+    assert detect_expression(image_path) == "happy"
+
+
+def test_detect_expression_missing_file_returns_empty() -> None:
+    """detect_expression must return an empty string when the image cannot be read."""
+    assert detect_expression(Path("/tmp/does-not-exist.jpg")) == ""

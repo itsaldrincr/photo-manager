@@ -35,10 +35,9 @@ dependencies = [
     "imagededup",
     "imagehash",
     "mediapipe>=0.10.9",
-    "deepface",
-    # deepface's TF backend needs tf-keras with TF>=2.16; without it,
-    # detect_expression silently degrades to "" (found 2026-07-17)
-    "tf-keras",
+    # ONNX-engine emotion + valence/arousal head (enet_b0_8_va_mtl); replaced
+    # DeepFace's TF-based emotion model — see benchmarks/runs/expression_fair_test_report.md
+    "emotiefflib",
     # 0.6.3: Gemma 4 vision + Qwen3-VL chunked-prefill fixes; 0.6.4 has
     # known regressions (Blaizzy/mlx-vlm#1521, #1526) — do not float past
     "mlx-vlm>=0.6.3,<0.6.4",

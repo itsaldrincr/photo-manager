@@ -33,6 +33,7 @@ from cull.models import (
 from cull.router import CURATED_DIR, REVIEW_DIR
 from cull.stage1 import duplicate as duplicate_module
 from cull import clip_loader
+from cull import emotieff_loader
 from cull.stage2.aesthetic import unload_predictor
 from cull.stage2.composition import unload_topiq_iaa
 from cull.stage2.iqa import unload_metrics
@@ -188,6 +189,7 @@ def _unload_stage2_models() -> None:
     unload_face_landmarker()
     unload_topiq_iaa()
     clip_loader.unload()
+    emotieff_loader.unload()
     gc.collect()
 
 

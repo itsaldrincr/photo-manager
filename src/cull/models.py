@@ -168,6 +168,8 @@ class PortraitScores(BaseModel):
     is_eyes_closed: bool = False
     is_squinting: bool = False
     dominant_emotion: str | None = None
+    valence: float | None = None
+    arousal: float | None = None
     is_face_occluded: bool = False
     face_occlusion_ratio: float | None = None
 

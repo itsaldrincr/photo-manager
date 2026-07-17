@@ -11,8 +11,8 @@ from cull.env_bootstrap import bootstrap_default
 from cull.setup_command import setup_command as _run_setup_command
 
 # Module-level side effect — REQUIRED. Sets HF_HOME / HF_HUB_CACHE / TORCH_HOME /
-# DEEPFACE_HOME / HF_HUB_OFFLINE / TRANSFORMERS_OFFLINE before any cull.* import
-# that transitively pulls torch / transformers / pyiqa / mediapipe / deepface.
+# HF_HUB_OFFLINE / TRANSFORMERS_OFFLINE before any cull.* import that
+# transitively pulls torch / transformers / pyiqa / mediapipe / emotiefflib.
 # Importing this module is what bootstraps the offline cache env state.
 _CACHE: ModelCacheConfig = bootstrap_default()
 

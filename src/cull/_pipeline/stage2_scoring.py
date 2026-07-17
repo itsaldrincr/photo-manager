@@ -350,10 +350,10 @@ def _decode_full_res_bgr(path: Path) -> np.ndarray | None:
 def _portrait_or_none(path: Path, config: CullConfig) -> PortraitResult | None:
     """Decode full-res once and run portrait assessment; swallow failures.
 
-    assess_portrait_from_array shares this single decode with DeepFace
-    (via portrait._assemble_result), eliminating the redundant cv2.imread
-    inside assess_portrait plus DeepFace's own path-based decode — 2 of
-    the 3 historical decodes for a portrait-mode photo. Full resolution is
+    assess_portrait_from_array shares this single decode with the
+    EmotiEffLib emotion pass (via portrait._assemble_result's
+    landmark-derived face crop), eliminating the redundant cv2.imread
+    that assess_portrait would otherwise perform. Full resolution is
     preserved (not the downscaled pil_1280) because eye-sharpness scoring
     is resolution-sensitive; see assess_portrait_from_array's docstring.
     """
@@ -406,6 +406,8 @@ def _to_portrait_scores(portrait: PortraitResult) -> PortraitScores:
         ear_right=portrait.ear_right,
         is_eyes_closed=portrait.eyes_closed,
         dominant_emotion=portrait.dominant_emotion,
+        valence=portrait.valence,
+        arousal=portrait.arousal,
         is_face_occluded=portrait.face_occluded,
         face_occlusion_ratio=portrait.occlusion_ratio,
     )
