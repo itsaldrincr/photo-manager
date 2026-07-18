@@ -1,0 +1,940 @@
+{
+  "readings": [
+    {
+      "name": "DSCF1521 189 Edited.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1521 189 Edited.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6941682700465525
+    },
+    {
+      "name": "DSCF0267.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0267.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.740494763652046
+    },
+    {
+      "name": "DSCF0168.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0168.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9273224587932608
+    },
+    {
+      "name": "DSCF0401.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0401.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7920212502981341
+    },
+    {
+      "name": "DSCF0389.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0389.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6069232391529299
+    },
+    {
+      "name": "DSCF0374.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0374.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.916690650247932
+    },
+    {
+      "name": "DSCF0286.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0286.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8912009499037193
+    },
+    {
+      "name": "DSCF0263.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0263.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.720963204566817
+    },
+    {
+      "name": "DSCF1180.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1180.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.815139946414472
+    },
+    {
+      "name": "DSCF0256.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0256.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8290218027976897
+    },
+    {
+      "name": "DSCF1425.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1425.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7969195672926848
+    },
+    {
+      "name": "DSCF0501.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0501.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7141929388618841
+    },
+    {
+      "name": "DSCF0182 59 Edited.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0182 59 Edited.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.7099097575236106
+    },
+    {
+      "name": "DSCF1557 194 Edited.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1557 194 Edited.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.9442651704125123
+    },
+    {
+      "name": "DSCF1491.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1491.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7693717758728473
+    },
+    {
+      "name": "DSCF0373.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0373.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7893174040443978
+    },
+    {
+      "name": "DSCF0377.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0377.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.847964856494185
+    },
+    {
+      "name": "DSCF0540.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0540.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8916114073059165
+    },
+    {
+      "name": "DSCF1485.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1485.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.537411930148372
+    },
+    {
+      "name": "DSCF0359.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0359.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6558214271501448
+    },
+    {
+      "name": "DSCF0486.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0486.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8268355626128756
+    },
+    {
+      "name": "DSCF1531.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1531.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7420034927640683
+    },
+    {
+      "name": "DSCF0514.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0514.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7148332562240804
+    },
+    {
+      "name": "DSCF0121 34 Edited.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0121 34 Edited.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.505691953204945
+    },
+    {
+      "name": "DSCF0345.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0345.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8232826293746223
+    },
+    {
+      "name": "DSCF0447.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0447.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6888126732234615
+    },
+    {
+      "name": "DSCF1322 102 Edited.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1322 102 Edited.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.8939813705633192
+    },
+    {
+      "name": "DSCF0347.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0347.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8609056108194366
+    },
+    {
+      "name": "DSCF1523.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1523.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8813564140609406
+    },
+    {
+      "name": "DSCF0236.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0236.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.4736424981410392
+    },
+    {
+      "name": "DSCF1566.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1566.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7237074644142806
+    },
+    {
+      "name": "DSCF0469.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0469.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9588308527197821
+    },
+    {
+      "name": "DSCF0522.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0522.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9046868878744518
+    },
+    {
+      "name": "DSCF0212 67 Edited.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0212 67 Edited.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.5784908329076047
+    },
+    {
+      "name": "DSCF0206.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0206.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7441590152806253
+    },
+    {
+      "name": "DSCF0357.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0357.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9665644309175919
+    },
+    {
+      "name": "DSCF1466.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1466.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.56773916243893
+    },
+    {
+      "name": "DSCF0348.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0348.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8232044950226484
+    },
+    {
+      "name": "DSCF0474.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0474.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6132218264251739
+    },
+    {
+      "name": "DSCF0409.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0409.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7902784284913632
+    },
+    {
+      "name": "DSCF0279.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0279.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9195067007276145
+    },
+    {
+      "name": "DSCF0166 52 Edited.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0166 52 Edited.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.7940773298334659
+    },
+    {
+      "name": "DSCF1312.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1312.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8208263999661383
+    },
+    {
+      "name": "DSCF0400.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0400.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6384030323955142
+    },
+    {
+      "name": "DSCF0213.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0213.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6587079915127748
+    },
+    {
+      "name": "DSCF0478.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0478.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8355119066860665
+    },
+    {
+      "name": "DSCF0599.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0599.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.911833075390988
+    },
+    {
+      "name": "DSCF0542.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0542.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9400247950086463
+    },
+    {
+      "name": "DSCF0338.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0338.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6910479593644253
+    },
+    {
+      "name": "DSCF0352.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0352.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7310071050468184
+    },
+    {
+      "name": "DSCF0402.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0402.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8408711263851616
+    },
+    {
+      "name": "DSCF0258.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0258.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9442271290427908
+    },
+    {
+      "name": "DSCF1433.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF1433.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.5973704743451704
+    },
+    {
+      "name": "DSCF0450.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/vigil/DSCF0450.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9316007416984095
+    },
+    {
+      "name": "DSCF3785.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3785.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.4293643337144107
+    },
+    {
+      "name": "DSCF3905.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3905.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6132413584400243
+    },
+    {
+      "name": "DSCF1498.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF1498.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9563283299894161
+    },
+    {
+      "name": "DSCF4084.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4084.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6496620120324337
+    },
+    {
+      "name": "DSCF1543.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF1543.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.713566981280515
+    },
+    {
+      "name": "DSCF4087.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4087.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6964547497722331
+    },
+    {
+      "name": "DSCF2154.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF2154.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7683785387110446
+    },
+    {
+      "name": "DSCF1551.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF1551.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7987130612442939
+    },
+    {
+      "name": "HIEP4039.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/HIEP4039.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8573600683958352
+    },
+    {
+      "name": "DSCF3932.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3932.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8604266721501742
+    },
+    {
+      "name": "DSCF4065.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4065.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9331291439836731
+    },
+    {
+      "name": "DSCF2150.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF2150.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8111899745489901
+    },
+    {
+      "name": "HIEP3952.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/HIEP3952.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6721913868512166
+    },
+    {
+      "name": "HIEP3933.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/HIEP3933.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.886807908595402
+    },
+    {
+      "name": "DSCF2112.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF2112.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9529122498013326
+    },
+    {
+      "name": "DSCF1542.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF1542.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8139729058228061
+    },
+    {
+      "name": "DSCF3935.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3935.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7128883060612273
+    },
+    {
+      "name": "DSCF4095.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4095.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7983160163624584
+    },
+    {
+      "name": "DSCF3951.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3951.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7163562273508906
+    },
+    {
+      "name": "DSCF3938.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3938.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6055972338619391
+    },
+    {
+      "name": "DSCF3934.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3934.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9047431540443945
+    },
+    {
+      "name": "DSCF1424.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF1424.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6527014750361013
+    },
+    {
+      "name": "DSCF3912.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3912.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6178906725556085
+    },
+    {
+      "name": "DSCF4193.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4193.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.5019266400723357
+    },
+    {
+      "name": "DSCF4051.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4051.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6553726625512863
+    },
+    {
+      "name": "DSCF3865.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3865.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6823604686339442
+    },
+    {
+      "name": "DSCF3985.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3985.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8962668655253625
+    },
+    {
+      "name": "DSCF4093.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4093.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8737346447496359
+    },
+    {
+      "name": "DSCF4101.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4101.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6777802162057822
+    },
+    {
+      "name": "DSCF4010.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4010.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.5388790952070193
+    },
+    {
+      "name": "DSCF4246.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4246.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7120568056517349
+    },
+    {
+      "name": "DSCF2048.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF2048.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.47487103077429516
+    },
+    {
+      "name": "DSCF1423.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF1423.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.44734495409220637
+    },
+    {
+      "name": "DSCF1438.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF1438.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.5941875234147451
+    },
+    {
+      "name": "DSCF2271.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF2271.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.898894745908089
+    },
+    {
+      "name": "DSCF1365.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF1365.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7990617983228534
+    },
+    {
+      "name": "DSCF2164.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF2164.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9519364445393789
+    },
+    {
+      "name": "HIEP4038.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/HIEP4038.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9239513772315087
+    },
+    {
+      "name": "DSCF1534.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF1534.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8426618953154705
+    },
+    {
+      "name": "DSCF1445.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF1445.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6386502954900676
+    },
+    {
+      "name": "DSCF4181.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4181.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6060615506054291
+    },
+    {
+      "name": "DSCF1670.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF1670.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6291963023225571
+    },
+    {
+      "name": "DSCF3898.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3898.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7318359018421084
+    },
+    {
+      "name": "DSCF4031.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4031.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7098407515713945
+    },
+    {
+      "name": "DSCF4017.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4017.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.74255648028037
+    },
+    {
+      "name": "DSCF2272.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF2272.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9256368849451646
+    },
+    {
+      "name": "DSCF3855.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3855.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7645843131588536
+    },
+    {
+      "name": "DSCF3977.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3977.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8392668646766772
+    },
+    {
+      "name": "DSCF2050.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF2050.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.46740895853086895
+    },
+    {
+      "name": "DSCF4039.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF4039.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7859554611443114
+    },
+    {
+      "name": "DSCF3823.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF3823.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7309302589838779
+    },
+    {
+      "name": "DSCF1530.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/weddings/DSCF1530.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8042640739150647
+    },
+    {
+      "name": "fr203_260225_zenas_-_5.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr203_260225_zenas_-_5.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.8455024517053924
+    },
+    {
+      "name": "fr198_281024_cal_lunch_-_134.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr198_281024_cal_lunch_-_134.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.7667296926012409
+    },
+    {
+      "name": "fr125_HIEP9894.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr125_HIEP9894.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9671991101794135
+    },
+    {
+      "name": "fr213_HIEP9838.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr213_HIEP9838.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9528030253975581
+    },
+    {
+      "name": "fr165_HIEP9876.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr165_HIEP9876.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8555509123171332
+    },
+    {
+      "name": "fr161_HIEP9897.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr161_HIEP9897.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8474944416854407
+    },
+    {
+      "name": "fr150_180124_joel_birthday_dinner_-_3.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr150_180124_joel_birthday_dinner_-_3.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.8689784573774183
+    },
+    {
+      "name": "fr113_HIEP9842.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr113_HIEP9842.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9297107785802013
+    },
+    {
+      "name": "fr037_HIEP4885.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr037_HIEP4885.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9685219403432549
+    },
+    {
+      "name": "fr191_HIEP9886.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr191_HIEP9886.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.7786880226739501
+    },
+    {
+      "name": "fr189_180124_joel_birthday_dinner_-_20.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr189_180124_joel_birthday_dinner_-_20.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.6406930665549652
+    },
+    {
+      "name": "fr025_231024_alex_joel_dinner_-_14.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr025_231024_alex_joel_dinner_-_14.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.65909868857607
+    },
+    {
+      "name": "fr012_HIEP9804.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr012_HIEP9804.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9509479555712205
+    },
+    {
+      "name": "fr032_DSCF3363.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr032_DSCF3363.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9351996895548378
+    },
+    {
+      "name": "fr040_260225_zenas_-_6.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr040_260225_zenas_-_6.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.8201036585712721
+    },
+    {
+      "name": "fr041_HIEP9885.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr041_HIEP9885.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8695159504941267
+    },
+    {
+      "name": "fr159_DSCF3404.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr159_DSCF3404.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9362087159644821
+    },
+    {
+      "name": "fr145_231024_alex_joel_dinner_-_28.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr145_231024_alex_joel_dinner_-_28.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.8841795470008875
+    },
+    {
+      "name": "fr111_HIEP9851.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr111_HIEP9851.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9817047540593253
+    },
+    {
+      "name": "fr136_281024_cal_lunch_-_66.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr136_281024_cal_lunch_-_66.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.6285867646970112
+    },
+    {
+      "name": "fr007_DSCF9084.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr007_DSCF9084.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.3551084423402882
+    },
+    {
+      "name": "fr102_HIEP9753.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr102_HIEP9753.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8608139296804701
+    },
+    {
+      "name": "fr177_HIEP9812.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr177_HIEP9812.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9153335958348343
+    },
+    {
+      "name": "fr183_HIEP9902.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr183_HIEP9902.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9312707988244873
+    },
+    {
+      "name": "fr116_HIEP9751.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr116_HIEP9751.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9682204585174927
+    },
+    {
+      "name": "fr215_091224_desmond_carmen_-_3.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr215_091224_desmond_carmen_-_3.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.9400958822821784
+    },
+    {
+      "name": "fr034_HIEP9903.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr034_HIEP9903.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.804986871705137
+    },
+    {
+      "name": "fr127_DSCF9061.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr127_DSCF9061.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.795039993019712
+    },
+    {
+      "name": "fr001_281024_cal_lunch_-_130.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr001_281024_cal_lunch_-_130.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.6215957259993073
+    },
+    {
+      "name": "fr186_HIEP4906.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr186_HIEP4906.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8988117621083811
+    },
+    {
+      "name": "fr204_HIEP9824.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr204_HIEP9824.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9550998935604998
+    },
+    {
+      "name": "fr016_party_edit_vanya_-_24.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr016_party_edit_vanya_-_24.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.8756046644797268
+    },
+    {
+      "name": "fr154_180124_joel_birthday_dinner_-_11.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr154_180124_joel_birthday_dinner_-_11.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.8993675966795215
+    },
+    {
+      "name": "fr126_260225_zenas_-_3.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr126_260225_zenas_-_3.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.5560833407946901
+    },
+    {
+      "name": "fr200_DSCF9087.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr200_DSCF9087.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.637530431794675
+    },
+    {
+      "name": "fr142_DSCF9035.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr142_DSCF9035.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.6490750008270566
+    },
+    {
+      "name": "fr042_DSCF9036.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr042_DSCF9036.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.5640548611447711
+    },
+    {
+      "name": "fr151_HIEP9880.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr151_HIEP9880.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8496216052485177
+    },
+    {
+      "name": "fr039_HIEP4892.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr039_HIEP4892.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9197068507222989
+    },
+    {
+      "name": "fr185_180124_joel_birthday_dinner_-_8.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr185_180124_joel_birthday_dinner_-_8.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.8133988994948899
+    },
+    {
+      "name": "fr019_231024_alex_joel_dinner_-_19.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr019_231024_alex_joel_dinner_-_19.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.7330731550696581
+    },
+    {
+      "name": "fr214_HIEP9883.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr214_HIEP9883.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8899513390438909
+    },
+    {
+      "name": "fr187_DSCF3369.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr187_DSCF3369.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8119088845614533
+    },
+    {
+      "name": "fr162_HIEP4895.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr162_HIEP4895.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9642323867442564
+    },
+    {
+      "name": "fr124_HIEP9775.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr124_HIEP9775.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.8714842916988426
+    },
+    {
+      "name": "fr196_HIEP9865.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr196_HIEP9865.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.9475614383888513
+    },
+    {
+      "name": "fr149_DSCF5521_1_Edited.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr149_DSCF5521_1_Edited.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.7891156570360398
+    },
+    {
+      "name": "fr192_DSCF9055.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr192_DSCF9055.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.928015216442866
+    },
+    {
+      "name": "fr137_DSCF9051.JPG",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr137_DSCF9051.JPG",
+      "has_face": true,
+      "occlusion_ratio": 0.714142716313711
+    },
+    {
+      "name": "fr216_180124_joel_birthday_dinner_-_12.jpeg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/pull/friends/fr216_180124_joel_birthday_dinner_-_12.jpeg",
+      "has_face": true,
+      "occlusion_ratio": 0.9130308305387129
+    }
+  ]
+}

@@ -1,0 +1,652 @@
+{
+  "readings": [
+    {
+      "name": "DSCF0166_52_Edited_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0166_52_Edited_blur.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0166_52_Edited_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0166_52_Edited_ellipse_mouth.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0166_52_Edited_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0166_52_Edited_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.3189876906714042
+    },
+    {
+      "name": "DSCF0166_52_Edited_rect_lower.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0166_52_Edited_rect_lower.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0179_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0179_blur.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0179_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0179_ellipse_eye.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0179_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0179_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.3282487781347278
+    },
+    {
+      "name": "DSCF0179_rect_upper.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0179_rect_upper.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0180_57_Edited_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0180_57_Edited_blur.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0180_57_Edited_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0180_57_Edited_ellipse_mouth.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.701807920893023
+    },
+    {
+      "name": "DSCF0180_57_Edited_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0180_57_Edited_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.5285483170412156
+    },
+    {
+      "name": "DSCF0180_57_Edited_rect_left.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0180_57_Edited_rect_left.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0180_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0180_blur.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0180_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0180_ellipse_eye.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0180_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0180_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.4075641805766871
+    },
+    {
+      "name": "DSCF0180_rect_lower.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0180_rect_lower.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0210_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0210_blur.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0210_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0210_ellipse_mouth.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0210_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0210_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.4446163486466231
+    },
+    {
+      "name": "DSCF0210_rect_upper.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0210_rect_upper.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0213_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0213_blur.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0213_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0213_ellipse_eye.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.11317900034562782
+    },
+    {
+      "name": "DSCF0213_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0213_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.2181369915085971
+    },
+    {
+      "name": "DSCF0213_rect_left.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0213_rect_left.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0218_68_Edited_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0218_68_Edited_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6530463273432996
+    },
+    {
+      "name": "DSCF0218_68_Edited_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0218_68_Edited_ellipse_mouth.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6279284202722092
+    },
+    {
+      "name": "DSCF0218_68_Edited_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0218_68_Edited_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.5660728775101345
+    },
+    {
+      "name": "DSCF0218_68_Edited_rect_lower.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0218_68_Edited_rect_lower.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6166181253080332
+    },
+    {
+      "name": "DSCF0218_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0218_blur.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0218_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0218_ellipse_eye.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.05192127314467438
+    },
+    {
+      "name": "DSCF0218_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0218_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.404849658145685
+    },
+    {
+      "name": "DSCF0218_rect_upper.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0218_rect_upper.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.0
+    },
+    {
+      "name": "DSCF0226_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0226_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.2310209577812937
+    },
+    {
+      "name": "DSCF0226_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0226_ellipse_mouth.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.07066477016952499
+    },
+    {
+      "name": "DSCF0226_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0226_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.16585873966097042
+    },
+    {
+      "name": "DSCF0226_rect_left.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0226_rect_left.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0244_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0244_blur.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0244_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0244_ellipse_eye.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0244_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0244_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6629471444610986
+    },
+    {
+      "name": "DSCF0244_rect_lower.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0244_rect_lower.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0252_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0252_blur.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0252_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0252_ellipse_mouth.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0252_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0252_neg.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0252_rect_upper.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0252_rect_upper.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.36812608800751045
+    },
+    {
+      "name": "DSCF0264_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0264_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.303162841701261
+    },
+    {
+      "name": "DSCF0264_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0264_ellipse_mouth.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.5208149980314956
+    },
+    {
+      "name": "DSCF0264_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0264_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.47175735203612673
+    },
+    {
+      "name": "DSCF0264_rect_lower.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0264_rect_lower.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF0354_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0354_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.02898438497146895
+    },
+    {
+      "name": "DSCF0354_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0354_ellipse_eye.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.0
+    },
+    {
+      "name": "DSCF0354_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0354_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.12339677186849825
+    },
+    {
+      "name": "DSCF0354_rect_upper.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0354_rect_upper.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.5748106316161754
+    },
+    {
+      "name": "DSCF0363_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0363_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.03430753231373111
+    },
+    {
+      "name": "DSCF0363_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0363_ellipse_mouth.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.17357315623522715
+    },
+    {
+      "name": "DSCF0363_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0363_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.22009151621330256
+    },
+    {
+      "name": "DSCF0363_rect_left.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0363_rect_left.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.30153314493430233
+    },
+    {
+      "name": "DSCF0366_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0366_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.00598245355138595
+    },
+    {
+      "name": "DSCF0366_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0366_ellipse_eye.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.20174871436340894
+    },
+    {
+      "name": "DSCF0366_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0366_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6977339741486672
+    },
+    {
+      "name": "DSCF0366_rect_lower.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0366_rect_lower.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.0
+    },
+    {
+      "name": "DSCF0369_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0369_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.009770466730111334
+    },
+    {
+      "name": "DSCF0369_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0369_ellipse_mouth.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.25563688756034353
+    },
+    {
+      "name": "DSCF0369_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0369_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6738784172372083
+    },
+    {
+      "name": "DSCF0369_rect_upper.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0369_rect_upper.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.0
+    },
+    {
+      "name": "DSCF0370_145_Edited_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0370_145_Edited_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.0031035773748432924
+    },
+    {
+      "name": "DSCF0370_145_Edited_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0370_145_Edited_ellipse_eye.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.0
+    },
+    {
+      "name": "DSCF0370_145_Edited_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0370_145_Edited_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.40049799812599207
+    },
+    {
+      "name": "DSCF0370_145_Edited_rect_left.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0370_145_Edited_rect_left.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6201256023377874
+    },
+    {
+      "name": "DSCF0373_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0373_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.008517303518715985
+    },
+    {
+      "name": "DSCF0373_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0373_ellipse_mouth.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.28488949387802326
+    },
+    {
+      "name": "DSCF0373_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0373_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.48598367111370555
+    },
+    {
+      "name": "DSCF0373_rect_lower.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0373_rect_lower.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.7054505967236407
+    },
+    {
+      "name": "DSCF0377_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0377_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.015264143425126294
+    },
+    {
+      "name": "DSCF0377_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0377_ellipse_eye.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.0
+    },
+    {
+      "name": "DSCF0377_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0377_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6823962925407017
+    },
+    {
+      "name": "DSCF0377_rect_upper.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0377_rect_upper.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6301379470280419
+    },
+    {
+      "name": "DSCF0384_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0384_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.014807554276707574
+    },
+    {
+      "name": "DSCF0384_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0384_ellipse_mouth.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.47434148565990225
+    },
+    {
+      "name": "DSCF0384_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0384_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.701734069103817
+    },
+    {
+      "name": "DSCF0384_rect_left.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0384_rect_left.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.7602752325317461
+    },
+    {
+      "name": "DSCF0387_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0387_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.014755955869368826
+    },
+    {
+      "name": "DSCF0387_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0387_ellipse_eye.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.001933031357912939
+    },
+    {
+      "name": "DSCF0387_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0387_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.4169075976797711
+    },
+    {
+      "name": "DSCF0387_rect_lower.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0387_rect_lower.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.0
+    },
+    {
+      "name": "DSCF0457_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0457_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.008513134856974733
+    },
+    {
+      "name": "DSCF0457_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0457_ellipse_mouth.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.3115563151316659
+    },
+    {
+      "name": "DSCF0457_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0457_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.5144778782044622
+    },
+    {
+      "name": "DSCF0457_rect_upper.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0457_rect_upper.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.0
+    },
+    {
+      "name": "DSCF0484_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0484_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6282305042759732
+    },
+    {
+      "name": "DSCF0484_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0484_ellipse_eye.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6067932472062192
+    },
+    {
+      "name": "DSCF0484_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0484_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.5493075858521832
+    },
+    {
+      "name": "DSCF0484_rect_left.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0484_rect_left.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6009367094701645
+    },
+    {
+      "name": "DSCF0494_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0494_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.022246082592189995
+    },
+    {
+      "name": "DSCF0494_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0494_ellipse_mouth.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.0
+    },
+    {
+      "name": "DSCF0494_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0494_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.2914765621200574
+    },
+    {
+      "name": "DSCF0494_rect_lower.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0494_rect_lower.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.0
+    },
+    {
+      "name": "DSCF0588_181_Edited_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0588_181_Edited_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.010880790253937749
+    },
+    {
+      "name": "DSCF0588_181_Edited_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0588_181_Edited_ellipse_eye.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.01210425107747466
+    },
+    {
+      "name": "DSCF0588_181_Edited_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0588_181_Edited_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.2958859898721537
+    },
+    {
+      "name": "DSCF0588_181_Edited_rect_upper.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF0588_181_Edited_rect_upper.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.0
+    },
+    {
+      "name": "DSCF1491_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF1491_blur.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF1491_ellipse_mouth.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF1491_ellipse_mouth.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF1491_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF1491_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.49528109621988337
+    },
+    {
+      "name": "DSCF1491_rect_upper.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF1491_rect_upper.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    },
+    {
+      "name": "DSCF1543_blur.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF1543_blur.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.015002505669265774
+    },
+    {
+      "name": "DSCF1543_ellipse_eye.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF1543_ellipse_eye.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.21924102894358719
+    },
+    {
+      "name": "DSCF1543_neg.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF1543_neg.jpg",
+      "has_face": true,
+      "occlusion_ratio": 0.6402824001546485
+    },
+    {
+      "name": "DSCF1543_rect_left.jpg",
+      "path": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/occlusion_eval/images/DSCF1543_rect_left.jpg",
+      "has_face": false,
+      "occlusion_ratio": null
+    }
+  ]
+}

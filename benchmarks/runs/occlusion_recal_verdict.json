@@ -1,0 +1,10 @@
+{
+  "adopted": false,
+  "current_threshold": 0.32,
+  "best_threshold": 0.8,
+  "real_f1_current": 0.0,
+  "real_f1_best": 0.35555555555555557,
+  "synthetic_f1_current": 0.7755102040816326,
+  "synthetic_f1_at_best": 0.8030303030303031,
+  "clean_false_flag_rate_at_best": 0.4336283185840708
+}
