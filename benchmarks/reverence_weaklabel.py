@@ -26,6 +26,7 @@ from fair_expr_models import RunnerStageOutput
 from weaklabel_models import EXPRESSION_VOCAB, WeaklabelRunOutput, compute_agreement
 
 KEY_CONTRAST: tuple[str, str] = ("reverent/prayerful", "distressed")
+SECONDARY_CONTRAST: tuple[str, str] = ("reverent/prayerful", "joyful")
 MIN_GROUP_FOR_EFFECT: int = 5
 
 
@@ -126,25 +127,35 @@ def _auc(groups: tuple[list[float], list[float]]) -> float:
 
 
 class ContrastResult(BaseModel):
-    """Effect sizes for the reverent-vs-distressed key contrast."""
+    """Effect sizes for one label-pair contrast in valence/arousal space."""
 
-    n_reverent: int
-    n_distressed: int
+    label_a: str
+    label_b: str
+    n_a: int
+    n_b: int
     valence_cohens_d: float | None = None
     arousal_cohens_d: float | None = None
     valence_auc: float | None = None
     arousal_auc: float | None = None
 
 
-def _key_contrast(faces: list[JoinedFace]) -> ContrastResult:
-    """Compute reverent-vs-distressed effect sizes when both groups are big enough."""
-    reverent = [f for f in faces if f.gemma_label == KEY_CONTRAST[0]]
-    distressed = [f for f in faces if f.gemma_label == KEY_CONTRAST[1]]
-    result = ContrastResult(n_reverent=len(reverent), n_distressed=len(distressed))
-    if len(reverent) < MIN_GROUP_FOR_EFFECT or len(distressed) < MIN_GROUP_FOR_EFFECT:
+class _ContrastInput(BaseModel):
+    """Faces plus the label pair to contrast."""
+
+    faces: list[JoinedFace]
+    pair: tuple[str, str]
+
+
+def _contrast(contrast_in: _ContrastInput) -> ContrastResult:
+    """Compute effect sizes for one label pair when both groups are big enough."""
+    label_a, label_b = contrast_in.pair
+    group_a = [f for f in contrast_in.faces if f.gemma_label == label_a]
+    group_b = [f for f in contrast_in.faces if f.gemma_label == label_b]
+    result = ContrastResult(label_a=label_a, label_b=label_b, n_a=len(group_a), n_b=len(group_b))
+    if len(group_a) < MIN_GROUP_FOR_EFFECT or len(group_b) < MIN_GROUP_FOR_EFFECT:
         return result
-    valence_pair = ([f.valence for f in reverent], [f.valence for f in distressed])
-    arousal_pair = ([f.arousal for f in reverent], [f.arousal for f in distressed])
+    valence_pair = ([f.valence for f in group_a], [f.valence for f in group_b])
+    arousal_pair = ([f.arousal for f in group_a], [f.arousal for f in group_b])
     result.valence_cohens_d = _cohens_d(valence_pair)
     result.arousal_cohens_d = _cohens_d(arousal_pair)
     result.valence_auc = _auc(valence_pair)
@@ -181,11 +192,11 @@ def _stats_lines(stats: list[GroupStats]) -> list[str]:
 
 
 def _contrast_lines(contrast: ContrastResult) -> list[str]:
-    """Markdown lines for the key reverent-vs-distressed contrast."""
+    """Markdown lines for one label-pair contrast."""
     lines = [
-        "## Key contrast: reverent/prayerful vs distressed",
+        f"## Contrast: {contrast.label_a} vs {contrast.label_b}",
         "",
-        f"- Group sizes: reverent {contrast.n_reverent}, distressed {contrast.n_distressed}",
+        f"- Group sizes: {contrast.label_a} {contrast.n_a}, {contrast.label_b} {contrast.n_b}",
     ]
     if contrast.valence_cohens_d is None:
         lines.append(
@@ -218,7 +229,8 @@ def _render_report(faces: list[JoinedFace]) -> str:
     ]
     body = ["## Cross-tab", ""] + _crosstab_lines(faces) + [""]
     body += ["## Valence/arousal by Gemma label", ""] + _stats_lines(_group_stats(faces)) + [""]
-    body += _contrast_lines(_key_contrast(faces))
+    body += _contrast_lines(_contrast(_ContrastInput(faces=faces, pair=KEY_CONTRAST)))
+    body += _contrast_lines(_contrast(_ContrastInput(faces=faces, pair=SECONDARY_CONTRAST)))
     return "\n".join(header + body)
 
 

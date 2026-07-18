@@ -1,0 +1,782 @@
+{
+  "stage": "emotiefflib",
+  "readings": [
+    {
+      "name": "DSCF0419.JPG",
+      "has_face": true,
+      "latency_seconds": 0.02057816699380055,
+      "raw_label": "Neutral",
+      "valence": 0.1992056667804718,
+      "arousal": -0.04991859570145607
+    },
+    {
+      "name": "DSCF0341.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011925791972316802,
+      "raw_label": "Happiness",
+      "valence": 0.20952922105789185,
+      "arousal": 0.24787002801895142
+    },
+    {
+      "name": "DSCF0474.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011860041006002575,
+      "raw_label": "Happiness",
+      "valence": 0.28247612714767456,
+      "arousal": -0.16898290812969208
+    },
+    {
+      "name": "DSCF1531.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011273832991719246,
+      "raw_label": "Surprise",
+      "valence": -0.2560548782348633,
+      "arousal": 0.47889402508735657
+    },
+    {
+      "name": "DSCF0212 67 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.0110017079859972,
+      "raw_label": "Sadness",
+      "valence": -0.10631711035966873,
+      "arousal": -0.32400742173194885
+    },
+    {
+      "name": "DSCF0236.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011737374996300787,
+      "raw_label": "Surprise",
+      "valence": 0.10384038090705872,
+      "arousal": 0.26484084129333496
+    },
+    {
+      "name": "DSCF0599.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011372042004950345,
+      "raw_label": "Sadness",
+      "valence": -0.5314751863479614,
+      "arousal": -0.2377368062734604
+    },
+    {
+      "name": "DSCF0258.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011079624993726611,
+      "raw_label": "Surprise",
+      "valence": -0.0010697618126869202,
+      "arousal": 0.1396409124135971
+    },
+    {
+      "name": "DSCF0450.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011502541950903833,
+      "raw_label": "Happiness",
+      "valence": 0.29393714666366577,
+      "arousal": -0.11326257884502411
+    },
+    {
+      "name": "DSCF1380.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011111916974186897,
+      "raw_label": "Surprise",
+      "valence": 0.044167399406433105,
+      "arousal": 0.21540316939353943
+    },
+    {
+      "name": "DSCF0213.JPG",
+      "has_face": true,
+      "latency_seconds": 0.0118637919658795,
+      "raw_label": "Sadness",
+      "valence": -0.13485202193260193,
+      "arousal": -0.06383249163627625
+    },
+    {
+      "name": "DSCF0540.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011345834005624056,
+      "raw_label": "Neutral",
+      "valence": -0.043120309710502625,
+      "arousal": -0.022707287222146988
+    },
+    {
+      "name": "DSCF0373.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010993792035151273,
+      "raw_label": "Sadness",
+      "valence": -0.25345203280448914,
+      "arousal": -0.19061386585235596
+    },
+    {
+      "name": "DSCF0182 59 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.011593249975703657,
+      "raw_label": "Happiness",
+      "valence": 0.2108924388885498,
+      "arousal": -0.10131637752056122
+    },
+    {
+      "name": "DSCF0256.JPG",
+      "has_face": true,
+      "latency_seconds": 0.01103424996836111,
+      "raw_label": "Sadness",
+      "valence": 0.12754172086715698,
+      "arousal": 0.00754634290933609
+    },
+    {
+      "name": "DSCF0502.JPG",
+      "has_face": true,
+      "latency_seconds": 0.01070362504106015,
+      "raw_label": "Disgust",
+      "valence": -0.2881162762641907,
+      "arousal": 0.15472003817558289
+    },
+    {
+      "name": "DSCF0486.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010945208952762187,
+      "raw_label": "Sadness",
+      "valence": -0.3809926509857178,
+      "arousal": -0.12345144152641296
+    },
+    {
+      "name": "DSCF0221 70 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.010996041994076222,
+      "raw_label": "Happiness",
+      "valence": 0.16296327114105225,
+      "arousal": 0.13529819250106812
+    },
+    {
+      "name": "DSCF0388.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011258916987571865,
+      "raw_label": "Happiness",
+      "valence": 0.7651902437210083,
+      "arousal": -0.14444099366664886
+    },
+    {
+      "name": "DSCF1491.JPG",
+      "has_face": true,
+      "latency_seconds": 0.01076566701522097,
+      "raw_label": "Surprise",
+      "valence": 0.0038322806358337402,
+      "arousal": 0.2637774348258972
+    },
+    {
+      "name": "DSCF0501.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010587292024865746,
+      "raw_label": "Sadness",
+      "valence": -0.38787853717803955,
+      "arousal": -0.23405040800571442
+    },
+    {
+      "name": "DSCF1485.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010880916961468756,
+      "raw_label": "Surprise",
+      "valence": -0.21768993139266968,
+      "arousal": 0.43611258268356323
+    },
+    {
+      "name": "DSCF0271.JPG",
+      "has_face": true,
+      "latency_seconds": 0.01082283299183473,
+      "raw_label": "Happiness",
+      "valence": 0.42412251234054565,
+      "arousal": -0.060079175978899
+    },
+    {
+      "name": "DSCF0374.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011002125043887645,
+      "raw_label": "Sadness",
+      "valence": -0.31052088737487793,
+      "arousal": -0.35399678349494934
+    },
+    {
+      "name": "DSCF0597 201 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.010835667024366558,
+      "raw_label": "Neutral",
+      "valence": 0.05705435574054718,
+      "arousal": 0.05884341523051262
+    },
+    {
+      "name": "DSCF1557 194 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.011310082976706326,
+      "raw_label": "Anger",
+      "valence": 0.16285622119903564,
+      "arousal": 0.43975692987442017
+    },
+    {
+      "name": "DSCF0168.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011848583002574742,
+      "raw_label": "Happiness",
+      "valence": 0.10440921783447266,
+      "arousal": -0.0180584155023098
+    },
+    {
+      "name": "DSCF0267.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011190875025931746,
+      "raw_label": "Sadness",
+      "valence": -0.5950966477394104,
+      "arousal": -0.5268644094467163
+    },
+    {
+      "name": "DSCF0166 52 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.010962292028125376,
+      "raw_label": "Sadness",
+      "valence": -0.06866786628961563,
+      "arousal": 0.004661675542593002
+    },
+    {
+      "name": "DSCF0401.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010856333014089614,
+      "raw_label": "Contempt",
+      "valence": 0.2656923830509186,
+      "arousal": 0.007547482848167419
+    },
+    {
+      "name": "DSCF1523.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011033917020540684,
+      "raw_label": "Fear",
+      "valence": -0.17619100213050842,
+      "arousal": 0.7572769522666931
+    },
+    {
+      "name": "DSCF1311 98 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.010725583008024842,
+      "raw_label": "Surprise",
+      "valence": 0.1374713033437729,
+      "arousal": 0.3562086224555969
+    },
+    {
+      "name": "DSCF0338.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010835791006684303,
+      "raw_label": "Happiness",
+      "valence": 0.9512814283370972,
+      "arousal": 0.17735645174980164
+    },
+    {
+      "name": "DSCF0362 143 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.011155291984323412,
+      "raw_label": "Happiness",
+      "valence": 0.6154502630233765,
+      "arousal": 0.24734820425510406
+    },
+    {
+      "name": "DSCF0400.JPG",
+      "has_face": true,
+      "latency_seconds": 0.01133629196556285,
+      "raw_label": "Disgust",
+      "valence": -0.0627075806260109,
+      "arousal": -0.011625822633504868
+    },
+    {
+      "name": "DSCF1466.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011740333051420748,
+      "raw_label": "Surprise",
+      "valence": -0.18332722783088684,
+      "arousal": 0.1291496306657791
+    },
+    {
+      "name": "DSCF0402.JPG",
+      "has_face": true,
+      "latency_seconds": 0.01203204196644947,
+      "raw_label": "Contempt",
+      "valence": 0.16451185941696167,
+      "arousal": 0.22968553006649017
+    },
+    {
+      "name": "DSCF1563 195 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.011204999987967312,
+      "raw_label": "Anger",
+      "valence": -0.32326972484588623,
+      "arousal": 0.35162681341171265
+    },
+    {
+      "name": "DSCF0519.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011046874977182597,
+      "raw_label": "Surprise",
+      "valence": 0.1049232929944992,
+      "arousal": 0.29308369755744934
+    },
+    {
+      "name": "DSCF0431.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011612917005550116,
+      "raw_label": "Neutral",
+      "valence": -0.11528874188661575,
+      "arousal": -0.14091026782989502
+    },
+    {
+      "name": "DSCF1180.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011696375033352524,
+      "raw_label": "Neutral",
+      "valence": -0.16374170780181885,
+      "arousal": 0.07758599519729614
+    },
+    {
+      "name": "DSCF1532.JPG",
+      "has_face": true,
+      "latency_seconds": 0.01140170800499618,
+      "raw_label": "Surprise",
+      "valence": -0.14864209294319153,
+      "arousal": 0.49338826537132263
+    },
+    {
+      "name": "DSCF0406.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011973082961048931,
+      "raw_label": "Happiness",
+      "valence": 0.35786867141723633,
+      "arousal": -0.23338614404201508
+    },
+    {
+      "name": "DSCF0475.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011380500043742359,
+      "raw_label": "Disgust",
+      "valence": -0.3449557423591614,
+      "arousal": 0.2753489017486572
+    },
+    {
+      "name": "DSCF0412.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011371125001460314,
+      "raw_label": "Happiness",
+      "valence": 0.5772148966789246,
+      "arousal": -0.022191349416971207
+    },
+    {
+      "name": "DSCF1521 189 Edited.jpg",
+      "has_face": true,
+      "latency_seconds": 0.010907458025030792,
+      "raw_label": "Neutral",
+      "valence": -0.005101501941680908,
+      "arousal": -0.0815776139497757
+    },
+    {
+      "name": "DSCF0352.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011404082993976772,
+      "raw_label": "Sadness",
+      "valence": -0.28324246406555176,
+      "arousal": -0.1986619383096695
+    },
+    {
+      "name": "DSCF1497.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011736042040865868,
+      "raw_label": "Neutral",
+      "valence": -0.041437722742557526,
+      "arousal": 0.03258899971842766
+    },
+    {
+      "name": "DSCF0472.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011422417010180652,
+      "raw_label": "Neutral",
+      "valence": -0.2105114758014679,
+      "arousal": -0.09348835051059723
+    },
+    {
+      "name": "DSCF1425.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010935625003185123,
+      "raw_label": "Surprise",
+      "valence": -0.025493115186691284,
+      "arousal": 0.3800211250782013
+    },
+    {
+      "name": "DSCF0447.JPG",
+      "has_face": true,
+      "latency_seconds": 0.0121323749772273,
+      "raw_label": "Sadness",
+      "valence": -0.481464147567749,
+      "arousal": -0.47525525093078613
+    },
+    {
+      "name": "DSCF0529.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010863957984838635,
+      "raw_label": "Neutral",
+      "valence": -0.0928986594080925,
+      "arousal": -0.060041364282369614
+    },
+    {
+      "name": "DSCF0263.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011115292028989643,
+      "raw_label": "Happiness",
+      "valence": 0.1886897087097168,
+      "arousal": 0.06694827973842621
+    },
+    {
+      "name": "DSCF0389.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011371875007171184,
+      "raw_label": "Happiness",
+      "valence": 0.9051065444946289,
+      "arousal": 0.04569180682301521
+    },
+    {
+      "name": "DSCF1433.JPG",
+      "has_face": true,
+      "latency_seconds": 0.01092154101934284,
+      "raw_label": "Sadness",
+      "valence": -0.6363697052001953,
+      "arousal": -0.09628273546695709
+    },
+    {
+      "name": "DSCF0345.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011294416966848075,
+      "raw_label": "Neutral",
+      "valence": -0.17014527320861816,
+      "arousal": 0.08475172519683838
+    },
+    {
+      "name": "DSCF0377.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010951375006698072,
+      "raw_label": "Disgust",
+      "valence": -0.07973844558000565,
+      "arousal": -0.05046095326542854
+    },
+    {
+      "name": "DSCF0505.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011184374976437539,
+      "raw_label": "Surprise",
+      "valence": 0.17704617977142334,
+      "arousal": 0.13863953948020935
+    },
+    {
+      "name": "DSCF1312.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010659084015060216,
+      "raw_label": "Surprise",
+      "valence": 0.05433797091245651,
+      "arousal": 0.5425440073013306
+    },
+    {
+      "name": "DSCF4101.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010857000015676022,
+      "raw_label": "Happiness",
+      "valence": 0.34494149684906006,
+      "arousal": 0.42555680871009827
+    },
+    {
+      "name": "DSCF3985.JPG",
+      "has_face": true,
+      "latency_seconds": 0.01136487495386973,
+      "raw_label": "Surprise",
+      "valence": 0.20934933423995972,
+      "arousal": 0.24307914078235626
+    },
+    {
+      "name": "DSCF3912.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011994791973847896,
+      "raw_label": "Happiness",
+      "valence": 0.8009014129638672,
+      "arousal": 0.11202742159366608
+    },
+    {
+      "name": "DSCF4031.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011953292007092386,
+      "raw_label": "Sadness",
+      "valence": -0.23181456327438354,
+      "arousal": -0.15579061210155487
+    },
+    {
+      "name": "DSCF1530.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011150875012390316,
+      "raw_label": "Happiness",
+      "valence": 0.7431604266166687,
+      "arousal": 0.39293959736824036
+    },
+    {
+      "name": "DSCF3951.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011458457971457392,
+      "raw_label": "Sadness",
+      "valence": -0.5564023852348328,
+      "arousal": 0.017638612538576126
+    },
+    {
+      "name": "DSCF4030.JPG",
+      "has_face": true,
+      "latency_seconds": 0.012030874961055815,
+      "raw_label": "Happiness",
+      "valence": 0.7927987575531006,
+      "arousal": 0.38674330711364746
+    },
+    {
+      "name": "HIEP3933.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011716874956618994,
+      "raw_label": "Happiness",
+      "valence": 0.656474232673645,
+      "arousal": 0.16311195492744446
+    },
+    {
+      "name": "DSCF1435.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011551207979209721,
+      "raw_label": "Happiness",
+      "valence": 0.814145565032959,
+      "arousal": 0.3275918960571289
+    },
+    {
+      "name": "DSCF3898.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010966875008307397,
+      "raw_label": "Happiness",
+      "valence": 0.2976389229297638,
+      "arousal": 0.05645887553691864
+    },
+    {
+      "name": "DSCF1915.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011792333039920777,
+      "raw_label": "Surprise",
+      "valence": 0.16085141897201538,
+      "arousal": 0.34500280022621155
+    },
+    {
+      "name": "DSCF3855.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011658041970804334,
+      "raw_label": "Surprise",
+      "valence": -0.09922296553850174,
+      "arousal": 0.20632943511009216
+    },
+    {
+      "name": "DSCF3823.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011524292000103742,
+      "raw_label": "Neutral",
+      "valence": -0.015993572771549225,
+      "arousal": -0.19707418978214264
+    },
+    {
+      "name": "DSCF2050.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010520750016439706,
+      "raw_label": "Happiness",
+      "valence": 0.0640430673956871,
+      "arousal": 0.011656064540147781
+    },
+    {
+      "name": "HIEP4038.JPG",
+      "has_face": true,
+      "latency_seconds": 0.01029162498889491,
+      "raw_label": "Neutral",
+      "valence": -0.03379448503255844,
+      "arousal": 0.06954532861709595
+    },
+    {
+      "name": "DSCF3782.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011241792002692819,
+      "raw_label": "Happiness",
+      "valence": 0.7415251731872559,
+      "arousal": 0.170146182179451
+    },
+    {
+      "name": "DSCF1670.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010605000017676502,
+      "raw_label": "Surprise",
+      "valence": 0.2779826819896698,
+      "arousal": 0.3445165753364563
+    },
+    {
+      "name": "HIEP3952.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010305957985110581,
+      "raw_label": "Happiness",
+      "valence": 0.47303062677383423,
+      "arousal": 0.25527194142341614
+    },
+    {
+      "name": "DSCF1424.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011044999992009252,
+      "raw_label": "Happiness",
+      "valence": 0.8301326632499695,
+      "arousal": 0.25856930017471313
+    },
+    {
+      "name": "DSCF1438.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010948707989882678,
+      "raw_label": "Happiness",
+      "valence": 0.44831258058547974,
+      "arousal": -0.1354801207780838
+    },
+    {
+      "name": "DSCF3842.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010930292017292231,
+      "raw_label": "Neutral",
+      "valence": -0.04288909584283829,
+      "arousal": -0.08484005928039551
+    },
+    {
+      "name": "DSCF2271.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011133207997772843,
+      "raw_label": "Happiness",
+      "valence": 0.8440059423446655,
+      "arousal": 0.2895825505256653
+    },
+    {
+      "name": "DSCF1498.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011809832998551428,
+      "raw_label": "Happiness",
+      "valence": 0.7724283933639526,
+      "arousal": 0.32917270064353943
+    },
+    {
+      "name": "DSCF4039.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010841624985914677,
+      "raw_label": "Happiness",
+      "valence": 0.7803409099578857,
+      "arousal": 0.6144102215766907
+    },
+    {
+      "name": "DSCF1473.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011020666977856308,
+      "raw_label": "Happiness",
+      "valence": 0.5302259922027588,
+      "arousal": 0.013304945081472397
+    },
+    {
+      "name": "DSCF4051.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011386667029000819,
+      "raw_label": "Happiness",
+      "valence": 0.4033316969871521,
+      "arousal": 0.191568985581398
+    },
+    {
+      "name": "DSCF3938.JPG",
+      "has_face": true,
+      "latency_seconds": 0.012282958021387458,
+      "raw_label": "Neutral",
+      "valence": 0.06951259076595306,
+      "arousal": -0.019279781728982925
+    },
+    {
+      "name": "DSCF4246.JPG",
+      "has_face": true,
+      "latency_seconds": 0.012047666008584201,
+      "raw_label": "Anger",
+      "valence": -0.34652942419052124,
+      "arousal": 0.3912062644958496
+    },
+    {
+      "name": "DSCF3873.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010828457947354764,
+      "raw_label": "Surprise",
+      "valence": 0.4117514491081238,
+      "arousal": 0.16458727419376373
+    },
+    {
+      "name": "DSCF2048.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011009625042788684,
+      "raw_label": "Contempt",
+      "valence": 0.2052207738161087,
+      "arousal": 0.0797940269112587
+    },
+    {
+      "name": "DSCF3934.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011275833006948233,
+      "raw_label": "Surprise",
+      "valence": -0.18326827883720398,
+      "arousal": 0.1742515116930008
+    },
+    {
+      "name": "DSCF2112.JPG",
+      "has_face": true,
+      "latency_seconds": 0.010913417034316808,
+      "raw_label": "Neutral",
+      "valence": -0.22551637887954712,
+      "arousal": -0.07816767692565918
+    },
+    {
+      "name": "DSCF3927.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011829249968286604,
+      "raw_label": "Happiness",
+      "valence": 0.8599385023117065,
+      "arousal": 0.42120763659477234
+    },
+    {
+      "name": "DSCF4017.JPG",
+      "has_face": true,
+      "latency_seconds": 0.01201595802558586,
+      "raw_label": "Disgust",
+      "valence": 0.28470200300216675,
+      "arousal": 0.13371656835079193
+    },
+    {
+      "name": "DSCF2164.JPG",
+      "has_face": true,
+      "latency_seconds": 0.012079041975084692,
+      "raw_label": "Happiness",
+      "valence": 0.6879277229309082,
+      "arousal": 0.07089860737323761
+    },
+    {
+      "name": "DSCF1543.JPG",
+      "has_face": true,
+      "latency_seconds": 0.011811292031779885,
+      "raw_label": "Happiness",
+      "valence": 0.9262420535087585,
+      "arousal": 0.4555189609527588
+    },
+    {
+      "name": "DSCF3905.JPG",
+      "has_face": true,
+      "latency_seconds": 0.012361417000647634,
+      "raw_label": "Surprise",
+      "valence": 0.5511936545372009,
+      "arousal": 0.48757192492485046
+    },
+    {
+      "name": "DSCF4010.JPG",
+      "has_face": true,
+      "latency_seconds": 0.01162379200104624,
+      "raw_label": "Happiness",
+      "valence": 0.8441082239151001,
+      "arousal": 0.273059219121933
+    }
+  ],
+  "bboxes": []
+}
