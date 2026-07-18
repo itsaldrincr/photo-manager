@@ -127,13 +127,28 @@ class GateVerdict(BaseModel):
     synthetic_f1_at_best: float
 
 
+def _best_candidate(sweeps: tuple[list[SweepPoint], list[SweepPoint]]) -> SweepPoint:
+    """Among max-real-F1 thresholds, tie-break by synthetic F1 then proximity to current."""
+    real_sweep, synthetic_sweep = sweeps
+    synthetic_by_threshold = {p.threshold: p for p in synthetic_sweep}
+    best_f1 = max(p.f1 for p in real_sweep)
+    tied = [p for p in real_sweep if p.f1 >= best_f1 - 1e-9]
+    return max(
+        tied,
+        key=lambda p: (
+            synthetic_by_threshold[p.threshold].f1,
+            -abs(p.threshold - CURRENT_THRESHOLD),
+        ),
+    )
+
+
 def _judge(sweeps: tuple[list[SweepPoint], list[SweepPoint]]) -> GateVerdict:
     """Apply the promotion gate to the best real-corpus threshold."""
     real_sweep, synthetic_sweep = sweeps
     synthetic_by_threshold = {p.threshold: p for p in synthetic_sweep}
     real_current = next(p for p in real_sweep if p.threshold == CURRENT_THRESHOLD)
     synthetic_current = synthetic_by_threshold[CURRENT_THRESHOLD]
-    best = max(real_sweep, key=lambda p: p.f1)
+    best = _best_candidate(sweeps)
     synthetic_at_best = synthetic_by_threshold[best.threshold]
     adopted = (
         best.f1 >= real_current.f1 + REAL_F1_MIN_GAIN
