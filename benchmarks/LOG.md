@@ -121,3 +121,14 @@ concurrently with the expression eval (DeepFace 6.5 GB + Py-Feat) on an 18 GB
 host, driving free memory to ~64 MB and inflating Stage 2 to 7m56s and Stage 3
 past 36m. Those numbers measured swap contention, not the pipeline. Always
 benchmark serially with no other model process resident.
+
+## VLM confidence calibration check (2026-07-18)
+
+Across 120 labeled Gemma-4-12B verdicts (harness raw data): self-reported
+confidence sits at 0.85-0.95 on every single call while accuracy is flat 65%
+at every threshold — the confidence field carries NO information about
+correctness. VLM_CONFIDENCE_THRESHOLD (0.70) is therefore a dead branch: no
+verdict ever falls below it. Deliberately NOT retuned — thresholding an
+uninformative signal would inject noise. If a trust gate is ever needed,
+derive it from agreement between repeated calls or stage-2 margin, not from
+the model's self-report.
