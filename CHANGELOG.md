@@ -1,5 +1,42 @@
 # Changelog
 
+## v1.4.0
+
+Calibration + TUI hardening. Everything trainable from existing data is now
+trained or calibrated; remaining gaps require new labels (documented below).
+
+### Changed
+
+- Routing thresholds calibrated against 293 owner-triaged photos:
+  KEEPER_MIN 0.72 -> 0.94, AMBIGUOUS_MIN 0.48 -> 0.85. The old values sat
+  below the 5th percentile of real composite scores, auto-keeping 93% of
+  photos at a 72% error rate; calibrated routing errs 13.6% at ~35% VLM
+  share. Expect materially stricter keeps and more stage-3 activity.
+- Genre preset weights were fitted on the same corpus but FAILED the
+  promotion gate (+1.06 CV points, needs +3.0) — left unchanged; the full
+  fit is archived in benchmarks/runs/calibration_report.md.
+- VLM self-reported confidence measured uninformative (0.85-0.95 on every
+  call at flat accuracy); the confidence threshold is documented as a dead
+  branch rather than retuned.
+
+### Fixed
+
+- TUI no longer breaks on window resize: resize events are debounced (one
+  kitty clear+put at settle instead of a mid-storm write storm), identical
+  photos reuse their uploaded image id instead of re-uploading, and
+  terminals below 40x12 get a clean placeholder instead of corrupt layout.
+
+### Added
+
+- Score panel shows eye state (open/squinting/closed) in the portrait block.
+
+### Known label gaps (cannot be trained without new data)
+
+- Reverence/expression accuracy: needs owner-labeled liturgy faces.
+- Occlusion threshold: calibrated on synthetic occluders only.
+- Non-holiday genre weights: need triaged corpora per genre (the Weddings
+  archive's Edited/ folders are a candidate implicit-label source).
+
 ## v1.3.0
 
 Ship-blocker sweep: a full audit traced every user-visible metric to its

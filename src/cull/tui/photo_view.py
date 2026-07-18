@@ -26,6 +26,7 @@ Requires a Kitty graphics protocol terminal (Kitty, Ghostty, wezterm).
 from __future__ import annotations
 
 import base64
+import hashlib
 import itertools
 import logging
 import math
@@ -39,6 +40,7 @@ from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict
 from rich.text import Text
+from textual.timer import Timer
 from textual.widget import Widget
 
 from cull.config import (
@@ -57,6 +59,7 @@ PRECACHE_BEHIND: int = 1
 PNG_TARGET_LONG_EDGE: int = 1024
 PNG_COMPRESS_LEVEL: int = 1
 KITTY_CHUNK_SIZE: int = 4096
+RESIZE_DEBOUNCE_SECONDS: float = 0.08
 
 DEBUG_LOG_PATH: Path = Path.home() / ".cache" / "cull_photoview_debug.log"
 DEBUG_LOG_ENABLED: bool = bool(os.environ.get("CULL_PHOTOVIEW_DEBUG"))
@@ -104,6 +107,69 @@ _STDOUT_WRITE_LOCK = threading.Lock()
 def _next_image_id() -> int:
     """Return the next unique Kitty image ID for this session."""
     return next(_image_id_counter)
+
+
+class _UploadIdentityCache(OrderedDict[str, int]):
+    """LRU cache mapping PNG content hash to an already-uploaded Kitty image id."""
+
+    def __init__(self, maxsize: int = CACHE_MAX_ENTRIES) -> None:
+        super().__init__()
+        self._maxsize = maxsize
+
+    def put(self, key: str, value: int) -> int | None:
+        """Insert a hash to image-id mapping; return an evicted image id, if any."""
+        self[key] = value
+        self.move_to_end(key)
+        if len(self) <= self._maxsize:
+            return None
+        _, evicted_id = self.popitem(last=False)
+        return evicted_id
+
+
+_upload_identity_cache = _UploadIdentityCache()
+_upload_identity_lock = threading.Lock()
+
+
+def _hash_png(png_bytes: bytes) -> str:
+    """Return a content hash identifying PNG bytes for terminal-upload dedup."""
+    return hashlib.sha1(png_bytes).hexdigest()
+
+
+class _ImageIdentity(BaseModel):
+    """Resolved Kitty image id for a PNG upload, and whether it is newly reserved."""
+
+    image_id: int
+    is_new_upload: bool
+
+
+def _reserve_image_id(content_hash: str) -> _ImageIdentity:
+    """Return the known image id for a content hash, or reserve+track a new one."""
+    with _upload_identity_lock:
+        existing = _upload_identity_cache.get(content_hash)
+        if existing is not None:
+            _upload_identity_cache.move_to_end(content_hash)
+            return _ImageIdentity(image_id=existing, is_new_upload=False)
+        image_id = _next_image_id()
+        evicted_id = _upload_identity_cache.put(content_hash, image_id)
+    if evicted_id is not None:
+        _emit_kitty_delete(evicted_id)
+    return _ImageIdentity(image_id=image_id, is_new_upload=True)
+
+
+def _build_upload_sequence_if_new(png_bytes: bytes, identity: _ImageIdentity) -> str:
+    """Build the upload APC sequence only when the content id was newly reserved."""
+    if not identity.is_new_upload:
+        return ""
+    upload_in = _KittyUploadInput(png_bytes=png_bytes, image_id=identity.image_id)
+    return _build_upload_sequence(upload_in)
+
+
+def _invalidate_image_id(image_id: int) -> None:
+    """Remove any content-hash entries pointing at image_id from the identity cache."""
+    with _upload_identity_lock:
+        stale_keys = [k for k, v in _upload_identity_cache.items() if v == image_id]
+        for key in stale_keys:
+            del _upload_identity_cache[key]
 
 
 class _KittyUploadInput(BaseModel):
@@ -337,6 +403,16 @@ def precache_images(request: PrecacheRequest, viewport: ViewportSize) -> None:
             logger.warning("Failed to pre-cache %s", path)
 
 
+class _UploadApplyInput(BaseModel):
+    """Bundle for applying a prepared upload/put on the main thread."""
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    request: RenderRequest
+    image_id: int
+    upload_seq: str
+
+
 class PhotoView(Widget):
     """Textual widget displaying a photo via Kitty direct-write and re-emit."""
 
@@ -353,12 +429,14 @@ class PhotoView(Widget):
         self._kitty_id: int = 0
         self._blank_text: Text = Text("")
         self._last_put_state: tuple[int, int, int, int, int] | None = None
+        self._resize_timer: Timer | None = None
 
     def clear_terminal_image(self) -> None:
         """Remove any visible Kitty image placement and stored image state."""
         _emit_kitty_clear_all()
         if self._kitty_id != 0:
             _emit_kitty_delete(self._kitty_id)
+            _invalidate_image_id(self._kitty_id)
         self._kitty_id = 0
         self._last_put_state = None
         self.refresh()
@@ -378,12 +456,14 @@ class PhotoView(Widget):
         )
 
     def display_photo(self, request: RenderRequest) -> None:
-        """Store the request and dispatch heavy encode+upload to a background worker."""
+        """Store the request and dispatch heavy encode+upload to a background worker.
+
+        Only clears visible placements here — stored image data is left alone
+        so that navigating back to recently-shown content (still tracked by
+        the upload-identity cache) can reuse it instead of re-uploading.
+        """
         _dlog(f"display_photo image_id={request.image_id}")
         _emit_kitty_clear_all()
-        if self._kitty_id != 0:
-            _emit_kitty_delete(self._kitty_id)
-            self._kitty_id = 0
         self._current_request = request
         self._last_put_state = None
         self._rebuild_blank_text()
@@ -396,12 +476,14 @@ class PhotoView(Widget):
         )
 
     def _worker_prepare_photo(self, request: RenderRequest) -> None:
-        """Background worker: encode PNG and build the APC upload sequence ONLY.
+        """Background worker: encode PNG and build the APC upload sequence.
 
         All stdout writes are marshalled back to the main thread via
         ``call_from_thread`` so that our APC sequences cannot race with
         Textual's own paint-cycle writes, which would corrupt the escape
         sequences and cause the base64 payload to render as raw text.
+        Identical PNG content reuses its previously-uploaded Kitty image id
+        instead of re-uploading, so repeat navigation and redisplay stay cheap.
         """
         if self._current_request is not request:
             return
@@ -412,32 +494,35 @@ class PhotoView(Widget):
             return
         if self._current_request is not request:
             return
-        image_id = _next_image_id()
-        upload_seq = _build_upload_sequence(
-            _KittyUploadInput(png_bytes=png, image_id=image_id)
+        identity = _reserve_image_id(_hash_png(png))
+        upload_seq = _build_upload_sequence_if_new(png, identity)
+        _dlog(
+            f"worker: image_id={identity.image_id} "
+            f"new={identity.is_new_upload} apc={len(upload_seq)}B"
         )
-        _dlog(f"worker: built upload image_id={image_id} apc={len(upload_seq)}B")
-        self.app.call_from_thread(
-            self._main_apply_upload, request, image_id, upload_seq,
+        apply_in = _UploadApplyInput(
+            request=request, image_id=identity.image_id, upload_seq=upload_seq,
         )
+        self.app.call_from_thread(self._main_apply_upload, apply_in)
 
-    def _main_apply_upload(
-        self, request: RenderRequest, image_id: int, upload_seq: str
-    ) -> None:
-        """Main thread: flush the APC upload and emit the put directly.
+    def _main_apply_upload(self, apply_in: _UploadApplyInput) -> None:
+        """Main thread: flush any new upload and emit the put directly.
 
         We are guaranteed to be on the main thread here (via call_from_thread),
         which means Textual is not mid-paint. Emitting the put inline avoids
         racing with Textual's repaint cycle and the fragile
         refresh/call_after_refresh dance that was dropping emissions under
-        rapid navigation.
+        rapid navigation. The previous image id, if any, is left in the
+        terminal's store — the upload-identity LRU (see ``_reserve_image_id``)
+        owns storage lifecycle and issues deletes only on eviction, so that
+        recently-shown content can be re-put without a fresh upload.
         """
+        request, image_id = apply_in.request, apply_in.image_id
         if self._current_request is not request:
             _dlog(f"main_apply_upload: stale request for image_id={image_id}")
             return
-        if self._kitty_id != 0:
-            _emit_kitty_delete(self._kitty_id)
-        _write_raw(upload_seq)
+        if apply_in.upload_seq:
+            _write_raw(apply_in.upload_seq)
         self._kitty_id = image_id
         self._last_put_state = None
         self._maybe_emit_put()
@@ -458,10 +543,33 @@ class PhotoView(Widget):
         self._maybe_emit_put()
 
     def on_resize(self, event: object) -> None:  # noqa: ARG002
-        """Re-emit the put directly at the new cell dimensions after a resize."""
+        """Rebuild the blank spacer immediately; debounce the actual re-emit.
+
+        Rapid resize storms fire many of these in quick succession. We only
+        want one clear+put once the terminal size has settled, not one per
+        event, so the real re-emit is scheduled on a short debounce timer
+        that keeps getting pushed back while events keep arriving.
+        """
         _dlog(f"on_resize size=({self.size.width},{self.size.height})")
         self._rebuild_blank_text()
-        self._last_put_state = None  # force re-emit even if kitty_id unchanged
+        self._schedule_resize_settle()
+
+    def _schedule_resize_settle(self) -> None:
+        """Coalesce rapid resize events; re-emit only once sizing settles."""
+        if self._resize_timer is not None:
+            self._resize_timer.stop()
+        self._resize_timer = self.set_timer(
+            RESIZE_DEBOUNCE_SECONDS, self._on_resize_settled,
+        )
+
+    def _on_resize_settled(self) -> None:
+        """Re-emit the Kitty put once no further resize events have arrived.
+
+        ``_maybe_emit_put`` itself skips the clear+put when the resolved
+        geometry state is unchanged, so a storm that ends back at its
+        starting size emits nothing extra.
+        """
+        self._resize_timer = None
         self._maybe_emit_put()
 
     def render(self) -> Text:
