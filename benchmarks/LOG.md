@@ -132,3 +132,32 @@ verdict ever falls below it. Deliberately NOT retuned — thresholding an
 uninformative signal would inject noise. If a trust gate is ever needed,
 derive it from agreement between repeated calls or stage-2 margin, not from
 the model's self-report.
+
+## Gemma weak-label wave (2026-07-18, tasks 720-722)
+
+Method for all three: gemma-4-12b double-pass labeling with paraphrased
+prompts at temperature 0.0; keep only double-pass agreements
+(agreement-as-confidence — self-reported confidence again saturated at
+0.9-1.0 and was never used). Tooling committed as
+benchmarks/{weaklabel_models,gemma_weaklabel_runner,occlusion_ratio_runner,
+occlusion_recal,reverence_weaklabel}.py.
+
+### Occlusion recalibration — verdict KEEP 0.32 (no production change)
+
+156 face-gated real photos (vigil/weddings/friends), 138 agreed (11.5%
+disagreement, 0 parse errors). The texture-variance ratio has NO real-photo
+signal: occluded median 0.74 vs clean 0.82, full overlap; at 0.32 the
+detector never fires on real photos (production no-op). Best sweep point
+(0.80) would false-flag 43% of clean faces — gate hardened with a clean
+false-flag-rate <= 0.10 constraint, which nothing satisfies. Real occluders
+are textured (hands, 22/25); synthetic occluders are flat — that's the
+transfer failure. Full analysis: runs/occlusion_recal_report.md.
+
+### Reverence prototype — key contrast unanswerable, misread confirmed
+
+97 vigil/wedding faces, 86 agreed (11.3%). Only 3 distressed faces exist in
+the whole corpus — reverent-vs-distressed needs a distress-bearing corpus.
+Confirmed: EmotiEffLib misreads reverent as Sadness/Surprise (21/32) while
+V/A places reverent in a calm near-neutral cluster, strongly separated from
+joyful (valence d -1.80). Liturgy-preset rule proposed (not wired) in
+runs/reverence_weaklabel_report.md.
