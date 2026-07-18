@@ -1,0 +1,1564 @@
+{
+  "readings": [
+    {
+      "name": "DSCF1521 189 Edited.jpg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1521 189 Edited.jpg",
+      "has_face": true,
+      "blendshape_std": 0.1908077384019985,
+      "blendshape_mean": 0.10583401115915127,
+      "skin_outside_hull_frac": 0.10570164698791165,
+      "boundary_edge_density": 0.009494617224880382,
+      "texture_ratio": 0.6941682700465525
+    },
+    {
+      "name": "DSCF0267.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0267.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1329407174304405,
+      "blendshape_mean": 0.07628512006918196,
+      "skin_outside_hull_frac": 0.1609736906810917,
+      "boundary_edge_density": 0.12420229738353541,
+      "texture_ratio": 0.740494763652046
+    },
+    {
+      "name": "DSCF0168.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0168.JPG",
+      "has_face": true,
+      "blendshape_std": 0.24299087717847964,
+      "blendshape_mean": 0.1328170179507767,
+      "skin_outside_hull_frac": 0.198148475967559,
+      "boundary_edge_density": 0.04689950106913756,
+      "texture_ratio": 0.9273224587932608
+    },
+    {
+      "name": "DSCF0401.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0401.JPG",
+      "has_face": true,
+      "blendshape_std": 0.09758114684782443,
+      "blendshape_mean": 0.05492268045037463,
+      "skin_outside_hull_frac": 0.07809932104205022,
+      "boundary_edge_density": 0.027822984476715072,
+      "texture_ratio": 0.7920212502981341
+    },
+    {
+      "name": "DSCF0389.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0389.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18836054004756633,
+      "blendshape_mean": 0.09396485130301302,
+      "skin_outside_hull_frac": 0.10430478612296794,
+      "boundary_edge_density": 0.02904275092936803,
+      "texture_ratio": 0.6069232391529299
+    },
+    {
+      "name": "DSCF0374.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0374.JPG",
+      "has_face": true,
+      "blendshape_std": 0.11405716409483023,
+      "blendshape_mean": 0.0632361137825267,
+      "skin_outside_hull_frac": 0.11970477427474265,
+      "boundary_edge_density": 0.04864239239239239,
+      "texture_ratio": 0.916690650247932
+    },
+    {
+      "name": "DSCF0286.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0286.JPG",
+      "has_face": true,
+      "blendshape_std": 0.19424175171771282,
+      "blendshape_mean": 0.10666615508137836,
+      "skin_outside_hull_frac": 0.10264081322577144,
+      "boundary_edge_density": 0.027390939597315436,
+      "texture_ratio": 0.8912009499037193
+    },
+    {
+      "name": "DSCF0263.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0263.JPG",
+      "has_face": true,
+      "blendshape_std": 0.20713285317688293,
+      "blendshape_mean": 0.11005532696804897,
+      "skin_outside_hull_frac": 0.22770378424088672,
+      "boundary_edge_density": 0.07035561005518087,
+      "texture_ratio": 0.720963204566817
+    },
+    {
+      "name": "DSCF1180.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1180.JPG",
+      "has_face": true,
+      "blendshape_std": 0.14874975315238168,
+      "blendshape_mean": 0.08116809111182899,
+      "skin_outside_hull_frac": 0.10309875150254788,
+      "boundary_edge_density": 0.04107505070993915,
+      "texture_ratio": 0.815139946414472
+    },
+    {
+      "name": "DSCF0256.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0256.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18068800042836533,
+      "blendshape_mean": 0.10476191338071623,
+      "skin_outside_hull_frac": 0.16102293472496632,
+      "boundary_edge_density": 0.05543918918918919,
+      "texture_ratio": 0.8290218027976897
+    },
+    {
+      "name": "DSCF1425.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1425.JPG",
+      "has_face": true,
+      "blendshape_std": 0.24119998437400414,
+      "blendshape_mean": 0.13583272675321845,
+      "skin_outside_hull_frac": 0.2274568625733555,
+      "boundary_edge_density": 0.006875727590221188,
+      "texture_ratio": 0.7969195672926848
+    },
+    {
+      "name": "DSCF0501.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0501.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1797856427351596,
+      "blendshape_mean": 0.09174251378140817,
+      "skin_outside_hull_frac": 0.09806332852319913,
+      "boundary_edge_density": 0.010330326669917114,
+      "texture_ratio": 0.7141929388618841
+    },
+    {
+      "name": "DSCF0182 59 Edited.jpg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0182 59 Edited.jpg",
+      "has_face": true,
+      "blendshape_std": 0.21078728671562766,
+      "blendshape_mean": 0.11827305553421139,
+      "skin_outside_hull_frac": 0.14508678572423592,
+      "boundary_edge_density": 0.040945618436158,
+      "texture_ratio": 0.7099097575236106
+    },
+    {
+      "name": "DSCF1557 194 Edited.jpg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1557 194 Edited.jpg",
+      "has_face": true,
+      "blendshape_std": 0.18003593829104642,
+      "blendshape_mean": 0.11565042837239661,
+      "skin_outside_hull_frac": 0.15695191012411555,
+      "boundary_edge_density": 0.03591033041753727,
+      "texture_ratio": 0.9442651704125123
+    },
+    {
+      "name": "DSCF1491.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1491.JPG",
+      "has_face": true,
+      "blendshape_std": 0.09766258385893166,
+      "blendshape_mean": 0.07130328895088639,
+      "skin_outside_hull_frac": 0.1859950385671841,
+      "boundary_edge_density": 0.02654741624077229,
+      "texture_ratio": 0.7693717758728473
+    },
+    {
+      "name": "DSCF0373.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0373.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1503625123543115,
+      "blendshape_mean": 0.0723523009248576,
+      "skin_outside_hull_frac": 0.0606543553419344,
+      "boundary_edge_density": 0.05032733224222586,
+      "texture_ratio": 0.7893174040443978
+    },
+    {
+      "name": "DSCF0377.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0377.JPG",
+      "has_face": true,
+      "blendshape_std": 0.10734857537041162,
+      "blendshape_mean": 0.06362281734077854,
+      "skin_outside_hull_frac": 0.08488506784760104,
+      "boundary_edge_density": 0.02550701051577366,
+      "texture_ratio": 0.847964856494185
+    },
+    {
+      "name": "DSCF0540.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0540.JPG",
+      "has_face": true,
+      "blendshape_std": 0.10193742699800962,
+      "blendshape_mean": 0.059859637780777776,
+      "skin_outside_hull_frac": 0.1731657719212624,
+      "boundary_edge_density": 0.0017857142857142857,
+      "texture_ratio": 0.8916114073059165
+    },
+    {
+      "name": "DSCF1485.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1485.JPG",
+      "has_face": true,
+      "blendshape_std": 0.15766523260222404,
+      "blendshape_mean": 0.06914178817798602,
+      "skin_outside_hull_frac": 0.12882953652788687,
+      "boundary_edge_density": 0.01482494332697636,
+      "texture_ratio": 0.537411930148372
+    },
+    {
+      "name": "DSCF0359.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0359.JPG",
+      "has_face": true,
+      "blendshape_std": 0.19038047578033404,
+      "blendshape_mean": 0.09802774288631304,
+      "skin_outside_hull_frac": 0.1267735614292263,
+      "boundary_edge_density": 0.026427855711422844,
+      "texture_ratio": 0.6558214271501448
+    },
+    {
+      "name": "DSCF0486.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0486.JPG",
+      "has_face": true,
+      "blendshape_std": 0.13766992667250544,
+      "blendshape_mean": 0.06341766734849488,
+      "skin_outside_hull_frac": 0.15456981132075473,
+      "boundary_edge_density": 0.009669303749507441,
+      "texture_ratio": 0.8268355626128756
+    },
+    {
+      "name": "DSCF1531.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1531.JPG",
+      "has_face": true,
+      "blendshape_std": 0.19565276889368063,
+      "blendshape_mean": 0.12222922259610303,
+      "skin_outside_hull_frac": 0.14643539119908616,
+      "boundary_edge_density": 0.020694301848049282,
+      "texture_ratio": 0.7420034927640683
+    },
+    {
+      "name": "DSCF0514.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0514.JPG",
+      "has_face": true,
+      "blendshape_std": 0.16468649203267005,
+      "blendshape_mean": 0.08463029663412928,
+      "skin_outside_hull_frac": 0.08871354641834713,
+      "boundary_edge_density": 0.013878585558852621,
+      "texture_ratio": 0.7148332562240804
+    },
+    {
+      "name": "DSCF0121 34 Edited.jpg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0121 34 Edited.jpg",
+      "has_face": true,
+      "blendshape_std": 0.1185073841469105,
+      "blendshape_mean": 0.06238346987249309,
+      "skin_outside_hull_frac": 0.12500169213899906,
+      "boundary_edge_density": 0.002099483204134367,
+      "texture_ratio": 0.505691953204945
+    },
+    {
+      "name": "DSCF0345.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0345.JPG",
+      "has_face": true,
+      "blendshape_std": 0.13447234855298967,
+      "blendshape_mean": 0.07303420876768447,
+      "skin_outside_hull_frac": 0.10811527729743706,
+      "boundary_edge_density": 0.008843154594420774,
+      "texture_ratio": 0.8232826293746223
+    },
+    {
+      "name": "DSCF0447.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0447.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1565400086352463,
+      "blendshape_mean": 0.08453251823727652,
+      "skin_outside_hull_frac": 0.14569694489907256,
+      "boundary_edge_density": 0.08611339923119166,
+      "texture_ratio": 0.6888126732234615
+    },
+    {
+      "name": "DSCF1322 102 Edited.jpg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1322 102 Edited.jpg",
+      "has_face": true,
+      "blendshape_std": 0.25175423525742024,
+      "blendshape_mean": 0.13643663975370807,
+      "skin_outside_hull_frac": 0.23894176283496424,
+      "boundary_edge_density": 0.015978954547668924,
+      "texture_ratio": 0.8939813705633192
+    },
+    {
+      "name": "DSCF0347.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0347.JPG",
+      "has_face": true,
+      "blendshape_std": 0.13816405979425272,
+      "blendshape_mean": 0.08065616062592475,
+      "skin_outside_hull_frac": 0.12358592132505176,
+      "boundary_edge_density": 0.06376542470348628,
+      "texture_ratio": 0.8609056108194366
+    },
+    {
+      "name": "DSCF1523.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1523.JPG",
+      "has_face": true,
+      "blendshape_std": 0.08563554114607949,
+      "blendshape_mean": 0.06173732137410173,
+      "skin_outside_hull_frac": 0.11411493674197414,
+      "boundary_edge_density": 0.022948682766190998,
+      "texture_ratio": 0.8813564140609406
+    },
+    {
+      "name": "DSCF0236.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0236.JPG",
+      "has_face": true,
+      "blendshape_std": 0.14837952600410256,
+      "blendshape_mean": 0.08626926900157907,
+      "skin_outside_hull_frac": 0.10593853001662112,
+      "boundary_edge_density": 0.0653630150889776,
+      "texture_ratio": 0.4736424981410392
+    },
+    {
+      "name": "DSCF1566.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1566.JPG",
+      "has_face": true,
+      "blendshape_std": 0.11189482997076634,
+      "blendshape_mean": 0.06001672122057003,
+      "skin_outside_hull_frac": 0.1300910926279649,
+      "boundary_edge_density": 0.015445334142916777,
+      "texture_ratio": 0.7237074644142806
+    },
+    {
+      "name": "DSCF0469.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0469.JPG",
+      "has_face": true,
+      "blendshape_std": 0.2358835406748948,
+      "blendshape_mean": 0.14318791438331216,
+      "skin_outside_hull_frac": 0.11593432422499338,
+      "boundary_edge_density": 0.007449400299850075,
+      "texture_ratio": 0.9588308527197821
+    },
+    {
+      "name": "DSCF0522.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0522.JPG",
+      "has_face": true,
+      "blendshape_std": 0.23070556748450463,
+      "blendshape_mean": 0.10752359847003845,
+      "skin_outside_hull_frac": 0.0926745722870353,
+      "boundary_edge_density": 0.004669156883671291,
+      "texture_ratio": 0.9046868878744518
+    },
+    {
+      "name": "DSCF0212 67 Edited.jpg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0212 67 Edited.jpg",
+      "has_face": true,
+      "blendshape_std": 0.174550493138663,
+      "blendshape_mean": 0.09106880280108508,
+      "skin_outside_hull_frac": 0.2503115042564322,
+      "boundary_edge_density": 0.024905719673161533,
+      "texture_ratio": 0.5784908329076047
+    },
+    {
+      "name": "DSCF0206.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0206.JPG",
+      "has_face": true,
+      "blendshape_std": 0.17480805936571736,
+      "blendshape_mean": 0.09671860678576603,
+      "skin_outside_hull_frac": 0.14037840332256576,
+      "boundary_edge_density": 0.06169742802590693,
+      "texture_ratio": 0.7441590152806253
+    },
+    {
+      "name": "DSCF0357.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0357.JPG",
+      "has_face": true,
+      "blendshape_std": 0.14906827419029764,
+      "blendshape_mean": 0.0694431302096292,
+      "skin_outside_hull_frac": 0.10682929114010287,
+      "boundary_edge_density": 0.008758371973209686,
+      "texture_ratio": 0.9665644309175919
+    },
+    {
+      "name": "DSCF1466.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1466.JPG",
+      "has_face": true,
+      "blendshape_std": 0.20329552140588644,
+      "blendshape_mean": 0.1125207396804314,
+      "skin_outside_hull_frac": 0.10881152289783767,
+      "boundary_edge_density": 0.0242109634551495,
+      "texture_ratio": 0.56773916243893
+    },
+    {
+      "name": "DSCF0348.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0348.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1937548849913868,
+      "blendshape_mean": 0.09553879338549852,
+      "skin_outside_hull_frac": 0.09999550331581582,
+      "boundary_edge_density": 0.030617283950617285,
+      "texture_ratio": 0.8232044950226484
+    },
+    {
+      "name": "DSCF0474.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0474.JPG",
+      "has_face": true,
+      "blendshape_std": 0.10539969197416238,
+      "blendshape_mean": 0.06529234154214357,
+      "skin_outside_hull_frac": 0.0817045941076364,
+      "boundary_edge_density": 0.08921072134387352,
+      "texture_ratio": 0.6132218264251739
+    },
+    {
+      "name": "DSCF0409.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0409.JPG",
+      "has_face": true,
+      "blendshape_std": 0.20000226028310383,
+      "blendshape_mean": 0.10829264842823473,
+      "skin_outside_hull_frac": 0.07867307361881466,
+      "boundary_edge_density": 0.040666340029397355,
+      "texture_ratio": 0.7902784284913632
+    },
+    {
+      "name": "DSCF0279.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0279.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1732348954014886,
+      "blendshape_mean": 0.11031930004524029,
+      "skin_outside_hull_frac": 0.13214674891332448,
+      "boundary_edge_density": 0.05536592026215183,
+      "texture_ratio": 0.9195067007276145
+    },
+    {
+      "name": "DSCF0166 52 Edited.jpg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0166 52 Edited.jpg",
+      "has_face": true,
+      "blendshape_std": 0.2606149069438488,
+      "blendshape_mean": 0.17537405255542332,
+      "skin_outside_hull_frac": 0.12509530954079248,
+      "boundary_edge_density": 0.043845135671740566,
+      "texture_ratio": 0.7940773298334659
+    },
+    {
+      "name": "DSCF1312.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1312.JPG",
+      "has_face": true,
+      "blendshape_std": 0.3120544237041404,
+      "blendshape_mean": 0.22114502546068537,
+      "skin_outside_hull_frac": 0.11855482354692742,
+      "boundary_edge_density": 0.005789700805523591,
+      "texture_ratio": 0.8208263999661383
+    },
+    {
+      "name": "DSCF0400.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0400.JPG",
+      "has_face": true,
+      "blendshape_std": 0.106728743321734,
+      "blendshape_mean": 0.06327839490465888,
+      "skin_outside_hull_frac": 0.10115896676754144,
+      "boundary_edge_density": 0.042547097759674135,
+      "texture_ratio": 0.6384030323955142
+    },
+    {
+      "name": "DSCF0213.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0213.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18490521329326357,
+      "blendshape_mean": 0.09920792338955957,
+      "skin_outside_hull_frac": 0.18358701274474057,
+      "boundary_edge_density": 0.0504389530157698,
+      "texture_ratio": 0.6587079915127748
+    },
+    {
+      "name": "DSCF0478.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0478.JPG",
+      "has_face": true,
+      "blendshape_std": 0.10955851624803636,
+      "blendshape_mean": 0.05873434533274505,
+      "skin_outside_hull_frac": 0.10541852570039918,
+      "boundary_edge_density": 0.006710590531966813,
+      "texture_ratio": 0.8355119066860665
+    },
+    {
+      "name": "DSCF0599.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0599.JPG",
+      "has_face": true,
+      "blendshape_std": 0.11361063987245897,
+      "blendshape_mean": 0.06622374268333793,
+      "skin_outside_hull_frac": 0.13222653468166928,
+      "boundary_edge_density": 0.06996311186637377,
+      "texture_ratio": 0.911833075390988
+    },
+    {
+      "name": "DSCF0542.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0542.JPG",
+      "has_face": true,
+      "blendshape_std": 0.12012956893276412,
+      "blendshape_mean": 0.05620963490148979,
+      "skin_outside_hull_frac": 0.0961847964414849,
+      "boundary_edge_density": 0.001974191063174114,
+      "texture_ratio": 0.9400247950086463
+    },
+    {
+      "name": "DSCF0338.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0338.JPG",
+      "has_face": true,
+      "blendshape_std": 0.24578970385694776,
+      "blendshape_mean": 0.16818632881435244,
+      "skin_outside_hull_frac": 0.05912637209008668,
+      "boundary_edge_density": 0.038091016548463356,
+      "texture_ratio": 0.6910479593644253
+    },
+    {
+      "name": "DSCF0352.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0352.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18721463661281026,
+      "blendshape_mean": 0.10671624287879708,
+      "skin_outside_hull_frac": 0.12875668319237873,
+      "boundary_edge_density": 0.05729625550660793,
+      "texture_ratio": 0.7310071050468184
+    },
+    {
+      "name": "DSCF0402.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0402.JPG",
+      "has_face": true,
+      "blendshape_std": 0.16430744378998785,
+      "blendshape_mean": 0.07933222102915173,
+      "skin_outside_hull_frac": 0.05409331578783766,
+      "boundary_edge_density": 0.019933976637887253,
+      "texture_ratio": 0.8408711263851616
+    },
+    {
+      "name": "DSCF0258.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0258.JPG",
+      "has_face": true,
+      "blendshape_std": 0.20102338243543086,
+      "blendshape_mean": 0.09702906519732356,
+      "skin_outside_hull_frac": 0.17320043743512026,
+      "boundary_edge_density": 0.06316098707403055,
+      "texture_ratio": 0.9442271290427908
+    },
+    {
+      "name": "DSCF1433.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1433.JPG",
+      "has_face": true,
+      "blendshape_std": 0.19141329591605477,
+      "blendshape_mean": 0.09534550099942042,
+      "skin_outside_hull_frac": 0.03679683610819182,
+      "boundary_edge_density": 0.03504912743804077,
+      "texture_ratio": 0.5973704743451704
+    },
+    {
+      "name": "DSCF0450.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF0450.JPG",
+      "has_face": true,
+      "blendshape_std": 0.13265301842054805,
+      "blendshape_mean": 0.07378954894245096,
+      "skin_outside_hull_frac": 0.14693226422619174,
+      "boundary_edge_density": 0.025323910482921083,
+      "texture_ratio": 0.9316007416984095
+    },
+    {
+      "name": "DSCF3785.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3785.JPG",
+      "has_face": true,
+      "blendshape_std": 0.10683790678061406,
+      "blendshape_mean": 0.05064973517396839,
+      "skin_outside_hull_frac": 0.21633130676896178,
+      "boundary_edge_density": 0.04941351540616246,
+      "texture_ratio": 0.4293643337144107
+    },
+    {
+      "name": "DSCF3905.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3905.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1981986423260967,
+      "blendshape_mean": 0.11160014601323962,
+      "skin_outside_hull_frac": 0.13022667591255813,
+      "boundary_edge_density": 0.009377784029633797,
+      "texture_ratio": 0.6132413584400243
+    },
+    {
+      "name": "DSCF1498.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1498.JPG",
+      "has_face": true,
+      "blendshape_std": 0.2975471734314886,
+      "blendshape_mean": 0.19483589239425828,
+      "skin_outside_hull_frac": 0.1579120786674394,
+      "boundary_edge_density": 0.04046352583586626,
+      "texture_ratio": 0.9563283299894161
+    },
+    {
+      "name": "DSCF4084.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4084.JPG",
+      "has_face": true,
+      "blendshape_std": 0.10979368896576329,
+      "blendshape_mean": 0.06323742574608016,
+      "skin_outside_hull_frac": 0.1613540053438622,
+      "boundary_edge_density": 0.0,
+      "texture_ratio": 0.6496620120324337
+    },
+    {
+      "name": "DSCF1543.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1543.JPG",
+      "has_face": true,
+      "blendshape_std": 0.27593160791727656,
+      "blendshape_mean": 0.17318055131452229,
+      "skin_outside_hull_frac": 0.1289874425770016,
+      "boundary_edge_density": 0.02338292101586258,
+      "texture_ratio": 0.713566981280515
+    },
+    {
+      "name": "DSCF4087.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4087.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18428099620285793,
+      "blendshape_mean": 0.10675954153019714,
+      "skin_outside_hull_frac": 0.13494972017705562,
+      "boundary_edge_density": 0.010913521360431356,
+      "texture_ratio": 0.6964547497722331
+    },
+    {
+      "name": "DSCF2154.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF2154.JPG",
+      "has_face": true,
+      "blendshape_std": 0.14000447480426279,
+      "blendshape_mean": 0.09220028193578632,
+      "skin_outside_hull_frac": 0.11936123624277517,
+      "boundary_edge_density": 0.2094889733300188,
+      "texture_ratio": 0.7683785387110446
+    },
+    {
+      "name": "DSCF1551.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1551.JPG",
+      "has_face": true,
+      "blendshape_std": 0.14104809968479234,
+      "blendshape_mean": 0.07907627884769035,
+      "skin_outside_hull_frac": 0.14770513201315635,
+      "boundary_edge_density": 0.04486620127981385,
+      "texture_ratio": 0.7987130612442939
+    },
+    {
+      "name": "HIEP4039.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/HIEP4039.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1112371439514444,
+      "blendshape_mean": 0.055302668837169104,
+      "skin_outside_hull_frac": 0.150692540456053,
+      "boundary_edge_density": 0.014650283553875236,
+      "texture_ratio": 0.8573600683958352
+    },
+    {
+      "name": "DSCF3932.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3932.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1019283964659613,
+      "blendshape_mean": 0.06361459861931247,
+      "skin_outside_hull_frac": 0.1489956470122675,
+      "boundary_edge_density": 0.01032540675844806,
+      "texture_ratio": 0.8604266721501742
+    },
+    {
+      "name": "DSCF4065.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4065.JPG",
+      "has_face": true,
+      "blendshape_std": 0.12144912846440374,
+      "blendshape_mean": 0.07262153751822215,
+      "skin_outside_hull_frac": 0.18072517078297426,
+      "boundary_edge_density": 0.0013980681240467717,
+      "texture_ratio": 0.9331291439836731
+    },
+    {
+      "name": "DSCF2150.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF2150.JPG",
+      "has_face": true,
+      "blendshape_std": 0.22441077431740714,
+      "blendshape_mean": 0.15189882826970802,
+      "skin_outside_hull_frac": 0.1587094749205192,
+      "boundary_edge_density": 0.06952542160366121,
+      "texture_ratio": 0.8111899745489901
+    },
+    {
+      "name": "HIEP3952.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/HIEP3952.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18956935851097223,
+      "blendshape_mean": 0.1249025746681052,
+      "skin_outside_hull_frac": 0.13004726304030248,
+      "boundary_edge_density": 0.0033706952566601688,
+      "texture_ratio": 0.6721913868512166
+    },
+    {
+      "name": "HIEP3933.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/HIEP3933.JPG",
+      "has_face": true,
+      "blendshape_std": 0.11582642536894165,
+      "blendshape_mean": 0.09559515218308258,
+      "skin_outside_hull_frac": 0.18280165601594173,
+      "boundary_edge_density": 0.00133769322235434,
+      "texture_ratio": 0.886807908595402
+    },
+    {
+      "name": "DSCF2112.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF2112.JPG",
+      "has_face": true,
+      "blendshape_std": 0.17830991263637244,
+      "blendshape_mean": 0.08222763653586129,
+      "skin_outside_hull_frac": 0.12493709678331326,
+      "boundary_edge_density": 0.3401753023410629,
+      "texture_ratio": 0.9529122498013326
+    },
+    {
+      "name": "DSCF1542.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1542.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18335363952340253,
+      "blendshape_mean": 0.1144159692164878,
+      "skin_outside_hull_frac": 0.18717552192643322,
+      "boundary_edge_density": 0.022477197046474592,
+      "texture_ratio": 0.8139729058228061
+    },
+    {
+      "name": "DSCF3935.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3935.JPG",
+      "has_face": true,
+      "blendshape_std": 0.12663191211377858,
+      "blendshape_mean": 0.06731424874513826,
+      "skin_outside_hull_frac": 0.19642849703589832,
+      "boundary_edge_density": 0.009296570105022686,
+      "texture_ratio": 0.7128883060612273
+    },
+    {
+      "name": "DSCF4095.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4095.JPG",
+      "has_face": true,
+      "blendshape_std": 0.19836673274548197,
+      "blendshape_mean": 0.11389196421208235,
+      "skin_outside_hull_frac": 0.10073971254875777,
+      "boundary_edge_density": 0.05238526570048309,
+      "texture_ratio": 0.7983160163624584
+    },
+    {
+      "name": "DSCF3951.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3951.JPG",
+      "has_face": true,
+      "blendshape_std": 0.2659318940581607,
+      "blendshape_mean": 0.18809850527644606,
+      "skin_outside_hull_frac": 0.0990401791542702,
+      "boundary_edge_density": 0.03352471966398212,
+      "texture_ratio": 0.7163562273508906
+    },
+    {
+      "name": "DSCF3938.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3938.JPG",
+      "has_face": true,
+      "blendshape_std": 0.08453013214321867,
+      "blendshape_mean": 0.04971982817175038,
+      "skin_outside_hull_frac": 0.16328849721706865,
+      "boundary_edge_density": 0.0055089703588143525,
+      "texture_ratio": 0.6055972338619391
+    },
+    {
+      "name": "DSCF3934.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3934.JPG",
+      "has_face": true,
+      "blendshape_std": 0.11975862293945623,
+      "blendshape_mean": 0.06869127649700016,
+      "skin_outside_hull_frac": 0.2117218150862388,
+      "boundary_edge_density": 0.0009349677955537087,
+      "texture_ratio": 0.9047431540443945
+    },
+    {
+      "name": "DSCF1424.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1424.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18268766899301783,
+      "blendshape_mean": 0.10766118505325768,
+      "skin_outside_hull_frac": 0.1295629102080715,
+      "boundary_edge_density": 0.048954476148987146,
+      "texture_ratio": 0.6527014750361013
+    },
+    {
+      "name": "DSCF3912.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3912.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18897650974795424,
+      "blendshape_mean": 0.12481080173110254,
+      "skin_outside_hull_frac": 0.16771439922109627,
+      "boundary_edge_density": 0.00006329113924050633,
+      "texture_ratio": 0.6178906725556085
+    },
+    {
+      "name": "DSCF4193.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4193.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18589255940601493,
+      "blendshape_mean": 0.09308453587950273,
+      "skin_outside_hull_frac": 0.2239129238634033,
+      "boundary_edge_density": 0.0031963021243115656,
+      "texture_ratio": 0.5019266400723357
+    },
+    {
+      "name": "DSCF4051.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4051.JPG",
+      "has_face": true,
+      "blendshape_std": 0.12146144144145354,
+      "blendshape_mean": 0.07799332013484235,
+      "skin_outside_hull_frac": 0.16069104621274663,
+      "boundary_edge_density": 0.025389702409069438,
+      "texture_ratio": 0.6553726625512863
+    },
+    {
+      "name": "DSCF3865.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3865.JPG",
+      "has_face": true,
+      "blendshape_std": 0.2626745890520625,
+      "blendshape_mean": 0.17464028227424747,
+      "skin_outside_hull_frac": 0.1888181492340262,
+      "boundary_edge_density": 0.040076403381557074,
+      "texture_ratio": 0.6823604686339442
+    },
+    {
+      "name": "DSCF3985.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3985.JPG",
+      "has_face": true,
+      "blendshape_std": 0.20258374066204363,
+      "blendshape_mean": 0.10687381724899594,
+      "skin_outside_hull_frac": 0.16212652212652212,
+      "boundary_edge_density": 0.022871151936444886,
+      "texture_ratio": 0.8962668655253625
+    },
+    {
+      "name": "DSCF4093.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4093.JPG",
+      "has_face": true,
+      "blendshape_std": 0.20545091439165938,
+      "blendshape_mean": 0.13280216128880154,
+      "skin_outside_hull_frac": 0.18351136615549477,
+      "boundary_edge_density": 0.003416313559322034,
+      "texture_ratio": 0.8737346447496359
+    },
+    {
+      "name": "DSCF4101.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4101.JPG",
+      "has_face": true,
+      "blendshape_std": 0.19714850996256097,
+      "blendshape_mean": 0.13288426230717526,
+      "skin_outside_hull_frac": 0.03629471527362759,
+      "boundary_edge_density": 0.02583654431149868,
+      "texture_ratio": 0.6777802162057822
+    },
+    {
+      "name": "DSCF4010.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4010.JPG",
+      "has_face": true,
+      "blendshape_std": 0.20328209999152494,
+      "blendshape_mean": 0.12431095194377202,
+      "skin_outside_hull_frac": 0.17090958836178335,
+      "boundary_edge_density": 0.025899242742953302,
+      "texture_ratio": 0.5388790952070193
+    },
+    {
+      "name": "DSCF4246.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4246.JPG",
+      "has_face": true,
+      "blendshape_std": 0.09181478274172682,
+      "blendshape_mean": 0.04826984416151243,
+      "skin_outside_hull_frac": 0.11301371783655248,
+      "boundary_edge_density": 0.014154411764705882,
+      "texture_ratio": 0.7120568056517349
+    },
+    {
+      "name": "DSCF2048.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF2048.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1599927354711486,
+      "blendshape_mean": 0.07669255606558457,
+      "skin_outside_hull_frac": 0.14332482419805415,
+      "boundary_edge_density": 0.12677917632531033,
+      "texture_ratio": 0.47487103077429516
+    },
+    {
+      "name": "DSCF1423.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1423.JPG",
+      "has_face": true,
+      "blendshape_std": 0.15672761417954034,
+      "blendshape_mean": 0.0998504117977767,
+      "skin_outside_hull_frac": 0.12263626251390433,
+      "boundary_edge_density": 0.02781664521184306,
+      "texture_ratio": 0.44734495409220637
+    },
+    {
+      "name": "DSCF1438.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1438.JPG",
+      "has_face": true,
+      "blendshape_std": 0.17129751614118227,
+      "blendshape_mean": 0.0790093989419763,
+      "skin_outside_hull_frac": 0.11398619957537155,
+      "boundary_edge_density": 0.07323508005822417,
+      "texture_ratio": 0.5941875234147451
+    },
+    {
+      "name": "DSCF2271.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF2271.JPG",
+      "has_face": true,
+      "blendshape_std": 0.2266536306630684,
+      "blendshape_mean": 0.15026975813082252,
+      "skin_outside_hull_frac": 0.12131930847326777,
+      "boundary_edge_density": 0.21960981973434535,
+      "texture_ratio": 0.898894745908089
+    },
+    {
+      "name": "DSCF1365.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1365.JPG",
+      "has_face": true,
+      "blendshape_std": 0.208422872881834,
+      "blendshape_mean": 0.12045645055198685,
+      "skin_outside_hull_frac": 0.1233380947148665,
+      "boundary_edge_density": 0.043669527896995707,
+      "texture_ratio": 0.7990617983228534
+    },
+    {
+      "name": "DSCF2164.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF2164.JPG",
+      "has_face": true,
+      "blendshape_std": 0.15907861036201473,
+      "blendshape_mean": 0.10080878212389681,
+      "skin_outside_hull_frac": 0.17627258032498652,
+      "boundary_edge_density": 0.17600148367952523,
+      "texture_ratio": 0.9519364445393789
+    },
+    {
+      "name": "HIEP4038.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/HIEP4038.JPG",
+      "has_face": true,
+      "blendshape_std": 0.164668733237945,
+      "blendshape_mean": 0.08520200938623394,
+      "skin_outside_hull_frac": 0.17032702107343084,
+      "boundary_edge_density": 0.0,
+      "texture_ratio": 0.9239513772315087
+    },
+    {
+      "name": "DSCF1534.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1534.JPG",
+      "has_face": true,
+      "blendshape_std": 0.07377723053488497,
+      "blendshape_mean": 0.05352085215040422,
+      "skin_outside_hull_frac": 0.10299023872967535,
+      "boundary_edge_density": 0.03948314837648993,
+      "texture_ratio": 0.8426618953154705
+    },
+    {
+      "name": "DSCF1445.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1445.JPG",
+      "has_face": true,
+      "blendshape_std": 0.15768884228766375,
+      "blendshape_mean": 0.09828751994184842,
+      "skin_outside_hull_frac": 0.08525941106676733,
+      "boundary_edge_density": 0.02212874908558888,
+      "texture_ratio": 0.6386502954900676
+    },
+    {
+      "name": "DSCF4181.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4181.JPG",
+      "has_face": true,
+      "blendshape_std": 0.28241225344798926,
+      "blendshape_mean": 0.18468496117542618,
+      "skin_outside_hull_frac": 0.06082067565511899,
+      "boundary_edge_density": 0.06276345242594261,
+      "texture_ratio": 0.6060615506054291
+    },
+    {
+      "name": "DSCF1670.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1670.JPG",
+      "has_face": true,
+      "blendshape_std": 0.15682809406776044,
+      "blendshape_mean": 0.08692943288617955,
+      "skin_outside_hull_frac": 0.14926650688719745,
+      "boundary_edge_density": 0.07190608185227458,
+      "texture_ratio": 0.6291963023225571
+    },
+    {
+      "name": "DSCF3898.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3898.JPG",
+      "has_face": true,
+      "blendshape_std": 0.17149933647965046,
+      "blendshape_mean": 0.09994063127710819,
+      "skin_outside_hull_frac": 0.0839369340075721,
+      "boundary_edge_density": 0.0,
+      "texture_ratio": 0.7318359018421084
+    },
+    {
+      "name": "DSCF4031.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4031.JPG",
+      "has_face": true,
+      "blendshape_std": 0.23696837170231624,
+      "blendshape_mean": 0.1554838822841288,
+      "skin_outside_hull_frac": 0.07370330502087526,
+      "boundary_edge_density": 0.0032668162317471563,
+      "texture_ratio": 0.7098407515713945
+    },
+    {
+      "name": "DSCF4017.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4017.JPG",
+      "has_face": true,
+      "blendshape_std": 0.20119307225006522,
+      "blendshape_mean": 0.10678929725097075,
+      "skin_outside_hull_frac": 0.18091530398825878,
+      "boundary_edge_density": 0.048798699872622656,
+      "texture_ratio": 0.74255648028037
+    },
+    {
+      "name": "DSCF2272.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF2272.JPG",
+      "has_face": true,
+      "blendshape_std": 0.11598618848847746,
+      "blendshape_mean": 0.0597161359902619,
+      "skin_outside_hull_frac": 0.11524076491820905,
+      "boundary_edge_density": 0.19851668726823238,
+      "texture_ratio": 0.9256368849451646
+    },
+    {
+      "name": "DSCF3855.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3855.JPG",
+      "has_face": true,
+      "blendshape_std": 0.11462074407188369,
+      "blendshape_mean": 0.06597754535927271,
+      "skin_outside_hull_frac": 0.11452259633575824,
+      "boundary_edge_density": 0.014384080175925592,
+      "texture_ratio": 0.7645843131588536
+    },
+    {
+      "name": "DSCF3977.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3977.JPG",
+      "has_face": true,
+      "blendshape_std": 0.23714034895752098,
+      "blendshape_mean": 0.13505996673096682,
+      "skin_outside_hull_frac": 0.17647721474531008,
+      "boundary_edge_density": 0.022290711009174312,
+      "texture_ratio": 0.8392668646766772
+    },
+    {
+      "name": "DSCF2050.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF2050.JPG",
+      "has_face": true,
+      "blendshape_std": 0.21009053576795356,
+      "blendshape_mean": 0.13378419349450527,
+      "skin_outside_hull_frac": 0.17895697690526607,
+      "boundary_edge_density": 0.15751140751140752,
+      "texture_ratio": 0.46740895853086895
+    },
+    {
+      "name": "DSCF4039.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF4039.JPG",
+      "has_face": true,
+      "blendshape_std": 0.2882563622807683,
+      "blendshape_mean": 0.18975167121163403,
+      "skin_outside_hull_frac": 0.20680513516334412,
+      "boundary_edge_density": 0.009845575618923115,
+      "texture_ratio": 0.7859554611443114
+    },
+    {
+      "name": "DSCF3823.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF3823.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1882979207941321,
+      "blendshape_mean": 0.0769042607545642,
+      "skin_outside_hull_frac": 0.048421755700756686,
+      "boundary_edge_density": 0.00043168082882719133,
+      "texture_ratio": 0.7309302589838779
+    },
+    {
+      "name": "DSCF1530.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/DSCF1530.JPG",
+      "has_face": true,
+      "blendshape_std": 0.2611753301493319,
+      "blendshape_mean": 0.15977430328820108,
+      "skin_outside_hull_frac": 0.10735993322701325,
+      "boundary_edge_density": 0.040600243753808656,
+      "texture_ratio": 0.8042640739150647
+    },
+    {
+      "name": "fr203_260225_zenas_-_5.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr203_260225_zenas_-_5.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.18663586830273401,
+      "blendshape_mean": 0.09182953833978688,
+      "skin_outside_hull_frac": 0.220837389945216,
+      "boundary_edge_density": 0.010896898575020955,
+      "texture_ratio": 0.8455024517053924
+    },
+    {
+      "name": "fr198_281024_cal_lunch_-_134.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr198_281024_cal_lunch_-_134.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.2516983652138751,
+      "blendshape_mean": 0.15253233901638602,
+      "skin_outside_hull_frac": 0.037611238596294845,
+      "boundary_edge_density": 0.011091954022988506,
+      "texture_ratio": 0.7667296926012409
+    },
+    {
+      "name": "fr125_HIEP9894.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr125_HIEP9894.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18213121991173611,
+      "blendshape_mean": 0.11398207056236417,
+      "skin_outside_hull_frac": 0.10948074320167343,
+      "boundary_edge_density": 0.1537914398812469,
+      "texture_ratio": 0.9671991101794135
+    },
+    {
+      "name": "fr213_HIEP9838.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr213_HIEP9838.JPG",
+      "has_face": true,
+      "blendshape_std": 0.17578424215781652,
+      "blendshape_mean": 0.08310915922862329,
+      "skin_outside_hull_frac": 0.047244876249911354,
+      "boundary_edge_density": 0.08451903807615231,
+      "texture_ratio": 0.9528030253975581
+    },
+    {
+      "name": "fr165_HIEP9876.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr165_HIEP9876.JPG",
+      "has_face": true,
+      "blendshape_std": 0.24826624823570748,
+      "blendshape_mean": 0.140438124623034,
+      "skin_outside_hull_frac": 0.16644951359963275,
+      "boundary_edge_density": 0.15454785827604442,
+      "texture_ratio": 0.8555509123171332
+    },
+    {
+      "name": "fr161_HIEP9897.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr161_HIEP9897.JPG",
+      "has_face": true,
+      "blendshape_std": 0.20791807874309934,
+      "blendshape_mean": 0.08377443443811997,
+      "skin_outside_hull_frac": 0.08016249541620829,
+      "boundary_edge_density": 0.1798707356076759,
+      "texture_ratio": 0.8474944416854407
+    },
+    {
+      "name": "fr150_180124_joel_birthday_dinner_-_3.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr150_180124_joel_birthday_dinner_-_3.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.15189765805528005,
+      "blendshape_mean": 0.08877046033105626,
+      "skin_outside_hull_frac": 0.10190146462473951,
+      "boundary_edge_density": 0.007072072072072072,
+      "texture_ratio": 0.8689784573774183
+    },
+    {
+      "name": "fr113_HIEP9842.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr113_HIEP9842.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18820210714874483,
+      "blendshape_mean": 0.11792116472992455,
+      "skin_outside_hull_frac": 0.07620494605711078,
+      "boundary_edge_density": 0.10156483306456429,
+      "texture_ratio": 0.9297107785802013
+    },
+    {
+      "name": "fr037_HIEP4885.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr037_HIEP4885.JPG",
+      "has_face": true,
+      "blendshape_std": 0.24714385373280212,
+      "blendshape_mean": 0.15022578484601745,
+      "skin_outside_hull_frac": 0.0,
+      "boundary_edge_density": 0.058159188690842044,
+      "texture_ratio": 0.9685219403432549
+    },
+    {
+      "name": "fr191_HIEP9886.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr191_HIEP9886.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1801311558923067,
+      "blendshape_mean": 0.08884350936144517,
+      "skin_outside_hull_frac": 0.1475710913245947,
+      "boundary_edge_density": 0.1527013325608343,
+      "texture_ratio": 0.7786880226739501
+    },
+    {
+      "name": "fr189_180124_joel_birthday_dinner_-_20.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr189_180124_joel_birthday_dinner_-_20.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.20281779196382058,
+      "blendshape_mean": 0.10583435600475458,
+      "skin_outside_hull_frac": 0.16288349699907342,
+      "boundary_edge_density": 0.005499188311688312,
+      "texture_ratio": 0.6406930665549652
+    },
+    {
+      "name": "fr025_231024_alex_joel_dinner_-_14.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr025_231024_alex_joel_dinner_-_14.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.13246705237723386,
+      "blendshape_mean": 0.0911553474999029,
+      "skin_outside_hull_frac": 0.13891712858745028,
+      "boundary_edge_density": 0.019085173501577287,
+      "texture_ratio": 0.65909868857607
+    },
+    {
+      "name": "fr012_HIEP9804.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr012_HIEP9804.JPG",
+      "has_face": true,
+      "blendshape_std": 0.20556201316361872,
+      "blendshape_mean": 0.09935050939328514,
+      "skin_outside_hull_frac": 0.05669899778574707,
+      "boundary_edge_density": 0.08861472945891784,
+      "texture_ratio": 0.9509479555712205
+    },
+    {
+      "name": "fr032_DSCF3363.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr032_DSCF3363.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18790397959219135,
+      "blendshape_mean": 0.08948474095112954,
+      "skin_outside_hull_frac": 0.10252481884876696,
+      "boundary_edge_density": 0.04346330275229358,
+      "texture_ratio": 0.9351996895548378
+    },
+    {
+      "name": "fr040_260225_zenas_-_6.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr040_260225_zenas_-_6.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.10721168321733493,
+      "blendshape_mean": 0.05073039801469825,
+      "skin_outside_hull_frac": 0.0927750154366124,
+      "boundary_edge_density": 0.0,
+      "texture_ratio": 0.8201036585712721
+    },
+    {
+      "name": "fr041_HIEP9885.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr041_HIEP9885.JPG",
+      "has_face": true,
+      "blendshape_std": 0.23014948324127796,
+      "blendshape_mean": 0.12234811740545878,
+      "skin_outside_hull_frac": 0.18011761846245256,
+      "boundary_edge_density": 0.16995171638335868,
+      "texture_ratio": 0.8695159504941267
+    },
+    {
+      "name": "fr159_DSCF3404.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr159_DSCF3404.JPG",
+      "has_face": true,
+      "blendshape_std": 0.14850775171831793,
+      "blendshape_mean": 0.08016602869145897,
+      "skin_outside_hull_frac": 0.1403807445587765,
+      "boundary_edge_density": 0.09541984732824428,
+      "texture_ratio": 0.9362087159644821
+    },
+    {
+      "name": "fr145_231024_alex_joel_dinner_-_28.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr145_231024_alex_joel_dinner_-_28.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.2121541681272934,
+      "blendshape_mean": 0.11906776808739496,
+      "skin_outside_hull_frac": 0.17836352836352837,
+      "boundary_edge_density": 0.014181385869565218,
+      "texture_ratio": 0.8841795470008875
+    },
+    {
+      "name": "fr111_HIEP9851.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr111_HIEP9851.JPG",
+      "has_face": true,
+      "blendshape_std": 0.25211514920728884,
+      "blendshape_mean": 0.1500278822745178,
+      "skin_outside_hull_frac": 0.08593531970778955,
+      "boundary_edge_density": 0.1584749154145596,
+      "texture_ratio": 0.9817047540593253
+    },
+    {
+      "name": "fr136_281024_cal_lunch_-_66.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr136_281024_cal_lunch_-_66.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.13352564434332717,
+      "blendshape_mean": 0.09091987716713928,
+      "skin_outside_hull_frac": 0.03389695180554547,
+      "boundary_edge_density": 0.0049932675044883305,
+      "texture_ratio": 0.6285867646970112
+    },
+    {
+      "name": "fr007_DSCF9084.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr007_DSCF9084.JPG",
+      "has_face": true,
+      "blendshape_std": 0.20025164269713197,
+      "blendshape_mean": 0.12111561399826691,
+      "skin_outside_hull_frac": 0.13926587804910612,
+      "boundary_edge_density": 0.04348532689450223,
+      "texture_ratio": 0.3551084423402882
+    },
+    {
+      "name": "fr102_HIEP9753.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr102_HIEP9753.JPG",
+      "has_face": true,
+      "blendshape_std": 0.18943823004231325,
+      "blendshape_mean": 0.09148495219957978,
+      "skin_outside_hull_frac": 0.12334467369037166,
+      "boundary_edge_density": 0.038654048370136695,
+      "texture_ratio": 0.8608139296804701
+    },
+    {
+      "name": "fr177_HIEP9812.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr177_HIEP9812.JPG",
+      "has_face": true,
+      "blendshape_std": 0.2501793473771441,
+      "blendshape_mean": 0.16563976595305166,
+      "skin_outside_hull_frac": 0.21349187475227904,
+      "boundary_edge_density": 0.04635041966426859,
+      "texture_ratio": 0.9153335958348343
+    },
+    {
+      "name": "fr183_HIEP9902.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr183_HIEP9902.JPG",
+      "has_face": true,
+      "blendshape_std": 0.24018216949230628,
+      "blendshape_mean": 0.1643569340788141,
+      "skin_outside_hull_frac": 0.1724212986298859,
+      "boundary_edge_density": 0.08776142996108949,
+      "texture_ratio": 0.9312707988244873
+    },
+    {
+      "name": "fr116_HIEP9751.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr116_HIEP9751.JPG",
+      "has_face": true,
+      "blendshape_std": 0.17406275530815649,
+      "blendshape_mean": 0.07779975010795152,
+      "skin_outside_hull_frac": 0.1100800553416874,
+      "boundary_edge_density": 0.026035714285714287,
+      "texture_ratio": 0.9682204585174927
+    },
+    {
+      "name": "fr215_091224_desmond_carmen_-_3.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr215_091224_desmond_carmen_-_3.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.18364904214782635,
+      "blendshape_mean": 0.11941667122252564,
+      "skin_outside_hull_frac": 0.0,
+      "boundary_edge_density": 0.12079697125256673,
+      "texture_ratio": 0.9400958822821784
+    },
+    {
+      "name": "fr034_HIEP9903.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr034_HIEP9903.JPG",
+      "has_face": true,
+      "blendshape_std": 0.11921030326070077,
+      "blendshape_mean": 0.08469005924244921,
+      "skin_outside_hull_frac": 0.1455486525060868,
+      "boundary_edge_density": 0.12551487414187643,
+      "texture_ratio": 0.804986871705137
+    },
+    {
+      "name": "fr127_DSCF9061.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr127_DSCF9061.JPG",
+      "has_face": true,
+      "blendshape_std": 0.24095281463346446,
+      "blendshape_mean": 0.1538738373843426,
+      "skin_outside_hull_frac": 0.14162101920873066,
+      "boundary_edge_density": 0.008903032036613273,
+      "texture_ratio": 0.795039993019712
+    },
+    {
+      "name": "fr001_281024_cal_lunch_-_130.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr001_281024_cal_lunch_-_130.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.1864861348804571,
+      "blendshape_mean": 0.09921463822985177,
+      "skin_outside_hull_frac": 0.03906228180421729,
+      "boundary_edge_density": 0.0,
+      "texture_ratio": 0.6215957259993073
+    },
+    {
+      "name": "fr186_HIEP4906.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr186_HIEP4906.JPG",
+      "has_face": true,
+      "blendshape_std": 0.163704921757801,
+      "blendshape_mean": 0.10076620513880567,
+      "skin_outside_hull_frac": 0.0,
+      "boundary_edge_density": 0.06838894869034805,
+      "texture_ratio": 0.8988117621083811
+    },
+    {
+      "name": "fr204_HIEP9824.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr204_HIEP9824.JPG",
+      "has_face": true,
+      "blendshape_std": 0.29527537244503627,
+      "blendshape_mean": 0.2051055361308348,
+      "skin_outside_hull_frac": 0.03939276264938463,
+      "boundary_edge_density": 0.042026897214217096,
+      "texture_ratio": 0.9550998935604998
+    },
+    {
+      "name": "fr016_party_edit_vanya_-_24.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr016_party_edit_vanya_-_24.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.275761758818695,
+      "blendshape_mean": 0.1804274411970964,
+      "skin_outside_hull_frac": 0.0670923303149911,
+      "boundary_edge_density": 0.058734939759036146,
+      "texture_ratio": 0.8756046644797268
+    },
+    {
+      "name": "fr154_180124_joel_birthday_dinner_-_11.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr154_180124_joel_birthday_dinner_-_11.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.17765565572470082,
+      "blendshape_mean": 0.08864776780818569,
+      "skin_outside_hull_frac": 0.12128503448690528,
+      "boundary_edge_density": 0.012816373966942149,
+      "texture_ratio": 0.8993675966795215
+    },
+    {
+      "name": "fr126_260225_zenas_-_3.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr126_260225_zenas_-_3.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.18998015218140854,
+      "blendshape_mean": 0.11222819420861123,
+      "skin_outside_hull_frac": 0.16948035464499803,
+      "boundary_edge_density": 0.0015732846122614697,
+      "texture_ratio": 0.5560833407946901
+    },
+    {
+      "name": "fr200_DSCF9087.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr200_DSCF9087.JPG",
+      "has_face": true,
+      "blendshape_std": 0.22355654826605484,
+      "blendshape_mean": 0.10623639895549712,
+      "skin_outside_hull_frac": 0.09031733116354759,
+      "boundary_edge_density": 0.005851547052850959,
+      "texture_ratio": 0.637530431794675
+    },
+    {
+      "name": "fr142_DSCF9035.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr142_DSCF9035.JPG",
+      "has_face": true,
+      "blendshape_std": 0.2373121193679331,
+      "blendshape_mean": 0.14479396439364614,
+      "skin_outside_hull_frac": 0.1238094323009839,
+      "boundary_edge_density": 0.02591534514925373,
+      "texture_ratio": 0.6490750008270566
+    },
+    {
+      "name": "fr042_DSCF9036.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr042_DSCF9036.JPG",
+      "has_face": true,
+      "blendshape_std": 0.20363781858092103,
+      "blendshape_mean": 0.10957261515392136,
+      "skin_outside_hull_frac": 0.10999227250768534,
+      "boundary_edge_density": 0.024105367793240556,
+      "texture_ratio": 0.5640548611447711
+    },
+    {
+      "name": "fr151_HIEP9880.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr151_HIEP9880.JPG",
+      "has_face": true,
+      "blendshape_std": 0.23586768262619912,
+      "blendshape_mean": 0.14245934394141743,
+      "skin_outside_hull_frac": 0.06193032408866177,
+      "boundary_edge_density": 0.09182248664400194,
+      "texture_ratio": 0.8496216052485177
+    },
+    {
+      "name": "fr039_HIEP4892.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr039_HIEP4892.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1397376631499848,
+      "blendshape_mean": 0.0709676240670365,
+      "skin_outside_hull_frac": 0.0,
+      "boundary_edge_density": 0.1778135431568908,
+      "texture_ratio": 0.9197068507222989
+    },
+    {
+      "name": "fr185_180124_joel_birthday_dinner_-_8.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr185_180124_joel_birthday_dinner_-_8.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.16090926614646386,
+      "blendshape_mean": 0.08082555856920627,
+      "skin_outside_hull_frac": 0.07512296136753678,
+      "boundary_edge_density": 0.07220657595602456,
+      "texture_ratio": 0.8133988994948899
+    },
+    {
+      "name": "fr019_231024_alex_joel_dinner_-_19.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr019_231024_alex_joel_dinner_-_19.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.19544219044677233,
+      "blendshape_mean": 0.08219648930164801,
+      "skin_outside_hull_frac": 0.1866590099111262,
+      "boundary_edge_density": 0.01855572297561248,
+      "texture_ratio": 0.7330731550696581
+    },
+    {
+      "name": "fr214_HIEP9883.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr214_HIEP9883.JPG",
+      "has_face": true,
+      "blendshape_std": 0.15632440957721644,
+      "blendshape_mean": 0.07727671194065884,
+      "skin_outside_hull_frac": 0.11093972987617155,
+      "boundary_edge_density": 0.11612500433561097,
+      "texture_ratio": 0.8899513390438909
+    },
+    {
+      "name": "fr187_DSCF3369.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr187_DSCF3369.JPG",
+      "has_face": true,
+      "blendshape_std": 0.189109768477082,
+      "blendshape_mean": 0.11092720285897957,
+      "skin_outside_hull_frac": 0.16177633186705767,
+      "boundary_edge_density": 0.08586641852770885,
+      "texture_ratio": 0.8119088845614533
+    },
+    {
+      "name": "fr162_HIEP4895.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr162_HIEP4895.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1679073978465832,
+      "blendshape_mean": 0.07424440260118662,
+      "skin_outside_hull_frac": 0.0,
+      "boundary_edge_density": 0.1326715438357131,
+      "texture_ratio": 0.9642323867442564
+    },
+    {
+      "name": "fr124_HIEP9775.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr124_HIEP9775.JPG",
+      "has_face": true,
+      "blendshape_std": 0.0983671056269509,
+      "blendshape_mean": 0.05999499294904855,
+      "skin_outside_hull_frac": 0.08771947880858771,
+      "boundary_edge_density": 0.015350218573764474,
+      "texture_ratio": 0.8714842916988426
+    },
+    {
+      "name": "fr196_HIEP9865.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr196_HIEP9865.JPG",
+      "has_face": true,
+      "blendshape_std": 0.19284888755661952,
+      "blendshape_mean": 0.14150709093668495,
+      "skin_outside_hull_frac": 0.13059344030202927,
+      "boundary_edge_density": 0.08550840986078205,
+      "texture_ratio": 0.9475614383888513
+    },
+    {
+      "name": "fr149_DSCF5521_1_Edited.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr149_DSCF5521_1_Edited.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.16733696972265943,
+      "blendshape_mean": 0.10342332097930881,
+      "skin_outside_hull_frac": 0.014017233115966737,
+      "boundary_edge_density": 0.0,
+      "texture_ratio": 0.7891156570360398
+    },
+    {
+      "name": "fr192_DSCF9055.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr192_DSCF9055.JPG",
+      "has_face": true,
+      "blendshape_std": 0.1379942539602596,
+      "blendshape_mean": 0.08259966264667247,
+      "skin_outside_hull_frac": 0.11843276154791874,
+      "boundary_edge_density": 0.0,
+      "texture_ratio": 0.928015216442866
+    },
+    {
+      "name": "fr137_DSCF9051.JPG",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr137_DSCF9051.JPG",
+      "has_face": true,
+      "blendshape_std": 0.10995534351416354,
+      "blendshape_mean": 0.0738476965000056,
+      "skin_outside_hull_frac": 0.13558743993526604,
+      "boundary_edge_density": 0.009533227848101266,
+      "texture_ratio": 0.714142716313711
+    },
+    {
+      "name": "fr216_180124_joel_birthday_dinner_-_12.jpeg",
+      "path": "/Volumes/personal_folder/drive-mirror/1 Projects/Github/photo-manager-data/weaklabel-2026-07-18/originals/fr216_180124_joel_birthday_dinner_-_12.jpeg",
+      "has_face": true,
+      "blendshape_std": 0.1790703503682462,
+      "blendshape_mean": 0.08826688045491483,
+      "skin_outside_hull_frac": 0.14111303084660334,
+      "boundary_edge_density": 0.009539989545216936,
+      "texture_ratio": 0.9130308305387129
+    }
+  ]
+}

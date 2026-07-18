@@ -1,0 +1,773 @@
+{
+  "per_shoot": {
+    "exn_backup": {
+      "burst": {
+        "face_aware_matches_owner_rate": 0.48,
+        "keeper_bearing_groups": 25,
+        "multi_keeper_groups": 1,
+        "winner_matches_owner_rate": 0.56
+      },
+      "burst_records": [
+        {
+          "face_winner": "DSCF1288.JPG",
+          "face_winner_is_keeper": true,
+          "members": [
+            "DSCF1288.JPG",
+            "DSCF1289.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1288.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "DSCF1293.JPG",
+          "face_winner_is_keeper": true,
+          "members": [
+            "DSCF1291.JPG",
+            "DSCF1292.JPG",
+            "DSCF1293.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 3,
+          "winner": "DSCF1293.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "DSCF1295.JPG",
+          "face_winner_is_keeper": true,
+          "members": [
+            "DSCF1295.JPG",
+            "DSCF1296.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1295.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "DSCF1310.JPG",
+          "face_winner_is_keeper": true,
+          "members": [
+            "DSCF1311.JPG",
+            "DSCF1310.JPG",
+            "DSCF1312.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 3,
+          "winner": "DSCF1310.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "DSCF1350.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1349.JPG",
+            "DSCF1350.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1350.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "face_winner": "DSCF1358.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1357.JPG",
+            "DSCF1358.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1358.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "face_winner": "DSCF1361.JPG",
+          "face_winner_is_keeper": true,
+          "members": [
+            "DSCF1360.JPG",
+            "DSCF1361.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1361.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "DSCF1375.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1373.JPG",
+            "DSCF1374.JPG",
+            "DSCF1375.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 3,
+          "winner": "DSCF1375.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "face_winner": "DSCF1378.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1378.JPG",
+            "DSCF1377.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1378.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "face_winner": "DSCF1399.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1398.JPG",
+            "DSCF1399.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1399.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "face_winner": "DSCF1410.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1409.JPG",
+            "DSCF1410.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1409.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "DSCF1418.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1417.JPG",
+            "DSCF1418.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1418.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "face_winner": "DSCF1420.JPG",
+          "face_winner_is_keeper": true,
+          "members": [
+            "DSCF1419.JPG",
+            "DSCF1420.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1420.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "DSCF1427.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1426.JPG",
+            "DSCF1427.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1427.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "face_winner": "DSCF1437.JPG",
+          "face_winner_is_keeper": true,
+          "members": [
+            "DSCF1437.JPG",
+            "DSCF1438.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1437.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "DSCF1533.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1532.JPG",
+            "DSCF1533.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1533.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "face_winner": "DSCF1542.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1540.JPG",
+            "DSCF1541.JPG",
+            "DSCF1542.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 3,
+          "winner": "DSCF1542.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "face_winner": "DSCF1545.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1543.JPG",
+            "DSCF1544.JPG",
+            "DSCF1545.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 3,
+          "winner": "DSCF1545.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "face_winner": "DSCF1557.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1556.JPG",
+            "DSCF1557.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1557.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "face_winner": "HIEP0393.JPG",
+          "face_winner_is_keeper": true,
+          "members": [
+            "HIEP0393.JPG",
+            "HIEP0394.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "HIEP0393.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "HIEP0398.JPG",
+          "face_winner_is_keeper": true,
+          "members": [
+            "HIEP0397.JPG",
+            "HIEP0398.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "HIEP0398.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "DSCF1585.JPG",
+          "face_winner_is_keeper": true,
+          "members": [
+            "DSCF1584.JPG",
+            "DSCF1585.JPG"
+          ],
+          "num_keepers": 2,
+          "size": 2,
+          "winner": "DSCF1585.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "DSCF1589.JPG",
+          "face_winner_is_keeper": false,
+          "members": [
+            "DSCF1588.JPG",
+            "DSCF1589.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1588.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "DSCF1639.JPG",
+          "face_winner_is_keeper": true,
+          "members": [
+            "DSCF1638.JPG",
+            "DSCF1639.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1639.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "face_winner": "DSCF1668.JPG",
+          "face_winner_is_keeper": true,
+          "members": [
+            "DSCF1667.JPG",
+            "DSCF1668.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1668.JPG",
+          "winner_is_keeper": true
+        }
+      ],
+      "duplicate": {
+        "face_aware_matches_owner_rate": null,
+        "keeper_bearing_groups": 17,
+        "multi_keeper_groups": 6,
+        "winner_matches_owner_rate": 0.7647058823529411
+      },
+      "duplicate_records": [
+        {
+          "members": [
+            "DSCF1276.JPG",
+            "DSCF1277.JPG",
+            "DSCF1282.JPG",
+            "DSCF1283.JPG",
+            "DSCF1284.JPG",
+            "DSCF1285.JPG",
+            "DSCF1286.JPG",
+            "DSCF1288.JPG",
+            "DSCF1289.JPG",
+            "DSCF1291.JPG",
+            "DSCF1292.JPG",
+            "DSCF1293.JPG",
+            "DSCF1294.JPG",
+            "DSCF1295.JPG",
+            "DSCF1296.JPG",
+            "DSCF1297.JPG",
+            "DSCF1298.JPG",
+            "DSCF1299.JPG",
+            "DSCF1300.JPG",
+            "DSCF1309.JPG",
+            "DSCF1310.JPG",
+            "DSCF1311.JPG",
+            "DSCF1312.JPG",
+            "DSCF1313.JPG",
+            "DSCF1324.JPG",
+            "DSCF1325.JPG",
+            "DSCF1326.JPG",
+            "DSCF1327.JPG",
+            "DSCF1330.JPG",
+            "DSCF1333.JPG",
+            "DSCF1335.JPG",
+            "DSCF1336.JPG",
+            "DSCF1337.JPG",
+            "DSCF1338.JPG",
+            "DSCF1339.JPG",
+            "DSCF1340.JPG",
+            "DSCF1341.JPG",
+            "DSCF1342.JPG",
+            "DSCF1343.JPG",
+            "DSCF1344.JPG",
+            "DSCF1345.JPG",
+            "DSCF1349.JPG",
+            "DSCF1350.JPG",
+            "DSCF1351.JPG",
+            "DSCF1352.JPG",
+            "DSCF1353.JPG",
+            "DSCF1354.JPG",
+            "DSCF1355.JPG",
+            "DSCF1356.JPG",
+            "DSCF1357.JPG",
+            "DSCF1358.JPG",
+            "DSCF1359.JPG",
+            "DSCF1360.JPG",
+            "DSCF1361.JPG",
+            "DSCF1362.JPG",
+            "DSCF1363.JPG",
+            "DSCF1367.JPG",
+            "DSCF1368.JPG",
+            "DSCF1369.JPG",
+            "DSCF1370.JPG",
+            "DSCF1372.JPG",
+            "DSCF1373.JPG",
+            "DSCF1374.JPG",
+            "DSCF1375.JPG",
+            "DSCF1376.JPG",
+            "DSCF1377.JPG",
+            "DSCF1378.JPG",
+            "DSCF1379.JPG",
+            "DSCF1380.JPG",
+            "DSCF1385.JPG",
+            "DSCF1386.JPG",
+            "DSCF1392.JPG",
+            "DSCF1393.JPG",
+            "DSCF1394.JPG",
+            "DSCF1395.JPG",
+            "DSCF1396.JPG",
+            "DSCF1397.JPG",
+            "DSCF1398.JPG",
+            "DSCF1399.JPG",
+            "DSCF1400.JPG",
+            "DSCF1401.JPG",
+            "DSCF1402.JPG",
+            "DSCF1403.JPG",
+            "DSCF1404.JPG",
+            "DSCF1405.JPG",
+            "DSCF1406.JPG",
+            "DSCF1407.JPG",
+            "DSCF1408.JPG",
+            "DSCF1409.JPG",
+            "DSCF1410.JPG",
+            "DSCF1412.JPG",
+            "DSCF1414.JPG",
+            "DSCF1415.JPG",
+            "DSCF1417.JPG",
+            "DSCF1418.JPG",
+            "DSCF1419.JPG",
+            "DSCF1420.JPG",
+            "DSCF1421.JPG",
+            "DSCF1422.JPG",
+            "DSCF1423.JPG",
+            "DSCF1424.JPG",
+            "DSCF1437.JPG",
+            "DSCF1438.JPG",
+            "DSCF1439.JPG",
+            "DSCF1440.JPG",
+            "DSCF1441.JPG",
+            "DSCF1442.JPG",
+            "DSCF1444.JPG",
+            "DSCF1445.JPG",
+            "DSCF1446.JPG",
+            "DSCF1447.JPG",
+            "DSCF1449.JPG",
+            "DSCF1450.JPG",
+            "DSCF1456.JPG",
+            "DSCF1459.JPG",
+            "DSCF1461.JPG",
+            "DSCF1462.JPG",
+            "DSCF1463.JPG",
+            "DSCF1470.JPG",
+            "DSCF1471.JPG",
+            "DSCF1472.JPG",
+            "DSCF1473.JPG",
+            "DSCF1474.JPG",
+            "DSCF1475.JPG",
+            "DSCF1476.JPG",
+            "DSCF1477.JPG",
+            "DSCF1484.JPG",
+            "DSCF1492.JPG",
+            "DSCF1495.JPG",
+            "DSCF1496.JPG",
+            "DSCF1502.JPG",
+            "DSCF1546.JPG",
+            "DSCF1547.JPG",
+            "DSCF1548.JPG",
+            "DSCF1549.JPG",
+            "DSCF1551.JPG",
+            "DSCF1552.JPG",
+            "DSCF1553.JPG",
+            "DSCF1592.JPG",
+            "DSCF1593.JPG",
+            "DSCF1594.JPG",
+            "DSCF1596.JPG",
+            "DSCF1601.JPG",
+            "DSCF1602.JPG",
+            "DSCF1604.JPG",
+            "DSCF1605.JPG",
+            "DSCF1606.JPG",
+            "DSCF1607.JPG",
+            "DSCF1608.JPG",
+            "DSCF1611.JPG",
+            "DSCF1612.JPG",
+            "DSCF1638.JPG",
+            "DSCF1639.JPG",
+            "DSCF1661.JPG"
+          ],
+          "num_keepers": 39,
+          "size": 154,
+          "winner": "DSCF1276.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "members": [
+            "DSCF1426.JPG",
+            "DSCF1427.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1426.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "DSCF1428.JPG",
+            "DSCF1430.JPG",
+            "DSCF1432.JPG"
+          ],
+          "num_keepers": 2,
+          "size": 3,
+          "winner": "DSCF1428.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "DSCF1434.JPG",
+            "DSCF1435.JPG",
+            "DSCF1436.JPG"
+          ],
+          "num_keepers": 2,
+          "size": 3,
+          "winner": "DSCF1434.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "DSCF1497.JPG",
+            "DSCF1498.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1497.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "DSCF1510.JPG",
+            "DSCF1513.JPG",
+            "DSCF1514.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 3,
+          "winner": "DSCF1510.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "members": [
+            "DSCF1520.JPG",
+            "DSCF1521.JPG",
+            "DSCF1522.JPG",
+            "DSCF1523.JPG",
+            "DSCF1524.JPG",
+            "DSCF1525.JPG",
+            "DSCF1527.JPG",
+            "DSCF1564.JPG",
+            "DSCF1565.JPG",
+            "DSCF1578.JPG",
+            "DSCF1579.JPG",
+            "HIEP0390.JPG",
+            "HIEP0391.JPG",
+            "HIEP0392.JPG",
+            "HIEP0393.JPG",
+            "HIEP0394.JPG",
+            "HIEP0397.JPG",
+            "HIEP0398.JPG",
+            "HIEP0399.JPG",
+            "HIEP0400.JPG",
+            "HIEP0404.JPG",
+            "HIEP0405.JPG",
+            "HIEP0406.JPG"
+          ],
+          "num_keepers": 10,
+          "size": 23,
+          "winner": "DSCF1520.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "members": [
+            "DSCF1532.JPG",
+            "DSCF1533.JPG",
+            "DSCF1534.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 3,
+          "winner": "DSCF1532.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "DSCF1540.JPG",
+            "DSCF1541.JPG",
+            "DSCF1542.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 3,
+          "winner": "DSCF1540.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "DSCF1543.JPG",
+            "DSCF1544.JPG",
+            "DSCF1545.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 3,
+          "winner": "DSCF1543.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "DSCF1556.JPG",
+            "DSCF1557.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1556.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "DSCF1584.JPG",
+            "DSCF1585.JPG"
+          ],
+          "num_keepers": 2,
+          "size": 2,
+          "winner": "DSCF1584.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "DSCF1588.JPG",
+            "DSCF1589.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1588.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "DSCF1590.JPG",
+            "DSCF1591.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1590.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "DSCF1667.JPG",
+            "DSCF1668.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1667.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "members": [
+            "DSCF1669.JPG",
+            "DSCF1670.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "DSCF1669.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "HIEP0389.JPG",
+            "HIEP0395.JPG",
+            "HIEP0396.JPG"
+          ],
+          "num_keepers": 3,
+          "size": 3,
+          "winner": "HIEP0389.JPG",
+          "winner_is_keeper": true
+        }
+      ],
+      "rejected": 0,
+      "survivors": 257
+    },
+    "zd_backup": {
+      "burst": {
+        "face_aware_matches_owner_rate": null,
+        "keeper_bearing_groups": 0,
+        "multi_keeper_groups": 0,
+        "winner_matches_owner_rate": null
+      },
+      "burst_records": [],
+      "duplicate": {
+        "face_aware_matches_owner_rate": null,
+        "keeper_bearing_groups": 6,
+        "multi_keeper_groups": 3,
+        "winner_matches_owner_rate": 0.6666666666666666
+      },
+      "duplicate_records": [
+        {
+          "members": [
+            "HIEP3931.JPG",
+            "HIEP3936.JPG",
+            "HIEP3941.JPG",
+            "HIEP4024.JPG"
+          ],
+          "num_keepers": 2,
+          "size": 4,
+          "winner": "HIEP3931.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "HIEP3969.JPG",
+            "HIEP3970.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "HIEP3969.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "HIEP3983.JPG",
+            "HIEP3994.JPG"
+          ],
+          "num_keepers": 2,
+          "size": 2,
+          "winner": "HIEP3983.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "HIEP4007.JPG",
+            "HIEP4008.JPG"
+          ],
+          "num_keepers": 2,
+          "size": 2,
+          "winner": "HIEP4007.JPG",
+          "winner_is_keeper": true
+        },
+        {
+          "members": [
+            "HIEP4026.JPG",
+            "HIEP4027.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 2,
+          "winner": "HIEP4026.JPG",
+          "winner_is_keeper": false
+        },
+        {
+          "members": [
+            "HIEP4049.JPG",
+            "HIEP4055.JPG",
+            "HIEP4058.JPG"
+          ],
+          "num_keepers": 1,
+          "size": 3,
+          "winner": "HIEP4049.JPG",
+          "winner_is_keeper": false
+        }
+      ],
+      "rejected": 0,
+      "survivors": 106
+    }
+  },
+  "pooled_burst": {
+    "face_aware_matches_owner_rate": 0.48,
+    "keeper_bearing_groups": 25,
+    "multi_keeper_groups": 1,
+    "winner_matches_owner_rate": 0.56
+  },
+  "pooled_duplicate": {
+    "face_aware_matches_owner_rate": null,
+    "keeper_bearing_groups": 23,
+    "multi_keeper_groups": 9,
+    "winner_matches_owner_rate": 0.7391304347826086
+  }
+}
