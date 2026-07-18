@@ -11,6 +11,7 @@ from pydantic import BaseModel
 from cull.config import TASTE_RETRAIN_BATCH
 from cull.models import OverrideEntry
 from cull.override_log import load_overrides
+from cull.taste_features import TasteFeatureInputs, build_taste_feature_row
 
 logger = logging.getLogger(__name__)
 
@@ -36,10 +37,30 @@ def _label_for(entry: OverrideEntry) -> int:
     return 1 if entry.user_decision in KEEPER_LABELS else 0
 
 
+def _taste_inputs_from_entry(entry: OverrideEntry) -> TasteFeatureInputs:
+    """Extract canonical taste feature inputs from a logged override entry."""
+    composition = entry.stage2_composition
+    subject_blur = entry.stage2_subject_blur
+    return TasteFeatureInputs(
+        stage1_scores=entry.stage1_scores,
+        stage2_composite=entry.stage2_composite,
+        composition_composite=composition.composite if composition else None,
+        thirds_alignment=composition.thirds_alignment if composition else None,
+        negative_space_balance=composition.negative_space_balance if composition else None,
+        subject_blur_tenengrad=subject_blur.tenengrad if subject_blur else None,
+    )
+
+
 def _features_for(entry: OverrideEntry) -> np.ndarray:
-    """Flatten an OverrideEntry's stage1_scores dict into a stable vector."""
-    keys = sorted(entry.stage1_scores.keys())
-    return np.asarray([entry.stage1_scores[k] for k in keys], dtype=np.float32)
+    """Return an entry's canonical taste feature row.
+
+    Prefers the row logged at write time (entry.feature_row); falls back to
+    recomputing it from the entry's stage1/stage2 parts for older records
+    that predate the feature_row field.
+    """
+    if entry.feature_row:
+        return np.asarray(entry.feature_row, dtype=np.float32)
+    return build_taste_feature_row(_taste_inputs_from_entry(entry))
 
 
 def _build_matrix(overrides: list[OverrideEntry]) -> tuple[np.ndarray, np.ndarray]:
@@ -75,6 +96,8 @@ def retrain(ctx: TasteTrainerInput) -> Path | None:
     (all-keeper or all-reject) — LogisticRegression cannot fit one class.
     """
     from sklearn.linear_model import LogisticRegression  # noqa: PLC0415
+    from sklearn.pipeline import Pipeline  # noqa: PLC0415
+    from sklearn.preprocessing import StandardScaler  # noqa: PLC0415
 
     matrix, labels = _build_matrix(ctx.overrides)
     if not _has_enough_classes(labels):
@@ -83,7 +106,15 @@ def retrain(ctx: TasteTrainerInput) -> Path | None:
             len(labels),
         )
         return None
-    estimator = LogisticRegression(class_weight="balanced", max_iter=1000)
+    # StandardScaler + LogisticRegression as one Pipeline: standardizing the
+    # unscaled scalar row (tilt degrees, pixel-scale exposure counts, etc.)
+    # fixes the solver's ConvergenceWarning, and the fitted scaler travels
+    # with the estimator in a single joblib artifact — no separate file to
+    # keep in sync at inference time.
+    estimator = Pipeline([
+        ("scaler", StandardScaler()),
+        ("clf", LogisticRegression(class_weight="balanced", max_iter=1000)),
+    ])
     estimator.fit(matrix, labels)
     return _persist(estimator, ctx)
 

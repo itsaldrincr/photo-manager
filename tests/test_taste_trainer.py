@@ -9,7 +9,7 @@ import joblib
 import pytest
 
 from cull.models import OverrideEntry
-from cull.taste_trainer import TasteTrainerInput, maybe_retrain, retrain
+from cull.taste_trainer import TasteTrainerInput, _features_for, maybe_retrain, retrain
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -61,12 +61,9 @@ def _make_balanced_corpus() -> list[OverrideEntry]:
 
 def _holdout_accuracy(estimator: object, holdout: list[OverrideEntry]) -> float:
     """Score the trained estimator against a held-out OverrideEntry list."""
-    import numpy as np  # noqa: PLC0415
-
     correct = 0
     for entry in holdout:
-        keys = sorted(entry.stage1_scores.keys())
-        row = np.asarray([[entry.stage1_scores[k] for k in keys]], dtype=np.float32)
+        row = _features_for(entry).reshape(1, -1)
         predicted = int(estimator.predict(row)[0])
         actual = 1 if entry.user_decision == KEEPER_LABEL else 0
         if predicted == actual:
@@ -155,6 +152,44 @@ def test_retrain_skips_single_class_history_without_raising(tmp_path: Path) -> N
 
     assert result is None
     assert not profile_path.exists()
+
+
+def test_retrain_persists_scaler_in_the_same_artifact(tmp_path: Path) -> None:
+    """The persisted estimator is a scaler+classifier Pipeline in one joblib file."""
+    from sklearn.pipeline import Pipeline  # noqa: PLC0415
+    from sklearn.preprocessing import StandardScaler  # noqa: PLC0415
+
+    corpus = _make_balanced_corpus()
+    profile_path = tmp_path / "taste.joblib"
+
+    written = retrain(TasteTrainerInput(overrides=corpus, profile_path=profile_path))
+    payload = joblib.load(written)
+    estimator = payload["estimator"]
+
+    assert isinstance(estimator, Pipeline)
+    scaler = estimator.named_steps["scaler"]
+    assert isinstance(scaler, StandardScaler)
+    # Scaler is fitted (mean_/scale_ populated) and travels inside the one
+    # persisted artifact — predict_proba on a raw, unscaled row must work
+    # without any separate scaling step at call time.
+    assert scaler.mean_ is not None
+    row = _features_for(corpus[0]).reshape(1, -1)
+    probability = estimator.predict_proba(row)[0, 1]
+    assert 0.0 <= probability <= 1.0
+
+
+def test_retrain_does_not_raise_convergence_warning(tmp_path: Path) -> None:
+    """Standardizing features before fitting avoids sklearn's ConvergenceWarning."""
+    import warnings
+
+    from sklearn.exceptions import ConvergenceWarning  # noqa: PLC0415
+
+    corpus = _make_balanced_corpus()
+    profile_path = tmp_path / "taste.joblib"
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", ConvergenceWarning)
+        retrain(TasteTrainerInput(overrides=corpus, profile_path=profile_path))
 
 
 def test_label_for_treats_select_as_keeper() -> None:

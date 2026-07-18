@@ -350,6 +350,7 @@ class OverrideEntry(BaseModel):
     tilt_degrees: float | None = None
     keystone_degrees: float | None = None
     stage2_shoot_outliers: ShootStatsScore | None = None
+    feature_row: list[float] | None = None
 
 
 class SearchResult(BaseModel):

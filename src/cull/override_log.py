@@ -19,11 +19,9 @@ from pydantic import BaseModel
 
 from cull.config import OVERRIDE_LOG_DIR, OVERRIDE_LOG_PATH
 from cull.models import DecisionLabel, OverrideEntry, PhotoDecision
+from cull.taste_features import TasteFeatureInputs, build_taste_feature_row, flatten_stage1_scores
 
 logger = logging.getLogger(__name__)
-
-_STAGE1_BLUR_KEYS = ("tenengrad", "fft_ratio")
-_STAGE1_EXPOSURE_KEYS = ("dr_score", "clipping_highlight", "clipping_shadow", "midtone_pct", "color_cast_score")
 
 
 class OverrideContext(BaseModel):
@@ -40,26 +38,8 @@ def _ensure_log_dir() -> None:
 
 
 def _extract_stage1_scores(decision: PhotoDecision) -> dict[str, float]:
-    """Flatten Stage1Result blur + exposure + noise + geometry into a flat dict."""
-    if decision.stage1 is None:
-        return {}
-    scores: dict[str, float] = {}
-    blur = decision.stage1.blur
-    for key in _STAGE1_BLUR_KEYS:
-        value = getattr(blur, key, None)
-        if value is not None:
-            scores[key] = float(value)
-    exposure = decision.stage1.exposure
-    for key in _STAGE1_EXPOSURE_KEYS:
-        value = getattr(exposure, key, None)
-        if value is not None:
-            scores[key] = float(value)
-    scores["noise_score"] = float(decision.stage1.noise_score)
-    geometry = decision.stage1.geometry
-    if geometry is not None:
-        scores["tilt_degrees"] = float(geometry.tilt_degrees)
-        scores["keystone_degrees"] = float(geometry.keystone_degrees)
-    return scores
+    """Flatten a decision's Stage1Result into a flat scalar dict."""
+    return flatten_stage1_scores(decision.stage1)
 
 
 def _extract_geometry_pair(decision: PhotoDecision) -> tuple[float | None, float | None]:
@@ -90,22 +70,46 @@ def _stage2_extension_fields(decision: PhotoDecision) -> dict[str, object]:
     }
 
 
+def _canonical_feature_row(decision: PhotoDecision, stage1_scores: dict[str, float]) -> list[float] | None:
+    """Build the forward-compat canonical taste row for this decision, or None if no Stage 2 yet.
+
+    Captured at write time so future feature-space changes can retrain
+    directly from the log without recomputing from raw stage data.
+    """
+    if decision.stage2 is None:
+        return None
+    stage2 = decision.stage2
+    composition = stage2.composition
+    subject_blur = stage2.subject_blur
+    inputs = TasteFeatureInputs(
+        stage1_scores=stage1_scores,
+        stage2_composite=stage2.composite,
+        composition_composite=composition.composite if composition else None,
+        thirds_alignment=composition.thirds_alignment if composition else None,
+        negative_space_balance=composition.negative_space_balance if composition else None,
+        subject_blur_tenengrad=subject_blur.tenengrad if subject_blur else None,
+    )
+    return build_taste_feature_row(inputs).tolist()
+
+
 def build_override_entry(decision: PhotoDecision, ctx: OverrideContext) -> OverrideEntry:
     """Build an OverrideEntry from a PhotoDecision with flattened stage data."""
     stage2_composite = decision.stage2.composite if decision.stage2 is not None else None
     tilt, keystone = _extract_geometry_pair(decision)
+    stage1_scores = _extract_stage1_scores(decision)
     return OverrideEntry(
         photo_path=str(decision.photo.path),
         filename=decision.photo.filename,
         original_decision=decision.decision,
         user_decision=ctx.new_label,
-        stage1_scores=_extract_stage1_scores(decision),
+        stage1_scores=stage1_scores,
         stage2_composite=stage2_composite,
         stage3_result=_extract_stage3_dict(decision),
         session_source=ctx.session_source,
         override_origin=ctx.origin,
         tilt_degrees=tilt,
         keystone_degrees=keystone,
+        feature_row=_canonical_feature_row(decision, stage1_scores),
         **_stage2_extension_fields(decision),
     )
 

@@ -1,10 +1,12 @@
-"""Stage 2 taste scorer — logistic over CLIP embedding + scalar features."""
+"""Stage 2 taste scorer — logistic model over the canonical scalar feature row.
+
+See cull.taste_features for the shared row layout used here and in
+taste_trainer.py.
+"""
 
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass
-from pathlib import Path
 
 import numpy as np
 from pydantic import BaseModel
@@ -19,29 +21,12 @@ WARMSTART_WEIGHT: float = 0.0
 WARMSTART_VERSION: str = "warmstart"
 
 
-@dataclass
-class TasteFeatureVector:
-    """CLIP embedding + scalar feature row used as taste model input."""
-
-    clip_embedding: np.ndarray
-    scalar_scores: np.ndarray
-
-
 class TasteScoreInput(BaseModel):
-    """Public input bundle for taste scoring.
-
-    clip_embedding is optional: when the caller already has an L2-normalised
-    CLIP image embedding for this photo (e.g. from the shared Stage 2 CLIP
-    forward pass), passing it here skips a redundant single-image CLIP
-    forward. Standalone callers (CLI, search) that omit it fall back to
-    re-embedding via _embed_clip.
-    """
+    """Public input bundle for taste scoring: one canonical feature row."""
 
     model_config = {"arbitrary_types_allowed": True}
 
-    image_path: Path
-    scalar_features: np.ndarray
-    clip_embedding: np.ndarray | None = None
+    feature_row: np.ndarray
 
 
 class _TasteProfile(BaseModel):
@@ -69,6 +54,8 @@ def _load_profile() -> _TasteProfile | None:
     try:
         import joblib  # noqa: PLC0415
 
+        # Safe: TASTE_PROFILE_PATH is this app's own locally-trained artifact
+        # (written by taste_trainer.retrain), never an externally-sourced file.
         data = joblib.load(TASTE_PROFILE_PATH)
         _profile_cache = _TasteProfile(**data)
     except (OSError, ValueError, KeyError) as exc:
@@ -94,32 +81,15 @@ def _warmstart_score() -> TasteScore:
     )
 
 
-def _embed_clip(image_path: Path) -> np.ndarray:
-    """Run the CLIP singleton on one image and return its embedding row."""
-    from cull.clip_loader import get_clip_model, get_clip_processor  # noqa: PLC0415
-    from PIL import Image  # noqa: PLC0415
-
-    model = get_clip_model()
-    processor = get_clip_processor()
-    image = Image.open(image_path).convert("RGB")
-    inputs = processor(images=image, return_tensors="pt")
-    inputs = {k: v.to(model.device) for k, v in inputs.items()}
-    features = model.get_image_features(**inputs).pooler_output
-    return features.detach().cpu().numpy().reshape(-1)
+def _expected_feature_count(profile: _TasteProfile) -> int | None:
+    """Return the profile's fitted feature count, or None if unavailable."""
+    return getattr(profile.estimator, "n_features_in_", None)
 
 
-def _resolve_embedding(score_in: TasteScoreInput) -> np.ndarray:
-    """Return the precomputed CLIP embedding if provided, else re-embed from disk."""
-    if score_in.clip_embedding is not None:
-        return score_in.clip_embedding
-    return _embed_clip(score_in.image_path)
-
-
-def _build_feature_row(score_in: TasteScoreInput) -> np.ndarray:
-    """Concatenate CLIP embedding + scalar features into a single 1-D row."""
-    embedding = _resolve_embedding(score_in)
-    scalar = np.asarray(score_in.scalar_features, dtype=np.float32).reshape(-1)
-    return np.concatenate([embedding.astype(np.float32), scalar], axis=0)
+def _shape_matches(profile: _TasteProfile, row: np.ndarray) -> bool:
+    """Return True if the profile's fitted feature count matches the row length."""
+    n_expected = _expected_feature_count(profile)
+    return n_expected is None or n_expected == row.shape[0]
 
 
 def _scored(profile: _TasteProfile, row: np.ndarray) -> TasteScore:
@@ -133,13 +103,24 @@ def _scored(profile: _TasteProfile, row: np.ndarray) -> TasteScore:
     )
 
 
+def _guarded_score(profile: _TasteProfile, row: np.ndarray) -> TasteScore:
+    """Score row against profile, falling back to warmstart on a shape mismatch."""
+    if _shape_matches(profile, row):
+        return _scored(profile, row)
+    logger.warning(
+        "Taste profile shape mismatch: model expects %s features, got %d — using warmstart",
+        _expected_feature_count(profile), row.shape[0],
+    )
+    return _warmstart_score()
+
+
 def score_one(score_in: TasteScoreInput) -> TasteScore:
     """Score one photo's taste probability; warm-starts when no profile exists."""
     profile = _load_profile()
     if profile is None or profile.label_count < TASTE_MIN_LABELS:
         return _warmstart_score()
-    row = _build_feature_row(score_in)
-    return _scored(profile, row)
+    row = np.asarray(score_in.feature_row, dtype=np.float32).reshape(-1)
+    return _guarded_score(profile, row)
 
 
 def score_batch(score_inputs: list[TasteScoreInput]) -> list[TasteScore]:
