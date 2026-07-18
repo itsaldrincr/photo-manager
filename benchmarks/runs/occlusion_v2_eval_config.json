@@ -1,0 +1,5 @@
+{
+  "signals_path": "benchmarks/runs/occlusion_v2_signals.json",
+  "labels_v1_path": "benchmarks/runs/occlusion_weaklabels_v1.json",
+  "labels_v2_path": "benchmarks/runs/occlusion_weaklabels_v2.json"
+}
