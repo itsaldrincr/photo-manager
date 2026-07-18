@@ -1,5 +1,38 @@
 # Changelog
 
+## v1.3.0
+
+Ship-blocker sweep: a full audit traced every user-visible metric to its
+producer and revived or fixed six signals that could never fire.
+
+### Fixed
+
+- Occlusion detection works for the first time: a texture-variance signal
+  (Laplacian patches at six landmark regions, scaled to inter-ocular
+  distance) replaces the dead visibility-based heuristic. F1 0.78-0.80 on a
+  synthetic-occlusion eval; the face_occlusion_penalty preset weights now
+  actually apply.
+- Palette-outlier, EXIF-anomaly, and scene-start signals were structurally
+  dead: shoot_stats read model fields that never existed, silently zeroed by
+  getattr fallbacks. EXIF + capture time now flow from stage 1 (read once
+  beside the existing decode); the palette LAB centroid computes from the
+  already-decoded stage-2 image. All three fire with real distributions.
+- The taste model never trained: retrain fired on a single override (crashed,
+  swallowed) and 'select' decisions were mislabeled as rejects. Retrain now
+  uses the full override history; train and inference share one canonical
+  15-dim feature row (the old 772-dim inference path would have crashed on
+  any real profile); dimension mismatches degrade to warmstart. A profile
+  trained on the owner's 602 decisions ships the feature live (5-fold CV
+  0.676).
+- Scene boundaries needed a 120s minimum gap — the old 2s threshold flagged
+  nearly every travel photo as a scene start.
+- is_squinting is now computed (existed since v1.0, never assigned).
+
+### Changed
+
+- TUI shows 'Taste: untrained' instead of a frozen 0.500 when no profile is
+  loaded; the score panel and report card surface expression valence/arousal.
+
 ## v1.2.0
 
 ### Changed
