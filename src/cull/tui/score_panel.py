@@ -69,6 +69,18 @@ def _format_portrait_emotion(portrait: PortraitScores | None) -> str:
     return emotion
 
 
+def _format_eye_state(portrait: PortraitScores | None) -> str:
+    """Format eyes-closed/squinting flags for the portrait block."""
+    if portrait is None:
+        return EM_DASH
+    flags: list[str] = []
+    if portrait.is_eyes_closed:
+        flags.append("closed")
+    if portrait.is_squinting:
+        flags.append("squinting")
+    return ", ".join(flags) if flags else "open"
+
+
 def _format_anomaly_flags(stats: ShootStatsScore | None) -> str:
     """Summarise shoot anomaly scores as a compact flag string."""
     if stats is None:
@@ -146,6 +158,9 @@ def _render_stage2(s2: Stage2Result) -> list[str]:
     ]
     if emotion != EM_DASH:
         lines.append(f"  Expression:         {emotion}")
+    if s2.portrait is not None:
+        eye_state = _format_eye_state(s2.portrait)
+        lines.append(f"  Eyes:               {eye_state}")
     lines.append(f"  Shoot anomaly:      {anomaly}")
     return lines
 

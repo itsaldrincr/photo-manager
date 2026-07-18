@@ -9,8 +9,10 @@ import shutil
 from pathlib import Path
 
 from pydantic import BaseModel, Field
+from textual import events
 from textual.app import App, ComposeResult
 from textual.binding import Binding
+from textual.css.query import NoMatches
 from textual.widgets import Footer, Header, Static
 
 from cull.config import (
@@ -45,6 +47,9 @@ SAVE_IN_PROGRESS_MESSAGE: str = "Saving review changes..."
 SAVE_COMPLETE_MESSAGE: str = "Save complete. Exiting..."
 SAVE_FAILED_PREFIX: str = "Save failed: "
 SAVE_COMPLETE_DELAY_SECONDS: float = 0.25
+MIN_TERMINAL_COLS: int = 40
+MIN_TERMINAL_ROWS: int = 12
+TOO_SMALL_BANNER_ID: str = "too-small-banner"
 QUEUE_UNCERTAIN: int = 0
 QUEUE_REJECTED: int = 1
 QUEUE_DUPLICATES: int = 2
@@ -215,6 +220,14 @@ def _build_info_text(ctx: InfoBarContext) -> str:
     )
 
 
+def _too_small_message(cols: int, rows: int) -> str:
+    """Build the placeholder message shown when the terminal is below the minimum size."""
+    return (
+        f"Terminal too small ({cols}x{rows}).\n"
+        f"Resize to at least {MIN_TERMINAL_COLS}x{MIN_TERMINAL_ROWS}."
+    )
+
+
 def _find_burst_decisions(session: SessionResult, group_id: int) -> list[PhotoDecision]:
     """Find all decisions belonging to a burst group."""
     return [
@@ -253,11 +266,19 @@ class CullApp(App):
         Binding("?,shift+slash", "explain", "Explain"),
     ]
 
-    CSS = """
-    #info-bar {
+    CSS = f"""
+    #info-bar {{
         height: 3;
         border: solid blue;
-    }
+    }}
+
+    #{TOO_SMALL_BANNER_ID} {{
+        width: 1fr;
+        height: 1fr;
+        content-align: center middle;
+        background: $panel;
+        display: none;
+    }}
     """
 
     def __init__(self, app_input: AppInput) -> None:
@@ -320,7 +341,29 @@ class CullApp(App):
         yield ExplainPanel()
         yield Static("", id="info-bar")
         yield ScorePanel()
+        yield Static("", id=TOO_SMALL_BANNER_ID)
         yield Footer()
+
+    def on_resize(self, event: events.Resize) -> None:
+        """Show a placeholder when the terminal drops below the minimum usable size."""
+        try:
+            self._update_too_small_state(event.size.width, event.size.height)
+        except NoMatches:
+            self.log.debug("on_resize: DOM not ready yet")
+
+    def _update_too_small_state(self, cols: int, rows: int) -> None:
+        """Toggle the too-small placeholder based on current terminal dimensions."""
+        is_too_small = cols < MIN_TERMINAL_COLS or rows < MIN_TERMINAL_ROWS
+        self._set_too_small_visible(is_too_small)
+        if is_too_small:
+            banner = self.query_one(f"#{TOO_SMALL_BANNER_ID}", Static)
+            banner.update(_too_small_message(cols, rows))
+
+    def _set_too_small_visible(self, is_too_small: bool) -> None:
+        """Toggle the too-small placeholder over the normal content widgets."""
+        self.query_one(f"#{TOO_SMALL_BANNER_ID}", Static).display = is_too_small
+        self.query_one(PhotoView).display = not is_too_small
+        self.query_one("#info-bar", Static).display = not is_too_small
 
     def on_mount(self) -> None:
         """Initialize the display after mounting; fall back to first non-empty queue."""
