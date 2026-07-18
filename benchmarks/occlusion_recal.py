@@ -7,7 +7,13 @@ synthetic occluder eval set), sweeps candidate thresholds, and applies the
 promotion gate:
 
     adopt a new threshold only if it improves F1 on the weak-labeled REAL
-    corpus by >= 0.05 WITHOUT dropping synthetic F1 by more than 0.05.
+    corpus by >= 0.05 WITHOUT dropping synthetic F1 by more than 0.05,
+    AND without false-flagging more than MAX_CLEAN_FALSE_FLAG_RATE of the
+    weak-labeled-clean real faces. The last constraint exists because the
+    current threshold (0.32) never fires on real photos (F1 = 0), so ANY
+    candidate that fires at all trivially satisfies the +0.05 F1 clause —
+    including ones that would penalize half of all clean production
+    portraits. A no-op detector must not be "improved" into an active harm.
 
 Weak labels are MODEL-GENERATED (labeler: gemma-4-12b) — never presented as
 human ground truth; trust comes from double-pass agreement only.
@@ -33,6 +39,7 @@ SWEEP_STEP: float = 0.02
 CURRENT_THRESHOLD: float = 0.32
 REAL_F1_MIN_GAIN: float = 0.05
 SYNTHETIC_F1_MAX_DROP: float = 0.05
+MAX_CLEAN_FALSE_FLAG_RATE: float = 0.10
 
 
 class RecalConfig(BaseModel):
@@ -125,14 +132,22 @@ class GateVerdict(BaseModel):
     real_f1_best: float
     synthetic_f1_current: float
     synthetic_f1_at_best: float
+    clean_false_flag_rate_at_best: float
 
 
-def _best_candidate(sweeps: tuple[list[SweepPoint], list[SweepPoint]]) -> SweepPoint:
+class _JudgeInput(BaseModel):
+    """Everything the promotion gate needs."""
+
+    real_sweep: list[SweepPoint]
+    synthetic_sweep: list[SweepPoint]
+    real_rows: list[LabeledRatio]
+
+
+def _best_candidate(judge_in: _JudgeInput) -> SweepPoint:
     """Among max-real-F1 thresholds, tie-break by synthetic F1 then proximity to current."""
-    real_sweep, synthetic_sweep = sweeps
-    synthetic_by_threshold = {p.threshold: p for p in synthetic_sweep}
-    best_f1 = max(p.f1 for p in real_sweep)
-    tied = [p for p in real_sweep if p.f1 >= best_f1 - 1e-9]
+    synthetic_by_threshold = {p.threshold: p for p in judge_in.synthetic_sweep}
+    best_f1 = max(p.f1 for p in judge_in.real_sweep)
+    tied = [p for p in judge_in.real_sweep if p.f1 >= best_f1 - 1e-9]
     return max(
         tied,
         key=lambda p: (
@@ -142,22 +157,32 @@ def _best_candidate(sweeps: tuple[list[SweepPoint], list[SweepPoint]]) -> SweepP
     )
 
 
-def _judge(sweeps: tuple[list[SweepPoint], list[SweepPoint]]) -> GateVerdict:
+def _clean_false_flag_rate(judge_in: _JudgeInput, threshold: float) -> float:
+    """Share of weak-labeled-clean real faces the candidate threshold would flag."""
+    clean = [r.ratio for r in judge_in.real_rows if not r.is_occluded]
+    if not clean:
+        return 0.0
+    return sum(1 for ratio in clean if ratio < threshold) / len(clean)
+
+
+def _judge(judge_in: _JudgeInput) -> GateVerdict:
     """Apply the promotion gate to the best real-corpus threshold."""
-    real_sweep, synthetic_sweep = sweeps
-    synthetic_by_threshold = {p.threshold: p for p in synthetic_sweep}
-    real_current = next(p for p in real_sweep if p.threshold == CURRENT_THRESHOLD)
+    synthetic_by_threshold = {p.threshold: p for p in judge_in.synthetic_sweep}
+    real_current = next(p for p in judge_in.real_sweep if p.threshold == CURRENT_THRESHOLD)
     synthetic_current = synthetic_by_threshold[CURRENT_THRESHOLD]
-    best = _best_candidate(sweeps)
+    best = _best_candidate(judge_in)
     synthetic_at_best = synthetic_by_threshold[best.threshold]
+    clean_false_flag = _clean_false_flag_rate(judge_in, best.threshold)
     adopted = (
         best.f1 >= real_current.f1 + REAL_F1_MIN_GAIN
         and synthetic_at_best.f1 >= synthetic_current.f1 - SYNTHETIC_F1_MAX_DROP
+        and clean_false_flag <= MAX_CLEAN_FALSE_FLAG_RATE
     )
     return GateVerdict(
         adopted=adopted, best_threshold=best.threshold,
         real_f1_current=real_current.f1, real_f1_best=best.f1,
         synthetic_f1_current=synthetic_current.f1, synthetic_f1_at_best=synthetic_at_best.f1,
+        clean_false_flag_rate_at_best=clean_false_flag,
     )
 
 
@@ -235,8 +260,11 @@ def _gate_section(verdict: GateVerdict) -> list[str]:
         f"{verdict.real_f1_current:.3f}, synthetic F1 {verdict.synthetic_f1_current:.3f}",
         f"- Best real-corpus threshold {verdict.best_threshold:.2f}: real F1 "
         f"{verdict.real_f1_best:.3f}, synthetic F1 {verdict.synthetic_f1_at_best:.3f}",
+        f"- Clean-face false-flag rate at best threshold: "
+        f"{verdict.clean_false_flag_rate_at_best:.3f}",
         f"- Rule: adopt only if real F1 gain >= {REAL_F1_MIN_GAIN:.2f} and synthetic "
-        f"F1 drop <= {SYNTHETIC_F1_MAX_DROP:.2f}",
+        f"F1 drop <= {SYNTHETIC_F1_MAX_DROP:.2f} and clean false-flag rate <= "
+        f"{MAX_CLEAN_FALSE_FLAG_RATE:.2f}",
         "",
         f"## Verdict: {outcome}",
         "",
@@ -263,7 +291,9 @@ def main() -> None:
     real_rows = _load_real_rows(config)
     real_sweep = _sweep([(r.is_occluded, r.ratio) for r in real_rows])
     synthetic_sweep = _sweep(_load_synthetic_rows(config))
-    verdict = _judge((real_sweep, synthetic_sweep))
+    verdict = _judge(_JudgeInput(
+        real_sweep=real_sweep, synthetic_sweep=synthetic_sweep, real_rows=real_rows,
+    ))
     report_in = _ReportInput(
         config=config, real_rows=real_rows, agreement=_load_agreement(config),
         real_sweep=real_sweep, synthetic_sweep=synthetic_sweep, verdict=verdict,
