@@ -41,8 +41,12 @@ VLM_JPEG_QUALITY: int = 85
 # Stage 2 routing thresholds
 # ---------------------------------------------------------------------------
 
-ROUTING_KEEPER_MIN: float = 0.72
-ROUTING_AMBIGUOUS_MIN: float = 0.48
+# Calibrated 2026-07-18 against 293 owner-triaged photos (benchmarks/runs/
+# calibration_report.md): the old 0.72/0.48 sat below the 5th percentile of
+# real composite scores, auto-keeping 93% of photos at a 72% error rate.
+# Tuned values cut auto-routing error to 13.6% (VLM share ~35%).
+ROUTING_KEEPER_MIN: float = 0.94
+ROUTING_AMBIGUOUS_MIN: float = 0.85
 
 # ---------------------------------------------------------------------------
 # Stage 2 default genre weights (TOPIQ, LAION, CLIPIQA, Exposure)

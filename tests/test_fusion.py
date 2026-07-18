@@ -45,19 +45,23 @@ def _uniform_scores(value: float) -> IqaScores:
 
 
 def test_routes_keeper_at_high_composite() -> None:
-    """Composite of 0.80 should route to KEEPER."""
-    scores = _uniform_scores(0.80)
+    """Composite above ROUTING_KEEPER_MIN should route to KEEPER."""
+    from cull.config import ROUTING_KEEPER_MIN
+    value = min(ROUTING_KEEPER_MIN + 0.02, 1.0)
+    scores = _uniform_scores(value)
     result = compute_composite(scores, CullConfig())
     assert result.routing == "KEEPER"
-    assert result.stage2.composite == pytest.approx(0.80, abs=1e-6)
+    assert result.stage2.composite == pytest.approx(value, abs=1e-6)
 
 
 def test_routes_ambiguous_at_mid_composite() -> None:
-    """Composite of 0.60 should route to AMBIGUOUS."""
-    scores = _uniform_scores(0.60)
+    """Composite between the routing thresholds should route to AMBIGUOUS."""
+    from cull.config import ROUTING_AMBIGUOUS_MIN, ROUTING_KEEPER_MIN
+    value = (ROUTING_AMBIGUOUS_MIN + ROUTING_KEEPER_MIN) / 2
+    scores = _uniform_scores(value)
     result = compute_composite(scores, CullConfig())
     assert result.routing == "AMBIGUOUS"
-    assert result.stage2.composite == pytest.approx(0.60, abs=1e-6)
+    assert result.stage2.composite == pytest.approx(value, abs=1e-6)
 
 
 def test_routes_reject_at_low_composite() -> None:
@@ -69,29 +73,33 @@ def test_routes_reject_at_low_composite() -> None:
 
 
 def test_keeper_boundary_exact() -> None:
-    """Score exactly at ROUTING_KEEPER_MIN (0.72) should route to KEEPER."""
-    scores = _uniform_scores(0.72)
+    """Score exactly at ROUTING_KEEPER_MIN should route to KEEPER."""
+    from cull.config import ROUTING_KEEPER_MIN
+    scores = _uniform_scores(ROUTING_KEEPER_MIN)
     result = compute_composite(scores, CullConfig())
     assert result.routing == "KEEPER"
 
 
 def test_ambiguous_boundary_exact() -> None:
-    """Score exactly at ROUTING_AMBIGUOUS_MIN (0.48) should route to AMBIGUOUS."""
-    scores = _uniform_scores(0.48)
+    """Score exactly at ROUTING_AMBIGUOUS_MIN should route to AMBIGUOUS."""
+    from cull.config import ROUTING_AMBIGUOUS_MIN
+    scores = _uniform_scores(ROUTING_AMBIGUOUS_MIN)
     result = compute_composite(scores, CullConfig())
     assert result.routing == "AMBIGUOUS"
 
 
 def test_just_below_keeper_boundary() -> None:
-    """Score just below ROUTING_KEEPER_MIN (0.719) should route to AMBIGUOUS."""
-    scores = _uniform_scores(0.719)
+    """Score just below ROUTING_KEEPER_MIN should route to AMBIGUOUS."""
+    from cull.config import ROUTING_KEEPER_MIN
+    scores = _uniform_scores(ROUTING_KEEPER_MIN - 0.001)
     result = compute_composite(scores, CullConfig())
     assert result.routing == "AMBIGUOUS"
 
 
 def test_just_below_ambiguous_boundary() -> None:
-    """Score just below ROUTING_AMBIGUOUS_MIN (0.479) should route to REJECT."""
-    scores = _uniform_scores(0.479)
+    """Score just below ROUTING_AMBIGUOUS_MIN should route to REJECT."""
+    from cull.config import ROUTING_AMBIGUOUS_MIN
+    scores = _uniform_scores(ROUTING_AMBIGUOUS_MIN - 0.001)
     result = compute_composite(scores, CullConfig())
     assert result.routing == "REJECT"
 
@@ -184,7 +192,11 @@ def test_bokeh_bonus_is_preset_aware() -> None:
 
 def test_portrait_penalties_and_bonus_affect_routing() -> None:
     """Portrait quality should reward sharp eyes and penalize closed or occluded faces."""
-    base = _make_scores(_MetricValues(topiq=0.68, laion=0.68, clipiqa=0.68, exposure=0.68))
+    from cull.config import ROUTING_AMBIGUOUS_MIN
+    base_value = ROUTING_AMBIGUOUS_MIN - 0.02
+    base = _make_scores(_MetricValues(
+        topiq=base_value, laion=base_value, clipiqa=base_value, exposure=base_value
+    ))
     improved = base.model_copy(deep=True)
     improved.portrait = PortraitScores(
         eye_sharpness_left=900.0,
