@@ -1,0 +1,193 @@
+{
+  "gap_report": {
+    "ground_truth_total": 347,
+    "matched": 347,
+    "missing_from_scored": [],
+    "stage1_dropped": [],
+    "stage1_dropped_ground_truth_keepers": []
+  },
+  "reconstruction_check": {
+    "max_abs_diff": 0.0965737414818687,
+    "mean_abs_diff": 0.03857474312325737,
+    "n": 347
+  },
+  "sweep_best": {
+    "ambiguous_min": 0.83,
+    "keeper_min": 0.95,
+    "error": 0.32558139534883723,
+    "vlm_share": 0.2564841498559078
+  },
+  "frontier": [
+    {
+      "vlm_share_cap": 0.1,
+      "ambiguous_min": 0.88,
+      "keeper_min": 0.93,
+      "error": 0.3333333333333333,
+      "vlm_share": 0.05763688760806916
+    },
+    {
+      "vlm_share_cap": 0.15,
+      "ambiguous_min": 0.88,
+      "keeper_min": 0.93,
+      "error": 0.3333333333333333,
+      "vlm_share": 0.05763688760806916
+    },
+    {
+      "vlm_share_cap": 0.2,
+      "ambiguous_min": 0.84,
+      "keeper_min": 0.95,
+      "error": 0.3273381294964029,
+      "vlm_share": 0.1988472622478386
+    },
+    {
+      "vlm_share_cap": 0.25,
+      "ambiguous_min": 0.83,
+      "keeper_min": 0.93,
+      "error": 0.32567049808429116,
+      "vlm_share": 0.2478386167146974
+    },
+    {
+      "vlm_share_cap": 0.3,
+      "ambiguous_min": 0.83,
+      "keeper_min": 0.95,
+      "error": 0.32558139534883723,
+      "vlm_share": 0.2564841498559078
+    },
+    {
+      "vlm_share_cap": 0.35,
+      "ambiguous_min": 0.83,
+      "keeper_min": 0.95,
+      "error": 0.32558139534883723,
+      "vlm_share": 0.2564841498559078
+    },
+    {
+      "vlm_share_cap": 0.5,
+      "ambiguous_min": 0.83,
+      "keeper_min": 0.95,
+      "error": 0.32558139534883723,
+      "vlm_share": 0.2564841498559078
+    },
+    {
+      "vlm_share_cap": 1.0,
+      "ambiguous_min": 0.79,
+      "keeper_min": 0.95,
+      "error": 0.3051948051948052,
+      "vlm_share": 0.5561959654178674
+    }
+  ],
+  "full_coefs": {
+    "topiq": 0.1406779178914145,
+    "laion_aesthetic": 0.2356135169548311,
+    "clipiqa": -0.2653696734903813,
+    "exposure": -0.2079846577889909,
+    "composition": -0.48359558548312687,
+    "taste_probability": -0.3092878378214895,
+    "scene_start_bonus": 0.12963056013583305,
+    "tilt_penalty": 0.05676948628160439,
+    "palette_outlier_score": 0.07362472045725513,
+    "exposure_drift_score": -0.06909361051539166,
+    "exif_anomaly_score": -0.04849522644614028
+  },
+  "full_core_weights": {
+    "topiq": 0.373853627438786,
+    "laion_aesthetic": 0.6261463725612141,
+    "clipiqa": 0.0,
+    "exposure": 0.0
+  },
+  "non_core_flags": [
+    {
+      "metric": "composition",
+      "coefficient": -0.48359558548312687,
+      "expected_sign": "positive",
+      "agrees_with_current_design": false
+    },
+    {
+      "metric": "taste_probability",
+      "coefficient": -0.3092878378214895,
+      "expected_sign": "positive",
+      "agrees_with_current_design": false
+    },
+    {
+      "metric": "scene_start_bonus",
+      "coefficient": 0.12963056013583305,
+      "expected_sign": "positive",
+      "agrees_with_current_design": true
+    },
+    {
+      "metric": "tilt_penalty",
+      "coefficient": 0.05676948628160439,
+      "expected_sign": "negative",
+      "agrees_with_current_design": false
+    },
+    {
+      "metric": "palette_outlier_score",
+      "coefficient": 0.07362472045725513,
+      "expected_sign": "negative",
+      "agrees_with_current_design": false
+    },
+    {
+      "metric": "exposure_drift_score",
+      "coefficient": -0.06909361051539166,
+      "expected_sign": "negative",
+      "agrees_with_current_design": true
+    },
+    {
+      "metric": "exif_anomaly_score",
+      "coefficient": -0.04849522644614028,
+      "expected_sign": "negative",
+      "agrees_with_current_design": true
+    }
+  ],
+  "cv": {
+    "current_cv_accuracy_mean": 0.6931384015594544,
+    "current_cv_accuracy_folds": [
+      0.7592592592592593,
+      0.6842105263157895,
+      0.6666666666666667,
+      0.6888888888888889,
+      0.6666666666666667
+    ],
+    "fitted_cv_accuracy_mean": 0.6985408321034509,
+    "fitted_cv_accuracy_folds": [
+      0.7708333333333334,
+      0.6851851851851851,
+      0.6935483870967742,
+      0.6764705882352942,
+      0.6666666666666667
+    ],
+    "fitted_core_weights_per_fold": [
+      {
+        "topiq": 0.47269513817025954,
+        "laion_aesthetic": 0.5273048618297405,
+        "clipiqa": 0.0,
+        "exposure": 0.0
+      },
+      {
+        "topiq": 0.2669905254112327,
+        "laion_aesthetic": 0.7330094745887674,
+        "clipiqa": 0.0,
+        "exposure": 0.0
+      },
+      {
+        "topiq": 0.5785356269904559,
+        "laion_aesthetic": 0.4214643730095442,
+        "clipiqa": 0.0,
+        "exposure": 0.0
+      },
+      {
+        "topiq": 0.298933717274897,
+        "laion_aesthetic": 0.701066282725103,
+        "clipiqa": 0.0,
+        "exposure": 0.0
+      },
+      {
+        "topiq": 0.28542257064965076,
+        "laion_aesthetic": 0.7145774293503492,
+        "clipiqa": 0.0,
+        "exposure": 0.0
+      }
+    ],
+    "improvement_points": 0.5402430543996473
+  },
+  "gate_pass": false
+}

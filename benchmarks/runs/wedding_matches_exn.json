@@ -1,0 +1,792 @@
+{
+ "backup_dir": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/wedding_c/exn_backup",
+ "edited_dir": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/wedding_c/exn_edited",
+ "matcher": "dinov2-small pooled CLS cosine NN",
+ "accept_min_similarity": 0.6,
+ "accept_min_margin": 0.03,
+ "matches": [
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 1.jpeg",
+   "backup": "DSCF1277.JPG",
+   "backup_second": "DSCF1502.JPG",
+   "similarity": 0.9986920356750488,
+   "second_similarity": 0.8258649706840515,
+   "margin": 0.17282706499099731,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 10.jpeg",
+   "backup": "DSCF1325.JPG",
+   "backup_second": "DSCF1324.JPG",
+   "similarity": 0.9992479681968689,
+   "second_similarity": 0.9683327078819275,
+   "margin": 0.030915260314941406,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 11.jpeg",
+   "backup": "DSCF1339.JPG",
+   "backup_second": "DSCF1340.JPG",
+   "similarity": 0.9469866752624512,
+   "second_similarity": 0.9445415139198303,
+   "margin": 0.0024451613426208496,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 12.jpeg",
+   "backup": "DSCF1342.JPG",
+   "backup_second": "DSCF1341.JPG",
+   "similarity": 0.997704803943634,
+   "second_similarity": 0.9205518960952759,
+   "margin": 0.07715290784835815,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 13.jpeg",
+   "backup": "DSCF1349.JPG",
+   "backup_second": "DSCF1350.JPG",
+   "similarity": 0.998009443283081,
+   "second_similarity": 0.963302731513977,
+   "margin": 0.034706711769104004,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 14.jpeg",
+   "backup": "DSCF1351.JPG",
+   "backup_second": "DSCF1352.JPG",
+   "similarity": 0.9774142503738403,
+   "second_similarity": 0.8463586568832397,
+   "margin": 0.13105559349060059,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 15.jpeg",
+   "backup": "DSCF1357.JPG",
+   "backup_second": "DSCF1358.JPG",
+   "similarity": 0.9991232752799988,
+   "second_similarity": 0.9524251222610474,
+   "margin": 0.046698153018951416,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 16.jpeg",
+   "backup": "DSCF1361.JPG",
+   "backup_second": "DSCF1360.JPG",
+   "similarity": 0.9991697072982788,
+   "second_similarity": 0.943466067314148,
+   "margin": 0.05570363998413086,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 17.jpeg",
+   "backup": "DSCF1373.JPG",
+   "backup_second": "DSCF1374.JPG",
+   "similarity": 0.9989826083183289,
+   "second_similarity": 0.9864033460617065,
+   "margin": 0.012579262256622314,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 18.jpeg",
+   "backup": "DSCF1377.JPG",
+   "backup_second": "DSCF1379.JPG",
+   "similarity": 0.9982621073722839,
+   "second_similarity": 0.8964745402336121,
+   "margin": 0.10178756713867188,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 19.jpeg",
+   "backup": "DSCF1398.JPG",
+   "backup_second": "DSCF1399.JPG",
+   "similarity": 0.9281966090202332,
+   "second_similarity": 0.881069004535675,
+   "margin": 0.047127604484558105,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 2.jpeg",
+   "backup": "DSCF1278.JPG",
+   "backup_second": "DSCF1557.JPG",
+   "similarity": 0.9942395687103271,
+   "second_similarity": 0.6990057229995728,
+   "margin": 0.2952338457107544,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 20.jpeg",
+   "backup": "DSCF1405.JPG",
+   "backup_second": "DSCF1404.JPG",
+   "similarity": 0.9786401987075806,
+   "second_similarity": 0.960098385810852,
+   "margin": 0.018541812896728516,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 21.jpeg",
+   "backup": "DSCF1409.JPG",
+   "backup_second": "DSCF1410.JPG",
+   "similarity": 0.9991443753242493,
+   "second_similarity": 0.8935465812683105,
+   "margin": 0.10559779405593872,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 22.jpeg",
+   "backup": "DSCF1417.JPG",
+   "backup_second": "DSCF1418.JPG",
+   "similarity": 0.9988613128662109,
+   "second_similarity": 0.9249327182769775,
+   "margin": 0.0739285945892334,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 23.jpeg",
+   "backup": "DSCF1420.JPG",
+   "backup_second": "DSCF1419.JPG",
+   "similarity": 0.8871252536773682,
+   "second_similarity": 0.8762545585632324,
+   "margin": 0.010870695114135742,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 24.jpeg",
+   "backup": "DSCF1426.JPG",
+   "backup_second": "DSCF1427.JPG",
+   "similarity": 0.9992437958717346,
+   "second_similarity": 0.8517141342163086,
+   "margin": 0.14752966165542603,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 25.jpeg",
+   "backup": "DSCF1428.JPG",
+   "backup_second": "DSCF1430.JPG",
+   "similarity": 0.9778251647949219,
+   "second_similarity": 0.9641131162643433,
+   "margin": 0.013712048530578613,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 26.jpeg",
+   "backup": "DSCF1432.JPG",
+   "backup_second": "DSCF1430.JPG",
+   "similarity": 0.9989104270935059,
+   "second_similarity": 0.8482118248939514,
+   "margin": 0.15069860219955444,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 27.jpeg",
+   "backup": "DSCF1435.JPG",
+   "backup_second": "DSCF1434.JPG",
+   "similarity": 0.9240317344665527,
+   "second_similarity": 0.9135852456092834,
+   "margin": 0.010446488857269287,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 28.jpeg",
+   "backup": "DSCF1434.JPG",
+   "backup_second": "DSCF1435.JPG",
+   "similarity": 0.9041861891746521,
+   "second_similarity": 0.8590106964111328,
+   "margin": 0.04517549276351929,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 29.jpeg",
+   "backup": "DSCF1437.JPG",
+   "backup_second": "DSCF1438.JPG",
+   "similarity": 0.999312698841095,
+   "second_similarity": 0.9084927439689636,
+   "margin": 0.09081995487213135,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 3.jpeg",
+   "backup": "DSCF1288.JPG",
+   "backup_second": "DSCF1285.JPG",
+   "similarity": 0.955998420715332,
+   "second_similarity": 0.8669991493225098,
+   "margin": 0.08899927139282227,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 30.jpeg",
+   "backup": "DSCF1440.JPG",
+   "backup_second": "DSCF1596.JPG",
+   "similarity": 0.9482104182243347,
+   "second_similarity": 0.8559914231300354,
+   "margin": 0.09221899509429932,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 31.jpeg",
+   "backup": "DSCF1449.JPG",
+   "backup_second": "DSCF1450.JPG",
+   "similarity": 0.9988043308258057,
+   "second_similarity": 0.9031550288200378,
+   "margin": 0.09564930200576782,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 32.jpeg",
+   "backup": "DSCF1456.JPG",
+   "backup_second": "DSCF1336.JPG",
+   "similarity": 0.9537967443466187,
+   "second_similarity": 0.8639107942581177,
+   "margin": 0.08988595008850098,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 33.jpeg",
+   "backup": "DSCF1459.JPG",
+   "backup_second": "DSCF1594.JPG",
+   "similarity": 0.9675785303115845,
+   "second_similarity": 0.8104101419448853,
+   "margin": 0.15716838836669922,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 34.jpeg",
+   "backup": "DSCF1474.JPG",
+   "backup_second": "DSCF1473.JPG",
+   "similarity": 0.9990109801292419,
+   "second_similarity": 0.9268878698348999,
+   "margin": 0.07212311029434204,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 35.jpeg",
+   "backup": "DSCF1497.JPG",
+   "backup_second": "DSCF1498.JPG",
+   "similarity": 0.9991229176521301,
+   "second_similarity": 0.9349973797798157,
+   "margin": 0.06412553787231445,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 36.jpeg",
+   "backup": "DSCF1501.JPG",
+   "backup_second": "DSCF1292.JPG",
+   "similarity": 0.9970808029174805,
+   "second_similarity": 0.7808589935302734,
+   "margin": 0.21622180938720703,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 37.jpeg",
+   "backup": "DSCF1502.JPG",
+   "backup_second": "DSCF1475.JPG",
+   "similarity": 0.9294755458831787,
+   "second_similarity": 0.8556859493255615,
+   "margin": 0.07378959655761719,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 38.jpeg",
+   "backup": "DSCF1506.JPG",
+   "backup_second": "DSCF1352.JPG",
+   "similarity": 0.9258904457092285,
+   "second_similarity": 0.7630089521408081,
+   "margin": 0.1628814935684204,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 39.jpeg",
+   "backup": "DSCF1513.JPG",
+   "backup_second": "DSCF1514.JPG",
+   "similarity": 0.9989660382270813,
+   "second_similarity": 0.9218235015869141,
+   "margin": 0.07714253664016724,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 4.jpeg",
+   "backup": "DSCF1293.JPG",
+   "backup_second": "DSCF1294.JPG",
+   "similarity": 0.9276302456855774,
+   "second_similarity": 0.9066303968429565,
+   "margin": 0.02099984884262085,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 40.jpeg",
+   "backup": "DSCF1518.JPG",
+   "backup_second": "DSCF1617.JPG",
+   "similarity": 0.9994845390319824,
+   "second_similarity": 0.7284992337226868,
+   "margin": 0.27098530530929565,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 41.jpeg",
+   "backup": "DSCF1524.JPG",
+   "backup_second": "DSCF1523.JPG",
+   "similarity": 0.9993530511856079,
+   "second_similarity": 0.9512689709663391,
+   "margin": 0.0480840802192688,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 42.jpeg",
+   "backup": "DSCF1525.JPG",
+   "backup_second": "DSCF1527.JPG",
+   "similarity": 0.9992987513542175,
+   "second_similarity": 0.9685219526290894,
+   "margin": 0.030776798725128174,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 43.jpeg",
+   "backup": "DSCF1532.JPG",
+   "backup_second": "DSCF1533.JPG",
+   "similarity": 0.9991036057472229,
+   "second_similarity": 0.9651328921318054,
+   "margin": 0.03397071361541748,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 44.jpeg",
+   "backup": "DSCF1540.JPG",
+   "backup_second": "DSCF1541.JPG",
+   "similarity": 0.9875779747962952,
+   "second_similarity": 0.9774729609489441,
+   "margin": 0.010105013847351074,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 45.jpeg",
+   "backup": "DSCF1543.JPG",
+   "backup_second": "DSCF1544.JPG",
+   "similarity": 0.998709499835968,
+   "second_similarity": 0.9735329151153564,
+   "margin": 0.025176584720611572,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 46.jpeg",
+   "backup": "DSCF1548.JPG",
+   "backup_second": "DSCF1547.JPG",
+   "similarity": 0.9977418780326843,
+   "second_similarity": 0.9684000611305237,
+   "margin": 0.029341816902160645,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 47.jpeg",
+   "backup": "DSCF1556.JPG",
+   "backup_second": "DSCF1557.JPG",
+   "similarity": 0.999135434627533,
+   "second_similarity": 0.9803088903427124,
+   "margin": 0.018826544284820557,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 48.jpeg",
+   "backup": "DSCF1558.JPG",
+   "backup_second": "DSCF1622.JPG",
+   "similarity": 0.9837741851806641,
+   "second_similarity": 0.7935954928398132,
+   "margin": 0.19017869234085083,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 49.jpeg",
+   "backup": "DSCF1562.JPG",
+   "backup_second": "DSCF1513.JPG",
+   "similarity": 0.9994611144065857,
+   "second_similarity": 0.7853240370750427,
+   "margin": 0.21413707733154297,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 5.jpeg",
+   "backup": "DSCF1295.JPG",
+   "backup_second": "DSCF1294.JPG",
+   "similarity": 0.9238093495368958,
+   "second_similarity": 0.8994706869125366,
+   "margin": 0.02433866262435913,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 50.jpeg",
+   "backup": "DSCF1585.JPG",
+   "backup_second": "DSCF1584.JPG",
+   "similarity": 0.857316255569458,
+   "second_similarity": 0.843815803527832,
+   "margin": 0.013500452041625977,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 51.jpeg",
+   "backup": "DSCF1585.JPG",
+   "backup_second": "HIEP0390.JPG",
+   "similarity": 0.8585660457611084,
+   "second_similarity": 0.8449560403823853,
+   "margin": 0.013610005378723145,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 52.jpeg",
+   "backup": "HIEP0389.JPG",
+   "backup_second": "HIEP0395.JPG",
+   "similarity": 0.9999788999557495,
+   "second_similarity": 0.9074192047119141,
+   "margin": 0.09255969524383545,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 53.jpeg",
+   "backup": "DSCF1578.JPG",
+   "backup_second": "DSCF1579.JPG",
+   "similarity": 0.9993664026260376,
+   "second_similarity": 0.9707047343254089,
+   "margin": 0.028661668300628662,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 54.jpeg",
+   "backup": "DSCF1579.JPG",
+   "backup_second": "DSCF1578.JPG",
+   "similarity": 0.9992799162864685,
+   "second_similarity": 0.9722579121589661,
+   "margin": 0.02702200412750244,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 55.jpeg",
+   "backup": "HIEP0391.JPG",
+   "backup_second": "HIEP0392.JPG",
+   "similarity": 0.9999750852584839,
+   "second_similarity": 0.9573050141334534,
+   "margin": 0.04267007112503052,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 56.jpeg",
+   "backup": "HIEP0393.JPG",
+   "backup_second": "HIEP0394.JPG",
+   "similarity": 0.9545268416404724,
+   "second_similarity": 0.9483117461204529,
+   "margin": 0.006215095520019531,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 57.jpeg",
+   "backup": "HIEP0396.JPG",
+   "backup_second": "HIEP0395.JPG",
+   "similarity": 0.9777617454528809,
+   "second_similarity": 0.9357999563217163,
+   "margin": 0.04196178913116455,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 58.jpeg",
+   "backup": "HIEP0395.JPG",
+   "backup_second": "HIEP0396.JPG",
+   "similarity": 0.9761703610420227,
+   "second_similarity": 0.9280585646629333,
+   "margin": 0.048111796379089355,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 59.jpeg",
+   "backup": "HIEP0398.JPG",
+   "backup_second": "HIEP0397.JPG",
+   "similarity": 0.9540555477142334,
+   "second_similarity": 0.9326443672180176,
+   "margin": 0.02141118049621582,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 6.jpeg",
+   "backup": "DSCF1294.JPG",
+   "backup_second": "DSCF1295.JPG",
+   "similarity": 0.9982872009277344,
+   "second_similarity": 0.9214380979537964,
+   "margin": 0.07684910297393799,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 60.jpeg",
+   "backup": "DSCF1584.JPG",
+   "backup_second": "DSCF1585.JPG",
+   "similarity": 0.9544759392738342,
+   "second_similarity": 0.9160445928573608,
+   "margin": 0.03843134641647339,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 61.jpeg",
+   "backup": "DSCF1591.JPG",
+   "backup_second": "HIEP0392.JPG",
+   "similarity": 0.7769659757614136,
+   "second_similarity": 0.7659453749656677,
+   "margin": 0.01102060079574585,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 62.jpeg",
+   "backup": "HIEP0403.JPG",
+   "backup_second": "DSCF1590.JPG",
+   "similarity": 0.9999862313270569,
+   "second_similarity": 0.6414571404457092,
+   "margin": 0.35852909088134766,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 63.jpeg",
+   "backup": "HIEP0404.JPG",
+   "backup_second": "HIEP0405.JPG",
+   "similarity": 0.9999745488166809,
+   "second_similarity": 0.8323282599449158,
+   "margin": 0.16764628887176514,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 64.jpeg",
+   "backup": "HIEP0405.JPG",
+   "backup_second": "HIEP0406.JPG",
+   "similarity": 0.9558923840522766,
+   "second_similarity": 0.8745405077934265,
+   "margin": 0.0813518762588501,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 65.jpeg",
+   "backup": "HIEP0406.JPG",
+   "backup_second": "HIEP0405.JPG",
+   "similarity": 0.9641003012657166,
+   "second_similarity": 0.901299238204956,
+   "margin": 0.0628010630607605,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 66.jpeg",
+   "backup": "DSCF1588.JPG",
+   "backup_second": "DSCF1589.JPG",
+   "similarity": 0.9989785552024841,
+   "second_similarity": 0.9807900786399841,
+   "margin": 0.0181884765625,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 67.jpeg",
+   "backup": "DSCF1590.JPG",
+   "backup_second": "DSCF1591.JPG",
+   "similarity": 0.9983721375465393,
+   "second_similarity": 0.9310050010681152,
+   "margin": 0.06736713647842407,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 68.jpeg",
+   "backup": "HIEP0389.JPG",
+   "backup_second": "HIEP0395.JPG",
+   "similarity": 0.8068167567253113,
+   "second_similarity": 0.7634013891220093,
+   "margin": 0.043415367603302,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 69.jpeg",
+   "backup": "DSCF1592.JPG",
+   "backup_second": "DSCF1593.JPG",
+   "similarity": 0.9988378286361694,
+   "second_similarity": 0.8897402286529541,
+   "margin": 0.10909759998321533,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 7.jpeg",
+   "backup": "DSCF1297.JPG",
+   "backup_second": "DSCF1296.JPG",
+   "similarity": 0.9197779297828674,
+   "second_similarity": 0.8904988765716553,
+   "margin": 0.029279053211212158,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 70.jpeg",
+   "backup": "DSCF1602.JPG",
+   "backup_second": "DSCF1601.JPG",
+   "similarity": 0.9945107102394104,
+   "second_similarity": 0.8934133052825928,
+   "margin": 0.10109740495681763,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 71.jpeg",
+   "backup": "DSCF1605.JPG",
+   "backup_second": "DSCF1606.JPG",
+   "similarity": 0.9915556907653809,
+   "second_similarity": 0.8714603185653687,
+   "margin": 0.12009537220001221,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 72.jpeg",
+   "backup": "DSCF1606.JPG",
+   "backup_second": "DSCF1607.JPG",
+   "similarity": 0.9926356673240662,
+   "second_similarity": 0.8835790157318115,
+   "margin": 0.10905665159225464,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 73.jpeg",
+   "backup": "DSCF1607.JPG",
+   "backup_second": "DSCF1608.JPG",
+   "similarity": 0.9229313731193542,
+   "second_similarity": 0.8958559632301331,
+   "margin": 0.02707540988922119,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 74.jpeg",
+   "backup": "DSCF1608.JPG",
+   "backup_second": "DSCF1607.JPG",
+   "similarity": 0.9921622276306152,
+   "second_similarity": 0.889915406703949,
+   "margin": 0.10224682092666626,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 75.jpeg",
+   "backup": "DSCF1611.JPG",
+   "backup_second": "DSCF1612.JPG",
+   "similarity": 0.9989594221115112,
+   "second_similarity": 0.9138895273208618,
+   "margin": 0.08506989479064941,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 76.jpeg",
+   "backup": "DSCF1617.JPG",
+   "backup_second": "DSCF1611.JPG",
+   "similarity": 0.9986542463302612,
+   "second_similarity": 0.7907602787017822,
+   "margin": 0.207893967628479,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 77.jpeg",
+   "backup": "DSCF1611.JPG",
+   "backup_second": "DSCF1498.JPG",
+   "similarity": 0.756483793258667,
+   "second_similarity": 0.7468747496604919,
+   "margin": 0.009609043598175049,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 78.jpeg",
+   "backup": "DSCF1639.JPG",
+   "backup_second": "DSCF1638.JPG",
+   "similarity": 0.9980660080909729,
+   "second_similarity": 0.9532768726348877,
+   "margin": 0.044789135456085205,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 79.jpeg",
+   "backup": "DSCF1606.JPG",
+   "backup_second": "DSCF1607.JPG",
+   "similarity": 0.8394387364387512,
+   "second_similarity": 0.790361762046814,
+   "margin": 0.049076974391937256,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 8.jpeg",
+   "backup": "DSCF1298.JPG",
+   "backup_second": "DSCF1300.JPG",
+   "similarity": 0.9400947690010071,
+   "second_similarity": 0.8934386372566223,
+   "margin": 0.046656131744384766,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 80.jpeg",
+   "backup": "DSCF1601.JPG",
+   "backup_second": "DSCF1604.JPG",
+   "similarity": 0.7911558151245117,
+   "second_similarity": 0.7905100584030151,
+   "margin": 0.000645756721496582,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 81.jpeg",
+   "backup": "DSCF1647.JPG",
+   "backup_second": "DSCF1612.JPG",
+   "similarity": 0.9993993043899536,
+   "second_similarity": 0.7997266054153442,
+   "margin": 0.19967269897460938,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 82.jpeg",
+   "backup": "DSCF1612.JPG",
+   "backup_second": "DSCF1611.JPG",
+   "similarity": 0.8442724943161011,
+   "second_similarity": 0.814911961555481,
+   "margin": 0.029360532760620117,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 83.jpeg",
+   "backup": "DSCF1661.JPG",
+   "backup_second": "DSCF1502.JPG",
+   "similarity": 0.7809712886810303,
+   "second_similarity": 0.7440023422241211,
+   "margin": 0.03696894645690918,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 84.jpeg",
+   "backup": "DSCF1661.JPG",
+   "backup_second": "DSCF1288.JPG",
+   "similarity": 0.9105936288833618,
+   "second_similarity": 0.8077543377876282,
+   "margin": 0.10283929109573364,
+   "accepted": true
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 85.jpeg",
+   "backup": "DSCF1665.JPG",
+   "backup_second": "DSCF1666.JPG",
+   "similarity": 0.7499419450759888,
+   "second_similarity": 0.747383713722229,
+   "margin": 0.0025582313537597656,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 86.jpeg",
+   "backup": "DSCF1668.JPG",
+   "backup_second": "DSCF1667.JPG",
+   "similarity": 0.9990195035934448,
+   "second_similarity": 0.9869173169136047,
+   "margin": 0.012102186679840088,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 87.jpeg",
+   "backup": "DSCF1669.JPG",
+   "backup_second": "DSCF1670.JPG",
+   "similarity": 0.9988918900489807,
+   "second_similarity": 0.9938570261001587,
+   "margin": 0.0050348639488220215,
+   "accepted": false
+  },
+  {
+   "edited": "220924_ethan_nicole_wedding_dance_rehearsal - 9.jpeg",
+   "backup": "DSCF1310.JPG",
+   "backup_second": "DSCF1311.JPG",
+   "similarity": 0.953719973564148,
+   "second_similarity": 0.9062651991844177,
+   "margin": 0.047454774379730225,
+   "accepted": true
+  }
+ ]
+}

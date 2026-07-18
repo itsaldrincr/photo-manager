@@ -1,0 +1,549 @@
+{
+ "backup_dir": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/wedding_c/zd_backup",
+ "edited_dir": "/private/tmp/claude-501/-Users-alrelador/d6882f01-c8b9-42a3-ba55-daa9f4359beb/scratchpad/wedding_c/zd_edited",
+ "matcher": "dinov2-small pooled CLS cosine NN",
+ "accept_min_similarity": 0.6,
+ "accept_min_margin": 0.03,
+ "matches": [
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 1.jpeg",
+   "backup": "HIEP3931.JPG",
+   "backup_second": "HIEP4024.JPG",
+   "similarity": 0.9872533679008484,
+   "second_similarity": 0.8178106546401978,
+   "margin": 0.16944271326065063,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 10.jpeg",
+   "backup": "HIEP3952.JPG",
+   "backup_second": "HIEP4049.JPG",
+   "similarity": 0.9335973262786865,
+   "second_similarity": 0.7135956883430481,
+   "margin": 0.22000163793563843,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 11.jpeg",
+   "backup": "HIEP3946.JPG",
+   "backup_second": "HIEP3964.JPG",
+   "similarity": 0.6194138526916504,
+   "second_similarity": 0.6061396598815918,
+   "margin": 0.013274192810058594,
+   "accepted": false
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 12.jpeg",
+   "backup": "HIEP3994.JPG",
+   "backup_second": "HIEP3983.JPG",
+   "similarity": 0.8316829204559326,
+   "second_similarity": 0.7649570107460022,
+   "margin": 0.06672590970993042,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 13.jpeg",
+   "backup": "HIEP3960.JPG",
+   "backup_second": "HIEP3964.JPG",
+   "similarity": 0.8412995338439941,
+   "second_similarity": 0.7161836624145508,
+   "margin": 0.12511587142944336,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 14.jpeg",
+   "backup": "HIEP3960.JPG",
+   "backup_second": "HIEP3964.JPG",
+   "similarity": 0.7837093472480774,
+   "second_similarity": 0.7777605056762695,
+   "margin": 0.005948841571807861,
+   "accepted": false
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 15.jpeg",
+   "backup": "HIEP3953.JPG",
+   "backup_second": "HIEP3949.JPG",
+   "similarity": 0.6864020824432373,
+   "second_similarity": 0.6752722859382629,
+   "margin": 0.011129796504974365,
+   "accepted": false
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 16.jpeg",
+   "backup": "HIEP3949.JPG",
+   "backup_second": "HIEP3953.JPG",
+   "similarity": 0.8290880918502808,
+   "second_similarity": 0.7065145969390869,
+   "margin": 0.12257349491119385,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 17.jpeg",
+   "backup": "HIEP3968.JPG",
+   "backup_second": "HIEP3970.JPG",
+   "similarity": 0.9601265788078308,
+   "second_similarity": 0.7556001543998718,
+   "margin": 0.20452642440795898,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 18.jpeg",
+   "backup": "HIEP3969.JPG",
+   "backup_second": "HIEP3970.JPG",
+   "similarity": 0.9802125692367554,
+   "second_similarity": 0.849170446395874,
+   "margin": 0.13104212284088135,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 19.jpeg",
+   "backup": "HIEP3971.JPG",
+   "backup_second": "HIEP3981.JPG",
+   "similarity": 0.97236168384552,
+   "second_similarity": 0.5923218131065369,
+   "margin": 0.38003987073898315,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 2.jpeg",
+   "backup": "HIEP3932.JPG",
+   "backup_second": "HIEP3994.JPG",
+   "similarity": 0.9817928671836853,
+   "second_similarity": 0.7488710880279541,
+   "margin": 0.2329217791557312,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 20.jpeg",
+   "backup": "HIEP3983.JPG",
+   "backup_second": "HIEP3994.JPG",
+   "similarity": 0.8593411445617676,
+   "second_similarity": 0.8169945478439331,
+   "margin": 0.04234659671783447,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 21.jpeg",
+   "backup": "HIEP3976.JPG",
+   "backup_second": "HIEP3995.JPG",
+   "similarity": 0.9290941953659058,
+   "second_similarity": 0.6463597416877747,
+   "margin": 0.2827344536781311,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 22.jpeg",
+   "backup": "HIEP3978.JPG",
+   "backup_second": "HIEP3969.JPG",
+   "similarity": 0.9897146224975586,
+   "second_similarity": 0.5567010641098022,
+   "margin": 0.43301355838775635,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 23.jpeg",
+   "backup": "HIEP3979.JPG",
+   "backup_second": "HIEP3946.JPG",
+   "similarity": 0.9368746280670166,
+   "second_similarity": 0.8052437901496887,
+   "margin": 0.13163083791732788,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 24.jpeg",
+   "backup": "HIEP3971.JPG",
+   "backup_second": "HIEP3981.JPG",
+   "similarity": 0.6577403545379639,
+   "second_similarity": 0.608494758605957,
+   "margin": 0.049245595932006836,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 25.jpeg",
+   "backup": "HIEP3981.JPG",
+   "backup_second": "HIEP3971.JPG",
+   "similarity": 0.6341480016708374,
+   "second_similarity": 0.6191746592521667,
+   "margin": 0.014973342418670654,
+   "accepted": false
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 26.jpeg",
+   "backup": "HIEP3983.JPG",
+   "backup_second": "HIEP3994.JPG",
+   "similarity": 0.9612746238708496,
+   "second_similarity": 0.8125450611114502,
+   "margin": 0.14872956275939941,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 27.jpeg",
+   "backup": "HIEP3964.JPG",
+   "backup_second": "HIEP4020.JPG",
+   "similarity": 0.5981237888336182,
+   "second_similarity": 0.5639527440071106,
+   "margin": 0.03417104482650757,
+   "accepted": false
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 28.jpeg",
+   "backup": "HIEP3985.JPG",
+   "backup_second": "HIEP3986.JPG",
+   "similarity": 0.5962972044944763,
+   "second_similarity": 0.5929174423217773,
+   "margin": 0.0033797621726989746,
+   "accepted": false
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 29.jpeg",
+   "backup": "HIEP3991.JPG",
+   "backup_second": "HIEP3986.JPG",
+   "similarity": 0.8185834884643555,
+   "second_similarity": 0.604066014289856,
+   "margin": 0.2145174741744995,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 3.jpeg",
+   "backup": "HIEP3933.JPG",
+   "backup_second": "HIEP3946.JPG",
+   "similarity": 0.9882889986038208,
+   "second_similarity": 0.7152137756347656,
+   "margin": 0.2730752229690552,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 30.jpeg",
+   "backup": "HIEP3994.JPG",
+   "backup_second": "HIEP3932.JPG",
+   "similarity": 0.9704466462135315,
+   "second_similarity": 0.8145010471343994,
+   "margin": 0.15594559907913208,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 31.jpeg",
+   "backup": "HIEP3995.JPG",
+   "backup_second": "HIEP3976.JPG",
+   "similarity": 0.9877384305000305,
+   "second_similarity": 0.6198633313179016,
+   "margin": 0.3678750991821289,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 32.jpeg",
+   "backup": "HIEP4001.JPG",
+   "backup_second": "HIEP4002.JPG",
+   "similarity": 0.4865853190422058,
+   "second_similarity": 0.4630067050457001,
+   "margin": 0.023578613996505737,
+   "accepted": false
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 33.jpeg",
+   "backup": "HIEP4003.JPG",
+   "backup_second": "HIEP4001.JPG",
+   "similarity": 0.5829623341560364,
+   "second_similarity": 0.47591474652290344,
+   "margin": 0.10704758763313293,
+   "accepted": false
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 34.jpeg",
+   "backup": "HIEP4004.JPG",
+   "backup_second": "HIEP4023.JPG",
+   "similarity": 0.7055870294570923,
+   "second_similarity": 0.4119640588760376,
+   "margin": 0.2936229705810547,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 35.jpeg",
+   "backup": "HIEP4005.JPG",
+   "backup_second": "HIEP3970.JPG",
+   "similarity": 0.9372417330741882,
+   "second_similarity": 0.7137541770935059,
+   "margin": 0.22348755598068237,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 36.jpeg",
+   "backup": "HIEP4006.JPG",
+   "backup_second": "HIEP3949.JPG",
+   "similarity": 0.9932537078857422,
+   "second_similarity": 0.7766053676605225,
+   "margin": 0.21664834022521973,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 37.jpeg",
+   "backup": "HIEP4007.JPG",
+   "backup_second": "HIEP4008.JPG",
+   "similarity": 0.9904921054840088,
+   "second_similarity": 0.8044253587722778,
+   "margin": 0.18606674671173096,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 38.jpeg",
+   "backup": "HIEP4008.JPG",
+   "backup_second": "HIEP4007.JPG",
+   "similarity": 0.9893918037414551,
+   "second_similarity": 0.7974957823753357,
+   "margin": 0.19189602136611938,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 39.jpeg",
+   "backup": "HIEP4007.JPG",
+   "backup_second": "HIEP3983.JPG",
+   "similarity": 0.7167972326278687,
+   "second_similarity": 0.6859147548675537,
+   "margin": 0.03088247776031494,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 4.jpeg",
+   "backup": "HIEP3939.JPG",
+   "backup_second": "HIEP4065.JPG",
+   "similarity": 0.9124597311019897,
+   "second_similarity": 0.5549389123916626,
+   "margin": 0.35752081871032715,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 40.jpeg",
+   "backup": "HIEP4015.JPG",
+   "backup_second": "HIEP4005.JPG",
+   "similarity": 0.9477362632751465,
+   "second_similarity": 0.6942551136016846,
+   "margin": 0.2534811496734619,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 41.jpeg",
+   "backup": "HIEP4019.JPG",
+   "backup_second": "HIEP3995.JPG",
+   "similarity": 0.9913610816001892,
+   "second_similarity": 0.6018908023834229,
+   "margin": 0.38947027921676636,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 42.jpeg",
+   "backup": "HIEP4020.JPG",
+   "backup_second": "HIEP4007.JPG",
+   "similarity": 0.9314181208610535,
+   "second_similarity": 0.5414727926254272,
+   "margin": 0.3899453282356262,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 43.jpeg",
+   "backup": "HIEP4021.JPG",
+   "backup_second": "HIEP4037.JPG",
+   "similarity": 0.9699497818946838,
+   "second_similarity": 0.4580680727958679,
+   "margin": 0.5118817090988159,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 44.jpeg",
+   "backup": "HIEP4022.JPG",
+   "backup_second": "HIEP4007.JPG",
+   "similarity": 0.9402758479118347,
+   "second_similarity": 0.4777035117149353,
+   "margin": 0.4625723361968994,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 45.jpeg",
+   "backup": "HIEP4023.JPG",
+   "backup_second": "HIEP3995.JPG",
+   "similarity": 0.8768866658210754,
+   "second_similarity": 0.5531572103500366,
+   "margin": 0.3237294554710388,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 46.jpeg",
+   "backup": "HIEP4027.JPG",
+   "backup_second": "HIEP4026.JPG",
+   "similarity": 0.9844467043876648,
+   "second_similarity": 0.9342417120933533,
+   "margin": 0.05020499229431152,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 47.jpeg",
+   "backup": "HIEP4028.JPG",
+   "backup_second": "HIEP4027.JPG",
+   "similarity": 0.9709164500236511,
+   "second_similarity": 0.7168232798576355,
+   "margin": 0.2540931701660156,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 48.jpeg",
+   "backup": "HIEP4031.JPG",
+   "backup_second": "HIEP4035.JPG",
+   "similarity": 0.9946765899658203,
+   "second_similarity": 0.7257320880889893,
+   "margin": 0.26894450187683105,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 49.jpeg",
+   "backup": "HIEP4034.JPG",
+   "backup_second": "HIEP4035.JPG",
+   "similarity": 0.618998646736145,
+   "second_similarity": 0.547275722026825,
+   "margin": 0.07172292470932007,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 5.jpeg",
+   "backup": "HIEP3941.JPG",
+   "backup_second": "HIEP3931.JPG",
+   "similarity": 0.9931260347366333,
+   "second_similarity": 0.7918344736099243,
+   "margin": 0.20129156112670898,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 50.jpeg",
+   "backup": "HIEP4035.JPG",
+   "backup_second": "HIEP4036.JPG",
+   "similarity": 0.8092527985572815,
+   "second_similarity": 0.804777979850769,
+   "margin": 0.004474818706512451,
+   "accepted": false
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 51.jpeg",
+   "backup": "HIEP4037.JPG",
+   "backup_second": "HIEP4040.JPG",
+   "similarity": 0.8506476283073425,
+   "second_similarity": 0.7017238736152649,
+   "margin": 0.14892375469207764,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 52.jpeg",
+   "backup": "HIEP4039.JPG",
+   "backup_second": "HIEP4038.JPG",
+   "similarity": 0.9593483209609985,
+   "second_similarity": 0.7690539956092834,
+   "margin": 0.1902943253517151,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 53.jpeg",
+   "backup": "HIEP3933.JPG",
+   "backup_second": "HIEP4040.JPG",
+   "similarity": 0.6443370580673218,
+   "second_similarity": 0.6090437769889832,
+   "margin": 0.03529328107833862,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 54.jpeg",
+   "backup": "HIEP3953.JPG",
+   "backup_second": "HIEP3949.JPG",
+   "similarity": 0.7056893110275269,
+   "second_similarity": 0.6831821203231812,
+   "margin": 0.022507190704345703,
+   "accepted": false
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 55.jpeg",
+   "backup": "HIEP4058.JPG",
+   "backup_second": "HIEP4055.JPG",
+   "similarity": 0.9862786531448364,
+   "second_similarity": 0.8541826605796814,
+   "margin": 0.13209599256515503,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 56.jpeg",
+   "backup": "HIEP4058.JPG",
+   "backup_second": "HIEP4055.JPG",
+   "similarity": 0.8498629927635193,
+   "second_similarity": 0.7349255681037903,
+   "margin": 0.114937424659729,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 57.jpeg",
+   "backup": "HIEP4065.JPG",
+   "backup_second": "HIEP3979.JPG",
+   "similarity": 0.9818933010101318,
+   "second_similarity": 0.6080076694488525,
+   "margin": 0.3738856315612793,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 58.jpeg",
+   "backup": "HIEP4065.JPG",
+   "backup_second": "HIEP3933.JPG",
+   "similarity": 0.635223925113678,
+   "second_similarity": 0.572435736656189,
+   "margin": 0.06278818845748901,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 59.jpeg",
+   "backup": "HIEP3983.JPG",
+   "backup_second": "HIEP4008.JPG",
+   "similarity": 0.4742734730243683,
+   "second_similarity": 0.4493632912635803,
+   "margin": 0.024910181760787964,
+   "accepted": false
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 6.jpeg",
+   "backup": "HIEP4015.JPG",
+   "backup_second": "HIEP3946.JPG",
+   "similarity": 0.6179801225662231,
+   "second_similarity": 0.5812517404556274,
+   "margin": 0.0367283821105957,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 60.jpeg",
+   "backup": "HIEP4005.JPG",
+   "backup_second": "HIEP3977.JPG",
+   "similarity": 0.5298493504524231,
+   "second_similarity": 0.4898128807544708,
+   "margin": 0.04003646969795227,
+   "accepted": false
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 7.jpeg",
+   "backup": "HIEP3946.JPG",
+   "backup_second": "HIEP3979.JPG",
+   "similarity": 0.9514400959014893,
+   "second_similarity": 0.793164849281311,
+   "margin": 0.15827524662017822,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 8.jpeg",
+   "backup": "HIEP3946.JPG",
+   "backup_second": "HIEP3979.JPG",
+   "similarity": 0.8281179666519165,
+   "second_similarity": 0.7378939986228943,
+   "margin": 0.09022396802902222,
+   "accepted": true
+  },
+  {
+   "edited": "290325_zack_dora_wedding_rehearsal - 9.jpeg",
+   "backup": "HIEP3949.JPG",
+   "backup_second": "HIEP4006.JPG",
+   "similarity": 0.945554256439209,
+   "second_similarity": 0.7580463886260986,
+   "margin": 0.18750786781311035,
+   "accepted": true
+  }
+ ]
+}

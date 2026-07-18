@@ -161,3 +161,14 @@ Confirmed: EmotiEffLib misreads reverent as Sadness/Surprise (21/32) while
 V/A places reverent in a calm near-neutral cluster, strongly separated from
 joyful (valence d -1.80). Liturgy-preset rule proposed (not wired) in
 runs/reverence_weaklabel_report.md.
+
+### Wedding-preset weights from implicit labels — gate FAIL x2 (no change)
+
+347 implicit-labeled photos (116 keep / 231 reject) mined from two
+Backup+Edited rehearsal shoots via DINOv2 content matching (renamed exports;
+burst-sibling exclusion policy). CV gate: all-rows fit +0.54, survivors-only
+-2.41 — both FAIL +3.0; wedding weights unchanged (mirrors holiday +1.06).
+HEADLINE SIDE-FINDING: production Stage 1 auto-drops 67/116 of the owner's
+actual selects on burst-heavy shoots (dance rehearsal = continuous burst) —
+burst/dupe representative selection, not stage-2 fusion, decides most
+outcomes there. Full analysis: runs/wedding_weights_report.md.
