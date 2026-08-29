@@ -64,3 +64,14 @@ def test_atomic_write_text_survives_interrupted_replace(tmp_path: Path, monkeypa
         pass
 
     assert target.read_text() == '{"version": 1}'
+
+
+def test_pipeline_write_archives_stale_report_and_takes_canonical_name(tmp_path):
+    """A new run's report must be session_report.json; the old one moves aside."""
+    first = _make_session(tmp_path)
+    write_report(first, overwrite=True)
+    second = _make_session(tmp_path)
+    target = write_report(second)
+    assert target == tmp_path / REPORT_FILENAME
+    archived = [p for p in tmp_path.glob("session_report_*.json")]
+    assert len(archived) == 1

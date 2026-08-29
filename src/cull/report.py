@@ -17,14 +17,28 @@ REPORT_FILENAME: str = "session_report.json"
 TIMESTAMP_FORMAT: str = "%Y%m%d_%H%M%S"
 
 
-def _unique_path(base_path: Path) -> Path:
-    """Return base_path if it does not exist; otherwise append a timestamp suffix."""
-    if not base_path.exists():
-        return base_path
+def _archive_path(base_path: Path) -> Path:
+    """Return a timestamp-suffixed sibling path for an existing report."""
     stem = base_path.stem
     suffix = base_path.suffix
     timestamp = datetime.now(tz=timezone.utc).strftime(TIMESTAMP_FORMAT)
     return base_path.with_name(f"{stem}_{timestamp}{suffix}")
+
+
+def _archive_existing(base_path: Path) -> Path | None:
+    """Rename an existing report aside so the new run's report becomes canonical.
+
+    `--review` always reads REPORT_FILENAME. Writing a new run's report under a
+    timestamped name instead left a stale session_report.json in place, and the
+    next `--review` save replayed the stale decisions over the new layout
+    (2026-08-30: 80 curated selects moved back into _review/).
+    """
+    if not base_path.exists():
+        return None
+    archived = _archive_path(base_path)
+    os.replace(base_path, archived)
+    logger.info("Previous report archived to %s", archived)
+    return archived
 
 
 def _serialise(session_result: SessionResult) -> str:
@@ -42,13 +56,16 @@ def _atomic_write_text(target: Path, content: str) -> None:
 def write_report(session_result: SessionResult, overwrite: bool = False) -> Path:
     """Write session_report.json to the source path.
 
-    When ``overwrite`` is False, preserve any existing report by writing a
-    timestamp-suffixed sibling. Review-mode saves should pass ``overwrite=True``
-    so the next `--review` session reloads the updated decisions.
+    The new report is always written to REPORT_FILENAME, because that is the
+    file `--review` reads. When ``overwrite`` is False, an existing report is
+    first renamed to a timestamp-suffixed sibling so it is preserved.
+    Review-mode saves pass ``overwrite=True`` and replace the file in place.
     """
     source_dir = Path(session_result.source_path)
     base_path = source_dir / REPORT_FILENAME
-    target = base_path if overwrite else _unique_path(base_path)
+    if not overwrite:
+        _archive_existing(base_path)
+    target = base_path
     content = _serialise(session_result)
     _atomic_write_text(target, content)
     logger.info("Report written to %s", target)
