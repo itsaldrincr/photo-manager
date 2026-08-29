@@ -29,9 +29,25 @@ class _S4RunInput(BaseModel):
     ctx: Any  # _StageRunCtx — Any avoids circular import with cull.pipeline
 
 
-def _collect_keeper_paths(s4_in: _S4RunInput) -> list[Path]:
-    """Return list of photo paths whose decision is currently 'keeper'."""
-    return [d.photo.path for d in s4_in.decisions if d.decision == "keeper"]
+# Stage 4 draws from every photo that survived Stage 1 (blur/exposure/noise,
+# burst, duplicate) and was scored by Stage 2, not only from Stage 2/3
+# "keeper" routing. The 0.94/0.85 routing cutoffs are calibrated for
+# auto-keep precision, not for building a curation pool: on a 214-photo
+# wedding card they left 3 keepers, so `--curate 80` could pick at most 3.
+_CANDIDATE_EXCLUDED_LABELS: frozenset[str] = frozenset({"duplicate"})
+
+
+def _collect_candidate_paths(s4_in: _S4RunInput) -> list[Path]:
+    """Return curation candidates: non-duplicate photos with a Stage 2 score."""
+    scored = _collect_composite_scores(s4_in.stages)
+    burst_losers = s4_in.stages.s1_out.burst_losers
+    return [
+        d.photo.path
+        for d in s4_in.decisions
+        if d.decision not in _CANDIDATE_EXCLUDED_LABELS
+        and str(d.photo.path) in scored
+        and str(d.photo.path) not in burst_losers
+    ]
 
 
 def _collect_composite_scores(stages: Any) -> dict[str, float]:
@@ -63,7 +79,7 @@ def _build_curator_input(s4_in: _S4RunInput) -> CuratorInput:
     """Assemble CuratorInput from stages, decisions, and run context."""
     cache = s4_in.stages.search_cache
     return CuratorInput(
-        keepers=_collect_keeper_paths(s4_in),
+        keepers=_collect_candidate_paths(s4_in),
         encodings=s4_in.stages.s1_out.encodings,
         composite_scores=_collect_composite_scores(s4_in.stages),
         config=s4_in.ctx.config,
