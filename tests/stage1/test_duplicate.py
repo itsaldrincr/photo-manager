@@ -136,11 +136,11 @@ def _make_tiny_jpeg(path: Path) -> None:
 
 
 class _FakeBatchInputs:
-    """Stand-in for a HF BatchFeature: .to(device) returns an empty kwargs mapping."""
+    """Stand-in for a one-image HF BatchFeature; the mocked model ignores its input."""
 
-    def to(self, device: str) -> dict:
-        """Return an empty mapping — the mocked model ignores its kwargs."""
-        return {}
+    def __getitem__(self, key: str) -> torch.Tensor:
+        """Return a (1,3,2,2) pixel_values tensor."""
+        return torch.zeros((1, 3, 2, 2))
 
 
 class _FakeModelOutput:

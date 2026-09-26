@@ -96,6 +96,7 @@ def _get_photo_paths(corpus_path: Path, baseline: dict) -> list[Path]:
     return sorted([corpus_path / name for name in baseline["scores"]])
 
 
+@pytest.mark.real_models
 def test_stage2_matches_baseline(corpus_path: Path, corpus_manifest: dict) -> None:
     """Verify Stage 2 scores match the committed baseline for the corpus."""
     baseline_path = FIXTURES_DIR / baseline_filename("p1", corpus_path)

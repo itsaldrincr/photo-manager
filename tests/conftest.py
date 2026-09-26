@@ -10,6 +10,7 @@ Also exposes mock_scorers fixture for plumbing tests that must not load real ML 
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 import pytest
@@ -29,6 +30,30 @@ from tests._mock_scorers import (
 )
 
 MANIFEST_FILENAME: str = "manifest.json"
+REAL_MODELS_MARKER: str = "real_models"
+REAL_MODELS_ENV: str = "CULL_RUN_REAL_MODELS"
+
+
+def pytest_configure(config: pytest.Config) -> None:
+    """Register the real_models marker."""
+    config.addinivalue_line(
+        "markers",
+        f"{REAL_MODELS_MARKER}: loads real ML models; skipped unless {REAL_MODELS_ENV}=1",
+    )
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
+    """Skip real_models tests unless CULL_RUN_REAL_MODELS=1.
+
+    The Stage 2 golden test grew to 14 GB over 55 minutes in a default run on
+    an 18 GB Mac, so the default suite stays mocked.
+    """
+    if os.environ.get(REAL_MODELS_ENV) == "1":
+        return
+    skip = pytest.mark.skip(reason=f"loads real ML models; set {REAL_MODELS_ENV}=1 to run")
+    for item in items:
+        if REAL_MODELS_MARKER in item.keywords:
+            item.add_marker(skip)
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:

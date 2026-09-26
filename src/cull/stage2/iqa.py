@@ -11,6 +11,7 @@ import logging
 import torch
 from pydantic import BaseModel, ConfigDict
 
+from cull.config import STAGE2_IQA_SUB_BATCH_SIZE
 from cull.io_silence import _silence_stdio
 
 logger = logging.getLogger(__name__)
@@ -86,7 +87,16 @@ def _scores_to_list(scores: torch.Tensor) -> list[float]:
 
 
 def _score_batch_with_fallback(request: _BatchScoreRequest) -> list[float]:
-    """Score batch of tensors, falling back to CPU if MPS fails."""
+    """Score a batch STAGE2_IQA_SUB_BATCH_SIZE photos per forward to bound MPS memory."""
+    scores: list[float] = []
+    for start in range(0, request.batch_tensor.shape[0], STAGE2_IQA_SUB_BATCH_SIZE):
+        sub_batch = request.batch_tensor[start:start + STAGE2_IQA_SUB_BATCH_SIZE]
+        scores.extend(_score_sub_batch_with_fallback(request.model_copy(update={"batch_tensor": sub_batch})))
+    return scores
+
+
+def _score_sub_batch_with_fallback(request: _BatchScoreRequest) -> list[float]:
+    """Score one sub-batch of tensors, falling back to CPU if MPS fails."""
     metric = _get_metric(request.name, request.device)
     try:
         with _silence_stdio(), torch.no_grad():
