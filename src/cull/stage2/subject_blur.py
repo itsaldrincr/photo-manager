@@ -51,11 +51,23 @@ def _resolve_region(
     sb_input: SubjectBlurInput, shape: tuple[int, int]
 ) -> tuple[PixelBBox, str, bool]:
     """Pick the cropping region from face / saliency / global fallback."""
-    if sb_input.portrait is not None and sb_input.portrait.has_face and sb_input.portrait.face_bbox is not None:
-        return sb_input.portrait.face_bbox, "face", True
+    portrait = sb_input.portrait
+    if portrait is not None and portrait.has_face and portrait.face_bbox is not None:
+        return _face_bbox_to_pixels(portrait, shape), "face", True
     if sb_input.saliency is not None:
         return _saliency_to_pixels(sb_input.saliency, shape), "saliency_peak", True
     return (0, 0, shape[1], shape[0]), "global", False
+
+
+def _face_bbox_to_pixels(portrait: PortraitResult, shape: tuple[int, int]) -> PixelBBox:
+    """Rescale the face bbox from the portrait pass's image into this image's pixels."""
+    bbox = portrait.face_bbox
+    if portrait.image_size is None:
+        return bbox
+    src_w, src_h = portrait.image_size
+    h_img, w_img = shape
+    sx, sy = w_img / src_w, h_img / src_h
+    return (int(bbox[0] * sx), int(bbox[1] * sy), int(bbox[2] * sx), int(bbox[3] * sy))
 
 
 def _saliency_to_pixels(saliency: SaliencyResult, shape: tuple[int, int]) -> PixelBBox:

@@ -66,6 +66,8 @@ class PortraitResult(BaseModel):
 
     face_count: int = 0
     face_bbox: tuple[int, int, int, int] | None = None
+    # (width, height) of the image face_bbox is measured in.
+    image_size: tuple[int, int] | None = None
     eye_sharpness_left: float | None = None
     eye_sharpness_right: float | None = None
     ear_left: float | None = None
@@ -281,6 +283,7 @@ def _assemble_result(assembly: _AssemblyInput) -> PortraitResult:
     return PortraitResult(
         face_count=assembly.face_count,
         face_bbox=_face_bbox_from_landmarks(ctx),
+        image_size=(ctx.image.shape[1], ctx.image.shape[0]),
         eye_sharpness_left=metrics.sharp_left,
         eye_sharpness_right=metrics.sharp_right,
         ear_left=metrics.ear_left,
