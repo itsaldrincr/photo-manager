@@ -75,3 +75,8 @@ where = ["src"]
 [tool.pytest.ini_options]
 # Test this checkout's src even when an editable install points elsewhere.
 pythonpath = ["src"]
+
+[tool.uv]
+# simple-aesthetics-predictor pins transformers<5 but only its LAION head is used,
+# which works on transformers 5; mlx-vlm 0.6.3 needs >=5.5.
+override-dependencies = ["transformers>=5.5,<5.13"]

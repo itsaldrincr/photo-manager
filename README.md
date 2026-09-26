@@ -33,8 +33,13 @@ thresholds go to the VLM for a second opinion. The rest are rejected.
 ## Install
 
 ```bash
-pip install -e ".[dev]"
+uv venv --python 3.13 .venv && . .venv/bin/activate
+uv pip install -e ".[dev]"
 ```
+
+Use `uv`, not plain `pip`. `pyproject.toml` overrides the `transformers<5`
+pin of `simple-aesthetics-predictor`, and only `uv` reads that override.
+Without it, the dependencies do not resolve.
 
 This installs the `cull` command. `mlx-vlm` is included for in-process VLM
 inference — no server or daemon required.
