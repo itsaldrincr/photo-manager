@@ -76,8 +76,10 @@ class SessionTiming(BaseModel):
 
     stage1_seconds: float = 0.0
     stage2_seconds: float = 0.0
+    reducer_seconds: float = 0.0
     stage3_seconds: float = 0.0
-    total_seconds: float = 0.0
+    stage4_seconds: float = 0.0
+    total_seconds: float = 0.0  # Stages 1-3, reducer, decisions and Stage 4
 
 
 class SessionSummary(BaseModel):
@@ -116,7 +118,9 @@ class _StageTimings(BaseModel):
 
     stage1: float = 0.0
     stage2: float = 0.0
+    reducer: float = 0.0
     stage3: float = 0.0
+    stage4: float = 0.0
 
 
 class _PipelineCtx(BaseModel):
@@ -211,7 +215,9 @@ def _assemble_session(session_in: _SessionInput, ctx: _StageRunCtx) -> SessionRe
         timing=SessionTiming(
             stage1_seconds=ctx.timings.stage1,
             stage2_seconds=ctx.timings.stage2,
+            reducer_seconds=ctx.timings.reducer,
             stage3_seconds=ctx.timings.stage3,
+            stage4_seconds=ctx.timings.stage4,
             total_seconds=session_in.total_seconds,
         ),
         decisions=session_in.decisions,
@@ -283,6 +289,7 @@ def _execute_run(ctx: _StageRunCtx) -> _RunState:
 
 def _finalize_run(state: _RunState, run_in: _PipelineRunInput) -> SessionResult:
     """Build decisions, run Stage 4, and assemble the SessionResult."""
+    t_finalize = time.monotonic()
     dec_ctx = _DecisionCtx(
         paths=state.paths, s1_out=state.stages.s1_out,
         s2_out=state.stages.s2_out, s3_results=state.stages.s3_results,
@@ -292,7 +299,8 @@ def _finalize_run(state: _RunState, run_in: _PipelineRunInput) -> SessionResult:
     session_in = _SessionInput(
         config=run_in.config, source_path=str(run_in.source_path),
         total_photos=len(state.paths), decisions=decisions,
-        total_seconds=state.total_seconds, curation=curation,
+        total_seconds=state.total_seconds + time.monotonic() - t_finalize,
+        curation=curation,
     )
     return _assemble_session(session_in, state.ctx)
 

@@ -181,6 +181,7 @@ def test_run_s4_calls_dashboard_bookends_when_curate_set(tmp_path: Path) -> None
     call_args = s4_in.ctx.dashboard.complete_stage4.call_args[0]
     assert isinstance(call_args[0], float)
     assert call_args[0] >= 0.0
+    assert s4_in.ctx.timings.stage4 == call_args[0]
 
 
 def test_run_s4_updates_dashboard_during_clustering(tmp_path: Path) -> None:

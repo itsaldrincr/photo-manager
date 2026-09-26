@@ -125,6 +125,7 @@ def test_run_s2_reducer_patches_composites_in_place(tmp_path: Path) -> None:
     outlier_path = str(tmp_path / f"photo_{OUTLIER_INDEX:02d}.jpg")
     assert s2_out.results[outlier_path].stage2.composite != baseline_composite[outlier_path]
     assert s2_out.results[outlier_path].stage2.shoot_stats is not None
+    assert ctx.timings.reducer > 0.0
 
 
 def test_run_s2_reducer_emits_dashboard_sub_bar(tmp_path: Path) -> None:

@@ -84,6 +84,7 @@ def _run_s2_reducer(run_in: _S2ReducerRunInput) -> _Stage2ReducerOutput:
     _reroute_after_patch(run_in.s2_out)
     _emit_reducer_updates(reducer_scores, run_in.ctx.dashboard)
     elapsed = time.monotonic() - t0
+    run_in.ctx.timings.reducer = elapsed
     run_in.ctx.dashboard.complete_stage2_reducer(elapsed)
     return _Stage2ReducerOutput(reducer_scores=reducer_scores, patched_count=len(reducer_scores))
 
