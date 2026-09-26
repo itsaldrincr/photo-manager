@@ -33,6 +33,11 @@ async def _ready(app: CullApp) -> PhotoView:
     return view
 
 
+def _screen_text(app: CullApp) -> str:
+    """Return what a full repaint of the current screen would write."""
+    return app.screen._compositor.render_full_update().render_segments(app.console)
+
+
 def _labels(app: CullApp) -> list[str]:
     """Return every decision label in session order."""
     return [d.decision for d in app._session.decisions]
@@ -223,6 +228,8 @@ def test_quit_without_saving_asks_first(tmp_path: Path, monkeypatch: pytest.Monk
             await _ready(app)
             await pilot.press("Q")
             assert isinstance(app.screen, ConfirmQuitScreen)
+            await pilot.pause()
+            assert "Quit without saving?" in _screen_text(app)
             await pilot.press("n")
             assert not isinstance(app.screen, ConfirmQuitScreen)
             assert exits == []
@@ -240,6 +247,8 @@ def test_help_overlay_hides_the_photo_until_closed(tmp_path: Path) -> None:
             view = await _ready(app)
             await pilot.press("question_mark")
             assert isinstance(app.screen, HelpScreen)
+            await pilot.pause()
+            assert "esc / ? to close" in _screen_text(app)
             assert all(kitty.PLACEHOLDER not in "".join(s.text for s in view.render_line(y)) for y in range(view.size.height))
             await pilot.press("escape")
             assert not isinstance(app.screen, HelpScreen)

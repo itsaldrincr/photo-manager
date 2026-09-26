@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from textual.app import ComposeResult
 from textual.binding import Binding
-from textual.containers import Vertical
 from textual.screen import ModalScreen
 from textual.widgets import Static
 
@@ -49,7 +48,7 @@ class HelpScreen(ModalScreen[None]):
     HelpScreen {
         align: center middle;
     }
-    HelpScreen > Vertical {
+    HelpScreen > Static {
         width: auto;
         height: auto;
         padding: 1 2;
@@ -59,8 +58,7 @@ class HelpScreen(ModalScreen[None]):
     """
 
     def compose(self) -> ComposeResult:
-        with Vertical():
-            yield Static(help_text())
+        yield Static(help_text())
 
     def action_dismiss_help(self) -> None:
         """Close the overlay."""
@@ -79,7 +77,7 @@ class ConfirmQuitScreen(ModalScreen[bool]):
     ConfirmQuitScreen {
         align: center middle;
     }
-    ConfirmQuitScreen > Vertical {
+    ConfirmQuitScreen > Static {
         width: auto;
         height: auto;
         padding: 1 2;
@@ -93,11 +91,10 @@ class ConfirmQuitScreen(ModalScreen[bool]):
         self._pending_changes = pending_changes
 
     def compose(self) -> ComposeResult:
-        with Vertical():
-            yield Static(
-                f"Quit without saving?\n\n{self._pending_changes} decision(s) this session: "
-                "no photos will move and the report will not change.\n\n[y] quit   [n / esc] keep reviewing"
-            )
+        yield Static(
+            f"Quit without saving?\n\n{self._pending_changes} decision(s) this session: "
+            "no photos will move and the report will not change.\n\n[y] quit   [n / esc] keep reviewing"
+        )
 
     def action_answer(self, should_quit: bool) -> None:
         """Return the answer to the app."""
