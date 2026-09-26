@@ -21,6 +21,7 @@ from cull.stage1.burst import _BurstInput, detect_bursts
 from cull.stage1.duplicate import find_duplicates
 from cull.stage1.exposure import ExposureResult
 from cull.stage1.geometry import GeometryResult
+from cull.stage1.representatives import select_group_losers
 from cull.stage1.worker import Stage1WorkerResult, assess_one
 
 logger = logging.getLogger(__name__)
@@ -45,6 +46,7 @@ class _Stage1Output(BaseModel):
     survivors: list[Path] = Field(default_factory=list)
     rejected: list[Path] = Field(default_factory=list)
     duplicate_paths: set[str] = Field(default_factory=set)
+    duplicate_groups: list[list[str]] = Field(default_factory=list)
     burst_losers: set[str] = Field(default_factory=set)
     failed_paths: list[Path] = Field(default_factory=list)
     encodings: dict[str, Any] = Field(default_factory=dict)
@@ -195,9 +197,8 @@ def _run_s1(ctx: Any) -> _Stage1Output:
     s1_out = _Stage1Output()
     _preflight_dupes_into_output(_Stage1WorkCtx(loop_in=loop_in, output=s1_out, dashboard=ctx.dashboard))
     _run_stage1_loop_into(_Stage1WorkCtx(loop_in=loop_in, output=s1_out, dashboard=ctx.dashboard))
-    _apply_burst_only(loop_in, s1_out)
-    _stamp_duplicate_flags(s1_out)
-    s1_out.survivors = _filter_survivors(s1_out)
+    _resolve_groups(loop_in, s1_out)
+    ctx.dashboard.set_dupe_count(len(s1_out.duplicate_paths))
     ctx.dashboard.set_burst_count(len(s1_out.burst_losers))
     ctx.dashboard.refresh()
     _unload_imagededup_cnn()
@@ -214,6 +215,8 @@ def _preflight_dupes_into_output(ctx: _Stage1WorkCtx) -> None:
     image_dir = ctx.loop_in.source_path if ctx.loop_in.source_path is not None else ctx.loop_in.paths[0].parent
     dup_result = find_duplicates(image_dir)
     ctx.output.encodings = dup_result.encodings
+    ctx.output.duplicate_groups = [[str(p) for p in g.paths] for g in dup_result.duplicate_groups]
+    # Provisional count for the live dashboard; _resolve_groups picks the real keepers.
     for group in dup_result.duplicate_groups:
         for dup_path in group.paths[1:]:
             ctx.output.duplicate_paths.add(str(dup_path))
@@ -230,22 +233,42 @@ def _run_stage1_loop_into(ctx: _Stage1WorkCtx) -> None:
     ctx.output.failed_paths.extend(loop_out.failed_paths)
 
 
-def _apply_burst_only(loop_in: _Stage1LoopInput, output: _Stage1Output) -> None:
-    """Run burst detection only — duplicates already detected in preflight."""
+def _detect_burst_groups(loop_in: _Stage1LoopInput, output: _Stage1Output) -> list[list[str]]:
+    """Return visually confirmed burst groups among Stage 1 survivors."""
     if not output.survivors:
-        return
-    blur_scores = {
+        return []
+    burst_result = detect_bursts(_BurstInput(
+        image_paths=output.survivors,
+        config=loop_in.config,
+        blur_scores=_survivor_tenengrad(output),
+    ))
+    return [[str(p) for p in group] for group in burst_result.groups]
+
+
+def _survivor_tenengrad(output: _Stage1Output) -> dict[str, float]:
+    """Return the Stage 1 Tenengrad sharpness of every survivor, keyed by str(path)."""
+    return {
         str(p): output.results[str(p)].blur.tenengrad
         for p in output.survivors
         if str(p) in output.results
     }
-    burst_result = detect_bursts(_BurstInput(
-        image_paths=output.survivors,
-        config=loop_in.config,
-        blur_scores=blur_scores,
-    ))
-    for loser in burst_result.losers:
-        output.burst_losers.add(str(loser))
+
+
+def _resolve_groups(loop_in: _Stage1LoopInput, output: _Stage1Output) -> None:
+    """Keep the sharpest survivor of each connected duplicate/burst group.
+
+    Duplicate and burst groups are merged before choosing, so a photo that
+    loses one grouping can never also knock out the other group's keeper.
+    """
+    passing = {str(p) for p in output.survivors}
+    dup_groups = [[m for m in g if m in passing] for g in output.duplicate_groups]
+    groups = dup_groups + _detect_burst_groups(loop_in, output)
+    losers = select_group_losers(groups, _survivor_tenengrad(output))
+    dup_members = {m for g in output.duplicate_groups for m in g}
+    output.duplicate_paths = losers & dup_members
+    output.burst_losers = losers - dup_members
+    _stamp_duplicate_flags(output)
+    output.survivors = _filter_survivors(output)
 
 
 class _Stage1WorkCtx(BaseModel):
