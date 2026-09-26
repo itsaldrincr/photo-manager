@@ -163,3 +163,27 @@ def test_post_pipeline_launches_review_only_when_requested() -> None:
     ):
         cli_pipeline._post_pipeline(post_in)
     launch_review.assert_not_called()
+
+
+def _captured_config(args: list[str]) -> CullConfig:
+    """Invoke the pipeline command with args and return the CullConfig it built."""
+    cli = _cli_module()
+    captured: list[CullConfig] = []
+
+    def fake_standard_pipeline(kwargs, config):  # type: ignore[no-untyped-def]
+        captured.append(config)
+
+    with patch.object(cli, "_run_standard_pipeline", side_effect=fake_standard_pipeline):
+        result = CliRunner().invoke(cli._cull_pipeline_command, args)
+    assert result.exit_code == 0, result.output
+    return captured[0]
+
+
+def test_portrait_defaults_on(tmp_path: Path) -> None:
+    """Portrait analysis is on without any flag, as the help table says."""
+    assert _captured_config([str(tmp_path)]).is_portrait is True
+
+
+def test_no_portrait_turns_it_off(tmp_path: Path) -> None:
+    """--no-portrait disables portrait analysis."""
+    assert _captured_config(["--no-portrait", str(tmp_path)]).is_portrait is False

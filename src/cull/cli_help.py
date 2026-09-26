@@ -22,7 +22,7 @@ FAST_MODE_AVAILABLE: bool = importlib.util.find_spec("cull_fast") is not None
 _BASE_FLAG_ROWS: list[tuple[str, str, str]] = [
     ("--dry-run", "Preview decisions without moving any files", "off"),
     ("--no-vlm", "Skip Stage 3 (no VLM needed, faster)", "off"),
-    ("--portrait", "Face/eye quality analysis (blink, sharpness, expression)", "on"),
+    ("--no-portrait", "Skip face/eye quality analysis (blink, sharpness, expression)", "off"),
     ("--model TEXT", "VLM alias \u2014 see VLM_ALIASES", VLM_DEFAULT_ALIAS),
     ("--threshold FLOAT", "Stage 4 scene-cluster distance (higher = fewer, broader clusters)", "0.65"),
     ("--burst-gap FLOAT", "Max seconds between shots to group as burst", "0.5"),

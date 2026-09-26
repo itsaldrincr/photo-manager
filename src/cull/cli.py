@@ -178,7 +178,7 @@ def _run_standard_pipeline(kwargs: dict, config: CullConfig) -> None:
 @click.option("--dry-run", is_flag=True, default=False)
 @click.option("--stage", type=int, multiple=True)
 @click.option("--no-vlm", is_flag=True, default=False)
-@click.option("--portrait", is_flag=True, default=False)
+@click.option("--portrait/--no-portrait", default=True)
 @click.option(
     "--model",
     type=str,
