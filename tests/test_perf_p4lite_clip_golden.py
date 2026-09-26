@@ -121,6 +121,7 @@ def _build_total_by_category(manifest: dict) -> dict[str, int]:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_models
 def test_aesthetic_matches_baseline(
     corpus_path: Path, corpus_manifest: dict
 ) -> None:
