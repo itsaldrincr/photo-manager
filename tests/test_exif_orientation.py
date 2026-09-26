@@ -72,9 +72,7 @@ def test_dinov2_duplicate_embed_input_is_upright(rotated_jpeg: Path, monkeypatch
 
     def _processor(images, return_tensors):
         seen.extend(img.size for img in images)
-        inputs = MagicMock()
-        inputs.to.return_value = {}
-        return inputs
+        return {"pixel_values": torch.zeros(len(images), 3, 2, 2)}
 
     model = MagicMock(return_value=MagicMock(pooler_output=torch.zeros(1, 4)))
     monkeypatch.setattr(duplicate.dinov2_loader, "get_dinov2_processor", lambda: _processor)
