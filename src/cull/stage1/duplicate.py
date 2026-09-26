@@ -21,11 +21,11 @@ from typing import Any
 
 import numpy as np
 import torch
-from PIL import Image
 from pydantic import BaseModel, ConfigDict, Field
 
 from cull import dinov2_loader
 from cull.config import BLUR_CNN_SIMILARITY_EXACT, DINOV2_DUPLICATE_SIMILARITY, DINOV2_EMBED_BATCH_SIZE
+from cull.image_io import open_rgb_upright
 from cull.router import CURATED_DIR, REVIEW_DIR
 from cull.stage2.iqa import select_device
 
@@ -222,7 +222,7 @@ def _embed_dinov2_batch(job: _DinoV2EmbedJob) -> np.ndarray:
     vectors: list[np.ndarray] = []
     for start in range(0, len(job.paths), DINOV2_EMBED_BATCH_SIZE):
         batch_paths = job.paths[start : start + DINOV2_EMBED_BATCH_SIZE]
-        images = [Image.open(p).convert("RGB") for p in batch_paths]
+        images = [open_rgb_upright(p) for p in batch_paths]
         inputs = processor(images=images, return_tensors="pt").to(job.device)  # type: ignore[attr-defined]
         with torch.no_grad():
             output = model(**inputs)  # type: ignore[operator]

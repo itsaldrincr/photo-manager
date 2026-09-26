@@ -99,9 +99,9 @@ def _load_cache(source: Path) -> tuple[np.ndarray, list[str]]:
 def _embed_single(path: Path, ctx: _EmbedContext) -> np.ndarray:
     """Return the L2-normalized CLIP image embedding for a single JPEG."""
     import torch  # noqa: PLC0415
-    from PIL import Image  # noqa: PLC0415
+    from cull.image_io import open_rgb_upright  # noqa: PLC0415
 
-    image = Image.open(path).convert("RGB")
+    image = open_rgb_upright(path)
     with _silence_stdio():
         inputs = ctx.processor(images=image, return_tensors="pt")
         inputs = {k: v.to(ctx.device) for k, v in inputs.items()}
@@ -172,11 +172,11 @@ def _encode_text(query: str, device: str) -> np.ndarray:
 def _encode_reference(path: Path, device: str) -> np.ndarray:
     """Return L2-normalized CLIP image embedding of shape (D,) for a single image."""
     import torch  # noqa: PLC0415
-    from PIL import Image  # noqa: PLC0415
+    from cull.image_io import open_rgb_upright  # noqa: PLC0415
 
     model = get_clip_model()
     processor = get_clip_processor()
-    image = Image.open(path).convert("RGB")
+    image = open_rgb_upright(path)
     with _silence_stdio():
         inputs = processor(images=image, return_tensors="pt")
         inputs = {k: v.to(device) for k, v in inputs.items()}

@@ -28,6 +28,7 @@ from cull.config import (
     SHARED_DECODE_PIXEL_PX,
     TILT_PENALTY_DEGREES,
 )
+from cull.image_io import open_rgb_upright
 from cull.saliency import (
     SaliencyRequest,
     SaliencyResult,
@@ -118,7 +119,7 @@ def _gather_chunk_embeddings(
 
 def _load_tensor(path: Path) -> torch.Tensor:
     """Load image as a torch tensor resized to IMAGE_LONG_EDGE_PX."""
-    img = Image.open(path).convert("RGB")
+    img = open_rgb_upright(path)
     long_edge = max(img.size)
     if long_edge > IMAGE_LONG_EDGE_PX:
         scale = IMAGE_LONG_EDGE_PX / long_edge
@@ -139,7 +140,7 @@ def _load_tensor_batch(paths: list[Path]) -> tuple[torch.Tensor, list[Image.Imag
     pil_images: list[Image.Image] = []
     for path in paths:
         tensors.append(_load_tensor(path))
-        pil_images.append(Image.open(path).convert("RGB"))
+        pil_images.append(open_rgb_upright(path))
     return torch.cat(tensors, dim=0), pil_images
 
 
@@ -194,7 +195,7 @@ def _load_dual_pil_batch(load_in: _DualLoadInput) -> _DualPilBatch:
     pil_224_list: list[Image.Image] = []
     pil_1280_list: list[Image.Image] = []
     for path in load_in.paths:
-        full = Image.open(path).convert("RGB")
+        full = open_rgb_upright(path)
         pil_1280_list.append(_make_pil_1280(full))
         pil_224_list.append(_make_pil_224(full))
     return _DualPilBatch(

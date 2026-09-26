@@ -63,9 +63,9 @@ def resize_for_vlm(img: PILImage) -> PILImage:
 
 def load_image_b64(image_path: Path) -> str:
     """Resize image to VLM_IMAGE_MAX_PX and return base64 JPEG string."""
-    from PIL import Image  # noqa: PLC0415
+    from cull.image_io import open_rgb_upright  # noqa: PLC0415
 
-    img = Image.open(image_path).convert("RGB")
+    img = open_rgb_upright(image_path)
     img = resize_for_vlm(img)
     buf = BytesIO()
     img.save(buf, format="JPEG", quality=VLM_JPEG_QUALITY)

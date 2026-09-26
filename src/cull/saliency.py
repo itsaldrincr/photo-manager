@@ -12,6 +12,7 @@ from pydantic import BaseModel, ConfigDict
 
 from cull.clip_loader import get_clip_model, get_clip_processor
 from cull.config import SALIENCY_TARGET_PX
+from cull.image_io import open_rgb_upright
 
 logger = logging.getLogger(__name__)
 
@@ -81,7 +82,7 @@ def compute_saliency_from_tokens(request: SaliencyFromTokensRequest) -> Saliency
 
 def _load_image(image_path: Path, target_px: int) -> Image.Image:
     """Open and resize image so its long edge equals target_px."""
-    img = Image.open(image_path).convert("RGB")
+    img = open_rgb_upright(image_path)
     w, h = img.size
     scale = target_px / max(w, h)
     return img.resize((int(w * scale), int(h * scale)), Image.BILINEAR)

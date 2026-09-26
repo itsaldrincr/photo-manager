@@ -178,7 +178,9 @@ def _resize_image_for_vlm(path: Path) -> "PILImage":
     """Resize image to VLM_IMAGE_MAX_PX long edge; return the in-memory PIL Image."""
     from PIL import Image  # noqa: PLC0415
 
-    img = Image.open(path).convert("RGB")
+    from cull.image_io import open_rgb_upright  # noqa: PLC0415
+
+    img = open_rgb_upright(path)
     long_edge = max(img.size)
     if long_edge > VLM_IMAGE_MAX_PX:
         scale = VLM_IMAGE_MAX_PX / long_edge

@@ -108,10 +108,10 @@ def _score_p1(photo_paths: list[Path]) -> dict[str, dict[str, float]]:
 
 def _score_one_aesthetic(path: Path) -> float:
     """Run score_aesthetic_batch on a single PIL image and return its score."""
-    from PIL import Image  # noqa: PLC0415
+    from cull.image_io import open_rgb_upright  # noqa: PLC0415
     from cull.stage2.aesthetic import score_aesthetic_batch  # noqa: PLC0415
 
-    pil_image = Image.open(path)
+    pil_image = open_rgb_upright(path)
     return score_aesthetic_batch([pil_image])[0]
 
 
