@@ -39,10 +39,10 @@ class FilmstripCell(Vertical):
     FilmstripCell {
         width: 1fr;
         height: 1fr;
-        padding: 0 1;
+        border: blank;
     }
     FilmstripCell.current {
-        background: $accent 40%;
+        border: solid $accent;
     }
     FilmstripCell > ImageCells {
         height: 1fr;
@@ -69,7 +69,7 @@ class Filmstrip(Horizontal):
 
     DEFAULT_CSS = """
     Filmstrip {
-        height: 7;
+        height: 8;
         width: 1fr;
     }
     Filmstrip.hidden {
