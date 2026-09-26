@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import exifread
@@ -13,6 +13,7 @@ from pydantic import BaseModel, Field
 
 from cull.config import (
     BLUR_DHASH_HAMMING_MAX,
+    BURST_GAP_NO_SUBSEC_SECONDS,
     CullConfig,
 )
 
@@ -52,19 +53,43 @@ class BurstResult(BaseModel):
 
 TimestampedPhoto = tuple[Path, datetime | None]
 
+# dHash compares a 9x8 thumbnail, so a JPEG DCT-scaled decode near this size
+# gives the same hash as a full decode at a fraction of the cost.
+DHASH_DECODE_PX: int = 256
 
-def _read_exif_datetime(path: Path) -> datetime | None:
-    """Return EXIF DateTimeOriginal for a single file, or None."""
+
+class CaptureTime(BaseModel):
+    """Capture time of one photo and whether it has sub-second resolution."""
+
+    path: Path
+    time: datetime | None
+    has_subsec: bool = True
+
+
+def _subsec_fraction(raw: object) -> timedelta | None:
+    """Return EXIF SubSecTimeOriginal digits ("45" = 0.45 s) as a timedelta, or None."""
+    digits = str(raw).strip() if raw is not None else ""
+    if not digits.isdigit():
+        return None
+    return timedelta(seconds=float(f"0.{digits}"))
+
+
+def _read_exif_capture(path: Path) -> CaptureTime | None:
+    """Return EXIF DateTimeOriginal plus SubSecTimeOriginal for one file, or None."""
     try:
         with open(path, "rb") as fh:
-            tags = exifread.process_file(fh, stop_tag="EXIF DateTimeOriginal", details=False)
+            tags = exifread.process_file(fh, stop_tag="EXIF SubSecTimeOriginal", details=False)
         raw = tags.get("EXIF DateTimeOriginal")
         if raw is None:
             return None
-        return datetime.strptime(str(raw), "%Y:%m:%d %H:%M:%S")
+        whole = datetime.strptime(str(raw), "%Y:%m:%d %H:%M:%S")
     except (OSError, ValueError, TypeError):
         logger.debug("EXIF read failed for %s", path)
         return None
+    fraction = _subsec_fraction(tags.get("EXIF SubSecTimeOriginal"))
+    if fraction is None:
+        return CaptureTime(path=path, time=whole, has_subsec=False)
+    return CaptureTime(path=path, time=whole + fraction)
 
 
 def _mtime_as_datetime(path: Path) -> datetime | None:
@@ -76,12 +101,17 @@ def _mtime_as_datetime(path: Path) -> datetime | None:
         return None
 
 
+def _dhash(path: Path) -> imagehash.ImageHash:
+    """Return the dHash of path from a reduced-size decode."""
+    with Image.open(path) as img:
+        img.draft("L", (DHASH_DECODE_PX, DHASH_DECODE_PX))
+        return imagehash.dhash(img)
+
+
 def _dhash_distance(path_a: Path, path_b: Path) -> int | None:
     """Return the Hamming distance between dHash values, or None if either is unreadable."""
     try:
-        hash_a = imagehash.dhash(Image.open(path_a))
-        hash_b = imagehash.dhash(Image.open(path_b))
-        return hash_a - hash_b
+        return _dhash(path_a) - _dhash(path_b)
     except (OSError, UnidentifiedImageError) as exc:
         logger.warning("Cannot hash %s or %s for burst pass: %s", path_a, path_b, exc)
         return None
@@ -92,34 +122,59 @@ def _dhash_distance(path_a: Path, path_b: Path) -> int | None:
 # ---------------------------------------------------------------------------
 
 
-def read_timestamps(image_paths: list[Path]) -> list[TimestampedPhoto]:
-    """Return (path, datetime) pairs using EXIF with mtime fallback."""
-    result: list[TimestampedPhoto] = []
+def read_capture_times(image_paths: list[Path]) -> list[CaptureTime]:
+    """Return capture times from EXIF (with sub-seconds when present), else mtime."""
+    result: list[CaptureTime] = []
     for path in image_paths:
-        dt = _read_exif_datetime(path)
-        if dt is None:
-            dt = _mtime_as_datetime(path)
+        capture = _read_exif_capture(path)
+        if capture is None:
             logger.debug("Using mtime for %s", path)
-        result.append((path, dt))
+            capture = CaptureTime(path=path, time=_mtime_as_datetime(path))
+        result.append(capture)
     return result
 
 
-def cluster_by_time(timestamped: list[TimestampedPhoto], gap_seconds: float) -> list[list[Path]]:
-    """Group photos into bursts where consecutive timestamps differ by ≤ gap_seconds."""
-    if not timestamped:
+def read_timestamps(image_paths: list[Path]) -> list[TimestampedPhoto]:
+    """Return (path, datetime) pairs using EXIF with mtime fallback."""
+    return [(c.path, c.time) for c in read_capture_times(image_paths)]
+
+
+def _within_gap(pair: tuple[CaptureTime, CaptureTime], gap_seconds: float) -> bool:
+    """Return True if two frames are close enough in time to share a burst.
+
+    Whole-second timestamps (e.g. Fuji JPEGs) put consecutive burst frames
+    a full second apart, which a sub-second gap would always split, so the
+    gap widens when either frame lacks sub-seconds.
+    """
+    prev, cur = pair
+    if prev.time is None or cur.time is None:
+        return False
+    limit = gap_seconds
+    if not (prev.has_subsec and cur.has_subsec):
+        limit = max(gap_seconds, BURST_GAP_NO_SUBSEC_SECONDS)
+    return abs((cur.time - prev.time).total_seconds()) <= limit
+
+
+def cluster_captures(captures: list[CaptureTime], gap_seconds: float) -> list[list[Path]]:
+    """Group photos into bursts where consecutive capture times are within the gap."""
+    if not captures:
         return []
-    sorted_photos = sorted(timestamped, key=lambda t: t[1] or datetime.min)
-    groups: list[list[Path]] = [[sorted_photos[0][0]]]
-    prev_dt = sorted_photos[0][1]
-    for path, dt in sorted_photos[1:]:
-        gap = abs((dt - prev_dt).total_seconds()) if dt and prev_dt else gap_seconds + 1
-        if gap <= gap_seconds:
-            groups[-1].append(path)
+    ordered = sorted(captures, key=lambda c: c.time or datetime.min)
+    groups: list[list[Path]] = [[ordered[0].path]]
+    prev = ordered[0]
+    for cur in ordered[1:]:
+        if _within_gap((prev, cur), gap_seconds):
+            groups[-1].append(cur.path)
         else:
-            groups.append([path])
-        if dt is not None:
-            prev_dt = dt
+            groups.append([cur.path])
+        if cur.time is not None:
+            prev = cur
     return [g for g in groups if len(g) > 1]
+
+
+def cluster_by_time(timestamped: list[TimestampedPhoto], gap_seconds: float) -> list[list[Path]]:
+    """Group (path, datetime) pairs into bursts where consecutive timestamps differ by ≤ gap_seconds."""
+    return cluster_captures([CaptureTime(path=p, time=dt) for p, dt in timestamped], gap_seconds)
 
 
 def confirm_burst_visually(group: list[Path]) -> list[list[Path]]:
@@ -160,8 +215,8 @@ def select_burst_winner(scoring_input: BurstScoringInput) -> tuple[Path, list[Pa
 def detect_bursts(burst_in: _BurstInput) -> BurstResult:
     """Detect burst groups, confirm visually, and select winners."""
     blur_scores = burst_in.blur_scores if burst_in.blur_scores is not None else {}
-    timestamped = read_timestamps(burst_in.image_paths)
-    temporal_groups = cluster_by_time(timestamped, burst_in.config.burst_gap)
+    captures = read_capture_times(burst_in.image_paths)
+    temporal_groups = cluster_captures(captures, burst_in.config.burst_gap)
     all_groups: list[list[Path]] = []
     for group in temporal_groups:
         visual_groups = confirm_burst_visually(group)
