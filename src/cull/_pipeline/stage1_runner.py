@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from functools import partial
 from multiprocessing import get_context
@@ -18,7 +19,7 @@ from cull.models import ExifSummary, ExposureScores, Stage1Result
 from cull.stage1 import duplicate as duplicate_module
 from cull.stage1.blur import BlurResult
 from cull.stage1.burst import _BurstInput, detect_bursts
-from cull.stage1.duplicate import find_duplicates
+from cull.stage1.duplicate import DuplicateResult, find_duplicates
 from cull.stage1.exposure import ExposureResult
 from cull.stage1.geometry import GeometryResult
 from cull.stage1.representatives import select_group_losers
@@ -190,13 +191,23 @@ def _filter_survivors(output: _Stage1Output) -> list[Path]:
 
 
 def _run_s1(ctx: Any) -> _Stage1Output:
-    """Execute Stage 1 and record timing."""
+    """Execute Stage 1 and record timing.
+
+    Duplicate detection runs in a thread while the per-photo worker pool
+    runs: the pool uses STAGE1_WORKER_COUNT processes and the detector
+    runs its own models, and the two write disjoint fields of the output
+    until _resolve_groups joins them.
+    """
     t0 = time.monotonic()
     loop_in = _Stage1LoopInput(paths=ctx.paths, config=ctx.config, source_path=ctx.source_path)
     ctx.dashboard.start_scanning()
     s1_out = _Stage1Output()
-    _preflight_dupes_into_output(_Stage1WorkCtx(loop_in=loop_in, output=s1_out, dashboard=ctx.dashboard))
-    _run_stage1_loop_into(_Stage1WorkCtx(loop_in=loop_in, output=s1_out, dashboard=ctx.dashboard))
+    work = _Stage1WorkCtx(loop_in=loop_in, output=s1_out, dashboard=ctx.dashboard)
+    with ThreadPoolExecutor(max_workers=1) as executor:
+        dup_future = executor.submit(_find_duplicates_for, loop_in)
+        _run_stage1_loop_into(work)
+        dup_result = dup_future.result()
+    _apply_duplicates(dup_result, work)
     _resolve_groups(loop_in, s1_out)
     ctx.dashboard.set_dupe_count(len(s1_out.duplicate_paths))
     ctx.dashboard.set_burst_count(len(s1_out.burst_losers))
@@ -209,11 +220,22 @@ def _run_s1(ctx: Any) -> _Stage1Output:
 
 
 def _preflight_dupes_into_output(ctx: _Stage1WorkCtx) -> None:
-    """Detect duplicates up-front so the live counter shows real values."""
-    if not ctx.loop_in.paths:
+    """Detect duplicates and record them in the output and the live counter."""
+    _apply_duplicates(_find_duplicates_for(ctx.loop_in), ctx)
+
+
+def _find_duplicates_for(loop_in: _Stage1LoopInput) -> DuplicateResult | None:
+    """Run duplicate detection over the scanned source, or None with no photos."""
+    if not loop_in.paths:
+        return None
+    image_dir = loop_in.source_path if loop_in.source_path is not None else loop_in.paths[0].parent
+    return find_duplicates(image_dir)
+
+
+def _apply_duplicates(dup_result: DuplicateResult | None, ctx: _Stage1WorkCtx) -> None:
+    """Record duplicate groups, encodings and a provisional count in the output."""
+    if dup_result is None:
         return
-    image_dir = ctx.loop_in.source_path if ctx.loop_in.source_path is not None else ctx.loop_in.paths[0].parent
-    dup_result = find_duplicates(image_dir)
     ctx.output.encodings = dup_result.encodings
     ctx.output.duplicate_groups = [[str(p) for p in g.paths] for g in dup_result.duplicate_groups]
     # Provisional count for the live dashboard; _resolve_groups picks the real keepers.
