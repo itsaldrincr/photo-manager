@@ -215,17 +215,26 @@ class _DinoV2EmbedJob(BaseModel):
     device: str
 
 
+def _dinov2_pixel_values(path: Path) -> torch.Tensor:
+    """Decode one photo and return its (1,3,224,224) DINOv2 input.
+
+    One photo at a time keeps a single full-resolution frame in memory
+    instead of a batch of them; the processor's output is bitwise equal
+    either way.
+    """
+    processor = dinov2_loader.get_dinov2_processor()
+    return processor(images=[open_rgb_upright(path)], return_tensors="pt")["pixel_values"]  # type: ignore[operator]
+
+
 def _embed_dinov2_batch(job: _DinoV2EmbedJob) -> np.ndarray:
     """Batch-embed images with DINOv2-small, returning pooled CLS embeddings."""
-    processor = dinov2_loader.get_dinov2_processor()
     model = dinov2_loader.get_dinov2_model()
     vectors: list[np.ndarray] = []
     for start in range(0, len(job.paths), DINOV2_EMBED_BATCH_SIZE):
         batch_paths = job.paths[start : start + DINOV2_EMBED_BATCH_SIZE]
-        images = [open_rgb_upright(p) for p in batch_paths]
-        inputs = processor(images=images, return_tensors="pt").to(job.device)  # type: ignore[attr-defined]
+        pixel_values = torch.cat([_dinov2_pixel_values(p) for p in batch_paths]).to(job.device)
         with torch.no_grad():
-            output = model(**inputs)  # type: ignore[operator]
+            output = model(pixel_values=pixel_values)  # type: ignore[operator]
         vectors.append(output.pooler_output.cpu().numpy())
     return np.concatenate(vectors, axis=0)
 
