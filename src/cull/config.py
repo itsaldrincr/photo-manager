@@ -352,6 +352,9 @@ STAGE2_BATCH_SIZE: int = 8
 # 20.1 GB process footprint on an M3 Pro, batch 1 at 5.4 GB, with scores within
 # 7.2e-7 of each other.
 STAGE2_IQA_SUB_BATCH_SIZE: int = 1
+# Threads decoding Stage 2 photos (next chunk's dual PIL batch, current chunk's
+# full-res portrait frames) while the main thread runs the GPU models.
+STAGE2_DECODE_THREADS: int = 3
 
 # ---------------------------------------------------------------------------
 # Stage 2 IQA defaults

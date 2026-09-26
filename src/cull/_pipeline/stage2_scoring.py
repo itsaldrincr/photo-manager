@@ -385,14 +385,37 @@ def _portrait_or_none(path: Path, config: CullConfig) -> PortraitResult | None:
     """
     if not config.is_portrait:
         return None
-    image = _decode_full_res_bgr(path)
-    if image is None:
+    return _assess_decoded_portrait(_DecodedPortraitJob(path=path, image=_decode_full_res_bgr(path), config=config))
+
+
+class _DecodedPortraitJob(BaseModel):
+    """A photo's full-resolution BGR decode (None if unreadable) and the run config."""
+
+    model_config = {"arbitrary_types_allowed": True}
+
+    path: Path
+    image: np.ndarray | None
+    config: CullConfig
+
+
+def _assess_decoded_portrait(job: _DecodedPortraitJob) -> PortraitResult | None:
+    """Run portrait assessment on an already-decoded photo; swallow failures."""
+    if job.image is None:
         return None
     try:
-        return assess_portrait_from_array(image, config)
+        return assess_portrait_from_array(job.image, job.config)
     except Exception as exc:  # noqa: BLE001
-        logger.warning("Portrait assessment failed for %s: %s", path, exc)
+        logger.warning("Portrait assessment failed for %s: %s", job.path, exc)
         return None
+
+
+def _portrait_for(path: Path, ctx: "_BatchCtx") -> PortraitResult | None:
+    """Portrait result for path, using the chunk's prefetched decode when there is one."""
+    config = ctx.loop_in.config
+    decode = ctx.full_res_bgr.pop(str(path), None)
+    if not config.is_portrait or decode is None:
+        return _portrait_or_none(path, config)
+    return _assess_decoded_portrait(_DecodedPortraitJob(path=path, image=decode.result(), config=config))
 
 
 def _path_to_dual_index(path: Path, ctx: "_BatchCtx") -> int:
@@ -406,8 +429,7 @@ def _build_subject_blur_input(
     path: Path, ctx: "_BatchCtx"
 ) -> tuple[SubjectBlurInput, PortraitResult | None]:
     """Compose a SubjectBlurInput from portrait + saliency fallbacks."""
-    config = ctx.loop_in.config
-    portrait = _portrait_or_none(path, config)
+    portrait = _portrait_for(path, ctx)
     needs_saliency = portrait is None or not portrait.has_face
     saliency = _compute_saliency_for_path(path, ctx) if needs_saliency else None
     idx = _path_to_dual_index(path, ctx)
