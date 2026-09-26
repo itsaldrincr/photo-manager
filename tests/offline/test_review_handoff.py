@@ -23,6 +23,8 @@ def test_should_handoff_review_requires_cmux_and_skips_child(
     monkeypatch.delenv("CMUX_WORKSPACE_ID", raising=False)
     monkeypatch.delenv("CMUX_SURFACE_ID", raising=False)
     monkeypatch.delenv(HANDOFF_ENV_VAR, raising=False)
+    monkeypatch.delenv("KITTY_WINDOW_ID", raising=False)
+    monkeypatch.setenv("GHOSTTY_RESOURCES_DIR", "/Applications/cmux.app/Contents/Resources/ghostty")
 
     assert should_handoff_review() is False
 
@@ -97,3 +99,26 @@ def test_missing_ghostty_is_reported_as_unavailable(monkeypatch) -> None:
     monkeypatch.setattr("cull.review_handoff.is_ghostty_installed", lambda: False)
     with pytest.raises(ReviewHandoffUnavailable):
         ensure_handoff_available()
+
+
+def test_no_handoff_when_already_inside_ghostty_launched_from_cmux(monkeypatch) -> None:
+    """CMUX_* inherited, TERM_PROGRAM=ghostty in both apps: Ghostty.app's resources dir decides."""
+    monkeypatch.setattr("cull.review_handoff.sys.platform", "darwin")
+    monkeypatch.delenv(HANDOFF_ENV_VAR, raising=False)
+    monkeypatch.delenv("KITTY_WINDOW_ID", raising=False)
+    monkeypatch.setenv("CMUX_WORKSPACE_ID", "workspace:1")
+    monkeypatch.setenv("TERM_PROGRAM", "ghostty")
+    monkeypatch.setenv("GHOSTTY_RESOURCES_DIR", "/Applications/cmux.app/Contents/Resources/ghostty")
+    assert should_handoff_review() is True
+    monkeypatch.setenv("GHOSTTY_RESOURCES_DIR", "/Applications/Ghostty.app/Contents/Resources/ghostty")
+    assert should_handoff_review() is False
+
+
+def test_no_handoff_inside_kitty(monkeypatch) -> None:
+    """kitty shows the images itself."""
+    monkeypatch.setattr("cull.review_handoff.sys.platform", "darwin")
+    monkeypatch.delenv(HANDOFF_ENV_VAR, raising=False)
+    monkeypatch.setenv("CMUX_WORKSPACE_ID", "workspace:1")
+    monkeypatch.setenv("GHOSTTY_RESOURCES_DIR", "/Applications/cmux.app/Contents/Resources/ghostty")
+    monkeypatch.setenv("KITTY_WINDOW_ID", "1")
+    assert should_handoff_review() is False

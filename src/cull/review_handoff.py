@@ -32,6 +32,12 @@ GHOSTTY_CONFIG_ARGS: tuple[str, ...] = (
 # of argv, where any user could read them from `ps`.
 FORWARDED_ENV_PREFIXES: tuple[str, ...] = ("CULL_", "PHOTO_MANAGER_")
 SECRET_NAME_MARKERS: tuple[str, ...] = ("TOKEN", "SECRET", "KEY", "PASSWORD")
+# cmux is built on libghostty and also sets TERM_PROGRAM=ghostty, so that
+# variable cannot tell the two apart. Each app points GHOSTTY_RESOURCES_DIR at
+# its own bundle, and a Ghostty window sets it for its shells even when it
+# was launched from a cmux shell that exported CMUX_* variables.
+GHOSTTY_APP_BUNDLE_MARKER: str = "/Ghostty.app/"
+KITTY_WINDOW_ENV_VAR: str = "KITTY_WINDOW_ID"
 
 
 class ReviewHandoffInput(BaseModel):
@@ -82,11 +88,17 @@ def is_handoff_child() -> bool:
     return os.environ.get(HANDOFF_ENV_VAR) == HANDOFF_ENV_VALUE
 
 
+def has_image_capable_terminal() -> bool:
+    """Return True inside Ghostty.app or kitty, which can already show the TUI's images."""
+    resources = os.environ.get("GHOSTTY_RESOURCES_DIR", "")
+    return GHOSTTY_APP_BUNDLE_MARKER in resources or bool(os.environ.get(KITTY_WINDOW_ENV_VAR))
+
+
 def should_handoff_review() -> bool:
-    """Return True only for a top-level cmux process on macOS."""
+    """Return True only for a top-level cmux process on macOS, not already in Ghostty."""
     if sys.platform != "darwin":
         return False
-    if is_handoff_child():
+    if is_handoff_child() or has_image_capable_terminal():
         return False
     return is_cmux_session()
 
