@@ -7,6 +7,7 @@ import shlex
 import shutil
 import subprocess
 import sys
+from collections.abc import Mapping
 from pathlib import Path
 
 from pydantic import BaseModel
@@ -17,6 +18,26 @@ CMUX_ENV_VARS: tuple[str, str] = ("CMUX_WORKSPACE_ID", "CMUX_SURFACE_ID")
 OPEN_BIN: str = "/usr/bin/open"
 GHOSTTY_APP: str = "Ghostty"
 SHELL_BIN: str = "/bin/zsh"
+# `open -n -W` waits for the whole Ghostty instance, and on macOS an instance
+# outlives its last window by default: without the first flag the parent
+# blocks until Cmd+Q. The window opens maximised and restores no old windows.
+GHOSTTY_CONFIG_ARGS: tuple[str, ...] = (
+    "--quit-after-last-window-closed=true",
+    "--maximize=true",
+    "--window-save-state=never",
+)
+# LaunchServices starts Ghostty with a fresh environment, and a login shell
+# only restores what the zsh profile sets, so settings exported in the
+# launching shell are forwarded explicitly. Credential-like names stay out
+# of argv, where any user could read them from `ps`.
+FORWARDED_ENV_PREFIXES: tuple[str, ...] = ("CULL_", "PHOTO_MANAGER_")
+SECRET_NAME_MARKERS: tuple[str, ...] = ("TOKEN", "SECRET", "KEY", "PASSWORD")
+# cmux is built on libghostty and also sets TERM_PROGRAM=ghostty, so that
+# variable cannot tell the two apart. Each app points GHOSTTY_RESOURCES_DIR at
+# its own bundle, and a Ghostty window sets it for its shells even when it
+# was launched from a cmux shell that exported CMUX_* variables.
+GHOSTTY_APP_BUNDLE_MARKER: str = "/Ghostty.app/"
+KITTY_WINDOW_ENV_VAR: str = "KITTY_WINDOW_ID"
 
 
 class ReviewHandoffInput(BaseModel):
@@ -30,12 +51,31 @@ class ReviewHandoffError(RuntimeError):
     """Raised when the Ghostty review handoff cannot be started."""
 
 
+class ReviewHandoffUnavailable(ReviewHandoffError):
+    """Raised before launch when Ghostty or the `cull` executable is missing."""
+
+
 def resolve_cull_executable() -> str:
     """Return the installed ``cull`` executable path."""
     cull_bin = shutil.which("cull")
     if cull_bin:
         return cull_bin
-    raise ReviewHandoffError("Could not find the `cull` executable in PATH.")
+    raise ReviewHandoffUnavailable("Could not find the `cull` executable in PATH.")
+
+
+def is_ghostty_installed() -> bool:
+    """Return True when LaunchServices can find the Ghostty app."""
+    result = subprocess.run(
+        [OPEN_BIN, "-Ra", GHOSTTY_APP], capture_output=True, text=True, check=False,
+    )
+    return result.returncode == 0
+
+
+def ensure_handoff_available() -> None:
+    """Raise ReviewHandoffUnavailable unless both Ghostty and `cull` can be found."""
+    resolve_cull_executable()
+    if not is_ghostty_installed():
+        raise ReviewHandoffUnavailable("Ghostty is not installed.")
 
 
 def is_cmux_session() -> bool:
@@ -48,13 +88,31 @@ def is_handoff_child() -> bool:
     return os.environ.get(HANDOFF_ENV_VAR) == HANDOFF_ENV_VALUE
 
 
+def has_image_capable_terminal() -> bool:
+    """Return True inside Ghostty.app or kitty, which can already show the TUI's images."""
+    resources = os.environ.get("GHOSTTY_RESOURCES_DIR", "")
+    return GHOSTTY_APP_BUNDLE_MARKER in resources or bool(os.environ.get(KITTY_WINDOW_ENV_VAR))
+
+
 def should_handoff_review() -> bool:
-    """Return True only for a top-level cmux process on macOS."""
+    """Return True only for a top-level cmux process on macOS, not already in Ghostty."""
     if sys.platform != "darwin":
         return False
-    if is_handoff_child():
+    if is_handoff_child() or has_image_capable_terminal():
         return False
     return is_cmux_session()
+
+
+def forwarded_env(environ: Mapping[str, str]) -> list[str]:
+    """Return ``--env NAME=VALUE`` pairs for app settings to pass to the child."""
+    args: list[str] = []
+    for name in sorted(environ):
+        if name == HANDOFF_ENV_VAR or not name.startswith(FORWARDED_ENV_PREFIXES):
+            continue
+        if any(marker in name.upper() for marker in SECRET_NAME_MARKERS):
+            continue
+        args.extend(["--env", f"{name}={environ[name]}"])
+    return args
 
 
 def build_ghostty_open_command(handoff_in: ReviewHandoffInput) -> list[str]:
@@ -78,10 +136,12 @@ def build_ghostty_open_command(handoff_in: ReviewHandoffInput) -> list[str]:
         GHOSTTY_APP,
         "--env",
         f"{HANDOFF_ENV_VAR}={HANDOFF_ENV_VALUE}",
+        *forwarded_env(os.environ),
         "--args",
+        *GHOSTTY_CONFIG_ARGS,
         "-e",
         SHELL_BIN,
-        "-c",
+        "-lc",
         shell_command,
     ]
 

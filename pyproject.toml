@@ -44,7 +44,6 @@ dependencies = [
     "torch",
     "torchvision",
     "textual",
-    "term-image",
     "rich",
     "click",
     "pydantic>=2.0",
@@ -72,3 +71,7 @@ cull = "cull.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+# Test this checkout's src even when an editable install points elsewhere.
+pythonpath = ["src"]

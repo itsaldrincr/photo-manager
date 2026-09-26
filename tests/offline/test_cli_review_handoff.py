@@ -7,6 +7,7 @@ import pytest
 
 from cull.cli_review import (
     REVIEW_EXIT_HANDOFF_ERROR,
+    ReviewHandoffPayload,
     ReviewLaunchInput,
     _launch_review_entry,
     _launch_review_session_file,
@@ -14,7 +15,7 @@ from cull.cli_review import (
 from cull.cli_results import _launch_review_after
 from cull.config import CullConfig
 from cull.pipeline import SessionResult, SessionSummary
-from cull.review_handoff import ReviewHandoffError
+from cull.review_handoff import ReviewHandoffError, ReviewHandoffUnavailable
 
 
 def _make_session(source: Path) -> SessionResult:
@@ -52,20 +53,23 @@ def test_launch_review_entry_handoffs_temp_session_and_cleans_up(
     tmp_path: Path,
 ) -> None:
     session = _make_session(tmp_path)
-    review_in = ReviewLaunchInput(config=CullConfig(), session=session)
+    config = CullConfig(model="custom-vlm", is_sidecars=False)
+    review_in = ReviewLaunchInput(config=config, session=session)
     observed: dict[str, Path] = {}
 
     monkeypatch.setattr("cull.cli_review.show_tui_handoff", lambda ctx: None)
     monkeypatch.setattr("cull.cli_review.should_handoff_review", lambda: True)
+    monkeypatch.setattr("cull.cli_review.ensure_handoff_available", lambda: None)
 
     def fake_launch(handoff_in) -> None:  # type: ignore[no-untyped-def]
         observed["session_path"] = handoff_in.session_path
         observed["cwd"] = handoff_in.cwd
         assert handoff_in.session_path.exists()
-        loaded = SessionResult.model_validate_json(
+        loaded = ReviewHandoffPayload.model_validate_json(
             handoff_in.session_path.read_text(encoding="utf-8")
         )
-        assert loaded.source_path == str(tmp_path)
+        assert loaded.session.source_path == str(tmp_path)
+        assert loaded.config == config
 
     monkeypatch.setattr("cull.cli_review.launch_review_handoff", fake_launch)
     run_app = MagicMock()
@@ -107,6 +111,7 @@ def test_launch_review_entry_reports_handoff_error_cleanly(
     monkeypatch.setattr("cull.cli_review.show_tui_handoff", lambda ctx: None)
     monkeypatch.setattr("cull.cli_review.show_general_error", show_error)
     monkeypatch.setattr("cull.cli_review.should_handoff_review", lambda: True)
+    monkeypatch.setattr("cull.cli_review.ensure_handoff_available", lambda: None)
 
     def fake_launch(handoff_in) -> None:  # type: ignore[no-untyped-def]
         observed["session_path"] = handoff_in.session_path
@@ -142,3 +147,41 @@ def test_launch_review_after_routes_session_to_unified_launcher(
     assert review_in.session == session
     assert review_in.config == config
     assert review_in.source is None
+
+
+def test_handoff_file_restores_parent_config_in_child(monkeypatch, tmp_path: Path) -> None:
+    """The child runs with the parent's --model/--preset/--no-sidecars, not CLI defaults."""
+    session = _make_session(tmp_path)
+    parent_config = CullConfig(model="custom-vlm", preset="wedding", is_sidecars=False)
+    session_path = tmp_path / "handoff.json"
+    payload = ReviewHandoffPayload(session=session, config=parent_config)
+    session_path.write_text(payload.model_dump_json(), encoding="utf-8")
+    run_app = MagicMock()
+    monkeypatch.setattr("cull.cli_review._run_cull_app", run_app)
+
+    _launch_review_session_file(session_path, CullConfig())
+
+    assert run_app.call_args.args[1] == parent_config
+
+
+def test_missing_ghostty_falls_back_to_this_terminal(monkeypatch, tmp_path: Path) -> None:
+    """No Ghostty or no cull: review runs here instead of exiting with an error."""
+    session = _make_session(tmp_path)
+    review_in = ReviewLaunchInput(config=CullConfig(), session=session)
+    monkeypatch.setattr("cull.cli_review.show_tui_handoff", lambda ctx: None)
+    monkeypatch.setattr("cull.cli_review.show_general_error", MagicMock())
+    monkeypatch.setattr("cull.cli_review.should_handoff_review", lambda: True)
+
+    def unavailable() -> None:
+        raise ReviewHandoffUnavailable("Ghostty is not installed.")
+
+    monkeypatch.setattr("cull.cli_review.ensure_handoff_available", unavailable)
+    launch = MagicMock()
+    monkeypatch.setattr("cull.cli_review.launch_review_handoff", launch)
+    run_app = MagicMock()
+    monkeypatch.setattr("cull.cli_review._run_cull_app", run_app)
+
+    _launch_review_entry(review_in)
+
+    launch.assert_not_called()
+    run_app.assert_called_once_with(session, review_in.config)

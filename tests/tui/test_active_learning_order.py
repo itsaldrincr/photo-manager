@@ -70,13 +70,13 @@ def _build_decisions() -> list[PhotoDecision]:
 
 
 def test_sort_by_uncertainty_orders_by_abs_p_minus_half() -> None:
-    """Queue is ordered by |p - 0.5| descending when TasteScore is present."""
+    """Queue is ordered by |p - 0.5| ascending: most uncertain (p nearest 0.5) first."""
     decisions = _build_decisions()
     indices = list(range(len(decisions)))
     sorted_indices = _sort_by_uncertainty(decisions, indices)
 
     uncertainties = [abs(decisions[i].stage2.taste.probability - 0.5) for i in sorted_indices]
-    assert uncertainties == sorted(uncertainties, reverse=True)
+    assert uncertainties == sorted(uncertainties)
 
 
 def test_sort_preserves_order_without_taste_scores() -> None:
@@ -90,12 +90,18 @@ def test_sort_preserves_order_without_taste_scores() -> None:
 
 
 def test_sort_highest_uncertainty_is_first() -> None:
-    """The most uncertain photo (p closest to 0.5) appears last; most certain first."""
+    """The most uncertain photo (p = 0.49) comes first; the most certain (p = 0.95) last."""
     decisions = _build_decisions()
     indices = list(range(len(decisions)))
     sorted_indices = _sort_by_uncertainty(decisions, indices)
 
-    first_prob = decisions[sorted_indices[0]].stage2.taste.probability
-    last_prob = decisions[sorted_indices[-1]].stage2.taste.probability
+    assert decisions[sorted_indices[0]].stage2.taste.probability == 0.49
+    assert decisions[sorted_indices[-1]].stage2.taste.probability == 0.95
 
-    assert abs(first_prob - 0.5) >= abs(last_prob - 0.5)
+
+def test_sort_puts_unscored_photos_last() -> None:
+    """Photos without a taste score go after every scored photo."""
+    decisions = _build_decisions()
+    decisions[1].stage2.taste = None
+    sorted_indices = _sort_by_uncertainty(decisions, list(range(len(decisions))))
+    assert sorted_indices[-1] == 1

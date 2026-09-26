@@ -4,15 +4,20 @@ from __future__ import annotations
 
 import json
 import logging
+import math
 import os
 import shutil
+from concurrent.futures import ThreadPoolExecutor
+from functools import partial
 from pathlib import Path
 
 from pydantic import BaseModel, Field
 from textual import events
 from textual.app import App, ComposeResult
 from textual.binding import Binding
+from textual.containers import Horizontal
 from textual.css.query import NoMatches
+from textual.screen import Screen
 from textual.widgets import Footer, Header, Static
 
 from cull.config import (
@@ -22,16 +27,28 @@ from cull.config import (
     TUI_AUTOSAVE_INTERVAL_SECONDS,
 )
 from cull.models import DecisionLabel, ExplainRequest, ExplainResult, OverrideEntry, PhotoDecision
-from cull.override_log import OverrideContext, build_override_entry, log_override
+from cull.override_log import log_override, remove_overrides
 from cull.pipeline import SessionResult
 from cull._pipeline.decision_assembly import _build_summary
 from cull.report import write_report
 from cull.router import execute_moves
-from cull.taste_trainer import TasteTrainerInput, maybe_retrain
-from cull.tui.burst_view import BurstGroup, BurstResult, BurstView, build_burst_group
+from cull.taste_trainer import TasteTrainerInput, maybe_retrain, unwind_retrain_counter
+from cull.tui.compare_view import CompareSource, CompareView, StackFrame, frame_sharpness
 from cull.tui.explain_modal import ExplainPanel, fetch_explanation_result
-from cull.tui.photo_view import PhotoView, PrecacheRequest, RenderRequest, ViewportSize, precache_images
+from cull.tui.face_panel import FacePanel
+from cull.tui.faces import FaceReport, FaceRequest, FaceService
+from cull.tui.filmstrip import FILMSTRIP_CENTRE, FILMSTRIP_SLOTS, Filmstrip, StripItem
+from cull.tui.images import ImageCells, ImageRequest, ImageService, PrefetchPlan
+from cull.tui.ledger import ChangeBatch, LabelChange, ReviewLedger, UndoEntry, _apply_override
+from cull.tui.paths import PathCache, resolve_all
+from cull.tui.photo_view import PhotoView
+from cull.tui.previews import PREVIEW_CACHE_MAX_BYTES, prune_cache
 from cull.tui.score_panel import ScorePanel
+from cull.tui.screens import ConfirmQuitScreen, HelpScreen
+from cull.tui.timing import LatencyTimer, debug_log
+from cull.tui.why_line import WhyContext, build_why_line
+
+__all__ = ["AppInput", "CullApp", "_apply_override"]
 
 OVERRIDE_ORIGIN_SINGLE: str = "single"
 OVERRIDE_ORIGIN_BURST: str = "burst"
@@ -50,6 +67,7 @@ SAVE_COMPLETE_DELAY_SECONDS: float = 0.25
 MIN_TERMINAL_COLS: int = 40
 MIN_TERMINAL_ROWS: int = 12
 TOO_SMALL_BANNER_ID: str = "too-small-banner"
+LOOKAHEAD_UPLOADS: int = 2
 QUEUE_UNCERTAIN: int = 0
 QUEUE_REJECTED: int = 1
 QUEUE_DUPLICATES: int = 2
@@ -77,28 +95,6 @@ QUEUE_CYCLE_ORDER: tuple[int, ...] = (
 _FALLBACK_QUEUE_ORDER: tuple[int, ...] = (
     QUEUE_SELECTED, QUEUE_KEEPERS, QUEUE_UNCERTAIN, QUEUE_REJECTED, QUEUE_DUPLICATES,
 )
-_RECOVERY_DIRS: tuple[tuple[str, ...], ...] = (
-    (),
-    ("_curated", "_selects"),
-    ("_review", "_uncertain"),
-    ("_review", "_rejected"),
-    ("_review", "_duplicates"),
-)
-
-
-class UndoEntry(BaseModel):
-    """Record of a single decision change for undo support."""
-
-    photo_path: str
-    previous_label: DecisionLabel
-
-
-class OverrideHookCtx(BaseModel):
-    """Bundle for emitting one override-log hook from a TUI mutation site."""
-
-    decision: PhotoDecision
-    new_label: DecisionLabel
-    origin: str
 
 
 class TuiState(BaseModel):
@@ -107,6 +103,7 @@ class TuiState(BaseModel):
     overrides: dict[str, DecisionLabel] = Field(default_factory=dict)
     current_index: int = 0
     current_queue: int = QUEUE_UNCERTAIN
+    reviewed: list[str] = Field(default_factory=list)
 
 
 class AppInput(BaseModel):
@@ -171,28 +168,21 @@ def _filter_queue(decisions: list[PhotoDecision], label: DecisionLabel) -> list[
 
 
 def _taste_uncertainty(decision: PhotoDecision) -> float:
-    """Return taste uncertainty score: abs(probability - 0.5), or -1 if absent."""
+    """Return |p - 0.5| (0 = most uncertain), or infinity when there is no taste score."""
     if decision.stage2 is None or decision.stage2.taste is None:
-        return -1.0
+        return math.inf
     return abs(decision.stage2.taste.probability - 0.5)
 
 
 def _sort_by_uncertainty(decisions: list[PhotoDecision], indices: list[int]) -> list[int]:
-    """Sort indices by taste uncertainty descending if any decision has TasteScore."""
+    """Sort indices most-uncertain first (p nearest 0.5) when any decision has a taste score.
+
+    The sort is stable, so untrained taste (every p = 0.5) keeps capture order.
+    """
     has_taste = any(decisions[i].stage2 and decisions[i].stage2.taste for i in indices)
     if not has_taste:
         return indices
-    return sorted(indices, key=lambda i: _taste_uncertainty(decisions[i]), reverse=True)
-
-
-def _apply_override(decision: PhotoDecision, label: DecisionLabel) -> PhotoDecision:
-    """Return a copy of the decision with the label overridden."""
-    return decision.model_copy(update={
-        "decision": label,
-        "is_override": True,
-        "override_from": decision.decision,
-        "override_by": "user_tui",
-    })
+    return sorted(indices, key=lambda i: _taste_uncertainty(decisions[i]))
 
 
 class InfoBarContext(BaseModel):
@@ -203,20 +193,21 @@ class InfoBarContext(BaseModel):
     total: int
     queue_label: str
     queue_counts: dict[str, int]
+    reviewed: int = 0
 
 
 def _build_info_text(ctx: InfoBarContext) -> str:
-    """Build the info bar text for the current photo with queue navigation hints."""
-    pct = int((ctx.position + 1) / ctx.total * 100) if ctx.total > 0 else 0
+    """Build the info bar: file, position, queue, per-queue counts, reviewed progress."""
+    reviewed_pct = int(ctx.reviewed / ctx.total * 100) if ctx.total > 0 else 0
     queue_badges = "  ".join(
         f"[{QUEUE_HOTKEY[label]}] {label}:{count}"
         for label, count in ctx.queue_counts.items()
     )
     return (
-        f"{ctx.decision.photo.filename}    "
-        f"{ctx.decision.decision.upper()}    "
-        f"[{ctx.position + 1}/{ctx.total}]  {pct}%    "
-        f"\u2502  queue: {ctx.queue_label}    {queue_badges}"
+        f"{ctx.decision.photo.filename}   "
+        f"{ctx.position + 1}/{ctx.total}   "
+        f"reviewed {ctx.reviewed}/{ctx.total} ({reviewed_pct}%)   "
+        f"│ queue: {ctx.queue_label}   {queue_badges}"
     )
 
 
@@ -236,24 +227,69 @@ def _find_burst_decisions(session: SessionResult, group_id: int) -> list[PhotoDe
     ]
 
 
+def _burst_group_id(decision: PhotoDecision) -> int | None:
+    """Return the decision's burst group id, if it is in a burst."""
+    if decision.stage1 is None or decision.stage1.burst is None:
+        return None
+    return decision.stage1.burst.group_id
+
+
+def _burst_winner_names(decisions: list[PhotoDecision]) -> dict[int, str]:
+    """Map burst group id to the filename Stage 1 picked as the sharpest frame."""
+    winners: dict[int, str] = {}
+    for decision in decisions:
+        burst = decision.stage1.burst if decision.stage1 else None
+        if burst is not None and burst.is_burst_winner:
+            winners[burst.group_id] = decision.photo.filename
+    return winners
+
+
+def _nearest_first(centre: int, total: int) -> list[int]:
+    """Return queue positions ordered by distance from ``centre`` (centre first)."""
+    order = [centre] if 0 <= centre < total else []
+    for distance in range(1, total):
+        order.extend(p for p in (centre + distance, centre - distance) if 0 <= p < total)
+    return order
+
+
+class ReviewScreen(Screen):
+    """Main review screen; stops painting images while another screen covers it."""
+
+    def on_screen_suspend(self) -> None:
+        """A modal or compare screen is on top: hide our image cells."""
+        for cells in self.query(ImageCells):
+            cells.set_suspended(True)
+
+    def on_screen_resume(self) -> None:
+        """We are on top again: paint image cells."""
+        for cells in self.query(ImageCells):
+            cells.set_suspended(False)
+
+
 class CullApp(App):
     """Main Textual application for interactive photo review."""
 
     TITLE = "CULL -- Review"
 
     BINDINGS = [
-        Binding("k", "keep", "Keep"),
-        Binding("r", "reject", "Reject"),
-        Binding("d", "mark_duplicate", "Duplicate"),
-        Binding("c", "curate", "Curate"),
-        Binding("right,>,period", "next_photo", "Next", show=False),
-        Binding("left,<,comma", "prev_photo", "Prev", show=False),
-        Binding("u", "undo", "Undo"),
+        Binding("p,k", "keep", "Keep"),
+        Binding("x,r", "reject", "Reject"),
+        Binding("c", "curate", "Select"),
+        Binding("d", "mark_duplicate", "Dup", show=False),
+        Binding("u,ctrl+z", "undo", "Undo"),
+        Binding("right,greater_than_sign,full_stop", "next_photo", "Next", show=False),
+        Binding("left,less_than_sign,comma", "prev_photo", "Prev", show=False),
+        Binding("home", "first_photo", "First", show=False),
+        Binding("end", "last_photo", "Last", show=False),
+        Binding("b", "compare", "Compare"),
+        Binding("f", "toggle_filmstrip", "Film"),
+        Binding("z", "toggle_faces", "Faces"),
         Binding("s", "toggle_scores", "Scores"),
-        Binding("b", "burst_view", "Burst"),
+        Binding("e", "explain", "Explain"),
+        Binding("question_mark", "help", "Help"),
         Binding("q", "save_quit", "Save+Quit"),
         Binding("Q", "quit_no_save", "Quit (no save)", show=False),
-        Binding("tab", "cycle_queue", "Next Queue"),
+        Binding("tab", "cycle_queue", "Queue"),
         Binding("1", "queue_1", "Uncertain", show=False),
         Binding("2", "queue_2", "Rejected", show=False),
         Binding("3", "queue_3", "Duplicates", show=False),
@@ -261,15 +297,24 @@ class CullApp(App):
         Binding("5", "queue_5", "Selected", show=False),
         Binding("K", "bulk_keep", "Keep All", show=False),
         Binding("R", "bulk_reject", "Reject All", show=False),
-        Binding("shift+r", "reject_cluster", "Reject Cluster", show=False),
+        Binding("X", "reject_cluster", "Reject Stack", show=False),
         Binding("A", "auto_accept", "Auto-accept VLM", show=False),
-        Binding("?,shift+slash", "explain", "Explain"),
     ]
 
     CSS = f"""
     #info-bar {{
-        height: 3;
-        border: solid blue;
+        height: 1;
+        padding: 0 1;
+        background: $boost;
+    }}
+
+    #why-line {{
+        height: 1;
+        padding: 0 1;
+    }}
+
+    #main-row {{
+        height: 1fr;
     }}
 
     #{TOO_SMALL_BANNER_ID} {{
@@ -285,8 +330,13 @@ class CullApp(App):
         super().__init__()
         self._session = app_input.session
         self._config = app_input.config
-        self._overrides: dict[str, DecisionLabel] = {}
-        self._undo_stack: list[UndoEntry] = []
+        self._ledger = ReviewLedger(self._session.decisions, str(self._session.source_path))
+        self._paths = PathCache(self._config)
+        self._burst_winners = _burst_winner_names(self._session.decisions)
+        self.images = ImageService(self)
+        self.faces = FaceService()
+        self.latency = LatencyTimer()
+        self._log_jobs = ThreadPoolExecutor(max_workers=1, thread_name_prefix="cull-override-log")
         self._queue_index: int = QUEUE_UNCERTAIN
         self._photo_index: int = 0
         self._queue_indices: list[int] = []
@@ -294,6 +344,15 @@ class CullApp(App):
         self._status_message: str | None = None
         self._normalize_decision_destinations()
         self._restore_state()
+
+    @property
+    def _overrides(self) -> dict[str, DecisionLabel]:
+        """Return the user's label overrides keyed by source path."""
+        return self._ledger.overrides
+
+    def get_default_screen(self) -> Screen:
+        """Use a screen that hides images while covered."""
+        return ReviewScreen(id="_default")
 
     def _normalize_decision_destinations(self) -> None:
         """Walk decisions and set `destination` to the current on-disk path.
@@ -321,25 +380,21 @@ class CullApp(App):
         state = _load_state(_state_path(self._session))
         if state is None:
             return
-        self._overrides = dict(state.overrides)
+        self._ledger.restore(state.overrides)
+        self._ledger.reviewed.update(state.reviewed)
         self._photo_index = state.current_index
         self._queue_index = state.current_queue
-        self._apply_restored_overrides()
-
-    def _apply_restored_overrides(self) -> None:
-        """Apply restored overrides to session decisions."""
-        for path_str, label in self._overrides.items():
-            for i, d in enumerate(self._session.decisions):
-                if str(d.photo.path) == path_str:
-                    self._session.decisions[i] = _apply_override(d, label)
-                    break
 
     def compose(self) -> ComposeResult:
         """Build the main screen layout."""
         yield Header()
-        yield PhotoView()
-        yield ExplainPanel()
         yield Static("", id="info-bar")
+        yield Static("", id="why-line")
+        with Horizontal(id="main-row"):
+            yield PhotoView()
+            yield FacePanel()
+        yield Filmstrip()
+        yield ExplainPanel()
         yield ScorePanel()
         yield Static("", id=TOO_SMALL_BANNER_ID)
         yield Footer()
@@ -360,23 +415,48 @@ class CullApp(App):
             banner.update(_too_small_message(cols, rows))
 
     def _set_too_small_visible(self, is_too_small: bool) -> None:
-        """Toggle the too-small placeholder over the normal content widgets."""
+        """Swap every image-bearing and status widget for the too-small placeholder."""
         self.query_one(f"#{TOO_SMALL_BANNER_ID}", Static).display = is_too_small
-        self.query_one(PhotoView).display = not is_too_small
-        self.query_one("#info-bar", Static).display = not is_too_small
+        for selector in ("#main-row", "#info-bar", "#why-line", "PhotoView", "Filmstrip"):
+            self.query_one(selector).display = not is_too_small
 
     def on_mount(self) -> None:
-        """Initialize the display after mounting; fall back to first non-empty queue."""
-        from cull.tui.photo_view import _dlog  # noqa: PLC0415
-
-        _dlog(f"CullApp.on_mount: initial queue_index={self._queue_index}")
+        """Start background services, then show the first photo."""
+        self.images.start()
+        self.faces.start()
+        self.run_worker(self._warm_paths, thread=True, group="paths", exit_on_error=False)
+        self.run_worker(self._prune_previews, thread=True, group="prune", exit_on_error=False)
         self._rebuild_queue()
-        _dlog(f"CullApp.on_mount: after rebuild len={len(self._queue_indices)}")
         if not self._queue_indices:
             self._fallback_to_non_empty_queue()
-            _dlog(f"CullApp.on_mount: after fallback queue_index={self._queue_index} len={len(self._queue_indices)}")
-        self._display_current()
+        debug_log(f"on_mount: queue={self._queue_index} len={len(self._queue_indices)}")
+        self.call_after_refresh(self._display_current)
         self._schedule_autosave()
+
+    def on_unmount(self) -> None:
+        """Free terminal images and let pending override-log writes finish."""
+        self.images.stop()
+        self.faces.stop()
+        self._log_jobs.shutdown(wait=True)
+
+    def _prune_previews(self) -> None:
+        """Worker: keep the on-disk preview cache under its size budget."""
+        try:
+            removed = prune_cache(PREVIEW_CACHE_MAX_BYTES)
+        except OSError as exc:
+            logger.warning("preview cache prune failed: %s", exc)
+            return
+        debug_log(f"preview cache pruned {removed} file(s)")
+
+    def _warm_paths(self) -> None:
+        """Worker: resolve every photo path once, off the UI thread."""
+        resolved = resolve_all(self._session.decisions, self._config)
+        self.call_from_thread(self._on_paths_warmed, resolved)
+
+    def _on_paths_warmed(self, resolved: dict[str, Path]) -> None:
+        """Adopt background-resolved paths and widen the prefetch plan."""
+        self._paths.merge(resolved)
+        self._prefetch()
 
     def _fallback_to_non_empty_queue(self) -> None:
         """Switch to the first queue in _FALLBACK_QUEUE_ORDER that has decisions."""
@@ -398,11 +478,17 @@ class CullApp(App):
             overrides=dict(self._overrides),
             current_index=self._photo_index,
             current_queue=self._queue_index,
+            reviewed=sorted(self._ledger.reviewed),
         )
         _save_state(state, _state_path(self._session))
 
     def _rebuild_queue(self) -> None:
-        """Rebuild the current queue indices from decisions, sorted by taste uncertainty."""
+        """Snapshot the current queue, most uncertain first.
+
+        The snapshot stays fixed while reviewing: a photo you just decided
+        keeps its place (with its new marker), so auto-advance and going
+        back behave predictably, as in pro culling tools.
+        """
         label = QUEUE_LABELS[self._queue_index]
         raw_indices = _filter_queue(self._session.decisions, label)
         self._queue_indices = _sort_by_uncertainty(self._session.decisions, raw_indices)
@@ -417,144 +503,149 @@ class CullApp(App):
 
     def _display_current(self) -> None:
         """Update all widgets with the current photo."""
-        from cull.tui.photo_view import _dlog  # noqa: PLC0415
-
         decision = self._current_decision()
-        _dlog(f"_display_current: decision={None if decision is None else decision.photo.path.name}")
         if decision is None:
             self._show_empty_queue()
             return
-        self._sync_explain_panel(decision)
-        self._show_photo(decision)
+        source = self._paths.resolve(decision)
+        self._sync_explain_panel(source)
+        self.query_one(PhotoView).show(source)
         self._show_info(decision)
+        self._update_filmstrip()
+        self._update_faces(decision)
+        self._prefetch()
 
-    def _sync_explain_panel(self, decision: PhotoDecision) -> None:
+    def _sync_explain_panel(self, source: Path) -> None:
         """Hide a stale explain panel when the current photo changes."""
         panel = self.query_one(ExplainPanel)
-        current_path = str(self._resolve_decision_path(decision))
-        if panel.photo_path is not None and panel.photo_path != current_path:
+        if panel.photo_path is not None and panel.photo_path != str(source):
             panel.hide_panel()
 
     def _show_empty_queue(self) -> None:
         """Display empty queue message."""
+        self.query_one(PhotoView).show(None)
+        self.query_one("#why-line", Static).update("", layout=False)
         self._update_info_bar(None)
 
     def _update_info_bar(self, decision: PhotoDecision | None) -> None:
         """Render the info bar, preferring any active status message."""
         info_bar = self.query_one("#info-bar", Static)
         if self._status_message is not None:
-            info_bar.update(self._status_message)
+            info_bar.update(self._status_message, layout=False)
             return
         if decision is None:
-            info_bar.update("Queue is empty")
+            info_bar.update("Queue is empty", layout=False)
             return
-        counts = {
-            QUEUE_LABELS[qi]: len(_filter_queue(self._session.decisions, QUEUE_LABELS[qi]))
-            for qi in QUEUE_CYCLE_ORDER
-        }
-        ctx = InfoBarContext(
+        info_bar.update(_build_info_text(self._info_context(decision)), layout=False)
+
+    def _info_context(self, decision: PhotoDecision) -> InfoBarContext:
+        """Gather position, per-queue counts, and reviewed progress for the info bar."""
+        label_counts = self._ledger.label_counts()
+        reviewed = sum(
+            1 for i in self._queue_indices
+            if str(self._session.decisions[i].photo.path) in self._ledger.reviewed
+        )
+        return InfoBarContext(
             decision=decision,
             position=self._photo_index,
             total=len(self._queue_indices),
             queue_label=QUEUE_LABELS[self._queue_index],
-            queue_counts=counts,
+            queue_counts={QUEUE_LABELS[qi]: label_counts.get(QUEUE_LABELS[qi], 0) for qi in QUEUE_CYCLE_ORDER},
+            reviewed=reviewed,
         )
-        info_bar.update(_build_info_text(ctx))
-
-    def _resolve_decision_path(self, decision: PhotoDecision) -> Path:
-        """Return the current on-disk path for a decision, routing through moves."""
-        from cull.router import route_photo  # noqa: PLC0415
-
-        if decision.destination is not None and decision.destination.exists():
-            return decision.destination
-        if decision.photo.path.exists():
-            return decision.photo.path
-        routed = route_photo(decision, self._config)
-        if routed.exists():
-            return routed
-        recovered = self._recover_missing_path(decision)
-        if recovered is not None:
-            decision.destination = recovered
-            return recovered
-        return decision.photo.path
-
-    def _recover_missing_path(self, decision: PhotoDecision) -> Path | None:
-        """Search known review/curation folders for a moved photo by filename."""
-        source = decision.photo.path
-        for parts in _RECOVERY_DIRS:
-            candidate = source.parent.joinpath(*parts, source.name)
-            if candidate.exists():
-                return candidate
-        return None
-
-    def _show_photo(self, decision: PhotoDecision) -> None:
-        """Load and display the current photo."""
-        from cull.tui.photo_view import _dlog  # noqa: PLC0415
-
-        _dlog(f"_show_photo: entry path={decision.photo.path.name}")
-        try:
-            photo_view = self.query_one(PhotoView)
-        except Exception as exc:  # noqa: BLE001
-            _dlog(f"_show_photo: query_one(PhotoView) failed: {type(exc).__name__}: {exc}")
-            return
-        _dlog(f"_show_photo: photo_view.size=({photo_view.size.width},{photo_view.size.height})")
-        actual_path = self._resolve_decision_path(decision)
-        _dlog(f"_show_photo: resolved to {actual_path}")
-        try:
-            image_bytes = actual_path.read_bytes()
-        except OSError as exc:
-            _dlog(f"_show_photo: read_bytes failed: {exc}")
-            logger.warning("Cannot read %s", actual_path)
-            photo_view.clear_terminal_image()
-            self.query_one("#info-bar", Static).update(f"Missing photo: {actual_path.name}")
-            return
-        viewport = ViewportSize(cols=photo_view.size.width, rows=photo_view.size.height)
-        req = RenderRequest(image_id=str(actual_path), image_bytes=image_bytes, viewport=viewport)
-        _dlog(f"_show_photo: calling display_photo bytes={len(image_bytes)}")
-        photo_view.display_photo(req)
-        self._trigger_precache()
 
     def _show_info(self, decision: PhotoDecision) -> None:
-        """Update the info bar with current photo details + queue navigation hints."""
+        """Update the info bar, the why line, and the score panel."""
         self._update_info_bar(decision)
-        score_panel = self.query_one(ScorePanel)
-        score_panel.show_scores(decision)
+        self.query_one("#why-line", Static).update(build_why_line(self._why_context(decision)), layout=False)
+        self.query_one(ScorePanel).show_scores(decision)
 
-    def _trigger_precache(self) -> None:
-        """Pre-cache nearby photos in a background worker so navigation stays snappy."""
-        if not self._queue_indices:
+    def _why_context(self, decision: PhotoDecision) -> WhyContext:
+        """Build the why-line input: the AI's own label and the burst winner's name."""
+        group_id = _burst_group_id(decision)
+        return WhyContext(
+            decision=decision,
+            ai_label=self._ledger.ai_labels.get(str(decision.photo.path), decision.decision),
+            burst_winner=self._burst_winners.get(group_id) if group_id is not None else None,
+        )
+
+    def _resolve_decision_path(self, decision: PhotoDecision) -> Path:
+        """Return the current on-disk path for a decision (cached after first lookup)."""
+        return self._paths.resolve(decision)
+
+    def _queue_source(self, position: int) -> Path | None:
+        """Return the cached path at a queue position, without touching the disk."""
+        return self._paths.cached(self._session.decisions[self._queue_indices[position]])
+
+    def _update_filmstrip(self) -> None:
+        """Show the queue neighbours around the cursor in the filmstrip."""
+        strip = self.query_one(Filmstrip)
+        if strip.has_class("hidden"):
             return
+        items: list[StripItem | None] = []
+        for slot in range(FILMSTRIP_SLOTS):
+            position = self._photo_index + slot - FILMSTRIP_CENTRE
+            items.append(self._strip_item(position) if 0 <= position < len(self._queue_indices) else None)
+        strip.update_items(items)
+
+    def _strip_item(self, position: int) -> StripItem:
+        """Build one filmstrip slot for a queue position."""
+        decision = self._session.decisions[self._queue_indices[position]]
+        return StripItem(
+            source=self._paths.resolve(decision),
+            filename=decision.photo.filename,
+            label=decision.decision,
+            is_current=position == self._photo_index,
+        )
+
+    def _prefetch(self) -> None:
+        """Queue previews nearest-first; upload the next/previous photos ahead of time."""
         photo_view = self.query_one(PhotoView)
-        cols, rows = photo_view.size.width, photo_view.size.height
-        if cols <= 1 or rows <= 1:
+        box = photo_view.cell_box()
+        if box.cols < 2 or box.rows < 2 or not self._queue_indices:
             return
-        resolved = [
-            self._resolve_decision_path(self._session.decisions[i])
-            for i in self._queue_indices
-        ]
-        request = PrecacheRequest(paths=resolved, current_index=self._photo_index)
-        viewport = ViewportSize(cols=cols, rows=rows)
-        self.run_worker(
-            lambda: precache_images(request, viewport),
-            thread=True,
-            exclusive=True,
-            group="precache",
-        )
+        requests: list[ImageRequest] = []
+        for position in _nearest_first(self._photo_index, len(self._queue_indices)):
+            source = self._queue_source(position)
+            if source is not None:
+                requests.append(ImageRequest(source=source, box=box))
+        thumbs = self._thumbnail_requests()
+        near = requests[:1 + 2 * LOOKAHEAD_UPLOADS]
+        self.images.prefetch(PrefetchPlan(
+            urgent=near + thumbs,
+            upload_ahead=near[1:] + thumbs,
+            background=requests[len(near):],
+        ))
 
-    def _emit_override_log(self, ctx: OverrideHookCtx) -> OverrideEntry | None:
-        """Build and persist one override-log entry; warn-only on write failure."""
-        log_ctx = OverrideContext(
-            new_label=ctx.new_label,
-            session_source=str(self._session.source_path),
-            origin=ctx.origin,
-        )
-        try:
-            entry = build_override_entry(ctx.decision, log_ctx)
-            log_override(entry)
-            return entry
-        except (OSError, AttributeError, ValueError) as exc:
-            self.log.warning("override log write failed: %s", exc)
-            return None
+    def _thumbnail_requests(self) -> list[ImageRequest]:
+        """Return requests for the filmstrip thumbnails currently in view."""
+        strip = self.query_one(Filmstrip)
+        if strip.has_class("hidden"):
+            return []
+        return [
+            ImageRequest(source=cells.source, box=cells.cell_box())
+            for cells in strip.thumbnail_boxes()
+            if cells.source is not None and cells.size.width > 0 and cells.size.height > 0
+        ]
+
+    def _update_faces(self, decision: PhotoDecision) -> None:
+        """Show face close-ups for the current photo when the panel is open."""
+        panel = self.query_one(FacePanel)
+        if not panel.is_visible:
+            return
+        source = self._paths.resolve(decision)
+        report = self.faces.request(FaceRequest(source=source, on_done=partial(self._on_face_report, source)))
+        if report is None:
+            panel.show_loading(decision)
+            return
+        panel.show_report(report, decision)
+
+    def _on_face_report(self, source: Path, report: FaceReport) -> None:
+        """Show a face report if its photo is still the current one."""
+        decision = self._current_decision()
+        if decision is None or self._paths.resolve(decision) != source:
+            return
+        self.query_one(FacePanel).show_report(report, decision)
 
     def _trigger_retrain(self, entry: OverrideEntry) -> None:
         """Bump the retrain counter; maybe_retrain reads the full override log to fit."""
@@ -564,22 +655,42 @@ class CullApp(App):
         except Exception as exc:  # noqa: BLE001
             logger.warning("taste retrain failed unexpectedly (%s): %s", type(exc).__name__, exc)
 
-    def _stage_move(self, label: DecisionLabel) -> None:
-        """Stage a decision override for the current photo."""
-        decision = self._current_decision()
-        if decision is None:
+    def _write_log_batch(self, entry: UndoEntry) -> None:
+        """Log worker: append override entries, bumping retrain when the action counts."""
+        for logged in entry.logged:
+            log_override(logged)
+        if entry.retrain_bumps:
+            for logged in entry.logged:
+                self._trigger_retrain(logged)
+
+    def _revert_log_batch(self, entry: UndoEntry) -> None:
+        """Log worker: remove undone entries and take back their retrain bumps."""
+        try:
+            remove_overrides(entry.logged)
+        except OSError as exc:
+            logger.warning("override log undo failed: %s", exc)
+        if entry.retrain_bumps:
+            unwind_retrain_counter(TASTE_PROFILE_PATH, entry.retrain_bumps)
+
+    def flush_log_jobs(self) -> None:
+        """Block until queued override-log writes finish (tests and save)."""
+        self._log_jobs.submit(lambda: None).result()
+
+    def _apply_batch(self, batch: ChangeBatch) -> None:
+        """Apply label changes as one undoable step and log them off the UI thread."""
+        entry = self._ledger.apply(batch)
+        if entry is not None and entry.logged:
+            self._log_jobs.submit(self._write_log_batch, entry)
+
+    def _decide(self, label: DecisionLabel) -> None:
+        """Label the current photo, then advance to the next one in the queue."""
+        if not self._queue_indices:
             return
-        path_str = str(decision.photo.path)
-        undo = UndoEntry(photo_path=path_str, previous_label=decision.decision)
-        self._undo_stack.append(undo)
-        self._overrides[path_str] = label
-        idx = self._queue_indices[self._photo_index]
-        self._session.decisions[idx] = _apply_override(decision, label)
-        hook_ctx = OverrideHookCtx(decision=decision, new_label=label, origin=OVERRIDE_ORIGIN_SINGLE)
-        entry = self._emit_override_log(hook_ctx)
-        if entry is not None:
-            self._trigger_retrain(entry)
-        self._rebuild_queue()
+        self.latency.start()
+        change = LabelChange(index=self._queue_indices[self._photo_index], label=label)
+        self._apply_batch(ChangeBatch(changes=[change], origin=OVERRIDE_ORIGIN_SINGLE, bumps_retrain=True))
+        if self._photo_index < len(self._queue_indices) - 1:
+            self._photo_index += 1
         self._display_current()
 
     def _switch_queue(self, queue_index: int) -> None:
@@ -590,94 +701,140 @@ class CullApp(App):
         self._display_current()
 
     def action_keep(self) -> None:
-        """Mark current photo as keeper."""
-        self._stage_move("keeper")
+        """Mark current photo as keeper and advance."""
+        self._decide("keeper")
 
     def action_reject(self) -> None:
-        """Mark current photo as rejected."""
-        self._stage_move("rejected")
+        """Mark current photo as rejected and advance."""
+        self._decide("rejected")
 
     def action_mark_duplicate(self) -> None:
-        """Mark current photo as duplicate."""
-        self._stage_move("duplicate")
+        """Mark current photo as duplicate and advance."""
+        self._decide("duplicate")
 
     def action_curate(self) -> None:
-        """Promote current photo to the curated select queue."""
-        self._stage_move("select")
+        """Promote current photo to the curated select queue and advance."""
+        self._decide("select")
+
+    def _go_to(self, position: int) -> None:
+        """Move the cursor to a queue position if it is valid and different."""
+        if not 0 <= position < len(self._queue_indices) or position == self._photo_index:
+            return
+        self.latency.start()
+        self._photo_index = position
+        self._display_current()
 
     def action_next_photo(self) -> None:
         """Navigate to the next photo in the queue."""
-        if self._photo_index < len(self._queue_indices) - 1:
-            self._photo_index += 1
-            self._display_current()
+        self._go_to(self._photo_index + 1)
 
     def action_prev_photo(self) -> None:
         """Navigate to the previous photo in the queue."""
-        if self._photo_index > 0:
-            self._photo_index -= 1
-            self._display_current()
+        self._go_to(self._photo_index - 1)
+
+    def action_first_photo(self) -> None:
+        """Navigate to the first photo in the queue."""
+        self._go_to(0)
+
+    def action_last_photo(self) -> None:
+        """Navigate to the last photo in the queue."""
+        self._go_to(len(self._queue_indices) - 1)
 
     def action_undo(self) -> None:
-        """Undo the last decision override."""
-        if not self._undo_stack:
+        """Undo the last action (single, bulk, stack or cluster) and return to its photo."""
+        entry = self._ledger.undo()
+        if entry is None:
+            self.notify("Nothing to undo", timeout=2)
             return
-        entry = self._undo_stack.pop()
-        self._overrides.pop(entry.photo_path, None)
-        self._apply_undo(entry)
-        self._rebuild_queue()
+        if entry.logged:
+            self._log_jobs.submit(self._revert_log_batch, entry)
+        self._move_cursor_to_undone(entry)
         self._display_current()
 
-    def _apply_undo(self, entry: UndoEntry) -> None:
-        """Restore a single decision to its previous label."""
-        for i, d in enumerate(self._session.decisions):
-            if str(d.photo.path) == entry.photo_path:
-                self._session.decisions[i] = _apply_override(d, entry.previous_label)
-                break
+    def _move_cursor_to_undone(self, entry: UndoEntry) -> None:
+        """Put the cursor on the first photo the undone action touched, if in this queue."""
+        paths = [str(p.decision.photo.path) for p in entry.priors] + entry.reviewed_only
+        if not paths:
+            return
+        for position, index in enumerate(self._queue_indices):
+            if str(self._session.decisions[index].photo.path) == paths[0]:
+                self._photo_index = position
+                return
 
     def action_toggle_scores(self) -> None:
         """Toggle the score detail panel."""
         self.query_one(ScorePanel).toggle_visible()
 
-    def action_burst_view(self) -> None:
-        """Open burst comparison view for the current photo."""
-        decision = self._current_decision()
-        if decision is None or decision.stage1 is None or decision.stage1.burst is None:
-            return
-        group_id = decision.stage1.burst.group_id
-        burst_decs = _find_burst_decisions(self._session, group_id)
-        group = build_burst_group(burst_decs, group_id)
-        burst_screen = BurstView(group)
-        self.push_screen(burst_screen, self._on_burst_complete)
+    def action_toggle_filmstrip(self) -> None:
+        """Show or hide the filmstrip."""
+        strip = self.query_one(Filmstrip)
+        strip.toggle_class("hidden")
+        if not strip.has_class("hidden"):
+            self.call_after_refresh(self._update_filmstrip)
 
-    def _on_burst_complete(self, result: object) -> None:
-        """Handle burst view completion and apply results."""
-        if not isinstance(result, BurstResult):
+    def action_toggle_faces(self) -> None:
+        """Show or hide the face close-up panel."""
+        self.query_one(FacePanel).toggle()
+        decision = self._current_decision()
+        if decision is not None:
+            self._update_faces(decision)
+
+    def action_help(self) -> None:
+        """Show the key reference."""
+        self.push_screen(HelpScreen())
+
+    def action_compare(self) -> None:
+        """Open compare mode for the current photo's burst stack."""
+        decision = self._current_decision()
+        group_id = _burst_group_id(decision) if decision is not None else None
+        if decision is None or group_id is None:
+            self.notify("No burst stack for this photo", timeout=2)
             return
-        if not result.is_confirmed:
-            return
-        self._apply_burst_result_winner(result.winner)
-        self._apply_burst_result_dupes(result.duplicates)
-        self._rebuild_queue()
+        source = CompareSource(
+            group_id=group_id,
+            load_frames=partial(self._stack_frames, group_id),
+            pick=partial(self._pick_in_stack, group_id),
+            undo=self.action_undo,
+            start_path=self._paths.resolve(decision),
+        )
+        self.push_screen(CompareView(source), self._on_compare_closed)
+
+    def _stack_frames(self, group_id: int) -> list[StackFrame]:
+        """Return the stack's frames with current labels, in capture order."""
+        frames: list[StackFrame] = []
+        for index, decision in enumerate(self._session.decisions):
+            if _burst_group_id(decision) != group_id:
+                continue
+            burst = decision.stage1.burst if decision.stage1 else None
+            frames.append(StackFrame(
+                index=index,
+                source=self._paths.resolve(decision),
+                filename=decision.photo.filename,
+                label=decision.decision,
+                sharpness=frame_sharpness(decision),
+                is_ai_pick=bool(burst and burst.is_burst_winner),
+            ))
+        return frames
+
+    def _pick_in_stack(self, group_id: int, picked: StackFrame) -> None:
+        """Keep the picked frame and reject the rest of its stack, as one undo step."""
+        winner_label: DecisionLabel = "select" if picked.label == "select" else "keeper"
+        changes = [
+            LabelChange(index=frame.index, label=winner_label if frame.index == picked.index else "rejected")
+            for frame in self._stack_frames(group_id)
+        ]
+        self._apply_batch(ChangeBatch(changes=changes, origin=OVERRIDE_ORIGIN_BURST))
+
+    def _on_compare_closed(self, _result: object) -> None:
+        """Refresh the main view after compare mode."""
         self._display_current()
 
-    def _apply_burst_result_winner(self, winner: Path) -> None:
-        """Apply keeper label to the burst winner."""
-        for i, d in enumerate(self._session.decisions):
-            if d.photo.path == winner:
-                self._session.decisions[i] = _apply_override(d, "keeper")
-                self._overrides[str(winner)] = "keeper"
-                self._emit_override_log(OverrideHookCtx(decision=d, new_label="keeper", origin=OVERRIDE_ORIGIN_BURST))
-                break
-
-    def _apply_burst_result_dupes(self, duplicates: list[Path]) -> None:
-        """Apply duplicate label to burst losers."""
-        for dup_path in duplicates:
-            for i, d in enumerate(self._session.decisions):
-                if d.photo.path == dup_path:
-                    self._session.decisions[i] = _apply_override(d, "duplicate")
-                    self._overrides[str(dup_path)] = "duplicate"
-                    self._emit_override_log(OverrideHookCtx(decision=d, new_label="duplicate", origin=OVERRIDE_ORIGIN_BURST))
-                    break
+    def _pin_resolved_destinations(self) -> None:
+        """Record recovered on-disk locations so moves start from where files really are."""
+        for decision in self._session.decisions:
+            cached = self._paths.cached(decision)
+            if cached is not None and cached != decision.photo.path and cached.exists():
+                decision.destination = cached
 
     def action_save_quit(self) -> None:
         """Show a save banner, then persist moves/report after the next refresh."""
@@ -690,6 +847,7 @@ class CullApp(App):
 
     def _commit_save_and_exit(self) -> None:
         """Persist pending review changes after the save banner has painted."""
+        self._pin_resolved_destinations()
         move_error = self._attempt_execute_moves()
         if move_error is not None:
             self._report_save_failure(f"{SAVE_FAILED_PREFIX}{move_error}")
@@ -742,8 +900,13 @@ class CullApp(App):
         self.set_timer(SAVE_COMPLETE_DELAY_SECONDS, self.exit)
 
     def action_quit_no_save(self) -> None:
-        """Quit without saving (should prompt for confirmation)."""
-        self.exit()
+        """Ask before quitting without saving."""
+        self.push_screen(ConfirmQuitScreen(len(self._overrides)), self._on_quit_answer)
+
+    def _on_quit_answer(self, should_quit: bool | None) -> None:
+        """Quit only on an explicit yes."""
+        if should_quit:
+            self.exit()
 
     def action_queue_1(self) -> None:
         """Switch to uncertain queue."""
@@ -780,63 +943,41 @@ class CullApp(App):
                 return
 
     def action_bulk_keep(self) -> None:
-        """Keep all remaining photos in the current queue."""
+        """Keep all photos in the current queue (one undo step)."""
         self._bulk_apply("keeper")
 
     def action_bulk_reject(self) -> None:
-        """Reject all remaining photos in the current queue."""
+        """Reject all photos in the current queue (one undo step)."""
         self._bulk_apply("rejected")
 
     def action_reject_cluster(self) -> None:
-        """Reject every member of the current photo's cluster."""
+        """Reject every member of the current photo's burst stack (one undo step)."""
         decision = self._current_decision()
-        if decision is None or decision.stage1 is None or decision.stage1.burst is None:
-            self._stage_move("rejected")
+        if decision is None:
             return
-        group_id = decision.stage1.burst.group_id
-        cluster = _find_burst_decisions(self._session, group_id)
-        for member in cluster:
-            self._apply_cluster_reject(member)
-        self._rebuild_queue()
+        group_id = _burst_group_id(decision)
+        if group_id is None:
+            self._decide("rejected")
+            return
+        changes = [LabelChange(index=frame.index, label="rejected") for frame in self._stack_frames(group_id)]
+        self._apply_batch(ChangeBatch(changes=changes, origin=OVERRIDE_ORIGIN_BULK, bumps_retrain=True))
         self._display_current()
-
-    def _apply_cluster_reject(self, decision: PhotoDecision) -> None:
-        """Apply rejected override to one cluster member and trigger retrain."""
-        path_str = str(decision.photo.path)
-        self._overrides[path_str] = "rejected"
-        for i, d in enumerate(self._session.decisions):
-            if str(d.photo.path) == path_str:
-                self._session.decisions[i] = _apply_override(decision, "rejected")
-                break
-        hook_ctx = OverrideHookCtx(decision=decision, new_label="rejected", origin=OVERRIDE_ORIGIN_BULK)
-        entry = self._emit_override_log(hook_ctx)
-        if entry is not None:
-            self._trigger_retrain(entry)
 
     def _bulk_apply(self, label: DecisionLabel) -> None:
         """Apply a label to all photos in the current queue."""
-        for idx in self._queue_indices:
-            decision = self._session.decisions[idx]
-            path_str = str(decision.photo.path)
-            self._overrides[path_str] = label
-            self._session.decisions[idx] = _apply_override(decision, label)
-            self._emit_override_log(OverrideHookCtx(decision=decision, new_label=label, origin=OVERRIDE_ORIGIN_BULK))
-        self._rebuild_queue()
+        changes = [LabelChange(index=idx, label=label) for idx in self._queue_indices]
+        self._apply_batch(ChangeBatch(changes=changes, origin=OVERRIDE_ORIGIN_BULK))
         self._display_current()
 
     def action_auto_accept(self) -> None:
         """Auto-accept VLM recommendations with confidence above threshold."""
-        for i, d in enumerate(self._session.decisions):
-            if d.decision != "uncertain" or d.stage3 is None:
-                continue
-            if d.stage3.confidence <= TUI_AUTOSAVE_BATCH_CONFIDENCE:
-                continue
-            label = self._vlm_label(d)
-            path_str = str(d.photo.path)
-            self._overrides[path_str] = label
-            self._session.decisions[i] = _apply_override(d, label)
-            self._emit_override_log(OverrideHookCtx(decision=d, new_label=label, origin=OVERRIDE_ORIGIN_AUTO))
-        self._rebuild_queue()
+        changes = [
+            LabelChange(index=i, label=self._vlm_label(d))
+            for i, d in enumerate(self._session.decisions)
+            if d.decision == "uncertain" and d.stage3 is not None
+            and d.stage3.confidence > TUI_AUTOSAVE_BATCH_CONFIDENCE
+        ]
+        self._apply_batch(ChangeBatch(changes=changes, origin=OVERRIDE_ORIGIN_AUTO))
         self._display_current()
 
     def _vlm_label(self, decision: PhotoDecision) -> DecisionLabel:

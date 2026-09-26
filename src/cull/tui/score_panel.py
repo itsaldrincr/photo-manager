@@ -224,7 +224,7 @@ class ScorePanel(Static):
 
     def show_scores(self, decision: PhotoDecision) -> None:
         """Update panel content with the given decision's scores."""
-        self.update(render_score_text(decision))
+        self.update(render_score_text(decision), layout=self.has_class("visible"))
 
     def toggle_visible(self) -> None:
         """Toggle the panel visibility."""

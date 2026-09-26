@@ -201,3 +201,16 @@ def test_label_for_treats_select_as_keeper() -> None:
 
     assert _label_for(select_entry) == 1
     assert _label_for(reject_entry) == 0
+
+
+def test_unwind_retrain_counter_takes_back_undone_bumps(tmp_path: Path) -> None:
+    """Undoing overrides lowers the retrain counter, never below zero."""
+    from cull.taste_trainer import unwind_retrain_counter
+
+    profile_path = tmp_path / "taste.joblib"
+    counter_path = profile_path.with_suffix(profile_path.suffix + ".counter")
+    counter_path.write_text("5", encoding="utf-8")
+    unwind_retrain_counter(profile_path, 2)
+    assert counter_path.read_text(encoding="utf-8") == "3"
+    unwind_retrain_counter(profile_path, 10)
+    assert counter_path.read_text(encoding="utf-8") == "0"
