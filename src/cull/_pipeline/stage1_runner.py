@@ -162,7 +162,21 @@ def _run_stage1_loop(loop_in: _Stage1LoopInput, dashboard: Dashboard) -> _Stage1
     with mp_ctx.Pool(processes=STAGE1_WORKER_COUNT) as pool:
         for outcome in pool.imap_unordered(worker_fn, loop_in.paths):
             _handle_worker_result(outcome, drain_ctx)
+    _sort_by_path(output)
     return output
+
+
+def _sort_by_path(output: _Stage1Output) -> None:
+    """Put the routing lists in path order instead of worker completion order.
+
+    Stage 2 cuts its chunks from survivors, and topiq_iaa scores a chunk in
+    one forward whose result depends on the batch (DSCF0652 alone 4.6416,
+    batched 4.6347). Burst detection breaks equal whole-second timestamps
+    by list order. Completion order made both depend on worker timing.
+    """
+    output.survivors.sort()
+    output.rejected.sort()
+    output.failed_paths.sort()
 
 
 def _classify_s1_result(result: Stage1Result, output: _Stage1Output) -> None:
