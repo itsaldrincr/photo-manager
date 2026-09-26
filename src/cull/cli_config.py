@@ -17,7 +17,8 @@ DEFAULT_THRESHOLD: float = 0.65
 DEFAULT_BURST_GAP: float = 0.5
 DEFAULT_STAGES: tuple[int, ...] = (1, 2, 3)
 PRESET_CHOICES: list[str] = [
-    "general", "wedding", "documentary", "wildlife", "landscape", "street", "holiday"
+    "general", "wedding", "documentary", "wildlife", "landscape", "street", "holiday",
+    "event",
 ]
 
 

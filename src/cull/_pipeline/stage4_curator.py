@@ -13,6 +13,8 @@ from cull.models import CurationResult, PhotoDecision
 from cull.stage2.portrait import PortraitResult
 from cull.stage4.curator import CuratorInput, curate
 
+from cull._pipeline.event_routing import EventRouteInput, collect_event_scores
+
 if TYPE_CHECKING:
     from cull.pipeline import _StagesResult, _StageRunCtx
 
@@ -80,6 +82,16 @@ def _collect_portraits(stages: Any) -> dict[str, PortraitResult]:
     return dict(stages.s2_out.portraits)
 
 
+def _collect_event_scores(s4_in: _S4RunInput) -> dict[str, float]:
+    """Return event scores for the event preset, else an empty dict."""
+    if not s4_in.ctx.config.is_event:
+        return {}
+    stages = s4_in.stages
+    return collect_event_scores(EventRouteInput(
+        s1_out=stages.s1_out, s2_out=stages.s2_out, s3_results=stages.s3_results,
+    ))
+
+
 def _build_curator_input(s4_in: _S4RunInput) -> CuratorInput:
     """Assemble CuratorInput from stages, decisions, and run context."""
     cache = s4_in.stages.search_cache
@@ -94,6 +106,7 @@ def _build_curator_input(s4_in: _S4RunInput) -> CuratorInput:
         search_embeddings=cache.embeddings if cache else None,
         search_path_to_row=cache.path_to_row if cache else None,
         vlm_session=s4_in.ctx.vlm_session,
+        event_scores=_collect_event_scores(s4_in),
     )
 
 

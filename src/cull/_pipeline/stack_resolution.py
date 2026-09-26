@@ -51,16 +51,31 @@ def _drop_from_routing(s2_out: "_Stage2Output | None", removed: set[str]) -> Non
     s2_out.rejects = [p for p in s2_out.rejects if str(p) not in removed]
 
 
-def resolve_moment_stacks(s1_out: _Stage1Output, s2_out: "_Stage2Output | None") -> None:
-    """Pick each stack's highest-composite member; mark the rest as duplicates.
-
-    Tenengrad breaks composite ties, and decides alone when Stage 2 did not run.
-    """
-    scores = _member_scores(s1_out, s2_out)
+def _apply_ranking(s1_out: _Stage1Output, scores: dict[str, tuple[float, float]]) -> set[str]:
+    """Rank every stack by scores, stamp the result, and return the non-representatives."""
     duplicates: set[str] = set()
     for stack in s1_out.stacks:
         ranked = rank_stack(stack, scores)
         _stamp_ranking(ranked, s1_out)
         duplicates.update(ranked[1:])
     s1_out.duplicate_paths = duplicates
+    return duplicates
+
+
+def resolve_moment_stacks(s1_out: _Stage1Output, s2_out: "_Stage2Output | None") -> None:
+    """Pick each stack's highest-composite member; mark the rest as duplicates.
+
+    Tenengrad breaks composite ties, and decides alone when Stage 2 did not run.
+    """
+    duplicates = _apply_ranking(s1_out, _member_scores(s1_out, s2_out))
     _drop_from_routing(s2_out, duplicates)
+
+
+def resolve_event_stacks(s1_out: _Stage1Output, event_scores: dict[str, float]) -> None:
+    """Pick each stack's highest event_score member; Tenengrad breaks ties."""
+    scores = {
+        member: (event_scores.get(member, float("-inf")), s1_out.results[member].blur.tenengrad)
+        for stack in s1_out.stacks
+        for member in stack
+    }
+    _apply_ranking(s1_out, scores)

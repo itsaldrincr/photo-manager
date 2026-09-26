@@ -16,6 +16,7 @@ from cull.config import (
 )
 from cull.dashboard import Dashboard
 from cull.models import Stage1Result, Stage3Result
+from cull.stage3.event_scoring import rate_photo
 from cull.stage3.prompt import PromptContext
 from cull.stage3.vlm_scoring import VlmRequest, VlmScoreCallInput, score_photo
 from cull.vlm_registry import resolve_alias
@@ -101,8 +102,16 @@ def _build_prompt_context(prompt_in: _PromptContextInput) -> PromptContext:
     )
 
 
+def _rate_single_event(path: Path, loop_in: _Stage3LoopInput) -> Stage3Result:
+    """Rate one photo with the event prompt; Stage 1/2 hints are not sent."""
+    request = VlmRequest(image_path=path, context=PromptContext(), model=loop_in.model_name)
+    return rate_photo(VlmScoreCallInput(request=request, session=loop_in.session))
+
+
 def _score_single_s3(path: Path, loop_in: _Stage3LoopInput) -> Stage3Result:
-    """Score one ambiguous photo via VLM."""
+    """Score one ambiguous photo via VLM, or rate it in event mode."""
+    if loop_in.config.is_event:
+        return _rate_single_event(path, loop_in)
     s1 = loop_in.s1_results.get(str(path))
     s2_fusion = loop_in.s2_results.get(str(path))
     context = _build_prompt_context(
@@ -149,11 +158,28 @@ class _S3RunInput(BaseModel):
     model_name: str
 
 
+def _event_queue(s2_out: Any) -> list[Path]:
+    """Return every Stage-2-scored photo, stack members included.
+
+    The VLM must pick each stack's representative: on the singles-mixer shoot
+    the cheap score chose a keeper-bearing frame in 92 of 129 stacks, the VLM
+    rating in 101.
+    """
+    return sorted(Path(key) for key, fusion in s2_out.results.items() if fusion.stage2 is not None)
+
+
+def _stage3_queue(run_in: _S3RunInput) -> list[Path]:
+    """Return the photos Stage 3 sends to the VLM."""
+    if run_in.ctx.config.is_event:
+        return _event_queue(run_in.s2_out)
+    return run_in.s2_out.ambiguous
+
+
 def _run_s3(run_in: _S3RunInput) -> dict[str, Stage3Result]:
     """Execute Stage 3 and record timing."""
     t0 = time.monotonic()
     loop_in = _Stage3LoopInput(
-        ambiguous=run_in.s2_out.ambiguous,
+        ambiguous=_stage3_queue(run_in),
         config=run_in.ctx.config,
         model_name=run_in.model_name,
         s1_results=run_in.s1_out.results,

@@ -221,6 +221,7 @@ class Stage3Result(BaseModel):
     flags: list[str] = Field(default_factory=list)
     model_used: str = ""
     is_parse_error: bool = False
+    rating: int | None = None  # Event preset only: VLM rating 1-5, 5 = hero shot.
 
 
 # ---------------------------------------------------------------------------

@@ -5,6 +5,7 @@ from __future__ import annotations
 import base64
 import logging
 import time
+from collections.abc import Callable
 from io import BytesIO
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -49,6 +50,9 @@ class VlmScoreCallInput(BaseModel):
     session: VlmSession
 
 
+AttemptFn = Callable[[VlmScoreCallInput], Stage3Result]
+
+
 def resize_for_vlm(img: PILImage) -> PILImage:
     """Resize image so long edge is at most VLM_IMAGE_MAX_PX."""
     from PIL import Image  # noqa: PLC0415
@@ -88,7 +92,7 @@ def _run_attempt(call_in: VlmScoreCallInput) -> Stage3Result:
     return result
 
 
-def _run_attempt_safe(call_in: VlmScoreCallInput) -> Stage3Result:
+def _run_attempt_safe(call_in: VlmScoreCallInput, attempt: AttemptFn) -> Stage3Result:
     """Run one attempt, converting a raw generate() failure into a parse-error result.
 
     OOM, corrupt images, and backend failures raise from session.generate();
@@ -96,7 +100,7 @@ def _run_attempt_safe(call_in: VlmScoreCallInput) -> Stage3Result:
     abort the whole Stage 3 run instead of being retried like a parse error.
     """
     try:
-        return _run_attempt(call_in)
+        return attempt(call_in)
     except Exception as exc:  # noqa: BLE001
         logger.warning("VLM generate() failed for %s: %s", call_in.request.image_path, exc)
         return Stage3Result(
@@ -106,16 +110,16 @@ def _run_attempt_safe(call_in: VlmScoreCallInput) -> Stage3Result:
         )
 
 
-def _retry_loop(call_in: VlmScoreCallInput) -> Stage3Result:
-    """Retry _run_attempt_safe on parse errors or generate() failures with backoff."""
+def run_with_retries(call_in: VlmScoreCallInput, attempt: AttemptFn) -> Stage3Result:
+    """Retry `attempt` on parse errors or generate() failures with backoff."""
     delay = RETRY_BASE_DELAY
-    for attempt in range(1, VLM_MAX_RETRIES + 1):
-        logger.info("VLM attempt %d/%d", attempt, VLM_MAX_RETRIES)
-        result = _run_attempt_safe(call_in)
+    for number in range(1, VLM_MAX_RETRIES + 1):
+        logger.info("VLM attempt %d/%d", number, VLM_MAX_RETRIES)
+        result = _run_attempt_safe(call_in, attempt)
         if not result.is_parse_error:
             return result
-        if attempt < VLM_MAX_RETRIES:
-            logger.warning("VLM attempt %d failed, retry in %.1fs", attempt, delay)
+        if number < VLM_MAX_RETRIES:
+            logger.warning("VLM attempt %d failed, retry in %.1fs", number, delay)
             time.sleep(delay)
             delay *= RETRY_BACKOFF_FACTOR
     logger.error("All %d VLM attempts failed for %s", VLM_MAX_RETRIES, call_in.request.image_path)
@@ -131,4 +135,4 @@ def score_photo(call_in: VlmScoreCallInput) -> Stage3Result:
     if not call_in.request.image_path.exists():
         logger.warning("Image not found, skipping: %s", call_in.request.image_path)
         return Stage3Result(photo_path=call_in.request.image_path, is_parse_error=True)
-    return _retry_loop(call_in)
+    return run_with_retries(call_in, _run_attempt)

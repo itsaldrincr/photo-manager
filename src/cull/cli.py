@@ -36,7 +36,8 @@ _CACHE: ModelCacheConfig = bootstrap_default()
 import click  # noqa: E402
 
 from cull.config import (  # noqa: E402
-    CURATE_DEFAULT_TARGET, CURATE_VLM_TIEBREAK_THRESHOLD, CullConfig, VLM_DEFAULT_ALIAS,
+    CURATE_DEFAULT_TARGET, CURATE_VLM_TIEBREAK_THRESHOLD, CullConfig, EVENT_VLM_ALIAS,
+    VLM_DEFAULT_ALIAS, default_model_alias,
 )
 from cull.model_cache import require_bootstrap_valid  # noqa: E402, F401
 from cull.cli_config import (  # noqa: E402, F401
@@ -182,8 +183,11 @@ def _run_standard_pipeline(kwargs: dict, config: CullConfig) -> None:
 @click.option(
     "--model",
     type=str,
-    default=VLM_DEFAULT_ALIAS,
-    help="VLM alias (see VLM_ALIASES)",
+    default=None,
+    help=(
+        f"VLM alias (see --vlms). Default {VLM_DEFAULT_ALIAS}; "
+        f"{EVENT_VLM_ALIAS} for --preset event."
+    ),
 )
 @click.option("--threshold", type=float, default=DEFAULT_THRESHOLD)
 @click.option("--burst-gap", type=float, default=DEFAULT_BURST_GAP)
@@ -311,6 +315,7 @@ def _run_standard_pipeline(kwargs: dict, config: CullConfig) -> None:
 def _cull_pipeline_command(**kwargs: object) -> None:
     """Run the photo cull pipeline on SOURCE directory."""
     logging.getLogger("cull").setLevel(logging.INFO)
+    kwargs["model"] = kwargs.get("model") or default_model_alias(kwargs.get("preset"))
     if kwargs.get("review_session"):
         _launch_review_session(kwargs["review_session"], _build_config(kwargs))
         return

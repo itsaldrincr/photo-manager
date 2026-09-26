@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 # ---------------------------------------------------------------------------
 # Pipeline stages
@@ -36,6 +36,28 @@ VLM_MAX_RETRIES: int = 3
 VLM_CONFIDENCE_THRESHOLD: float = 0.70
 VLM_IMAGE_MAX_PX: int = 1024
 VLM_JPEG_QUALITY: int = 85
+
+# ---------------------------------------------------------------------------
+# Event preset — VLM 1-5 rating drives keep/reject/curate
+# ---------------------------------------------------------------------------
+
+# Auto-slug alias of the Qwen3.8-27B MLX 4-bit directory. On a 488-photo
+# singles-mixer shoot its event-prompt rating gave keeper AUC 0.72; the Stage 2
+# composite gave 0.56 on the same labels.
+EVENT_VLM_ALIAS: str = "qwen3-8-27b-mlx-4bit"
+EVENT_RATING_MIN: int = 1
+EVENT_RATING_MAX: int = 5
+# Rating-5 representatives were 69% label keepers on the singles-mixer shoot.
+EVENT_KEEPER_RATING: int = 5
+EVENT_UNCERTAIN_RATING: int = 4
+# The cheap probability only breaks ties between equal ratings. Scored as
+# rating + 0.01 * cheap_prob, curated-100 held 63% label keepers, 6 bad picks
+# and 10/12 heroes (old composite: 36%, 28, 8/12); a larger weight did worse.
+EVENT_CHEAP_TIEBREAK_WEIGHT: float = 0.01
+# Without a VLM rating, representatives route by shoot-relative cheap_prob rank.
+EVENT_NO_VLM_KEEPER_FRACTION: float = 0.20
+EVENT_NO_VLM_UNCERTAIN_FRACTION: float = 0.25
+EVENT_MMR_LAMBDA: float = 0.75
 
 # ---------------------------------------------------------------------------
 # Stage 2 routing thresholds
@@ -155,6 +177,21 @@ GENRE_WEIGHTS: dict[str, dict[str, float]] = {
         "exif_anomaly": EXIF_ANOMALY_WEIGHT_DEFAULT,
         "scene_start_bonus": SCENE_START_BONUS_WEIGHT_DEFAULT,
     },
+    # Event routing ignores this composite (keeper AUC 0.56 on the
+    # singles-mixer shoot); it stays for display and the other stages.
+    "event": {
+        "topiq": 0.25,
+        "laion_aesthetic": 0.40,
+        "clipiqa": 0.25,
+        "exposure": 0.10,
+        "composition": COMPOSITION_WEIGHT_DEFAULT,
+        "taste": TASTE_WEIGHT_DEFAULT,
+        "tilt_penalty": TILT_PENALTY_WEIGHT_PEOPLE,
+        "palette_outlier": PALETTE_OUTLIER_WEIGHT_DEFAULT,
+        "exposure_drift": EXPOSURE_DRIFT_WEIGHT_DEFAULT,
+        "exif_anomaly": EXIF_ANOMALY_WEIGHT_DEFAULT,
+        "scene_start_bonus": SCENE_START_BONUS_WEIGHT_DEFAULT,
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -213,6 +250,13 @@ PRESET_QUALITY_POLICY: dict[str, dict[str, float]] = {
         "portrait_sharpness_bonus": 0.06,
         "eyes_closed_penalty": 0.12,
         "face_occlusion_penalty": 0.08,
+    },
+    "event": {
+        "subject_blur_blend": 0.30,
+        "bokeh_bonus": 0.05,
+        "portrait_sharpness_bonus": 0.08,
+        "eyes_closed_penalty": 0.18,
+        "face_occlusion_penalty": 0.12,
     },
 }
 
@@ -295,6 +339,7 @@ CLUSTER_THRESHOLD: dict[str, float] = {
     "landscape": 0.20,     # loose   — compositional diversity valued
     "street": 0.20,        # loose   — decisive moments differ visually
     "holiday": 0.18,       # mid     — blend of documentary and landscape
+    "event": 0.10,         # unused  — the event curator runs MMR, no clusters
 }
 
 CURATE_DEFAULT_TARGET: int = 30
@@ -562,8 +607,15 @@ CULL_DEFAULT_THRESHOLD: float = 0.65
 # ---------------------------------------------------------------------------
 
 PresetName = Literal[
-    "general", "wedding", "documentary", "wildlife", "landscape", "street", "holiday"
+    "general", "wedding", "documentary", "wildlife", "landscape", "street", "holiday",
+    "event",
 ]
+EVENT_PRESET: str = "event"
+
+
+def default_model_alias(preset: str | None) -> str:
+    """Return the VLM alias used when --model is not given."""
+    return EVENT_VLM_ALIAS if preset == EVENT_PRESET else VLM_DEFAULT_ALIAS
 
 # ---------------------------------------------------------------------------
 # Model cache config
@@ -705,3 +757,16 @@ class CullConfig(BaseModel):
         default=True,
         description="Write XMP sidecar files alongside source images.",
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _default_model_for_preset(cls, data: object) -> object:
+        """Fill a missing --model with the preset's VLM alias."""
+        if not isinstance(data, dict) or data.get("model") is not None:
+            return data
+        return {**data, "model": default_model_alias(data.get("preset"))}
+
+    @property
+    def is_event(self) -> bool:
+        """Return True when the VLM rating drives keep/reject/curate."""
+        return self.preset == EVENT_PRESET

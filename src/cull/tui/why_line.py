@@ -5,7 +5,7 @@ from __future__ import annotations
 from pydantic import BaseModel
 from rich.text import Text
 
-from cull.config import ROUTING_AMBIGUOUS_MIN, ROUTING_KEEPER_MIN
+from cull.config import EVENT_RATING_MAX, ROUTING_AMBIGUOUS_MIN, ROUTING_KEEPER_MIN
 from cull.models import DecisionLabel, PhotoDecision
 
 SEPARATOR: str = " · "
@@ -52,6 +52,17 @@ def _vlm_note(decision: PhotoDecision) -> str | None:
     return f"VLM: {verdict} (conf {stage3.confidence:.2f})"
 
 
+def _event_notes(decision: PhotoDecision) -> list[str] | None:
+    """Return ['VLM 5/5', 'flag, flag'] for an event-rated photo, else None."""
+    stage3 = decision.stage3
+    if stage3 is None or stage3.rating is None:
+        return None
+    notes = [f"VLM {stage3.rating}/{EVENT_RATING_MAX}"]
+    if stage3.flags:
+        notes.append(", ".join(stage3.flags))
+    return notes
+
+
 def _stage1_reason(ctx: WhyContext) -> str | None:
     """Return the Stage 1 reason for a reject or duplicate, if Stage 1 made the call."""
     stage1 = ctx.decision.stage1
@@ -85,6 +96,9 @@ def _reasons(ctx: WhyContext) -> list[str]:
     if stage1 is not None:
         return [stage1]
     reasons = ["Stage 4: curated pick"] if ctx.ai_label == "select" else []
+    event_notes = _event_notes(ctx.decision)
+    if event_notes is not None:
+        return reasons + event_notes
     for reason in (_score_reason(ctx), _vlm_note(ctx.decision)):
         if reason is not None:
             reasons.append(reason)

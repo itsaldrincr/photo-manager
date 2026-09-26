@@ -27,6 +27,7 @@ class _DecisionCtx(BaseModel):
     s1_out: _Stage1Output
     s2_out: _Stage2Output | None = None
     s3_results: dict[str, Stage3Result] = Field(default_factory=dict)
+    event_labels: dict[str, DecisionLabel] | None = None  # Set only for the event preset.
 
 
 def _build_photo_meta(path: Path) -> PhotoMeta:
@@ -51,6 +52,8 @@ def _decide_label(path: Path, ctx: _DecisionCtx) -> DecisionLabel:
 
 def _decide_from_s2_s3(key: str, ctx: _DecisionCtx) -> DecisionLabel:
     """Determine label from Stage 2/3 results."""
+    if ctx.event_labels is not None:
+        return ctx.event_labels.get(key, "uncertain")
     if ctx.s2_out is None:
         return "uncertain"
     fusion = ctx.s2_out.results.get(key)

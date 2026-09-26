@@ -27,6 +27,7 @@ from cull.dashboard import (
 )
 from cull.models import (
     CurationResult,
+    DecisionLabel,
     PhotoDecision,
     Stage3Result,
 )
@@ -50,7 +51,8 @@ from cull._pipeline.stage2_reducer import (
     _S2ReducerRunInput,
 )
 from cull._pipeline.stage2_scoring import _SearchCache
-from cull._pipeline.stack_resolution import resolve_moment_stacks
+from cull._pipeline.event_routing import EventRouteInput, collect_event_scores, route_event
+from cull._pipeline.stack_resolution import resolve_event_stacks, resolve_moment_stacks
 from cull._pipeline.stage3_runner import (
     _run_s3_if_configured,
     _S3MaybeRunInput,
@@ -282,11 +284,26 @@ def _execute_run(ctx: _StageRunCtx) -> _RunState:
     )
 
 
+def _event_route_input(stages: _StagesResult) -> EventRouteInput:
+    """Bundle the stage outputs the event router and scorer read."""
+    return EventRouteInput(
+        s1_out=stages.s1_out, s2_out=stages.s2_out, s3_results=stages.s3_results,
+    )
+
+
+def _event_labels(state: _RunState) -> dict[str, DecisionLabel] | None:
+    """Return event-preset labels for representatives, or None for other presets."""
+    if not state.ctx.config.is_event:
+        return None
+    return route_event(_event_route_input(state.stages))
+
+
 def _finalize_run(state: _RunState, run_in: _PipelineRunInput) -> SessionResult:
     """Build decisions, run Stage 4, and assemble the SessionResult."""
     dec_ctx = _DecisionCtx(
         paths=state.paths, s1_out=state.stages.s1_out,
         s2_out=state.stages.s2_out, s3_results=state.stages.s3_results,
+        event_labels=_event_labels(state),
     )
     decisions = _build_all_decisions(dec_ctx)
     curation = _run_s4(_S4RunInput(stages=state.stages, decisions=decisions, ctx=state.ctx))
@@ -299,7 +316,12 @@ def _finalize_run(state: _RunState, run_in: _PipelineRunInput) -> SessionResult:
 
 
 def _needs_vlm(config: CullConfig) -> bool:
-    """Return True if Stage 3 or the Stage 4 curator will need a VLM session."""
+    """Return True if Stage 3 or the Stage 4 curator will need a VLM session.
+
+    The event curator never calls the VLM, so only Stage 3 needs it there.
+    """
+    if config.is_event:
+        return STAGE_VLM in config.stages
     return STAGE_VLM in config.stages or config.curate_target is not None
 
 
@@ -374,17 +396,21 @@ def _execute_stages_inline(ctx: _StageRunCtx) -> _StagesResult:
         s2_out = _run_s2(_S2RunInput(s1_out=s1_out, ctx=ctx))
         _run_s2_reducer(_S2ReducerRunInput(s2_out=s2_out, s1_out=s1_out, ctx=ctx))
         _unload_stage2_models()
-    resolve_moment_stacks(s1_out, s2_out)
+    if not ctx.config.is_event:
+        resolve_moment_stacks(s1_out, s2_out)
     _load_vlm_if_needed(ctx)
     if STAGE_IQA in ctx.config.stages:
         s3_results = _run_s3_if_configured(
             _S3MaybeRunInput(ctx=ctx, s2_out=s2_out, s1_out=s1_out),
         )
     search_cache = s2_out.search_cache if s2_out is not None else None
-    return _StagesResult(
+    stages = _StagesResult(
         s1_out=s1_out, s2_out=s2_out,
         s3_results=s3_results, search_cache=search_cache,
     )
+    if ctx.config.is_event:
+        resolve_event_stacks(s1_out, collect_event_scores(_event_route_input(stages)))
+    return stages
 
 
 # Prior pipeline output dirs must never be re-ingested on a re-run — canonical

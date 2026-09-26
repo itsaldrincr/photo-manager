@@ -23,6 +23,7 @@ from cull.models import (
 from cull.stage2.portrait import PortraitResult
 from cull.stage4.cluster import ClusterInput, cluster_by_similarity
 from cull.stage4.diversity import MmrContext, MmrInput, select as diversity_select
+from cull.stage4.event_curator import curate_event
 from cull.stage4.narrative_flow import NarrativeFlowInput, check as narrative_check
 from cull.stage4.peak_action import PeakActionInput, pick_winner as pick_action_winner
 from cull.stage4.peak_portrait import PeakPortraitInput, pick_winner as pick_portrait_winner
@@ -55,6 +56,7 @@ class CuratorInput(BaseModel):
     search_embeddings: Any = None  # np.ndarray | None — CLIP rows for diversity
     search_path_to_row: dict[str, int] | None = None
     vlm_session: Any = None  # VlmSession — Any avoids import cycle
+    event_scores: dict[str, float] = {}  # Event preset only: rating + 0.01 * cheap_prob.
 
 
 class _ClusterClassifyInput(BaseModel):
@@ -709,6 +711,8 @@ def curate(curator_input: CuratorInput) -> CurationResult:
         return _empty_result(threshold, target)
     if len(keepers) <= target:
         return _make_all_keeper_result(curator_input, threshold)
+    if config.is_event:
+        return curate_event(curator_input)
     t0 = time.perf_counter()
     reporter = _S4ProgressReporter(dashboard=curator_input.dashboard)
     run_in = _ClusterRunInput(
