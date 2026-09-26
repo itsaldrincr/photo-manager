@@ -6,7 +6,7 @@ import logging
 from pathlib import Path
 from typing import Literal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from cull.config import (
     CullConfig,
@@ -31,6 +31,27 @@ class NarrativeFlowInput(BaseModel):
 
     selections: list[CuratorSelection]
     candidates: dict[str, Path]
+    # Stage 2 portrait results keyed by str(path); photos missing here are assessed afresh.
+    portraits: dict[str, PortraitResult] = Field(default_factory=dict)
+
+
+class _ShotTyper(BaseModel):
+    """Shot type per photo, classified once per check() call.
+
+    A swap re-reads every selection's shot type and the candidate search
+    walks the pool, so without the memo a photo is decoded and run through
+    face analysis up to three times.
+    """
+
+    portraits: dict[str, PortraitResult]
+    shots: dict[str, ShotType] = Field(default_factory=dict)
+
+    def shot_type(self, path: Path) -> ShotType:
+        """Return path's shot type, classifying it on first request."""
+        key = str(path)
+        if key not in self.shots:
+            self.shots[key] = _shot_type_for(path, self.portraits.get(key))
+        return self.shots[key]
 
 
 class _SwapContext(BaseModel):
@@ -39,6 +60,7 @@ class _SwapContext(BaseModel):
     flow_input: NarrativeFlowInput
     shots: list[ShotType]
     current_score: float
+    typer: _ShotTyper
 
 
 class _CandidateSearch(BaseModel):
@@ -47,24 +69,27 @@ class _CandidateSearch(BaseModel):
     candidates: dict[str, Path]
     current_paths: set[str]
     target_type: ShotType
+    typer: _ShotTyper
 
 
 def check(flow_input: NarrativeFlowInput) -> tuple[list[CuratorSelection], float]:
     """Return (possibly-swapped selections, narrative_flow_score)."""
-    shots = [_shot_type_for(sel) for sel in flow_input.selections]
+    typer = _ShotTyper(portraits=flow_input.portraits)
+    shots = [typer.shot_type(sel.path) for sel in flow_input.selections]
     score = _variety_score(shots)
     if score >= NARRATIVE_VARIETY_MIN:
         return flow_input.selections, score
-    ctx = _SwapContext(flow_input=flow_input, shots=shots, current_score=score)
+    ctx = _SwapContext(flow_input=flow_input, shots=shots, current_score=score, typer=typer)
     return _propose_swap(ctx)
 
 
-def _shot_type_for(selection: CuratorSelection) -> ShotType:
-    """Classify a selection as close/medium/wide using face bbox or saliency."""
-    portrait = _get_portrait(selection.path)
+def _shot_type_for(path: Path, portrait: PortraitResult | None) -> ShotType:
+    """Classify a photo as close/medium/wide using face bbox or saliency."""
+    if portrait is None:
+        portrait = _get_portrait(path)
     if portrait.has_face and portrait.face_bbox is not None:
-        return _classify_by_face(selection.path, portrait.face_bbox)
-    return _classify_by_saliency(selection.path)
+        return _classify_by_face(path, portrait.face_bbox)
+    return _classify_by_saliency(path)
 
 
 def _get_portrait(image_path: Path) -> PortraitResult:
@@ -135,6 +160,7 @@ def _build_search(ctx: _SwapContext, needed: ShotType) -> _CandidateSearch:
         candidates=ctx.flow_input.candidates,
         current_paths=current_paths,
         target_type=needed,
+        typer=ctx.typer,
     )
 
 
@@ -145,7 +171,7 @@ def _apply_swap(
     swap_idx = _worst_index(ctx.shots)
     new_selections = list(ctx.flow_input.selections)
     new_selections[swap_idx] = candidate
-    new_shots = [_shot_type_for(sel) for sel in new_selections]
+    new_shots = [ctx.typer.shot_type(sel.path) for sel in new_selections]
     new_score = _variety_score(new_shots)
     if new_score > ctx.current_score:
         logger.info("Narrative swap: variety %.2f → %.2f", ctx.current_score, new_score)
@@ -177,11 +203,10 @@ def _find_candidate(search: _CandidateSearch) -> CuratorSelection | None:
     for key, path in search.candidates.items():
         if key in search.current_paths or str(path) in search.current_paths:
             continue
-        dummy = CuratorSelection(
-            path=path, cluster_id=0, cluster_size=1, composite=0.0, is_vlm_winner=False
-        )
-        if _shot_type_for(dummy) == search.target_type:
-            return dummy
+        if search.typer.shot_type(path) == search.target_type:
+            return CuratorSelection(
+                path=path, cluster_id=0, cluster_size=1, composite=0.0, is_vlm_winner=False
+            )
     return None
 
 

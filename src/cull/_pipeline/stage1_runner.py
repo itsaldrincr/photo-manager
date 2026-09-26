@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from functools import partial
 from multiprocessing import get_context
@@ -18,7 +19,7 @@ from cull.models import BurstInfo, ExifSummary, ExposureScores, Stage1Result
 from cull.stage1 import duplicate as duplicate_module
 from cull.stage1.blur import BlurResult
 from cull.stage1.burst import _BurstInput, detect_bursts
-from cull.stage1.duplicate import find_duplicates
+from cull.stage1.duplicate import DuplicateResult, find_duplicates
 from cull.stage1.exposure import ExposureResult
 from cull.stage1.geometry import GeometryResult
 from cull.stage1.representatives import connected_groups, rank_stack
@@ -161,7 +162,21 @@ def _run_stage1_loop(loop_in: _Stage1LoopInput, dashboard: Dashboard) -> _Stage1
     with mp_ctx.Pool(processes=STAGE1_WORKER_COUNT) as pool:
         for outcome in pool.imap_unordered(worker_fn, loop_in.paths):
             _handle_worker_result(outcome, drain_ctx)
+    _sort_by_path(output)
     return output
+
+
+def _sort_by_path(output: _Stage1Output) -> None:
+    """Put the routing lists in path order instead of worker completion order.
+
+    Stage 2 cuts its chunks from survivors, and topiq_iaa scores a chunk in
+    one forward whose result depends on the batch (DSCF0652 alone 4.6416,
+    batched 4.6347). Burst detection breaks equal whole-second timestamps
+    by list order. Completion order made both depend on worker timing.
+    """
+    output.survivors.sort()
+    output.rejected.sort()
+    output.failed_paths.sort()
 
 
 def _classify_s1_result(result: Stage1Result, output: _Stage1Output) -> None:
@@ -173,13 +188,23 @@ def _classify_s1_result(result: Stage1Result, output: _Stage1Output) -> None:
 
 
 def _run_s1(ctx: Any) -> _Stage1Output:
-    """Execute Stage 1 and record timing."""
+    """Execute Stage 1 and record timing.
+
+    Duplicate detection runs in a thread while the per-photo worker pool
+    runs: the pool uses STAGE1_WORKER_COUNT processes and the detector
+    runs its own models, and the two write disjoint fields of the output
+    until _resolve_groups joins them.
+    """
     t0 = time.monotonic()
     loop_in = _Stage1LoopInput(paths=ctx.paths, config=ctx.config, source_path=ctx.source_path)
     ctx.dashboard.start_scanning()
     s1_out = _Stage1Output()
-    _preflight_dupes_into_output(_Stage1WorkCtx(loop_in=loop_in, output=s1_out, dashboard=ctx.dashboard))
-    _run_stage1_loop_into(_Stage1WorkCtx(loop_in=loop_in, output=s1_out, dashboard=ctx.dashboard))
+    work = _Stage1WorkCtx(loop_in=loop_in, output=s1_out, dashboard=ctx.dashboard)
+    with ThreadPoolExecutor(max_workers=1) as executor:
+        dup_future = executor.submit(_find_duplicates_for, loop_in)
+        _run_stage1_loop_into(work)
+        dup_result = dup_future.result()
+    _apply_duplicates(dup_result, work)
     _resolve_groups(loop_in, s1_out)
     ctx.dashboard.set_dupe_count(_stacked_extra_count(s1_out.stacks))
     ctx.dashboard.set_burst_count(len(s1_out.stacks))
@@ -192,11 +217,22 @@ def _run_s1(ctx: Any) -> _Stage1Output:
 
 
 def _preflight_dupes_into_output(ctx: _Stage1WorkCtx) -> None:
-    """Detect duplicates up-front so the live counter shows real values."""
-    if not ctx.loop_in.paths:
+    """Detect duplicates and record them in the output and the live counter."""
+    _apply_duplicates(_find_duplicates_for(ctx.loop_in), ctx)
+
+
+def _find_duplicates_for(loop_in: _Stage1LoopInput) -> DuplicateResult | None:
+    """Run duplicate detection over the scanned source, or None with no photos."""
+    if not loop_in.paths:
+        return None
+    image_dir = loop_in.source_path if loop_in.source_path is not None else loop_in.paths[0].parent
+    return find_duplicates(image_dir)
+
+
+def _apply_duplicates(dup_result: DuplicateResult | None, ctx: _Stage1WorkCtx) -> None:
+    """Record duplicate groups, encodings and a provisional count in the output."""
+    if dup_result is None:
         return
-    image_dir = ctx.loop_in.source_path if ctx.loop_in.source_path is not None else ctx.loop_in.paths[0].parent
-    dup_result = find_duplicates(image_dir)
     ctx.output.encodings = dup_result.encodings
     ctx.output.duplicate_groups = [[str(p) for p in g.paths] for g in dup_result.duplicate_groups]
     # Provisional count for the live dashboard; representatives are chosen after Stage 2.

@@ -459,7 +459,8 @@ def _run_narrative(
     """Run narrative-flow regularisation; fall back to input on failure."""
     candidates = {str(p): p for p in narr_in.curator_input.keepers}
     flow_in = NarrativeFlowInput(
-        selections=narr_in.selections, candidates=candidates
+        selections=narr_in.selections, candidates=candidates,
+        portraits=narr_in.curator_input.portraits,
     )
     try:
         return narrative_check(flow_in)

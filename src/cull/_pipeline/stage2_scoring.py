@@ -118,12 +118,12 @@ def _gather_chunk_embeddings(
 
 
 def _landscape(img: Image.Image) -> Image.Image:
-    """Lay a portrait frame on its side for the TOPIQ / CLIP-IQA tensor.
+    """Lay a portrait frame on its side for the fast-mode stacked tensor.
 
-    Both metrics score technical quality, which a 90 degree turn does not
-    change. Upright portraits would give a mixed-orientation batch two shapes,
-    and this matches the pixels the metrics saw before EXIF orientation was
-    applied, so their scores do not shift.
+    The fast path feeds MUSIQ one (N,C,H,W) batch, so upright portraits beside
+    landscapes cannot stack. MUSIQ scores technical quality, which a 90 degree
+    turn does not change. The main path keeps frames upright and scores each
+    size group separately (stage2/size_groups.py).
     """
     return img.transpose(Image.Transpose.ROTATE_90) if img.height > img.width else img
 
@@ -181,7 +181,7 @@ class _DualPilBatch(BaseModel):
 
     pil_224: list[Image.Image]
     pil_1280: list[Image.Image]
-    tensor_1280: torch.Tensor
+    tensor_1280: list[torch.Tensor]  # one (1,C,H,W) per photo; sizes differ by orientation
     paths: list[Path]
 
 
@@ -207,9 +207,9 @@ def _make_pil_224(pil: Image.Image) -> Image.Image:
     return resized.crop((left, top, left + SHARED_DECODE_CLIP_PX, top + SHARED_DECODE_CLIP_PX))
 
 
-def _stack_tensor_1280(pil_list: list[Image.Image]) -> torch.Tensor:
-    """Stack per-image 1280-edge PIL tensors into a single (N,C,H,W) batch."""
-    return _cat_iqa_tensors([tv_to_tensor(_landscape(pil)).unsqueeze(0) for pil in pil_list])
+def _tensors_1280(pil_list: list[Image.Image]) -> list[torch.Tensor]:
+    """Return one (1,C,H,W) tensor per 1280-edge PIL image."""
+    return [tv_to_tensor(pil).unsqueeze(0) for pil in pil_list]
 
 
 def _load_dual_pil_batch(load_in: _DualLoadInput) -> _DualPilBatch:
@@ -223,7 +223,7 @@ def _load_dual_pil_batch(load_in: _DualLoadInput) -> _DualPilBatch:
     return _DualPilBatch(
         pil_224=pil_224_list,
         pil_1280=pil_1280_list,
-        tensor_1280=_stack_tensor_1280(pil_1280_list),
+        tensor_1280=_tensors_1280(pil_1280_list),
         paths=list(load_in.paths),
     )
 
@@ -408,14 +408,37 @@ def _portrait_or_none(path: Path, config: CullConfig) -> PortraitResult | None:
     """
     if not config.is_portrait:
         return None
-    image = _decode_full_res_bgr(path)
-    if image is None:
+    return _assess_decoded_portrait(_DecodedPortraitJob(path=path, image=_decode_full_res_bgr(path), config=config))
+
+
+class _DecodedPortraitJob(BaseModel):
+    """A photo's full-resolution BGR decode (None if unreadable) and the run config."""
+
+    model_config = {"arbitrary_types_allowed": True}
+
+    path: Path
+    image: np.ndarray | None
+    config: CullConfig
+
+
+def _assess_decoded_portrait(job: _DecodedPortraitJob) -> PortraitResult | None:
+    """Run portrait assessment on an already-decoded photo; swallow failures."""
+    if job.image is None:
         return None
     try:
-        return assess_portrait_from_array(image, config)
+        return assess_portrait_from_array(job.image, job.config)
     except Exception as exc:  # noqa: BLE001
-        logger.warning("Portrait assessment failed for %s: %s", path, exc)
+        logger.warning("Portrait assessment failed for %s: %s", job.path, exc)
         return None
+
+
+def _portrait_for(path: Path, ctx: "_BatchCtx") -> PortraitResult | None:
+    """Portrait result for path, using the chunk's prefetched decode when there is one."""
+    config = ctx.loop_in.config
+    decode = ctx.full_res_bgr.pop(str(path), None)
+    if not config.is_portrait or decode is None:
+        return _portrait_or_none(path, config)
+    return _assess_decoded_portrait(_DecodedPortraitJob(path=path, image=decode.result(), config=config))
 
 
 def _path_to_dual_index(path: Path, ctx: "_BatchCtx") -> int:
@@ -429,8 +452,7 @@ def _build_subject_blur_input(
     path: Path, ctx: "_BatchCtx"
 ) -> tuple[SubjectBlurInput, PortraitResult | None]:
     """Compose a SubjectBlurInput from portrait + saliency fallbacks."""
-    config = ctx.loop_in.config
-    portrait = _portrait_or_none(path, config)
+    portrait = _portrait_for(path, ctx)
     needs_saliency = portrait is None or not portrait.has_face
     saliency = _compute_saliency_for_path(path, ctx) if needs_saliency else None
     idx = _path_to_dual_index(path, ctx)

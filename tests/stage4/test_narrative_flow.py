@@ -207,3 +207,30 @@ class TestCheckVarietyImproves:
             _new_selections, new_score = check(flow_input)
 
         assert new_score >= original_score
+
+
+def test_stage2_portraits_replace_face_analysis_and_each_photo_is_classified_once(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A swap re-reads shot types from the memo; Stage 2 portraits skip assess_portrait."""
+    close1, close2 = _make_selection("close1"), _make_selection("close2")
+    medium_cand = _make_selection("medium_cand")
+
+    def fail_portrait(path: Path, config: object) -> PortraitResult:
+        raise AssertionError(f"assess_portrait called for {path}")
+
+    monkeypatch.setattr("cull.stage4.narrative_flow.assess_portrait", fail_portrait)
+    portraits = {
+        str(close1.path): _mock_portrait_with_bbox(CLOSE_BBOX),
+        str(close2.path): _mock_portrait_with_bbox(CLOSE_BBOX),
+        str(medium_cand.path): _mock_portrait_with_bbox(MEDIUM_BBOX),
+    }
+    with patch("PIL.Image.open", return_value=_mock_pil_image()) as frame_open:
+        selections, _score = check(NarrativeFlowInput(
+            selections=[close1, close2],
+            candidates={"medium_cand": medium_cand.path},
+            portraits=portraits,
+        ))
+
+    assert selections[-1].path == medium_cand.path
+    assert frame_open.call_count == len(portraits)

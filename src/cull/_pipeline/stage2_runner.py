@@ -5,7 +5,9 @@ from __future__ import annotations
 import json
 import logging
 import time
+from concurrent.futures import Future, ThreadPoolExecutor
 from datetime import datetime, timezone
+from functools import partial
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
@@ -22,6 +24,7 @@ from cull.config import (
     EMBEDDING_INDEX_FILENAME,
     IQA_EXPOSURE_DEFAULT,
     STAGE2_BATCH_SIZE,
+    STAGE2_DECODE_THREADS,
 )
 from cull.dashboard import (
     Dashboard,
@@ -58,6 +61,7 @@ from cull.stage2.portrait import (
     _get_face_landmarker,
     assess_portrait,
 )
+from cull.stage2.size_groups import score_in_size_groups
 
 from cull._pipeline.stage1_runner import _Stage1Output
 if TYPE_CHECKING:
@@ -75,6 +79,7 @@ from cull._pipeline.stage2_scoring import (
     apply_palette_lab_to_scores,
     _DualLoadInput,
     _DualPilBatch,
+    _decode_full_res_bgr,
     _load_dual_pil_batch,
     _load_search_cache,
     _load_tensor_batch,
@@ -143,6 +148,7 @@ class _ChunkInput(BaseModel):
 
     paths: list[Path]
     device: str
+    dual_pil: _DualPilBatch | None = None  # prefetched decode; loaded inline when None
 
 
 class _EmitInput(BaseModel):
@@ -187,6 +193,8 @@ class _BatchCtx(BaseModel):
     dual_pil: _DualPilBatch | None = None
     aesthetic_score_cache: dict[str, float] = Field(default_factory=dict)
     embedding_rows: list[Any] = Field(default_factory=list)
+    decode_pool: Any = None  # ThreadPoolExecutor for prefetching decodes; None decodes inline
+    full_res_bgr: dict[str, Future] = Field(default_factory=dict)
 
 
 class _BatchOutcome(BaseModel):
@@ -285,16 +293,25 @@ def _build_iqa_pyiqa_only(
     ]
 
 
+def _score_iqa_same_size(device: str, group: list[tuple[Path, torch.Tensor]]) -> list[IqaScores]:
+    """Score topiq + clipiqa for photos whose 1280 tensors share one size."""
+    batch_input = _Stage2BatchInput(
+        tensor_batch=torch.cat([tensor for _, tensor in group], dim=0), pil_images=None,
+        embeddings=None, photo_paths=[path for path, _ in group],
+    )
+    return _build_iqa_pyiqa_only(batch_input, device)
+
+
 def _build_iqa_with_shared_embeds(
     build_in: _SharedBuildInput,
 ) -> list[IqaScores]:
     """Build iqa list from tensor_1280 + pre-computed aesthetic embeddings."""
     dual = build_in.batch_ctx.dual_pil  # type: ignore[union-attr]
-    batch_input = _Stage2BatchInput(
-        tensor_batch=dual.tensor_1280, pil_images=None,
-        embeddings=None, photo_paths=build_in.chunk_in.paths,
-    )
-    iqa_list = _build_iqa_pyiqa_only(batch_input, build_in.chunk_in.device)
+    items = [
+        (tuple(tensor.shape[-2:]), (path, tensor))
+        for path, tensor in zip(build_in.chunk_in.paths, dual.tensor_1280)
+    ]
+    iqa_list = score_in_size_groups(items, partial(_score_iqa_same_size, build_in.chunk_in.device))
     _apply_precomputed_aesthetic(_AestheticApplyInput(
         iqa_list=iqa_list, image_embeds=build_in.shared.image_embeds,
         device=build_in.chunk_in.device,
@@ -335,7 +352,7 @@ def _score_one_chunk(
     chunk_in: _ChunkInput, batch_ctx: _BatchCtx
 ) -> list[IqaScores]:
     """Run shared CLIP forward + IQA assembly for one chunk; returns iqa list."""
-    batch_ctx.dual_pil = _load_dual_pil_batch(
+    batch_ctx.dual_pil = chunk_in.dual_pil or _load_dual_pil_batch(
         _DualLoadInput(paths=chunk_in.paths, device=chunk_in.device)
     )
     shared = _run_shared_clip_forward(batch_ctx.dual_pil.pil_224, chunk_in.device)
@@ -355,6 +372,7 @@ def _process_batch(
     chunk_in: _ChunkInput, batch_ctx: _BatchCtx
 ) -> _BatchOutcome:
     """Score one chunk of paths via shared CLIP forward; returns fusion pairs."""
+    _submit_full_res_decodes(chunk_in.paths, batch_ctx)
     iqa_list = _score_one_chunk(chunk_in, batch_ctx)
     _apply_exposure_to_scores(iqa_list, batch_ctx.loop_in.s1_results)
     _apply_stage1_blur_context_to_scores(iqa_list, batch_ctx.loop_in.s1_results)
@@ -456,24 +474,61 @@ def _prewarm_stage2_models(loop_in: _Stage2LoopInput, dashboard: Dashboard) -> N
         dashboard.clear_stage2_loading()
 
 
+def _submit_full_res_decodes(paths: list[Path], batch_ctx: _BatchCtx) -> None:
+    """Start the chunk's full-resolution portrait decodes so they run during GPU scoring."""
+    if batch_ctx.decode_pool is None or not batch_ctx.loop_in.config.is_portrait:
+        return
+    for path in paths:
+        batch_ctx.full_res_bgr[str(path)] = batch_ctx.decode_pool.submit(_decode_full_res_bgr, path)
+
+
+class _DualPrefetch(BaseModel):
+    """The chunk list and the pool that decodes the next chunk ahead of scoring."""
+
+    model_config = {"arbitrary_types_allowed": True}
+
+    chunks: list[list[Path]]
+    pool: Any  # ThreadPoolExecutor
+    device: str
+
+
+def _submit_dual(prefetch: _DualPrefetch, index: int) -> Future | None:
+    """Start decoding chunk index's dual PIL batch, or None past the last chunk."""
+    if index >= len(prefetch.chunks):
+        return None
+    load_in = _DualLoadInput(paths=prefetch.chunks[index], device=prefetch.device)
+    return prefetch.pool.submit(_load_dual_pil_batch, load_in)
+
+
+def _score_chunks(prefetch: _DualPrefetch, emit_in: _EmitInput) -> _BatchCtx:
+    """Score every chunk, decoding chunk k+1 while chunk k is on the GPU."""
+    batch_ctx = _BatchCtx(loop_in=emit_in.loop_in, cache=emit_in.output.search_cache, decode_pool=prefetch.pool)
+    pending = _submit_dual(prefetch, 0)
+    for index, chunk in enumerate(prefetch.chunks):
+        dual = pending.result()  # type: ignore[union-attr]
+        pending = _submit_dual(prefetch, index + 1)
+        outcome = _process_batch(_ChunkInput(paths=chunk, device=prefetch.device, dual_pil=dual), batch_ctx)
+        emit_in.output.portraits.update(outcome.portraits)
+        _emit_batch_results(emit_in.model_copy(update={"pairs": outcome.pairs}))
+    return batch_ctx
+
+
 def _run_stage2_loop(loop_in: _Stage2LoopInput, dashboard: Dashboard) -> _Stage2Output:
-    """Run Stage 2 IQA scoring on all survivors with dashboard."""
+    """Run Stage 2 IQA scoring on all survivors with dashboard.
+
+    Decoding is ~0.5 s of CPU per photo (dual PIL load plus the full-res
+    portrait decode on an M3 Pro); it runs on STAGE2_DECODE_THREADS
+    threads while the main thread drives the GPU models.
+    """
     _prewarm_stage2_models(loop_in, dashboard)
     device = select_device()
     output = _Stage2Output()
     dashboard.start_stage2(len(loop_in.survivors))
-    search_cache = _resolve_search_cache(loop_in)
-    output.search_cache = search_cache
-    batch_ctx = _BatchCtx(loop_in=loop_in, cache=search_cache)
-    for i in range(0, len(loop_in.survivors), STAGE2_BATCH_SIZE):
-        chunk = loop_in.survivors[i: i + STAGE2_BATCH_SIZE]
-        outcome = _process_batch(_ChunkInput(paths=chunk, device=device), batch_ctx)
-        output.portraits.update(outcome.portraits)
-        emit_in = _EmitInput(
-            pairs=outcome.pairs, loop_in=loop_in, output=output,
-            dashboard=dashboard, device=device,
-        )
-        _emit_batch_results(emit_in)
+    output.search_cache = _resolve_search_cache(loop_in)
+    chunks = [loop_in.survivors[i: i + STAGE2_BATCH_SIZE] for i in range(0, len(loop_in.survivors), STAGE2_BATCH_SIZE)]
+    emit_in = _EmitInput(pairs=[], loop_in=loop_in, output=output, dashboard=dashboard, device=device)
+    with ThreadPoolExecutor(max_workers=STAGE2_DECODE_THREADS) as pool:
+        batch_ctx = _score_chunks(_DualPrefetch(chunks=chunks, pool=pool, device=device), emit_in)
     _maybe_write_search_cache(batch_ctx, output)
     return output
 

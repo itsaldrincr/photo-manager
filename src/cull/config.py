@@ -358,6 +358,14 @@ BURST_GAP_NO_SUBSEC_SECONDS: float = 2.0
 IMAGE_LONG_EDGE_PX: int = 1280
 JPEG_EXTENSIONS: frozenset[str] = frozenset({".jpg", ".jpeg"})
 STAGE2_BATCH_SIZE: int = 8
+# TOPIQ-NR and CLIP-IQA+ forward this many 1280-px photos at once. Their MPS
+# activation pool grows ~1.4 GB per photo in the forward: batch 8 peaked at a
+# 20.1 GB process footprint on an M3 Pro, batch 1 at 5.4 GB, with scores within
+# 7.2e-7 of each other.
+STAGE2_IQA_SUB_BATCH_SIZE: int = 1
+# Threads decoding Stage 2 photos (next chunk's dual PIL batch, current chunk's
+# full-res portrait frames) while the main thread runs the GPU models.
+STAGE2_DECODE_THREADS: int = 3
 
 # ---------------------------------------------------------------------------
 # Stage 2 IQA defaults

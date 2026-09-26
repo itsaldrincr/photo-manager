@@ -5,7 +5,6 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-import blur_detector
 import cv2
 import numpy as np
 from pydantic import BaseModel, ConfigDict
@@ -16,6 +15,7 @@ from cull.config import (
     IMAGE_LONG_EDGE_PX,
 )
 from cull.models import BlurScores
+from cull.stage1.blur_map import detect_blur_map
 
 logger = logging.getLogger(__name__)
 
@@ -28,8 +28,6 @@ FFT_RATIO_THRESHOLD: float = 0.05
 FFT_RADIUS_FRACTION: float = 0.6
 SOBEL_DIRECTIONS: int = 8
 SOBEL_KSIZE: int = 3
-DOWNSAMPLING_FACTOR: int = 4
-NUM_SCALES: int = 4
 BOKEH_SHARPNESS_RATIO: float = 2.0
 
 
@@ -111,14 +109,8 @@ def compute_fft_ratio(gray: np.ndarray) -> float:
 
 
 def compute_spatial_blur_map(image: np.ndarray) -> np.ndarray:
-    """Return pixel-level blur map via blur_detector (lower = more blurred)."""
-    gray = _to_gray(image)
-    return blur_detector.detectBlur(
-        gray,
-        downsampling_factor=DOWNSAMPLING_FACTOR,
-        num_scales=NUM_SCALES,
-        show_progress=False,
-    )
+    """Return pixel-level blur map, bitwise equal to blur_detector's (lower = more blurred)."""
+    return detect_blur_map(_to_gray(image))
 
 
 def detect_motion_blur(gray: np.ndarray) -> bool:

@@ -35,15 +35,15 @@ def test_portrait_and_landscape_share_one_iqa_batch(tmp_path: Path) -> None:
     portrait = _portrait_jpeg(tmp_path / "port.jpg")
     batch = _load_dual_pil_batch(_DualLoadInput(paths=[landscape, portrait], device="cpu"))
     assert batch.pil_1280[1].height > batch.pil_1280[1].width
-    assert batch.tensor_1280.shape[0] == 2
-    assert batch.tensor_1280.shape[-1] == SHARED_DECODE_PIXEL_PX
+    assert len(batch.tensor_1280) == 2
+    assert batch.tensor_1280[1].shape[-2] == SHARED_DECODE_PIXEL_PX
 
 
 def test_other_aspect_ratio_is_resized_into_the_batch(tmp_path: Path) -> None:
     three_two = _jpeg(tmp_path / "a.jpg", (3000, 2000))
     four_three = _jpeg(tmp_path / "b.jpg", (2400, 1800))
-    batch = _load_dual_pil_batch(_DualLoadInput(paths=[three_two, four_three], device="cpu"))
-    assert batch.tensor_1280.shape[0] == 2
+    tensor, _ = _load_tensor_batch([three_two, four_three])
+    assert tensor.shape[0] == 2
 
 
 def test_fast_path_tensor_batch_mixes_orientations(tmp_path: Path) -> None:

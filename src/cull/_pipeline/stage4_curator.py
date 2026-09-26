@@ -108,14 +108,15 @@ def _run_s4(s4_in: _S4RunInput) -> CurationResult | None:
     """Execute Stage 4 curation if --curate target was provided."""
     if s4_in.ctx.config.curate_target is None:
         return None
+    t0 = time.monotonic()
     curator_input = _build_curator_input(s4_in)
     if not curator_input.keepers:
         return None
     s4_in.ctx.dashboard.start_stage4(target=s4_in.ctx.config.curate_target)
-    t0 = time.monotonic()
     result = curate(curator_input)
-    elapsed = time.monotonic() - t0
     selected_paths = {str(sel.path) for sel in result.selected}
     _mark_selected(s4_in.decisions, selected_paths)
+    elapsed = time.monotonic() - t0
+    s4_in.ctx.timings.stage4 = elapsed
     s4_in.ctx.dashboard.complete_stage4(elapsed)
     return result
