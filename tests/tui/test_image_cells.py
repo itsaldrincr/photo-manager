@@ -170,7 +170,7 @@ def test_eviction_frees_old_images_but_not_the_one_on_screen(tmp_path: Path, ter
 
 
 def test_resize_storm_writes_nothing_until_settled(tmp_path: Path, terminal) -> None:
-    """Resizes are debounced: no terminal traffic mid-storm, one fresh upload after."""
+    """Resizes are debounced: no traffic mid-storm; after it, an instant stand-in then the sharp render."""
     source = write_jpeg(JpegSpec(path=tmp_path / "a.jpg"))
 
     async def body() -> None:
@@ -186,7 +186,7 @@ def test_resize_storm_writes_nothing_until_settled(tmp_path: Path, terminal) -> 
             await wait_until(lambda: view.shown is not None and view.shown.box.rows == 30)
 
     run(body)
-    assert terminal.joined.count("a=t,") == 1
+    assert terminal.joined.count("a=t,") == 2
 
 
 def test_ssh_sessions_send_pngs_inline(tmp_path: Path, terminal, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -206,3 +206,51 @@ def test_ssh_sessions_send_pngs_inline(tmp_path: Path, terminal, monkeypatch: py
     assert "a=t,t=d" in terminal.joined
     assert "t=f" not in terminal.joined
     assert "a=T" not in terminal.joined
+
+
+def test_resize_reuses_existing_preview_immediately(tmp_path: Path, terminal, monkeypatch: pytest.MonkeyPatch) -> None:
+    """A panel squeezing the view re-places the current photo at once; the sharper render follows."""
+    source = write_jpeg(JpegSpec(path=tmp_path / "a.jpg", size=(3000, 2000)))
+    gate = threading.Event()
+    real_render = previews.render_preview
+    renders: list[previews.PreviewSpec] = []
+
+    def gated_render(spec: previews.PreviewSpec) -> previews.Preview:
+        renders.append(spec)
+        if len(renders) > 1:
+            gate.wait(5)
+        return real_render(spec)
+
+    monkeypatch.setattr(previews, "render_preview", gated_render)
+
+    async def body() -> None:
+        app = Harness()
+        async with app.run_test(size=HARNESS_SIZE) as pilot:
+            view = app.query_one(PhotoView)
+            view.show(source)
+            await wait_until(lambda: view.shown is not None)
+            await pilot.resize_terminal(40, 24)
+            await wait_until(lambda: view.shown.box.cols <= 40)
+            assert not gate.is_set()
+            gate.set()
+
+    run(body)
+
+
+def test_decoded_bytes_budget_evicts_before_the_terminal_does(tmp_path: Path, terminal, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Past the byte budget, old off-screen images are freed; the one on screen stays."""
+    monkeypatch.setattr(images, "MAX_UPLOADED_BYTES", 1)
+    sources = [write_jpeg(JpegSpec(path=tmp_path / f"{i}.jpg", colour=(i * 60, 0, 0))) for i in range(3)]
+
+    async def body() -> None:
+        app = Harness()
+        async with app.run_test(size=HARNESS_SIZE):
+            view = app.query_one(PhotoView)
+            for source in sources:
+                shown_before = view.shown
+                view.show(source)
+                await wait_until(lambda: view.shown is not None and view.shown != shown_before)
+            assert f"a=d,d=I,i={view.shown.image_id}," not in terminal.joined
+            assert terminal.joined.count("a=d,d=I") >= 1
+
+    run(body)

@@ -41,6 +41,13 @@ from cull.tui.previews import (
 logger = logging.getLogger(__name__)
 
 MAX_UPLOADED_IMAGES: int = 40
+# Ghostty and kitty keep at most 320 MB of decoded images per screen and
+# silently drop the oldest past that, which blanked filmstrip thumbnails once
+# a few full-viewport previews (~20 MB RGBA each) had been uploaded. Staying
+# well under the limit keeps eviction in our hands, where on-screen images
+# are protected.
+MAX_UPLOADED_BYTES: int = 192_000_000
+RGBA_BYTES_PER_PIXEL: int = 4
 RESIZE_DEBOUNCE_SECONDS: float = 0.08
 
 
@@ -103,6 +110,7 @@ class _Upload(BaseModel):
     """Upload state; direct (``t=d``) uploads are prepared off-thread first."""
 
     image_id: int
+    decoded_bytes: int
     is_ready: bool = False
 
 
@@ -130,6 +138,7 @@ class ImageService:
         self._direct_pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="cull-upload")
         self._loop: asyncio.AbstractEventLoop | None = None
         self._previews: dict[PreviewSpec, Preview] = {}
+        self._largest_by_source: dict[Path, Preview] = {}
         self._tickets: dict[int, ImageTicket] = {}
         self._ahead: dict[PreviewSpec, CellBox] = {}
         self._plan_jobs: list[PreviewJob] = []
@@ -163,12 +172,18 @@ class ImageService:
         return make_spec(request.source, pixels)
 
     def want(self, ticket: ImageTicket) -> ShownImage | None:
-        """Return the image now if ready, else call ``ticket.on_ready`` once it is."""
+        """Return the image now if ready, else call ``ticket.on_ready`` once it is.
+
+        When the exact-size preview is not rendered yet but another size of
+        the same photo is, that one is placed at once (the terminal scales
+        it) and the ticket stays open so the sharper render replaces it.
+        """
         self._tickets[ticket.owner] = ticket
         preview = self._previews.get(self.spec_for(ticket.request))
         if preview is None:
             self._reprioritise()
-            return None
+            fallback = self._largest_by_source.get(ticket.request.source)
+            return self._ensure_upload(fallback, ticket.request.box) if fallback else None
         shown = self._ensure_upload(preview, ticket.request.box)
         if shown is not None:
             self._tickets.pop(ticket.owner, None)
@@ -229,9 +244,16 @@ class ImageService:
         if preview is None:
             return
         self._previews[spec] = preview
+        self._remember_largest(spec.source, preview)
         if spec in self._ahead:
             self._ensure_upload(preview, self._ahead[spec])
         self._fulfil_tickets()
+
+    def _remember_largest(self, source: Path, preview: Preview) -> None:
+        """Keep the biggest preview per photo as the instant stand-in after a resize."""
+        best = self._largest_by_source.get(source)
+        if best is None or preview.width * preview.height > best.width * best.height:
+            self._largest_by_source[source] = preview
 
     def _fulfil_tickets(self) -> None:
         """Hand every outstanding request whose image is now uploaded to its widget."""
@@ -258,7 +280,10 @@ class ImageService:
         if upload is not None:
             self._uploads.move_to_end(key)
             return ShownImage(image_id=upload.image_id, box=key.box) if upload.is_ready else None
-        upload = _Upload(image_id=self._next_image_id())
+        upload = _Upload(
+            image_id=self._next_image_id(),
+            decoded_bytes=preview.width * preview.height * RGBA_BYTES_PER_PIXEL,
+        )
         self._uploads[key] = upload
         if self._is_file_transmit:
             self._write_upload(key, kitty.transmit_file_sequence(upload.image_id, key.path))
@@ -302,20 +327,27 @@ class ImageService:
         upload = self._uploads[key]
         terminal_write(self._app, transmit + kitty.virtual_placement_sequence(upload.image_id, key.box))
         upload.is_ready = True
-        self._evict()
+        self._evict(key)
 
-    def _evict(self) -> None:
-        """Free the least recently used uploads that are not on screen."""
-        excess = len(self._uploads) - MAX_UPLOADED_IMAGES
+    def _is_over_budget(self) -> bool:
+        """Return True when uploads exceed the count or decoded-bytes budget."""
+        total_bytes = sum(upload.decoded_bytes for upload in self._uploads.values())
+        return len(self._uploads) > MAX_UPLOADED_IMAGES or total_bytes > MAX_UPLOADED_BYTES
+
+    def _evict(self, just_written: _UploadKey) -> None:
+        """Free least recently used uploads that are not on screen until within budget.
+
+        The upload just written is spared: its widget marks it in use only
+        after this returns.
+        """
         for key in list(self._uploads):
-            if excess <= 0:
+            if not self._is_over_budget():
                 return
             upload = self._uploads[key]
-            if upload.image_id in self._in_use or not upload.is_ready:
+            if key == just_written or upload.image_id in self._in_use or not upload.is_ready:
                 continue
             terminal_write(self._app, kitty.delete_image_sequence(upload.image_id))
             del self._uploads[key]
-            excess -= 1
 
 
 def image_service(app: App) -> ImageService | None:
