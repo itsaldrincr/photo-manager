@@ -426,6 +426,7 @@ def _run_tournament(tour_in: _TournamentRunInput) -> tuple[list[Path], int]:
     ctx = TournamentContext(
         s1_results=tour_in.curator_input.s1_results,
         composite_scores=tour_in.curator_input.composite_scores,
+        portraits=tour_in.curator_input.portraits,
     )
     inp = TournamentInput(
         candidates=tour_in.candidates,

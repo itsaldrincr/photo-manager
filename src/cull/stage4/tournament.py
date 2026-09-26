@@ -11,6 +11,7 @@ from pydantic import BaseModel, ConfigDict
 
 from cull.config import CullConfig
 from cull.models import Stage1Result
+from cull.stage2.portrait import PortraitResult
 from cull.stage3.prompt import PromptContext
 from cull.stage4.vlm_tiebreak import (
     CuratorTiebreakCallInput,
@@ -39,6 +40,7 @@ class TournamentContext(BaseModel):
 
     s1_results: dict[str, Stage1Result]
     composite_scores: dict[str, float]
+    portraits: dict[str, PortraitResult] = {}
 
 
 class _MatchParams(BaseModel):
@@ -58,15 +60,21 @@ def _seed_bracket(candidates: list[Path], scores: dict[str, float]) -> list[Path
     return sorted(candidates, key=lambda p: scores.get(str(p), 0.0), reverse=True)
 
 
-def _build_prompt_context(path: Path, s1: dict[str, Stage1Result]) -> PromptContext:
-    """Build PromptContext from Stage1Result for a given path, or return defaults."""
-    result = s1.get(str(path))
+def _is_eyes_closed(path: Path, ctx: TournamentContext) -> bool:
+    """Return the Stage 2 portrait eyes-closed verdict for path, False without one."""
+    portrait = ctx.portraits.get(str(path))
+    return portrait is not None and portrait.eyes_closed
+
+
+def _build_prompt_context(path: Path, ctx: TournamentContext) -> PromptContext:
+    """Build PromptContext from Stage 1 flags and Stage 2 eye state for a given path."""
+    eyes_closed = _is_eyes_closed(path, ctx)
+    result = ctx.s1_results.get(str(path))
     if result is None:
-        return PromptContext()
+        return PromptContext(eyes_closed=eyes_closed)
     return PromptContext(
         motion_blur_detected=result.blur.is_motion_blur,
-        # Stage 1 has no eye-state signal; Stage 2 portrait mode owns is_eyes_closed.
-        eyes_closed=False,
+        eyes_closed=eyes_closed,
         has_highlight_clip=result.exposure.has_highlight_clip,
         has_shadow_clip=result.exposure.has_shadow_clip,
         has_color_cast=result.exposure.has_color_cast,
@@ -75,8 +83,8 @@ def _build_prompt_context(path: Path, s1: dict[str, Stage1Result]) -> PromptCont
 
 def _play_match(params: _MatchParams) -> Path:
     """Run one VLM pairwise comparison and return the winner path."""
-    context_a = _build_prompt_context(params.photo_a, params.ctx.s1_results)
-    context_b = _build_prompt_context(params.photo_b, params.ctx.s1_results)
+    context_a = _build_prompt_context(params.photo_a, params.ctx)
+    context_b = _build_prompt_context(params.photo_b, params.ctx)
     tiebreak_input = CuratorTiebreakInput(
         photo_a=params.photo_a,
         photo_b=params.photo_b,
