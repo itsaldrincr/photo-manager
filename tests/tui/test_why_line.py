@@ -41,6 +41,23 @@ def test_keeper_shows_composite(tmp_path: Path) -> None:
     assert build_why_text(WhyContext(decision=decision, ai_label="keeper")) == "KEEP · composite 0.95"
 
 
+def test_event_decision_shows_rating_and_flags(tmp_path: Path) -> None:
+    """Event decisions show the VLM rating and its flags instead of the composite."""
+    decision = make_decision(tmp_path, PhotoSpec(name="a.jpg", label="keeper", composite=0.40))
+    decision.stage3 = Stage3Result(
+        photo_path=decision.photo.path, rating=5, flags=["great_expression", "connection"],
+    )
+    text = build_why_text(WhyContext(decision=decision, ai_label="keeper"))
+    assert text == "KEEP · VLM 5/5 · great_expression, connection"
+
+
+def test_event_curated_pick_without_flags(tmp_path: Path) -> None:
+    """A curated event pick names Stage 4, then the rating."""
+    decision = make_decision(tmp_path, PhotoSpec(name="a.jpg", label="select"))
+    decision.stage3 = Stage3Result(photo_path=decision.photo.path, rating=4)
+    assert build_why_text(WhyContext(decision=decision, ai_label="select")) == "SELECT · Stage 4: curated pick · VLM 4/5"
+
+
 def test_user_override_is_appended(tmp_path: Path) -> None:
     """When the user disagreed, the line keeps the AI's call and adds theirs."""
     decision = make_decision(tmp_path, PhotoSpec(name="a.jpg", label="rejected", composite=0.95))
