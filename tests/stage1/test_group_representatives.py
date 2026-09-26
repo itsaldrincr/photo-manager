@@ -1,4 +1,4 @@
-"""Stage 1 duplicate + burst resolution: every group keeps its sharpest member."""
+"""Stage 1 moment stacks: duplicate and burst groups merge, and no member is dropped."""
 
 from __future__ import annotations
 
@@ -73,32 +73,35 @@ def _burst(groups: list[list[Path]]) -> BurstResult:
     return BurstResult(groups=groups, winners=winners, losers=losers)
 
 
-def test_dup_and_burst_group_keeps_only_the_sharpest() -> None:
-    """A,B,C near-identical burst with C sharpest leaves exactly C."""
+def test_dup_and_burst_group_keeps_every_member_for_stage2() -> None:
+    """A near-identical burst A,B,C stays whole; Stage 1 drops none of it."""
     paths = [PHOTO_A, PHOTO_B, PHOTO_C, PHOTO_LONE]
     output = _preflight([[PHOTO_A, PHOTO_B, PHOTO_C]], paths)
     with patch.object(stage1_runner, "detect_bursts", return_value=_burst([[PHOTO_A, PHOTO_B, PHOTO_C]])):
         survivors = _resolve(output, paths)
-    assert sorted(survivors) == [PHOTO_C, PHOTO_LONE]
-    assert output.results[str(PHOTO_C)].is_duplicate is False
-    assert output.results[str(PHOTO_A)].is_duplicate is True
+    assert sorted(survivors) == sorted(paths)
+    assert output.stacks == [[str(PHOTO_A), str(PHOTO_B), str(PHOTO_C)]]
+    assert output.duplicate_paths == set()
+    assert output.results[str(PHOTO_LONE)].burst is None
 
 
-def test_dup_group_without_burst_keeps_sharpest_not_first_name() -> None:
-    """A duplicate group with no burst keeps the highest-Tenengrad member."""
+def test_stack_members_record_stack_id_and_size() -> None:
+    """Every member carries the stack id, size, and a provisional sharpness rank."""
     paths = [PHOTO_A, PHOTO_B, PHOTO_C]
     output = _preflight([[PHOTO_A, PHOTO_B, PHOTO_C]], paths)
     with patch.object(stage1_runner, "detect_bursts", return_value=_burst([])):
-        survivors = _resolve(output, paths)
-    assert survivors == [PHOTO_C]
+        _resolve(output, paths)
+    infos = [output.results[str(p)].burst for p in paths]
+    assert all(info is not None and info.group_id == 0 and info.group_size == 3 for info in infos)
+    assert output.results[str(PHOTO_C)].burst.rank == 0
+    assert not any(info.is_burst_winner for info in infos)
 
 
-def test_dup_and_burst_chained_groups_keep_exactly_one() -> None:
-    """Dup {A,B} and burst {B,C} connect through B, so only C survives."""
+def test_dup_and_burst_chained_groups_form_one_stack() -> None:
+    """Dup {A,B} and burst {B,C} connect through B into one moment stack."""
     paths = [PHOTO_A, PHOTO_B, PHOTO_C]
     output = _preflight([[PHOTO_A, PHOTO_B]], paths)
     with patch.object(stage1_runner, "detect_bursts", return_value=_burst([[PHOTO_B, PHOTO_C]])):
         survivors = _resolve(output, paths)
-    assert survivors == [PHOTO_C]
-    assert str(PHOTO_A) in output.duplicate_paths
-    assert str(PHOTO_B) in output.duplicate_paths
+    assert survivors == paths
+    assert output.stacks == [[str(PHOTO_A), str(PHOTO_B), str(PHOTO_C)]]

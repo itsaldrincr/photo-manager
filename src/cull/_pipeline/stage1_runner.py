@@ -1,4 +1,4 @@
-"""Stage 1 runner — per-photo assessment, preflight duplicates, burst detection."""
+"""Stage 1 runner — per-photo assessment, preflight duplicates, moment stacks."""
 
 from __future__ import annotations
 
@@ -14,14 +14,14 @@ from pydantic import BaseModel, Field
 
 from cull.config import CullConfig, STAGE1_WORKER_COUNT
 from cull.dashboard import Dashboard
-from cull.models import ExifSummary, ExposureScores, Stage1Result
+from cull.models import BurstInfo, ExifSummary, ExposureScores, Stage1Result
 from cull.stage1 import duplicate as duplicate_module
 from cull.stage1.blur import BlurResult
 from cull.stage1.burst import _BurstInput, detect_bursts
 from cull.stage1.duplicate import find_duplicates
 from cull.stage1.exposure import ExposureResult
 from cull.stage1.geometry import GeometryResult
-from cull.stage1.representatives import select_group_losers
+from cull.stage1.representatives import connected_groups, rank_stack
 from cull.stage1.worker import Stage1WorkerResult, assess_one
 
 logger = logging.getLogger(__name__)
@@ -47,7 +47,7 @@ class _Stage1Output(BaseModel):
     rejected: list[Path] = Field(default_factory=list)
     duplicate_paths: set[str] = Field(default_factory=set)
     duplicate_groups: list[list[str]] = Field(default_factory=list)
-    burst_losers: set[str] = Field(default_factory=set)
+    stacks: list[list[str]] = Field(default_factory=list)
     failed_paths: list[Path] = Field(default_factory=list)
     encodings: dict[str, Any] = Field(default_factory=dict)
 
@@ -172,23 +172,6 @@ def _classify_s1_result(result: Stage1Result, output: _Stage1Output) -> None:
         output.rejected.append(result.photo_path)
 
 
-def _stamp_duplicate_flags(output: _Stage1Output) -> None:
-    """Set is_duplicate=True on Stage1Result objects for all duplicate paths."""
-    for key in output.duplicate_paths:
-        result = output.results.get(key)
-        if result is not None:
-            result.is_duplicate = True
-
-
-def _filter_survivors(output: _Stage1Output) -> list[Path]:
-    """Remove burst losers and duplicates from the survivor list."""
-    return [
-        p for p in output.survivors
-        if str(p) not in output.burst_losers
-        and str(p) not in output.duplicate_paths
-    ]
-
-
 def _run_s1(ctx: Any) -> _Stage1Output:
     """Execute Stage 1 and record timing."""
     t0 = time.monotonic()
@@ -198,8 +181,8 @@ def _run_s1(ctx: Any) -> _Stage1Output:
     _preflight_dupes_into_output(_Stage1WorkCtx(loop_in=loop_in, output=s1_out, dashboard=ctx.dashboard))
     _run_stage1_loop_into(_Stage1WorkCtx(loop_in=loop_in, output=s1_out, dashboard=ctx.dashboard))
     _resolve_groups(loop_in, s1_out)
-    ctx.dashboard.set_dupe_count(len(s1_out.duplicate_paths))
-    ctx.dashboard.set_burst_count(len(s1_out.burst_losers))
+    ctx.dashboard.set_dupe_count(_stacked_extra_count(s1_out.stacks))
+    ctx.dashboard.set_burst_count(len(s1_out.stacks))
     ctx.dashboard.refresh()
     _unload_imagededup_cnn()
     elapsed = time.monotonic() - t0
@@ -216,11 +199,8 @@ def _preflight_dupes_into_output(ctx: _Stage1WorkCtx) -> None:
     dup_result = find_duplicates(image_dir)
     ctx.output.encodings = dup_result.encodings
     ctx.output.duplicate_groups = [[str(p) for p in g.paths] for g in dup_result.duplicate_groups]
-    # Provisional count for the live dashboard; _resolve_groups picks the real keepers.
-    for group in dup_result.duplicate_groups:
-        for dup_path in group.paths[1:]:
-            ctx.output.duplicate_paths.add(str(dup_path))
-    ctx.dashboard.set_dupe_count(len(ctx.output.duplicate_paths))
+    # Provisional count for the live dashboard; representatives are chosen after Stage 2.
+    ctx.dashboard.set_dupe_count(_stacked_extra_count(ctx.output.duplicate_groups))
     ctx.dashboard.refresh()
 
 
@@ -254,21 +234,30 @@ def _survivor_tenengrad(output: _Stage1Output) -> dict[str, float]:
     }
 
 
-def _resolve_groups(loop_in: _Stage1LoopInput, output: _Stage1Output) -> None:
-    """Keep the sharpest survivor of each connected duplicate/burst group.
+def _stacked_extra_count(groups: list[list[str]]) -> int:
+    """Return how many photos the groups hold beyond one representative each."""
+    return sum(len(group) - 1 for group in groups)
 
-    Duplicate and burst groups are merged before choosing, so a photo that
-    loses one grouping can never also knock out the other group's keeper.
+
+def _stamp_stack_info(output: _Stage1Output) -> None:
+    """Record stack id, size, and a provisional sharpness rank on each member."""
+    tenengrad = {k: (v,) for k, v in _survivor_tenengrad(output).items()}
+    for stack_id, stack in enumerate(output.stacks):
+        for rank, member in enumerate(rank_stack(stack, tenengrad)):
+            output.results[member].burst = BurstInfo(group_id=stack_id, rank=rank, group_size=len(stack))
+
+
+def _resolve_groups(loop_in: _Stage1LoopInput, output: _Stage1Output) -> None:
+    """Merge passing duplicate and burst groups into moment stacks.
+
+    Every stack member stays a survivor: the representative is chosen after
+    Stage 2, because on people shoots faces and expression decide the best
+    frame, not global sharpness.
     """
     passing = {str(p) for p in output.survivors}
     dup_groups = [[m for m in g if m in passing] for g in output.duplicate_groups]
-    groups = dup_groups + _detect_burst_groups(loop_in, output)
-    losers = select_group_losers(groups, _survivor_tenengrad(output))
-    dup_members = {m for g in output.duplicate_groups for m in g}
-    output.duplicate_paths = losers & dup_members
-    output.burst_losers = losers - dup_members
-    _stamp_duplicate_flags(output)
-    output.survivors = _filter_survivors(output)
+    output.stacks = connected_groups(dup_groups + _detect_burst_groups(loop_in, output))
+    _stamp_stack_info(output)
 
 
 class _Stage1WorkCtx(BaseModel):

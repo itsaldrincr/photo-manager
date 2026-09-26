@@ -234,6 +234,17 @@ DINOV2_MODEL_ID: str = "facebook/dinov2-small"
 DINOV2_DUPLICATE_SIMILARITY: float = 0.80
 DINOV2_EMBED_BATCH_SIZE: int = 8
 
+# Duplicate and burst edges link only photos captured within this many seconds.
+# Without it, 0.80 DINOv2 pairs chained 325 of 488 photos of one event shoot
+# into a single venue-wide group (pair precision 0.02 vs same-moment labels).
+# With a 10 s window: pair F1 0.90 (P 0.91, R 0.90, largest group 7); 30 s
+# gave 0.81, 5 s gave 0.88, timestamp alone 0.72
+# (scratch/singles-mixer-20260926/sim_bakeoff.py).
+DUPLICATE_TIME_WINDOW_SECONDS: float = 10.0
+# A pair where either photo has no EXIF capture time cannot be time-checked,
+# so it links only when DINOv2 sees it as near-identical.
+DINOV2_NEAR_IDENTICAL_SIMILARITY: float = 0.95
+
 # ---------------------------------------------------------------------------
 # Stage 1 exposure thresholds
 # ---------------------------------------------------------------------------

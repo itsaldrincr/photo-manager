@@ -75,11 +75,11 @@ def test_cosine_similarity_matrix_identical_vectors_score_one() -> None:
 
 
 def test_similarity_pairs_above_threshold_filters_correctly() -> None:
-    """Only pairs at/above DINOV2_DUPLICATE_SIMILARITY must be returned."""
+    """Only pairs at/above DINOV2_DUPLICATE_SIMILARITY must be returned, with their score."""
     similarity = np.array([[1.0, 0.9, 0.5], [0.9, 1.0, 0.1], [0.5, 0.1, 1.0]])
     names = ["a.jpg", "b.jpg", "c.jpg"]
     pairs = _similarity_pairs_above_threshold(similarity, names)
-    assert pairs == [("a.jpg", "b.jpg")]
+    assert pairs == [("a.jpg", "b.jpg", pytest.approx(0.9))]
 
 
 def test_groups_to_adjacency_builds_undirected_edges() -> None:
@@ -210,5 +210,5 @@ def test_run_dinov2_pass_swallows_failures_and_returns_empty(
         "cull.stage1.duplicate._find_dinov2_duplicate_pairs",
         MagicMock(side_effect=RuntimeError("boom")),
     )
-    result = _run_dinov2_pass(Path("/photos"), ["a.jpg", "b.jpg"])
+    result = _run_dinov2_pass(_DinoV2PassInput(image_dir=Path("/photos"), candidate_names=["a.jpg", "b.jpg"]))
     assert result == []

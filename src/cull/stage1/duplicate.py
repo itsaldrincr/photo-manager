@@ -9,6 +9,10 @@ CNN's measured recall is 0.50 vs DINOv2's 1.00 (see
 benchmarks/runs/dedupe_eval_report.md). DINOv2 pairs are merged with the
 CNN's groups by connected components; DINOv2 embeddings themselves are never
 exposed downstream, so Stage 4's calibration is unaffected.
+
+Both passes link a pair only when the two EXIF capture times fall within
+DUPLICATE_TIME_WINDOW_SECONDS. A pair missing a capture time links only when
+it is near-identical.
 """
 
 from __future__ import annotations
@@ -16,6 +20,7 @@ from __future__ import annotations
 import gc
 import logging
 from collections import defaultdict, deque
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -24,12 +29,22 @@ import torch
 from pydantic import BaseModel, ConfigDict, Field
 
 from cull import dinov2_loader
-from cull.config import BLUR_CNN_SIMILARITY_EXACT, DINOV2_DUPLICATE_SIMILARITY, DINOV2_EMBED_BATCH_SIZE
+from cull.config import (
+    BLUR_CNN_SIMILARITY_EXACT,
+    DINOV2_DUPLICATE_SIMILARITY,
+    DINOV2_EMBED_BATCH_SIZE,
+    DINOV2_NEAR_IDENTICAL_SIMILARITY,
+)
 from cull.image_io import open_rgb_upright
 from cull.router import CURATED_DIR, REVIEW_DIR
+from cull.stage1.burst import read_exif_capture_time
+from cull.stage1.representatives import is_within_moment_window
 from cull.stage2.iqa import select_device
 
 logger = logging.getLogger(__name__)
+
+CaptureTimes = dict[str, datetime | None]
+ScoredPair = tuple[str, str, float]
 
 _CNN_INSTANCE: object | None = None
 _IMPORT_FAILED: bool = False
@@ -80,6 +95,41 @@ def _add_pair_edges(adjacency: dict[str, set[str]], pairs: list[tuple[str, str]]
     for name_a, name_b in pairs:
         adjacency[name_a].add(name_b)
         adjacency[name_b].add(name_a)
+
+
+def _pair_times(pair: tuple[str, str], times: CaptureTimes) -> tuple[datetime, datetime] | None:
+    """Return both capture times of a pair, or None when either is missing."""
+    first, second = times.get(pair[0]), times.get(pair[1])
+    if first is None or second is None:
+        return None
+    return first, second
+
+
+def _is_linkable_cnn_pair(pair: tuple[str, str], times: CaptureTimes) -> bool:
+    """Return True if a CNN pair may link; CNN pairs are near-identical already."""
+    pair_times = _pair_times(pair, times)
+    return pair_times is None or is_within_moment_window(*pair_times)
+
+
+def _is_linkable_dinov2_pair(pair: ScoredPair, times: CaptureTimes) -> bool:
+    """Return True if a DINOv2 pair may link given its capture times."""
+    pair_times = _pair_times((pair[0], pair[1]), times)
+    if pair_times is None:
+        return pair[2] >= DINOV2_NEAR_IDENTICAL_SIMILARITY
+    return is_within_moment_window(*pair_times)
+
+
+def _gate_cnn_map(duplicates_map: dict, times: CaptureTimes) -> dict[str, list[str]]:
+    """Drop CNN duplicate entries whose pair fails the capture-time gate."""
+    return {
+        name: [dupe for dupe in dupes if _is_linkable_cnn_pair((name, dupe), times)]
+        for name, dupes in duplicates_map.items()
+    }
+
+
+def _read_capture_times(image_dir: Path, names: list[str]) -> CaptureTimes:
+    """Return the EXIF capture time of every candidate, keyed by relative name."""
+    return {name: read_exif_capture_time(image_dir / name) for name in names}
 
 
 class _BfsState(BaseModel):
@@ -236,12 +286,12 @@ def _cosine_similarity_matrix(vectors: np.ndarray) -> np.ndarray:
     return norm @ norm.T
 
 
-def _similarity_pairs_above_threshold(similarity: np.ndarray, names: list[str]) -> list[tuple[str, str]]:
-    """Return name pairs whose cosine similarity meets the DINOv2 duplicate threshold."""
-    pairs: list[tuple[str, str]] = []
+def _similarity_pairs_above_threshold(similarity: np.ndarray, names: list[str]) -> list[ScoredPair]:
+    """Return (name, name, similarity) for pairs meeting the DINOv2 duplicate threshold."""
+    pairs: list[ScoredPair] = []
     for i, j in zip(*np.triu_indices(len(names), k=1)):
         if similarity[i, j] >= DINOV2_DUPLICATE_SIMILARITY:
-            pairs.append((names[i], names[j]))
+            pairs.append((names[i], names[j], float(similarity[i, j])))
     return pairs
 
 
@@ -252,6 +302,7 @@ class _DinoV2PassInput(BaseModel):
 
     image_dir: Path
     candidate_names: list[str]
+    capture_times: CaptureTimes = Field(default_factory=dict)
 
 
 def _find_dinov2_duplicate_pairs(pass_in: _DinoV2PassInput) -> list[tuple[str, str]]:
@@ -262,21 +313,24 @@ def _find_dinov2_duplicate_pairs(pass_in: _DinoV2PassInput) -> list[tuple[str, s
     paths = [pass_in.image_dir / name for name in pass_in.candidate_names]
     embeddings = _embed_dinov2_batch(_DinoV2EmbedJob(paths=paths, device=device))
     similarity = _cosine_similarity_matrix(embeddings)
-    return _similarity_pairs_above_threshold(similarity, pass_in.candidate_names)
+    scored = _similarity_pairs_above_threshold(similarity, pass_in.candidate_names)
+    return [
+        (pair[0], pair[1]) for pair in scored
+        if _is_linkable_dinov2_pair(pair, pass_in.capture_times)
+    ]
 
 
-def _run_dinov2_pass(image_dir: Path, candidate_names: list[str]) -> list[tuple[str, str]]:
+def _run_dinov2_pass(pass_in: _DinoV2PassInput) -> list[tuple[str, str]]:
     """Run the DINOv2 second-tier pass, returning [] on any failure."""
     logger.info(
         "Running DINOv2 duplicate detection (threshold=%.2f) on %d candidates",
         DINOV2_DUPLICATE_SIMILARITY,
-        len(candidate_names),
+        len(pass_in.candidate_names),
     )
     try:
-        pass_in = _DinoV2PassInput(image_dir=image_dir, candidate_names=candidate_names)
         return _find_dinov2_duplicate_pairs(pass_in)
     except (RuntimeError, ValueError, OSError, ImportError, TypeError):
-        logger.exception("DINOv2 duplicate pass failed for %s", image_dir)
+        logger.exception("DINOv2 duplicate pass failed for %s", pass_in.image_dir)
         return []
 
 
@@ -297,8 +351,12 @@ def find_duplicates(image_dir: Path) -> DuplicateResult:
     except (RuntimeError, ValueError, OSError, TypeError):
         logger.exception("CNN duplicate detection failed for %s", image_dir)
         return DuplicateResult()
-    dinov2_pairs = _run_dinov2_pass(image_dir, list(raw_encodings.keys()))
-    merge_in = _GroupMergeInput(duplicates_map=duplicates_map, dinov2_pairs=dinov2_pairs, image_dir=image_dir)
+    names = list(raw_encodings.keys())
+    times = _read_capture_times(image_dir, names)
+    dinov2_pairs = _run_dinov2_pass(_DinoV2PassInput(image_dir=image_dir, candidate_names=names, capture_times=times))
+    merge_in = _GroupMergeInput(
+        duplicates_map=_gate_cnn_map(duplicates_map, times), dinov2_pairs=dinov2_pairs, image_dir=image_dir,
+    )
     groups = _build_duplicate_groups(merge_in)
     encodings = _build_encodings_map(raw_encodings, image_dir)
     logger.info("Found %d duplicate groups (%d DINOv2-only pairs)", len(groups), len(dinov2_pairs))

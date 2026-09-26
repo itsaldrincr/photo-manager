@@ -1,6 +1,15 @@
-"""Pick one representative per connected duplicate/burst group."""
+"""Moment stacks: connected duplicate/burst groups and their ranking."""
 
 from __future__ import annotations
+
+from datetime import datetime
+
+from cull.config import DUPLICATE_TIME_WINDOW_SECONDS
+
+
+def is_within_moment_window(first: datetime, second: datetime) -> bool:
+    """Return True if two capture times are close enough to share a moment."""
+    return abs((first - second).total_seconds()) <= DUPLICATE_TIME_WINDOW_SECONDS
 
 
 def _find_root(parent: dict[str, str], node: str) -> str:
@@ -24,17 +33,10 @@ def connected_groups(groups: list[list[str]]) -> list[list[str]]:
     components: dict[str, list[str]] = {}
     for member in parent:
         components.setdefault(_find_root(parent, member), []).append(member)
-    return [sorted(c) for c in components.values() if len(c) > 1]
+    return sorted(sorted(c) for c in components.values() if len(c) > 1)
 
 
-def select_group_losers(groups: list[list[str]], scores: dict[str, float]) -> set[str]:
-    """Return every member except the highest-scoring one of each connected group.
-
-    Ties break on the path name so the result is reproducible.
-    """
-    losers: set[str] = set()
-    for component in connected_groups(groups):
-        winner = min(component, key=lambda m: (-scores.get(m, 0.0), m))
-        losers.update(m for m in component if m != winner)
-    return losers
-
+def rank_stack(stack: list[str], scores: dict[str, tuple[float, ...]]) -> list[str]:
+    """Return stack members best first by score tuple, ties broken on path name."""
+    lowest: tuple[float, ...] = (float("-inf"),)
+    return sorted(stack, key=lambda m: (tuple(-s for s in scores.get(m, lowest)), m))

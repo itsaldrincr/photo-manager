@@ -16,6 +16,7 @@ from cull.config import (
     BURST_GAP_NO_SUBSEC_SECONDS,
     CullConfig,
 )
+from cull.stage1.representatives import is_within_moment_window
 
 logger = logging.getLogger(__name__)
 
@@ -122,6 +123,12 @@ def _dhash_distance(path_a: Path, path_b: Path) -> int | None:
 # ---------------------------------------------------------------------------
 
 
+def read_exif_capture_time(path: Path) -> datetime | None:
+    """Return the EXIF capture time of one photo, or None when EXIF has none."""
+    capture = _read_exif_capture(path)
+    return capture.time if capture is not None else None
+
+
 def read_capture_times(image_paths: list[Path]) -> list[CaptureTime]:
     """Return capture times from EXIF (with sub-seconds when present), else mtime."""
     result: list[CaptureTime] = []
@@ -202,6 +209,25 @@ def confirm_burst_visually(group: list[Path]) -> list[list[Path]]:
     return [g for g in confirmed if len(g) > 1]
 
 
+def split_by_moment_window(group: list[Path], times: dict[Path, datetime | None]) -> list[list[Path]]:
+    """Split a time-ordered burst into runs that stay within the moment window.
+
+    Consecutive-gap clustering can chain a long burst far past one moment, so
+    each run starts a new anchor once a frame falls outside the window of the
+    current anchor.
+    """
+    runs: list[list[Path]] = []
+    anchor: datetime | None = None
+    for path in group:
+        time = times.get(path)
+        if runs and time is not None and anchor is not None and is_within_moment_window(anchor, time):
+            runs[-1].append(path)
+            continue
+        runs.append([path])
+        anchor = time
+    return [run for run in runs if len(run) > 1]
+
+
 def select_burst_winner(scoring_input: BurstScoringInput) -> tuple[Path, list[Path]]:
     """Return (winner, losers) where winner has the highest blur score."""
     group = scoring_input.group
@@ -216,11 +242,12 @@ def detect_bursts(burst_in: _BurstInput) -> BurstResult:
     """Detect burst groups, confirm visually, and select winners."""
     blur_scores = burst_in.blur_scores if burst_in.blur_scores is not None else {}
     captures = read_capture_times(burst_in.image_paths)
+    times = {c.path: c.time for c in captures}
     temporal_groups = cluster_captures(captures, burst_in.config.burst_gap)
     all_groups: list[list[Path]] = []
     for group in temporal_groups:
-        visual_groups = confirm_burst_visually(group)
-        all_groups.extend(visual_groups)
+        for visual_group in confirm_burst_visually(group):
+            all_groups.extend(split_by_moment_window(visual_group, times))
     winners: list[Path] = []
     losers: list[Path] = []
     for group in all_groups:

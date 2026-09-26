@@ -30,6 +30,7 @@ from cull.pipeline import (
     _scan_with_dashboard,
     SessionResult,
 )
+from cull._pipeline.stack_resolution import resolve_moment_stacks
 from cull.vlm_registry import resolve_alias
 from cull_fast.pipeline_fast import _run_s2_fast, _unload_stage2_models_fast
 
@@ -95,6 +96,7 @@ def _execute_stages_inline_fast(ctx: _StageRunCtx) -> _StagesResult:
     if STAGE_IQA in ctx.config.stages:
         s2_out = _run_s2_fast(_S2RunInput(s1_out=s1_out, ctx=ctx))
         _unload_stage2_models_fast()
+    resolve_moment_stacks(s1_out, s2_out)
     if STAGE_VLM in ctx.config.stages and s2_out:
         build_in = _FastS3BuildInput(ctx=ctx, s1_out=s1_out, s2_out=s2_out)
         s3_results = _run_s3(_build_fast_s3_input(build_in))

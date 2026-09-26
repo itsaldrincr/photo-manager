@@ -43,8 +43,6 @@ def _decide_label(path: Path, ctx: _DecisionCtx) -> DecisionLabel:
     key = str(path)
     if key in ctx.s1_out.duplicate_paths:
         return "duplicate"
-    if key in ctx.s1_out.burst_losers:
-        return "rejected"
     s1 = ctx.s1_out.results.get(key)
     if s1 and not s1.is_pass:
         return "rejected"

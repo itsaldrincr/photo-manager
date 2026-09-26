@@ -139,8 +139,6 @@ def _classify_reject(decision: PhotoDecision) -> str:
             return "blur"
         if s1.reject_reason == "noise":
             return "noise"
-        if s1.burst is not None:
-            return "burst"
         if _is_exposure_reject(decision):
             return "exposure"
     s3 = decision.stage3

@@ -69,4 +69,4 @@ def _no_dinov2_duplicate_pass(monkeypatch: pytest.MonkeyPatch) -> None:
     representative of production behavior (see benchmarks/runs/
     dedupe_eval_report.md, measured with FP=0 on real photographs).
     """
-    monkeypatch.setattr("cull.stage1.duplicate._run_dinov2_pass", lambda image_dir, candidate_names: [])
+    monkeypatch.setattr("cull.stage1.duplicate._run_dinov2_pass", lambda pass_in: [])

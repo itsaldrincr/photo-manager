@@ -50,6 +50,7 @@ from cull._pipeline.stage2_reducer import (
     _S2ReducerRunInput,
 )
 from cull._pipeline.stage2_scoring import _SearchCache
+from cull._pipeline.stack_resolution import resolve_moment_stacks
 from cull._pipeline.stage3_runner import (
     _run_s3_if_configured,
     _S3MaybeRunInput,
@@ -373,6 +374,7 @@ def _execute_stages_inline(ctx: _StageRunCtx) -> _StagesResult:
         s2_out = _run_s2(_S2RunInput(s1_out=s1_out, ctx=ctx))
         _run_s2_reducer(_S2ReducerRunInput(s2_out=s2_out, s1_out=s1_out, ctx=ctx))
         _unload_stage2_models()
+    resolve_moment_stacks(s1_out, s2_out)
     _load_vlm_if_needed(ctx)
     if STAGE_IQA in ctx.config.stages:
         s3_results = _run_s3_if_configured(
