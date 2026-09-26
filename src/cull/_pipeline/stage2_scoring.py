@@ -117,9 +117,33 @@ def _gather_chunk_embeddings(
     return torch.from_numpy(stacked).to(select_device())
 
 
+def _landscape(img: Image.Image) -> Image.Image:
+    """Lay a portrait frame on its side for the TOPIQ / CLIP-IQA tensor.
+
+    Both metrics score technical quality, which a 90 degree turn does not
+    change. Upright portraits would give a mixed-orientation batch two shapes,
+    and this matches the pixels the metrics saw before EXIF orientation was
+    applied, so their scores do not shift.
+    """
+    return img.transpose(Image.Transpose.ROTATE_90) if img.height > img.width else img
+
+
+def _cat_iqa_tensors(tensors: list[torch.Tensor]) -> torch.Tensor:
+    """Concatenate (1,C,H,W) tensors, resizing any other aspect ratio to the first's shape."""
+    target = tuple(tensors[0].shape[-2:])
+    if any(tuple(t.shape[-2:]) != target for t in tensors):
+        logger.warning("Mixed aspect ratios in one IQA batch; resizing to %s", target)
+        tensors = [
+            t if tuple(t.shape[-2:]) == target
+            else torch.nn.functional.interpolate(t, size=target, mode="bilinear", align_corners=False)
+            for t in tensors
+        ]
+    return torch.cat(tensors, dim=0)
+
+
 def _load_tensor(path: Path) -> torch.Tensor:
     """Load image as a torch tensor resized to IMAGE_LONG_EDGE_PX."""
-    img = open_rgb_upright(path)
+    img = _landscape(open_rgb_upright(path))
     long_edge = max(img.size)
     if long_edge > IMAGE_LONG_EDGE_PX:
         scale = IMAGE_LONG_EDGE_PX / long_edge
@@ -130,8 +154,7 @@ def _load_tensor(path: Path) -> torch.Tensor:
 
 def _load_tensor_only_batch(paths: list[Path]) -> torch.Tensor:
     """Load a batch of images as a stacked (N,C,H,W) tensor (no PIL list)."""
-    tensors = [_load_tensor(path) for path in paths]
-    return torch.cat(tensors, dim=0)
+    return _cat_iqa_tensors([_load_tensor(path) for path in paths])
 
 
 def _load_tensor_batch(paths: list[Path]) -> tuple[torch.Tensor, list[Image.Image]]:
@@ -141,7 +164,7 @@ def _load_tensor_batch(paths: list[Path]) -> tuple[torch.Tensor, list[Image.Imag
     for path in paths:
         tensors.append(_load_tensor(path))
         pil_images.append(open_rgb_upright(path))
-    return torch.cat(tensors, dim=0), pil_images
+    return _cat_iqa_tensors(tensors), pil_images
 
 
 class _DualLoadInput(BaseModel):
@@ -186,8 +209,7 @@ def _make_pil_224(pil: Image.Image) -> Image.Image:
 
 def _stack_tensor_1280(pil_list: list[Image.Image]) -> torch.Tensor:
     """Stack per-image 1280-edge PIL tensors into a single (N,C,H,W) batch."""
-    tensors = [tv_to_tensor(pil).unsqueeze(0) for pil in pil_list]
-    return torch.cat(tensors, dim=0)
+    return _cat_iqa_tensors([tv_to_tensor(_landscape(pil)).unsqueeze(0) for pil in pil_list])
 
 
 def _load_dual_pil_batch(load_in: _DualLoadInput) -> _DualPilBatch:

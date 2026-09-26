@@ -37,10 +37,11 @@ def _is_upright(size: tuple[int, int]) -> bool:
     return size == (STORED_H, STORED_W)
 
 
-def test_stage2_tensor_load_is_upright(rotated_jpeg: Path) -> None:
-    """The TOPIQ/CLIP-IQA tensor path must see the frame upright."""
+def test_stage2_iqa_tensor_is_laid_landscape(rotated_jpeg: Path) -> None:
+    """The TOPIQ/CLIP-IQA tensor is the one deliberate exception: portraits lie on
+    their side so a mixed-orientation batch keeps one shape (see _landscape)."""
     tensor = _load_tensor(rotated_jpeg)
-    assert _is_upright((tensor.shape[3], tensor.shape[2]))
+    assert tensor.shape[3] > tensor.shape[2]
 
 
 def test_stage2_dual_pil_load_is_upright(rotated_jpeg: Path) -> None:
