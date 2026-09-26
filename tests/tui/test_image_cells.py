@@ -187,3 +187,22 @@ def test_resize_storm_writes_nothing_until_settled(tmp_path: Path, terminal) -> 
 
     run(body)
     assert terminal.joined.count("a=t,") == 1
+
+
+def test_ssh_sessions_send_pngs_inline(tmp_path: Path, terminal, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Over SSH the terminal cannot read our files, so the PNG goes inline (t=d, a=t)."""
+    monkeypatch.delenv("CULL_TUI_TRANSMIT")
+    monkeypatch.setenv("SSH_CONNECTION", "10.0.0.1 22 10.0.0.2 22")
+    source = write_jpeg(JpegSpec(path=tmp_path / "a.jpg"))
+
+    async def body() -> None:
+        app = Harness()
+        async with app.run_test(size=HARNESS_SIZE):
+            view = app.query_one(PhotoView)
+            view.show(source)
+            await wait_until(lambda: view.shown is not None)
+
+    run(body)
+    assert "a=t,t=d" in terminal.joined
+    assert "t=f" not in terminal.joined
+    assert "a=T" not in terminal.joined

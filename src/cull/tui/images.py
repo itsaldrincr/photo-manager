@@ -14,7 +14,8 @@ import itertools
 import logging
 from collections import Counter, OrderedDict
 from collections.abc import Callable
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import Future, ThreadPoolExecutor
+from functools import partial
 from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -263,21 +264,31 @@ class ImageService:
             self._write_upload(key, kitty.transmit_file_sequence(upload.image_id, key.path))
             return ShownImage(image_id=upload.image_id, box=key.box)
         future = self._direct_pool.submit(_read_direct_transmit, key, upload.image_id)
-        future.add_done_callback(self._on_direct_future)
+        future.add_done_callback(partial(self._on_direct_future, key))
         return None
 
     def _next_image_id(self) -> int:
-        """Return a fresh image id, wrapping inside the modal-safe range."""
-        return next(self._ids) % kitty.MAX_IMAGE_ID + 1
+        """Return an id not held by any live upload, wrapping inside the modal-safe range."""
+        live = {upload.image_id for upload in self._uploads.values()}
+        while (image_id := next(self._ids) % kitty.MAX_IMAGE_ID + 1) in live:
+            continue
+        return image_id
 
-    def _on_direct_future(self, future: object) -> None:
-        """Pool thread: pass a prepared inline upload to the UI loop."""
+    def _on_direct_future(self, key: _UploadKey, future: Future[_DirectReady]) -> None:
+        """Pool thread: pass a prepared inline upload (or its failure) to the UI loop."""
+        if future.cancelled():
+            return
         try:
-            ready = future.result()  # type: ignore[attr-defined]
-        except (OSError, RuntimeError) as exc:
+            ready = future.result()
+        except OSError as exc:
             logger.warning("preview read for upload failed: %s", exc)
+            self._call_soon(self._drop_upload, key)
             return
         self._call_soon(self._on_direct_ready, ready)
+
+    def _drop_upload(self, key: _UploadKey) -> None:
+        """UI thread: forget a failed upload so a later request can retry it."""
+        self._uploads.pop(key, None)
 
     def _on_direct_ready(self, ready: _DirectReady) -> None:
         """UI thread: write a prepared inline upload and wake its waiters."""
