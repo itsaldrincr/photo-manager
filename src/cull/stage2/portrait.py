@@ -21,6 +21,7 @@ from cull.config import (
     PORTRAIT_FACE_OCCLUSION_MIN,
     PORTRAIT_OCCLUSION_PATCH_IOD_FRACTION,
     PORTRAIT_OCCLUSION_PATCH_MIN_HALF_PX,
+    PORTRAIT_PROMINENT_FACE_AREA_FRACTION,
     CullConfig,
     ModelCacheConfig,
 )
@@ -109,10 +110,11 @@ class _FaceContext:
 
 @dataclass(frozen=True)
 class _AssemblyInput:
-    """Groups FaceContext and total face count for result assembly."""
+    """Groups FaceContext, total face count, and the group eyes-closed verdict."""
 
     ctx: _FaceContext
     face_count: int
+    is_any_prominent_eyes_closed: bool = False
 
 
 @dataclass(frozen=True)
@@ -279,7 +281,7 @@ def _assemble_result(assembly: _AssemblyInput) -> PortraitResult:
     ctx = assembly.ctx
     metrics = _compute_face_metrics(ctx)
     mean_ear = (metrics.ear_left + metrics.ear_right) / 2.0
-    eyes_closed = is_eyes_closed(mean_ear)
+    primary_closed = is_eyes_closed(mean_ear)
     return PortraitResult(
         face_count=assembly.face_count,
         face_bbox=_face_bbox_from_landmarks(ctx),
@@ -288,8 +290,8 @@ def _assemble_result(assembly: _AssemblyInput) -> PortraitResult:
         eye_sharpness_right=metrics.sharp_right,
         ear_left=metrics.ear_left,
         ear_right=metrics.ear_right,
-        eyes_closed=eyes_closed,
-        is_squinting=is_squinting(mean_ear, eyes_closed),
+        eyes_closed=primary_closed or assembly.is_any_prominent_eyes_closed,
+        is_squinting=is_squinting(mean_ear, primary_closed),
         face_occluded=metrics.occlusion < PORTRAIT_FACE_OCCLUSION_MIN,
         occlusion_ratio=metrics.occlusion,
         dominant_emotion=metrics.emotion.label or None,
@@ -473,6 +475,24 @@ def detect_expression(image_path: Path) -> str:
     return detect_expression_from_array(image)
 
 
+def _landmark_bbox_area(landmarks: list[Any]) -> float:
+    """Return the normalised bbox area enclosing a face's landmarks."""
+    xs = [lm.x for lm in landmarks[:TOTAL_LANDMARK_COUNT]]
+    ys = [lm.y for lm in landmarks[:TOTAL_LANDMARK_COUNT]]
+    return max(0.0, max(xs) - min(xs)) * max(0.0, max(ys) - min(ys))
+
+
+def any_prominent_eyes_closed(faces: list[list[Any]]) -> bool:
+    """Return True if any face at least PORTRAIT_PROMINENT_FACE_AREA_FRACTION of the largest has eyes closed."""
+    areas = [_landmark_bbox_area(face) for face in faces]
+    cutoff = max(areas) * PORTRAIT_PROMINENT_FACE_AREA_FRACTION
+    return any(
+        is_eyes_closed(compute_ear(face))
+        for face, area in zip(faces, areas)
+        if area >= cutoff
+    )
+
+
 def assess_portrait_from_array(image: np.ndarray, config: CullConfig) -> PortraitResult:
     """Detect faces and return full PortraitResult for an already-decoded image.
 
@@ -489,7 +509,11 @@ def assess_portrait_from_array(image: np.ndarray, config: CullConfig) -> Portrai
     if not faces:
         return PortraitResult(face_count=0)
     ctx = _FaceContext(image=image, landmarks=faces[0])
-    assembly = _AssemblyInput(ctx=ctx, face_count=len(faces))
+    assembly = _AssemblyInput(
+        ctx=ctx,
+        face_count=len(faces),
+        is_any_prominent_eyes_closed=any_prominent_eyes_closed(faces),
+    )
     return _assemble_result(assembly)
 
 

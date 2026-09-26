@@ -294,6 +294,9 @@ CURATE_VLM_TIEBREAK_THRESHOLD: float = 0.02
 # ---------------------------------------------------------------------------
 
 PORTRAIT_NUM_FACES_MAX: int = 10
+# A face counts toward the group eyes-closed check when its bbox area is at
+# least this fraction of the largest detected face (drops background faces).
+PORTRAIT_PROMINENT_FACE_AREA_FRACTION: float = 0.25
 PORTRAIT_FACE_DETECTION_CONFIDENCE_MIN: float = 0.5
 PORTRAIT_EAR_CLOSED_MAX: float = 0.20
 PORTRAIT_EAR_SQUINT_MAX: float = 0.25
