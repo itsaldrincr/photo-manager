@@ -317,10 +317,6 @@ class CullApp(App):
         height: 1fr;
     }}
 
-    Filmstrip.hidden {{
-        display: none;
-    }}
-
     #{TOO_SMALL_BANNER_ID} {{
         width: 1fr;
         height: 1fr;
