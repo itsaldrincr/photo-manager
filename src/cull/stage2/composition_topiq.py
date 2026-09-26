@@ -6,13 +6,16 @@
 from __future__ import annotations
 
 import logging
+from functools import partial
 
 import torch
 from PIL import Image
+from pydantic import BaseModel, ConfigDict
 from torchvision.transforms.functional import to_tensor as tv_to_tensor
 
 from cull.io_silence import _silence_stdio
 from cull.stage2.iqa import CPU_FALLBACK, select_device
+from cull.stage2.size_groups import score_in_size_groups
 
 logger = logging.getLogger(__name__)
 
@@ -74,11 +77,28 @@ def _normalize_batch_scores(scores: object, batch_size: int) -> list[float]:
     return [float(scores)] * batch_size
 
 
+class _MetricOnDevice(BaseModel):
+    """A loaded pyiqa metric and the device its inputs must be moved to."""
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    metric: object
+    device: str
+
+
+def _score_same_size_batch(target: _MetricOnDevice, images: list[Image.Image]) -> list[float]:
+    """Run one batched forward over images that all share one size."""
+    batch_tensor = _images_to_tensor_batch(images).to(target.device)
+    with _silence_stdio(), torch.no_grad():
+        scores = target.metric(batch_tensor)  # type: ignore[operator]
+    return _normalize_batch_scores(scores, len(images))
+
+
 def score_topiq_iaa_batch(images: list[Image.Image]) -> list[float]:
     """Run topiq_iaa on a batch of PIL images in one forward pass.
 
     Replaces the historical per-image metric() call (one pyiqa forward per
-    photo) with a single (N,C,H,W) batched forward, mirroring
+    photo) with one (N,C,H,W) batched forward per image size, mirroring
     iqa.py's topiq_nr/clipiqa batching.
     """
     if not images:
@@ -90,10 +110,10 @@ def score_topiq_iaa_batch(images: list[Image.Image]) -> list[float]:
     if metric is None:
         return [TOPIQ_IAA_DEFAULT] * len(images)
     try:
-        batch_tensor = _images_to_tensor_batch(images).to(device)
-        with _silence_stdio(), torch.no_grad():
-            scores = metric(batch_tensor)
-        return _normalize_batch_scores(scores, len(images))
+        return score_in_size_groups(
+            [(image.size, image) for image in images],
+            partial(_score_same_size_batch, _MetricOnDevice(metric=metric, device=device)),
+        )
     except Exception as exc:  # noqa: BLE001
         logger.warning("topiq_iaa batch scoring failed: %s", exc)
         return [TOPIQ_IAA_DEFAULT] * len(images)

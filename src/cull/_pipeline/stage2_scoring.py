@@ -158,7 +158,7 @@ class _DualPilBatch(BaseModel):
 
     pil_224: list[Image.Image]
     pil_1280: list[Image.Image]
-    tensor_1280: torch.Tensor
+    tensor_1280: list[torch.Tensor]  # one (1,C,H,W) per photo; sizes differ by orientation
     paths: list[Path]
 
 
@@ -184,10 +184,9 @@ def _make_pil_224(pil: Image.Image) -> Image.Image:
     return resized.crop((left, top, left + SHARED_DECODE_CLIP_PX, top + SHARED_DECODE_CLIP_PX))
 
 
-def _stack_tensor_1280(pil_list: list[Image.Image]) -> torch.Tensor:
-    """Stack per-image 1280-edge PIL tensors into a single (N,C,H,W) batch."""
-    tensors = [tv_to_tensor(pil).unsqueeze(0) for pil in pil_list]
-    return torch.cat(tensors, dim=0)
+def _tensors_1280(pil_list: list[Image.Image]) -> list[torch.Tensor]:
+    """Return one (1,C,H,W) tensor per 1280-edge PIL image."""
+    return [tv_to_tensor(pil).unsqueeze(0) for pil in pil_list]
 
 
 def _load_dual_pil_batch(load_in: _DualLoadInput) -> _DualPilBatch:
@@ -201,7 +200,7 @@ def _load_dual_pil_batch(load_in: _DualLoadInput) -> _DualPilBatch:
     return _DualPilBatch(
         pil_224=pil_224_list,
         pil_1280=pil_1280_list,
-        tensor_1280=_stack_tensor_1280(pil_1280_list),
+        tensor_1280=_tensors_1280(pil_1280_list),
         paths=list(load_in.paths),
     )
 

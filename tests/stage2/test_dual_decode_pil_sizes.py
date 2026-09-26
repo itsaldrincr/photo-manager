@@ -43,4 +43,4 @@ def test_tensor_1280_matches_pil_1280_shape(wide_jpeg: Path) -> None:
     """tensor_1280 must have shape (1, 3, H, W) matching pil_1280 dimensions."""
     batch = _load_dual_pil_batch(_DualLoadInput(paths=[wide_jpeg], device="cpu"))
     w, h = batch.pil_1280[0].size
-    assert batch.tensor_1280.shape == (1, 3, h, w)
+    assert batch.tensor_1280[0].shape == (1, 3, h, w)

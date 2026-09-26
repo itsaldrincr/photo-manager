@@ -6,6 +6,7 @@ import json
 import logging
 import time
 from datetime import datetime, timezone
+from functools import partial
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
@@ -58,6 +59,7 @@ from cull.stage2.portrait import (
     _get_face_landmarker,
     assess_portrait,
 )
+from cull.stage2.size_groups import score_in_size_groups
 
 from cull._pipeline.stage1_runner import _Stage1Output
 if TYPE_CHECKING:
@@ -285,16 +287,25 @@ def _build_iqa_pyiqa_only(
     ]
 
 
+def _score_iqa_same_size(device: str, group: list[tuple[Path, torch.Tensor]]) -> list[IqaScores]:
+    """Score topiq + clipiqa for photos whose 1280 tensors share one size."""
+    batch_input = _Stage2BatchInput(
+        tensor_batch=torch.cat([tensor for _, tensor in group], dim=0), pil_images=None,
+        embeddings=None, photo_paths=[path for path, _ in group],
+    )
+    return _build_iqa_pyiqa_only(batch_input, device)
+
+
 def _build_iqa_with_shared_embeds(
     build_in: _SharedBuildInput,
 ) -> list[IqaScores]:
     """Build iqa list from tensor_1280 + pre-computed aesthetic embeddings."""
     dual = build_in.batch_ctx.dual_pil  # type: ignore[union-attr]
-    batch_input = _Stage2BatchInput(
-        tensor_batch=dual.tensor_1280, pil_images=None,
-        embeddings=None, photo_paths=build_in.chunk_in.paths,
-    )
-    iqa_list = _build_iqa_pyiqa_only(batch_input, build_in.chunk_in.device)
+    items = [
+        (tuple(tensor.shape[-2:]), (path, tensor))
+        for path, tensor in zip(build_in.chunk_in.paths, dual.tensor_1280)
+    ]
+    iqa_list = score_in_size_groups(items, partial(_score_iqa_same_size, build_in.chunk_in.device))
     _apply_precomputed_aesthetic(_AestheticApplyInput(
         iqa_list=iqa_list, image_embeds=build_in.shared.image_embeds,
         device=build_in.chunk_in.device,
