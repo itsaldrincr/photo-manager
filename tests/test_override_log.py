@@ -245,3 +245,28 @@ def test_concurrent_appends_serialized(
     for line in lines:
         parsed = json.loads(line)
         assert "photo_path" in parsed
+
+
+def test_remove_overrides_drops_only_the_undone_entries(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """remove_overrides deletes exactly the given entries and keeps the rest in order."""
+    import cull.override_log as ol
+    log_path = tmp_path / ".cull" / "overrides.jsonl"
+    monkeypatch.setattr(ol, "OVERRIDE_LOG_DIR", log_path.parent)
+    monkeypatch.setattr(ol, "OVERRIDE_LOG_PATH", log_path)
+    entries = [_make_entry(tmp_path) for _ in range(3)]
+    for entry in entries:
+        log_override(entry)
+
+    assert ol.remove_overrides([entries[1]]) == 1
+
+    remaining = load_overrides()
+    assert [e.timestamp for e in remaining] == [entries[0].timestamp, entries[2].timestamp]
+
+
+def test_remove_overrides_without_log_is_a_no_op(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Undo before anything was logged removes nothing and creates no file."""
+    import cull.override_log as ol
+    log_path = tmp_path / "missing.jsonl"
+    monkeypatch.setattr(ol, "OVERRIDE_LOG_PATH", log_path)
+    assert ol.remove_overrides([_make_entry(tmp_path)]) == 0
+    assert not log_path.exists()

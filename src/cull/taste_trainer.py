@@ -161,6 +161,12 @@ def maybe_retrain(ctx: TasteTrainerInput) -> Path | None:
     return retrain(_full_history_ctx(ctx.profile_path))
 
 
+def unwind_retrain_counter(profile_path: Path, count: int) -> None:
+    """Take back ``count`` counter bumps for overrides the user undid (floor 0)."""
+    counter_path = _counter_path_for(profile_path)
+    _write_counter(counter_path, max(0, _read_counter(counter_path) - count))
+
+
 def _stream_partial_fit(estimator: object, ctx: TasteTrainerInput) -> object:
     """Apply river-based streaming partial fit to an existing estimator."""
     from river import linear_model  # noqa: PLC0415

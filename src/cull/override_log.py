@@ -136,6 +136,43 @@ def log_override(entry: OverrideEntry) -> None:
         logger.warning("Failed to write override log: %s", exc)
 
 
+def _entry_identity(data: dict) -> tuple[str, str, str]:
+    """Return the fields that identify one logged override."""
+    return (str(data.get("timestamp")), str(data.get("photo_path")), str(data.get("user_decision")))
+
+
+def _line_identity(line: str) -> tuple[str, str, str] | None:
+    """Return a log line's identity, or None for blank or malformed lines."""
+    try:
+        return _entry_identity(json.loads(line))
+    except (json.JSONDecodeError, AttributeError):
+        return None
+
+
+def remove_overrides(entries: list[OverrideEntry]) -> int:
+    """Delete the given entries from the log (the TUI undid them); return lines removed.
+
+    The taste trainer fits on the whole log, so an undone decision left in it
+    would keep teaching the model a label the user took back.
+    """
+    targets = {_entry_identity(entry.model_dump(mode="json")) for entry in entries}
+    if not targets or not OVERRIDE_LOG_PATH.exists():
+        return 0
+    with open(OVERRIDE_LOG_PATH, "r+", encoding="utf-8") as fh:
+        if _HAVE_FCNTL:
+            fcntl.flock(fh, fcntl.LOCK_EX)
+        try:
+            lines = fh.readlines()
+            kept = [line for line in lines if _line_identity(line) not in targets]
+            fh.seek(0)
+            fh.writelines(kept)
+            fh.truncate()
+        finally:
+            if _HAVE_FCNTL:
+                fcntl.flock(fh, fcntl.LOCK_UN)
+    return len(lines) - len(kept)
+
+
 def _parse_line(line: str) -> OverrideEntry | None:
     """Parse one JSONL line into an OverrideEntry, returning None on failure."""
     stripped = line.strip()
