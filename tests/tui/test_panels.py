@@ -67,24 +67,46 @@ def test_face_detection_never_blocks_navigation(tmp_path: Path, monkeypatch: pyt
     """With the detector stuck, z still opens the panel and arrows still move."""
     gate = threading.Event()
 
-    def slow_analyse(source: Path) -> FaceReport:
+    def slow_analyse(_client: object, source: Path) -> FaceReport:
         gate.wait(5)
         return FaceReport(source=source, error="stub")
 
-    monkeypatch.setattr(faces, "analyse_faces", slow_analyse)
+    monkeypatch.setattr(faces.FaceWorkerClient, "analyse", slow_analyse)
 
     async def body() -> None:
         app = _app(tmp_path, 3)
         async with app.run_test(size=APP_SIZE) as pilot:
-            await wait_until(lambda: app.query_one(PhotoView).shown is not None)
+            view = app.query_one(PhotoView)
+            await wait_until(lambda: view.shown is not None)
             await pilot.press("z")
             panel = app.query_one(FacePanel)
             assert panel.is_visible
             assert "finding faces" in str(panel.query_one("#face-status", Static).render())
+            for _ in range(5):
+                await pilot.pause(0.05)
+                assert view.shown is not None
             await pilot.press("right", "right")
             assert app._photo_index == 2
             gate.set()
             await wait_until(lambda: "stub" in str(panel.query_one("#face-status", Static).render()))
             assert app._photo_index == 2
+
+    run(body)
+
+
+def test_face_panel_toggle_keeps_filmstrip_thumbnails(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Re-layout from z keeps every filmstrip thumbnail painted."""
+    monkeypatch.setattr(faces.FaceWorkerClient, "analyse", lambda _client, source: FaceReport(source=source))
+
+    async def body() -> None:
+        app = _app(tmp_path, 6)
+        async with app.run_test(size=APP_SIZE) as pilot:
+            thumbs = [cell.query_one(ImageCells) for cell in app.query(FilmstripCell)]
+            await wait_until(lambda: all(t.shown is not None for t in thumbs if t.source is not None))
+            await pilot.press("z")
+            await pilot.pause(0.3)
+            await pilot.press("z")
+            await pilot.pause(0.3)
+            assert all(t.shown is not None for t in thumbs if t.source is not None)
 
     run(body)
