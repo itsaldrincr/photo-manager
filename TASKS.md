@@ -14,11 +14,11 @@ Originals: odysseus `~/Desktop/singles-mixer-20260926` (never modify). Runs: ody
 - [x] Event preset design: VLM rating primary, cheap LR tiebreak; sim curate-100 63% keeps / 6 bad vs old 36% / 28 — photo-manager
 - [x] feat/event-judge implemented and merged (683 passed, 3 known failures) — photo-manager
 - [x] Event sample run, 114 photos: works end to end; 41 min; curate-25 56% keeps vs 30% base — odysseus
-- [ ] Final run 488 --preset event --curate 100 (running) — odysseus
+- [x] Final run 488 --preset event --curate 100: 121 min, 61/100 labelled keeps, 11/12 heroes, 0 keeps lost in S1 — odysseus
 - [x] Iterate via offline curation simulator + 114-photo sample — odysseus
-- [ ] Full 488 run with --curate 100 on the final stack; score it — odysseus
-- [ ] Deliver 100 selects as copies to odysseus ~/Desktop/singles-mixer-20260926-selects + contact-sheet page — odysseus
-- [ ] Ship: merge integrate/event-cull to main after gates; update odysseus clone; theseus editable install follows main — photo-manager
+- [x] Full 488 run with --curate 100 on the final stack; score it — odysseus
+- [x] Deliver 100 selects to odysseus ~/Desktop/singles-mixer-20260926-selects + selects.csv; page photo-manager/singles-mixer-selects — odysseus
+- [x] Ship: main fast-forwarded to integrate (683 passed, 3 known failures); odysseus clone + `cull` on PATH + models link; theseus main pulled — photo-manager
 - [ ] Republish cull-tui page with real-shoot screenshots (blocked: theseus screen locked overnight) — theseus
 - [x] Fix pyproject dependency conflict (transformers override) so a fresh install resolves — photo-manager
 - [x] Laya: dropped without install. Zero-shot base ~0.36 vs 0.32 random (eesel review); fine-tuned it would duplicate the metrics LR, and the VLM rating is what moved curation — theseus
