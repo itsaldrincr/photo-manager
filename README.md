@@ -106,7 +106,37 @@ cull --report-card /path/to/photos
 
 Presets tune scoring weights for different genres:
 
-`general` (default), `wedding`, `documentary`, `wildlife`, `landscape`, `street`, `holiday`
+`general` (default), `wedding`, `documentary`, `wildlife`, `landscape`, `street`, `holiday`, `event`
+
+### Event preset
+
+Use `event` for people shoots such as mixers, parties and receptions:
+
+```bash
+cull --preset event --curate 100 /path/to/photos
+```
+
+The VLM rates every photo from 1 to 5 against an event-photography prompt,
+and the rating decides the outcome. A photo rated 5 is a keeper, one rated 4
+goes to review, and one rated 3 or lower is rejected. In each moment stack
+(frames of one moment taken within 10 s of each other), only the
+highest-rated frame is kept. The curator picks N photos from those stack
+winners, with a diversity penalty.
+
+The technical-quality composite does not predict what a person would keep on
+event photos. On a 488-photo singles mixer the old composite reached a keeper
+AUC of 0.56, and the `event` preset raised curation quality as follows:
+
+| Curate 100 | Keepers | Bad picks | Heroes found |
+|---|---|---|---|
+| Old composite | 36% | 28 | 8 of 12 |
+| `event` with `qwen3-8-27b-mlx-4bit` | 63% | 6 | 10 of 12 |
+| `event` with `--model gemma-4-12b` | 58% | 9 | 10 of 12 |
+
+The default judge, Qwen3.8-27B, needs about 21 GB of GPU memory and takes
+about 16 s per photo on an M6 Mac mini. That is about 2.2 h of rating for
+500 photos, so run it on odysseus. `--model gemma-4-12b` needs 8 GB and takes
+about 5 s per photo. Both figures were measured on odysseus.
 
 ### VLM model selection
 
@@ -123,6 +153,13 @@ is a faster, slightly less accurate alternative. Download either with:
 ```bash
 huggingface-cli download mlx-community/gemma-4-12B-it-4bit \
   --local-dir models/gemma-4-12B-it-4bit
+```
+
+The `event` preset defaults to Qwen3.8-27B (~16 GB on disk). Download it with:
+
+```bash
+huggingface-cli download lmstudio-community/Qwen3.8-27B-MLX-4bit \
+  --local-dir models/Qwen3.8-27B-MLX-4bit
 ```
 
 ```bash
