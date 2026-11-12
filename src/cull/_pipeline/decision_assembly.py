@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -30,11 +31,12 @@ class _DecisionCtx(BaseModel):
     event_labels: dict[str, DecisionLabel] | None = None  # Set only for the event preset.
 
 
-def _build_photo_meta(path: Path) -> PhotoMeta:
-    """Create a PhotoMeta from a file path."""
+def _build_photo_meta(path: Path, exif_datetime: datetime | None = None) -> PhotoMeta:
+    """Create a PhotoMeta from a file path and the capture time Stage 1 read."""
     return PhotoMeta(
         path=path,
         filename=path.name,
+        exif_datetime=exif_datetime,
         fs_mtime=path.stat().st_mtime,
     )
 
@@ -84,10 +86,11 @@ def _build_decision(path: Path, ctx: _DecisionCtx) -> PhotoDecision:
     label = _decide_label(path, ctx)
     stage = _stage_reached(key, ctx)
     s2_result = ctx.s2_out.results[key].stage2 if ctx.s2_out and key in ctx.s2_out.results else None
+    s1_result = ctx.s1_out.results.get(key)
     return PhotoDecision(
-        photo=_build_photo_meta(path),
+        photo=_build_photo_meta(path, s1_result.capture_time if s1_result else None),
         decision=label,
-        stage1=ctx.s1_out.results.get(key),
+        stage1=s1_result,
         stage2=s2_result,
         stage3=ctx.s3_results.get(key),
         stage_reached=stage,
